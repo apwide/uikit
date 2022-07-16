@@ -1,15 +1,19 @@
 <template>
     <div ref="target" class="select" :disabled="isDisabled">
         <TextField
-            :is-focused="focused" :is-invalid="isInvalid" :is-loading="isLoading"
-            class="select-wrapper" :select="select" tabindex="-1"
+            :is-focused="focused"
+            :is-invalid="isInvalid"
+            :is-loading="isLoading"
+            class="select-wrapper"
+            :select="select"
+            tabindex="-1"
             @click="click">
-            <div
-                ref="list" class="flex-wrapper" :gap="multi && !!selected.length"
-                @dragover.prevent>
-                <template v-if=" multi">
+            <div ref="list" class="flex-wrapper" :gap="multi && !!selected.length" @dragover.prevent>
+                <template v-if="multi">
                     <Tag
-                        v-for="(tag,i) in selected" :key="`${tag.id}-${i}`" :tag="tag"
+                        v-for="(tag, i) in selected"
+                        :key="`${tag.id}-${i}`"
+                        :tag="tag"
                         :index="i"
                         :count="selected.length"
                         :min="min"
@@ -18,14 +22,15 @@
                         @drag="handleDrag"
                         @dragstart="onDragStart"
                         @on-remove="onRemove">
-                        <slot name="tag" :tag="tag"/>
+                        <slot name="tag" :tag="tag" />
                     </Tag>
                 </template>
                 <input
-                    ref="input" class="search"
+                    ref="input"
+                    class="search"
                     :value="search"
                     :disabled="isDisabled"
-                    :style="{width: currentWidth}"
+                    :style="{ width: currentWidth }"
                     @keydown.down.prevent="onNextSuggestion"
                     @keydown.up.prevent="onPreviousSuggestion"
                     @keydown.enter="onSuggestionSelected"
@@ -33,33 +38,42 @@
                     @focus="onFocus"
                     @blur="onBlur"
                     @keyup.esc="onEsc"
-                    @keydown.delete="removeOption">
+                    @keydown.delete="removeOption" />
             </div>
             <div v-if="!selected.length" class="text">
-                <slot v-if="!search && selected.value && $scopedSlots['selected'] && !multi" name="selected" :selected="selected.value"/>
+                <slot
+                    v-if="!search && selected.value && $scopedSlots['selected'] && !multi"
+                    name="selected"
+                    :selected="selected.value" />
                 <span v-else :placeholder="!search && !selected.label">
                     {{ input }}
                 </span>
             </div>
             <Icons
-                :is-selected="isAnyOptionSelected" :is-fetching="isFetching"
-                :createable="createable" :is-clearable="showClearIcon" @clear="onClear">
-                <slot name="icon"/>
+                :is-selected="isAnyOptionSelected"
+                :is-fetching="isFetching"
+                :createable="createable"
+                :is-clearable="showClearIcon"
+                @clear="onClear">
+                <slot name="icon" />
             </Icons>
         </TextField>
         <Popper
-            v-if="shouldOpenMenu" ref="menu" :offset="[0,0]"
+            v-if="shouldOpenMenu"
+            ref="menu"
+            :offset="[0, 0]"
             :target-element="$refs.target"
             :boundaries-element="boundariesElement"
             placement="bottom-start">
             <SelectMenu
-                :selected="selected" :options="suggestions"
+                :selected="selected"
+                :options="suggestions"
                 :current-suggestion-index="currentSuggestionIndex"
                 :is-fetching="isFetching"
                 :async="async"
                 :append-to-body="appendToBody"
                 :contains-query="!!search"
-                :style="{width: selectWidth}"
+                :style="{ width: selectWidth }"
                 :has-suggestions="hasSuggestions"
                 :no-options-message="noOptionsMessage"
                 :placeholder="searchPromptText"
@@ -68,10 +82,12 @@
                 @mouseover="onMouseOverSuggestion"
                 @option-selected="onOptionSelected">
                 <slot
-                    slot="option" slot-scope="{option, isCurrent}" name="option"
+                    slot="option"
+                    slot-scope="{ option, isCurrent }"
+                    name="option"
                     :is-current="isCurrent"
-                    :option="option"/>
-                <slot name="custom-action"/>
+                    :option="option" />
+                <slot name="custom-action" />
             </SelectMenu>
         </Popper>
     </div>
@@ -84,12 +100,15 @@
     import Tag from './Tag.vue';
     import Icons from './Icons.vue';
 
-
     const INPUT_WIDTH = '5px';
 
     export default {
         components: {
-            TextField, Popper, SelectMenu, Tag, Icons
+            TextField,
+            Popper,
+            SelectMenu,
+            Tag,
+            Icons
         },
         props: {
             value: {
@@ -114,15 +133,15 @@
             },
             filterPredicate: {
                 type: Function,
-                default: (label = '', input = '') => label
-                    .toString()
-                    .toLowerCase()
-                    .includes(input.toLowerCase().trim())
+                default: (label = '', input = '') => label.toString().toLowerCase().includes(input.toLowerCase().trim())
             },
             normalizer: {
                 type: Function,
-                default: value => ({
-                    id: value, label: value, value, disabled: false
+                default: (value) => ({
+                    id: value,
+                    label: value,
+                    value,
+                    disabled: false
                 })
             },
             isLoading: {
@@ -229,13 +248,11 @@
         },
         computed: {
             selected() {
-                return this.multi
-                    ? this.value.map(e => this.normalizer(e))
-                    : this.normalizer(this.value);
+                return this.multi ? this.value.map((e) => this.normalizer(e)) : this.normalizer(this.value);
             },
 
             normalizedOptions() {
-                return this.options.map(e => this.normalizer(e));
+                return this.options.map((e) => this.normalizer(e));
             },
 
             input() {
@@ -244,15 +261,17 @@
 
             nonSelectedSuggestions() {
                 return this.multi
-                    ? this.normalizedOptions
-                        .filter(option => !this.selected.find(selected => option.id === selected.id))
+                    ? this.normalizedOptions.filter(
+                          (option) => !this.selected.find((selected) => option.id === selected.id)
+                      )
                     : this.normalizedOptions;
             },
 
             suggestions() {
                 if (this.search && !this.async) {
-                    return this.nonSelectedSuggestions
-                        .filter(option => this.filterPredicate(option.label, this.search));
+                    return this.nonSelectedSuggestions.filter((option) =>
+                        this.filterPredicate(option.label, this.search)
+                    );
                 }
                 return this.nonSelectedSuggestions;
             },
@@ -262,11 +281,11 @@
             },
 
             isAnyOptionSelected() {
-                return (this.multi && !!this.selected.filter(o => !o.disabled).length) || !!this.selected.value;
+                return (this.multi && !!this.selected.filter((o) => !o.disabled).length) || !!this.selected.value;
             },
 
             disabled() {
-                return this.multi && this.selected.filter(o => o.disabled).map(o => o.value);
+                return this.multi && this.selected.filter((o) => o.disabled).map((o) => o.value);
             },
 
             shouldBackspaceRemoveOption() {
@@ -286,12 +305,17 @@
             },
 
             shouldOpenMenu() {
-                return this.isOpen && !this.isDirty && !this.createable && (this.max === Infinity || this.selected.length < this.max);
+                return (
+                    this.isOpen &&
+                    !this.isDirty &&
+                    !this.createable &&
+                    (this.max === Infinity || this.selected.length < this.max)
+                );
             },
 
             nonClearableOptions() {
                 if (this.multi) {
-                    const min = this.selected.slice(0, this.min).map(o => o.value);
+                    const min = this.selected.slice(0, this.min).map((o) => o.value);
                     return Array.from(new Set([...this.disabled, ...min]));
                 }
                 return undefined;
@@ -412,9 +436,7 @@
                 }
                 this.isOpen = this.keepOpenOnSelect || false;
                 this.focused = true;
-                const selected = this.multi
-                    ? [...this.selected.map(e => e.value), option.value]
-                    : option.value;
+                const selected = this.multi ? [...this.selected.map((e) => e.value), option.value] : option.value;
                 this.$emit('input', selected);
                 if (!this.confirm && this.$refs.input) {
                     this.$nextTick(() => this.$refs.input.blur());
@@ -431,8 +453,8 @@
             onRemove(id) {
                 if (!this.selected.length) return;
                 const selected = this.selected
-                    .filter(option => option.id !== id || option.disabled)
-                    .map(option => option.value);
+                    .filter((option) => option.id !== id || option.disabled)
+                    .map((option) => option.value);
                 this.updatePopperPosition();
                 this.$emit('input', selected);
                 this.$nextTick(() => this.updatePopperPosition());
@@ -526,7 +548,7 @@
             },
 
             createTag() {
-                const selected = this.multi ? [...this.selected.map(o => o.value), this.search] : this.search;
+                const selected = this.multi ? [...this.selected.map((o) => o.value), this.search] : this.search;
                 this.search = '';
                 this.$emit('input', selected);
             },
@@ -552,7 +574,10 @@
                 const list = [...this.selected];
                 const [item] = list.splice(this.prevIndex, 1);
                 list.splice(nextIndex, 0, item);
-                this.$emit('input', list.map(e => e.value));
+                this.$emit(
+                    'input',
+                    list.map((e) => e.value)
+                );
                 this.$refs.input.focus();
             },
             onDragStart(e, index) {
@@ -611,7 +636,7 @@
     }
 
     .ghost {
-        opacity: .4;
+        opacity: 0.4;
         background-color: #fff;
         pointer-events: none;
     }

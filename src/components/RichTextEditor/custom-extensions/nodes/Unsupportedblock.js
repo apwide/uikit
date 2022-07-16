@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { unsupportedBlock } from '@atlaskit/adf-schema'
+import { unsupportedBlock } from '@atlaskit/adf-schema';
 
 export default class Unsupportedblock extends Node {
     get name() {

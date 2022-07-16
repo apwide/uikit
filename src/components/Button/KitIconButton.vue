@@ -14,22 +14,22 @@
 </template>
 
 <style scoped>
-/* cancel specific styles from Button */
-.kit-icon-button {
-  /* Use KitButtonGroup to align several KitIconButtons */
-  margin-left: 0;
-}
-  .kit-screen-reader {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-  }
+    /* cancel specific styles from Button */
+    .kit-icon-button {
+        /* Use KitButtonGroup to align several KitIconButtons */
+        margin-left: 0;
+    }
+    .kit-screen-reader {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
 </style>
 <script>
     import Vue from 'vue';

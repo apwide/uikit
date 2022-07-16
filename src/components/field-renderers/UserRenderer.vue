@@ -2,16 +2,8 @@
     <div class="user" :appearance="appearance" @click="onClick">
         <slot>
             <template v-if="user">
-                <img
-                    class="avatar"
-                    :src="user.avatar"
-                    :alt="alt === undefined ? user.name : ''"
-                    :title="user.name">
-                <component
-                    :is="tag" v-if="!avatarOnly"
-                    class="user-name"
-                    :href="link"
-                    target="_top">
+                <img class="avatar" :src="user.avatar" :alt="alt === undefined ? user.name : ''" :title="user.name" />
+                <component :is="tag" v-if="!avatarOnly" class="user-name" :href="link" target="_top">
                     {{ user.name }}
                 </component>
             </template>
@@ -20,7 +12,6 @@
 </template>
 
 <script>
-
     export default {
         name: 'UserRenderer',
         props: {
@@ -86,7 +77,7 @@
     }
 
     a.user-name {
-        color: #007AFF;
+        color: #007aff;
     }
 
     .user-name {

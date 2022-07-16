@@ -1,12 +1,15 @@
 <template>
     <a
-        href="#" :active="selected === id" :disabled="disabled"
-        :stretch="stretch" :inactive="inactive" @click.prevent="onClick">
-        <slot/>
+        href="#"
+        :active="selected === id"
+        :disabled="disabled"
+        :stretch="stretch"
+        :inactive="inactive"
+        @click.prevent="onClick">
+        <slot />
     </a>
 </template>
 <script>
-
     export default {
         name: 'TabItem',
         props: {
@@ -66,7 +69,7 @@
     }
 
     a:not([inactive]) hover {
-        color: #0052CC;
+        color: #0052cc;
     }
 
     [active] {
@@ -74,7 +77,7 @@
     }
 
     [active]:after {
-        content: "";
+        content: '';
         border-radius: 2px;
         bottom: 0px;
         margin: 0px;

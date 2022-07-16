@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { layoutSection } from '@atlaskit/adf-schema'
+import { layoutSection } from '@atlaskit/adf-schema';
 
 export default class LayoutSection extends Node {
     get name() {

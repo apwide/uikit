@@ -2,18 +2,18 @@
     <div class="kit-wrapper">
         <div class="kit-breadcrumbs">
             <slot>
-                <BreadcrumbItem
-                    v-for="item in items" :key="item.text" :link="item.link"
-                    :text="item.text"/>
+                <BreadcrumbItem v-for="item in items" :key="item.text" :link="item.link" :text="item.text" />
             </slot>
         </div>
 
         <CopyToClipboard
-            v-if="copy" :text="lastItemLink" placement="top-start"
-            style="color: rgb(94, 108, 132);"
+            v-if="copy"
+            :text="lastItemLink"
+            placement="top-start"
+            style="color: rgb(94, 108, 132)"
             label="Copy link to clipboard">
-            <template #default="{copied}">
-                <KitIcon v-if="!copied" type="link"/>
+            <template #default="{ copied }">
+                <KitIcon v-if="!copied" type="link" />
                 <KitIcon v-else type="check" />
             </template>
         </CopyToClipboard>
@@ -28,7 +28,9 @@
     export default {
         name: 'Breadcrumbs',
         components: {
-            KitIcon, BreadcrumbItem, CopyToClipboard
+            KitIcon,
+            BreadcrumbItem,
+            CopyToClipboard
         },
         props: {
             items: {
@@ -64,29 +66,29 @@
 </script>
 
 <style scoped>
-.kit-wrapper {
-    display: flex;
-    align-items: center;
-}
+    .kit-wrapper {
+        display: flex;
+        align-items: center;
+    }
 
-.kit-breadcrumbs {
-    color: rgb(94, 108, 132);
-    display: flex;
-    white-space: nowrap;
-    overflow: hidden;
-    line-height: 24px;
-    font-size: 14px;
-}
+    .kit-breadcrumbs {
+        color: rgb(94, 108, 132);
+        display: flex;
+        white-space: nowrap;
+        overflow: hidden;
+        line-height: 24px;
+        font-size: 14px;
+    }
 
-:deep(.kit-icon) {
-    opacity: 0;
-    cursor: pointer;
-    transform: scale(0.8) translate(-6px, 1px);
-    transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
-}
+    :deep(.kit-icon) {
+        opacity: 0;
+        cursor: pointer;
+        transform: scale(0.8) translate(-6px, 1px);
+        transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
+    }
 
-.kit-wrapper:hover :deep(.kit-icon) {
-    opacity: 1;
-    transform: scale(0.8) translate(8px, 1px);
-}
+    .kit-wrapper:hover :deep(.kit-icon) {
+        opacity: 1;
+        transform: scale(0.8) translate(8px, 1px);
+    }
 </style>

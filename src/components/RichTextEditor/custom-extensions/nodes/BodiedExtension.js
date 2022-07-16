@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { bodiedExtension } from '@atlaskit/adf-schema'
+import { bodiedExtension } from '@atlaskit/adf-schema';
 
 export default class BodiedExtension extends Node {
     get name() {

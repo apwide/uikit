@@ -22,34 +22,36 @@
             this.$spotlight.registerOverlay(this);
         },
         render(h) {
-            return h('div', {
-                class: 'spotlight-overlay',
-                attrs: { visible: Boolean(this.currentSpotlight) },
-                on: {
-                    click: e => e.stopPropagation()
-                }
-            }, this.components.map((component, index) => {
-                const {
-                    target, message, placement, offset
-                } = component;
-                return h(SpotlightHint, {
-                    class: 'spotlight-hint',
-                    props: {
-                        targetElement: target.elm || document.body,
-                        step: this.$spotlight.currentStep,
-                        total: this.$spotlight.lastStep,
-                        placement,
-                        offset
-                    },
-                    scopedSlots: message ? { default: () => message } : undefined,
-                    key: `spotlight-hint-${this.$spotlight.currentStep}-${index}`,
+            return h(
+                'div',
+                {
+                    class: 'spotlight-overlay',
+                    attrs: { visible: Boolean(this.currentSpotlight) },
                     on: {
-                        next: this.$spotlight.next,
-                        prev: this.$spotlight.prev,
-                        close: this.$spotlight.close
+                        click: (e) => e.stopPropagation()
                     }
-                });
-            }));
+                },
+                this.components.map((component, index) => {
+                    const { target, message, placement, offset } = component;
+                    return h(SpotlightHint, {
+                        class: 'spotlight-hint',
+                        props: {
+                            targetElement: target.elm || document.body,
+                            step: this.$spotlight.currentStep,
+                            total: this.$spotlight.lastStep,
+                            placement,
+                            offset
+                        },
+                        scopedSlots: message ? { default: () => message } : undefined,
+                        key: `spotlight-hint-${this.$spotlight.currentStep}-${index}`,
+                        on: {
+                            next: this.$spotlight.next,
+                            prev: this.$spotlight.prev,
+                            close: this.$spotlight.close
+                        }
+                    });
+                })
+            );
         }
     };
 </script>
@@ -69,5 +71,4 @@
     .spotlight-overlay[visible] {
         display: block;
     }
-
 </style>

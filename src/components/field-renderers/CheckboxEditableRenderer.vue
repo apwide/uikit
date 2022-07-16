@@ -7,7 +7,9 @@
         :placement="placement"
         @save-requested="onSaveRequested">
         <Checkbox
-            slot="editor" slot-scope="props" size="large"
+            slot="editor"
+            slot-scope="props"
+            size="large"
             class="checkbox"
             :checked="props.value"
             :is-focused="props.isFocused"
@@ -17,12 +19,12 @@
             @focus="props.focus"
             @blur="props.blur"
             @confirm="props.confirm"
-            @keyup.esc="props.cancel"/>
+            @keyup.esc="props.cancel" />
         <slot>
-            <CheckboxRenderer :value="value"/>
+            <CheckboxRenderer :value="value" />
         </slot>
     </InlineEdit>
-    <CheckboxRenderer v-else :value="value"/>
+    <CheckboxRenderer v-else :value="value" />
 </template>
 
 <script>

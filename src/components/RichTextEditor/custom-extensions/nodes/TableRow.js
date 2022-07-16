@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { tableRow } from '@atlaskit/adf-schema'
+import { tableRow } from '@atlaskit/adf-schema';
 
 export default class TableRow extends Node {
     get name() {

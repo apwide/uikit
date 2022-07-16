@@ -1,12 +1,12 @@
 <template>
-    <Checkbox
-        class="dropdown-checkbox-item" :checked="checked" :value="value"
-        @input="onInput">
+    <Checkbox class="dropdown-checkbox-item" :checked="checked" :value="value" @input="onInput">
         <span class="label-text">
-            <slot/>
+            <slot />
         </span>
         <Button
-            v-if="isMulti && showOnlyButton" class="only-button" appearance="subtle"
+            v-if="isMulti && showOnlyButton"
+            class="only-button"
+            appearance="subtle"
             spacing="none"
             @click="onOnlyClicked">
             only

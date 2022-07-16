@@ -22,7 +22,8 @@
                     style: { color: this.primaryColor, fill: this.secondaryColor },
                     attrs: { size: this.size },
                     on: { ...this.$listeners }
-                }, [this.$slots.default]
+                },
+                [this.$slots.default]
             );
         }
     };
@@ -49,32 +50,32 @@
         overflow: hidden;
     }
 
-    span[size="xxsmall"],
-    span[size="xxsmall"] > svg {
+    span[size='xxsmall'],
+    span[size='xxsmall'] > svg {
         width: 14px;
         height: 14px;
     }
 
-    span[size="xsmall"],
-    span[size="xsmall"] > svg {
+    span[size='xsmall'],
+    span[size='xsmall'] > svg {
         width: 16px;
         height: 16px;
     }
 
-    span[size="small"],
-    span[size="small"] > svg {
+    span[size='small'],
+    span[size='small'] > svg {
         width: 20px;
         height: 20px;
     }
 
-    span[size="large"],
-    span[size="large"] > svg {
+    span[size='large'],
+    span[size='large'] > svg {
         width: 32px;
         height: 32px;
     }
 
-    span[size="xlarge"],
-    span[size="xlarge"] > svg {
+    span[size='xlarge'],
+    span[size='xlarge'] > svg {
         width: 48px;
         height: 48px;
     }

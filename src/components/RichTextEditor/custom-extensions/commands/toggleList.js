@@ -2,9 +2,11 @@ import { wrapInList, liftListItem } from 'prosemirror-schema-list';
 import { findParentNode } from 'prosemirror-utils';
 
 function isList(node, schema) {
-    return (node.type === schema.nodes.bulletList
-        || node.type === schema.nodes.orderedList
-        || node.type === schema.nodes.taskList);
+    return (
+        node.type === schema.nodes.bulletList ||
+        node.type === schema.nodes.orderedList ||
+        node.type === schema.nodes.taskList
+    );
 }
 
 export function toggleList(listType, itemType) {
@@ -17,7 +19,7 @@ export function toggleList(listType, itemType) {
             return false;
         }
 
-        const parentList = findParentNode(node => isList(node, schema))(selection);
+        const parentList = findParentNode((node) => isList(node, schema))(selection);
 
         if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
             if (parentList.node.type === listType) {

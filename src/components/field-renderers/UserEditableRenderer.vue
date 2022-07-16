@@ -7,7 +7,8 @@
         :placement="placement"
         @save-requested="onSaveRequested">
         <Select
-            slot="editor" slot-scope="props"
+            slot="editor"
+            slot-scope="props"
             :value="props.value"
             :options="users"
             :open-on-focus="true"
@@ -27,20 +28,18 @@
             @confirm="props.confirm"
             @focus="props.focus"
             @cancel="props.cancel">
-            <div slot="option" slot-scope="{option}" class="label">
-                <UserRenderer :tag="tag" :user="option" :avatar-only="avatarOnly"/>
+            <div slot="option" slot-scope="{ option }" class="label">
+                <UserRenderer :tag="tag" :user="option" :avatar-only="avatarOnly" />
             </div>
-            <div slot="selected" slot-scope="{selected}" class="label">
-                <UserRenderer :tag="tag" :user="selected" :avatar-only="avatarOnly"/>
+            <div slot="selected" slot-scope="{ selected }" class="label">
+                <UserRenderer :tag="tag" :user="selected" :avatar-only="avatarOnly" />
             </div>
         </Select>
         <slot>
-            <UserRenderer :tag="tag" :user="user" :avatar-only="avatarOnly"/>
+            <UserRenderer :tag="tag" :user="user" :avatar-only="avatarOnly" />
         </slot>
     </InlineEdit>
-    <UserRenderer
-        v-else :tag="tag" :user="user"
-        :avatar-only="avatarOnly"/>
+    <UserRenderer v-else :tag="tag" :user="user" :avatar-only="avatarOnly" />
 </template>
 
 <script>
@@ -48,7 +47,6 @@
     import Select from '../Select/Select.vue';
     import UserRenderer from './UserRenderer.vue';
     import InlineEdit from '../Form/InlineEdit.vue';
-
 
     export default {
         name: 'UserEditableRenderer',
@@ -80,7 +78,7 @@
             },
             mapper: {
                 type: Function,
-                default: list => list
+                default: (list) => list
             },
             initialOptions: {
                 type: Array,

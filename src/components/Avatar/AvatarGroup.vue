@@ -1,60 +1,80 @@
 <template>
     <div class="avatar-group">
         <transition-group
-            name="participant" tag="div" class="avatar-group-inner"
+            name="participant"
+            tag="div"
+            class="avatar-group-inner"
             :over-limit="isOverLimit"
             @before-leave="beforeLeave">
-            <div
-                v-if="$slots.before" key="slot-before" class="avatar-wrapper"
-                :style="{ zIndex: count + 1 }">
-                <slot name="before"/>
+            <div v-if="$slots.before" key="slot-before" class="avatar-wrapper" :style="{ zIndex: count + 1 }">
+                <slot name="before" />
             </div>
             <div
-                v-for="(user,i) in visible" :key="user.key" class="avatar-wrapper"
-                :data-index="i" :style="{ zIndex: count - i }" :last="i === count - 1">
-                <Tooltip
-                    :key="user.key" class="tooltip"
-                    :append-to-body="true" :label="user.displayName">
+                v-for="(user, i) in visible"
+                :key="user.key"
+                class="avatar-wrapper"
+                :data-index="i"
+                :style="{ zIndex: count - i }"
+                :last="i === count - 1">
+                <Tooltip :key="user.key" class="tooltip" :append-to-body="true" :label="user.displayName">
                     <Avatar
-                        :key="user.key" :tag="user.link ? 'a' : 'span'"
+                        :key="user.key"
+                        :tag="user.link ? 'a' : 'span'"
                         class="avatar"
                         :size="size"
                         :link="user.link"
                         :status="user.status"
                         :outline="borderColor"
-                        :avatar="user.avatar" :presence="user.presence"/>
+                        :avatar="user.avatar"
+                        :presence="user.presence" />
                 </Tooltip>
             </div>
             <Dropdown
-                v-if="isOverLimit" key="dropdown"
+                v-if="isOverLimit"
+                key="dropdown"
                 placement="bottom-end"
                 :position-fixed="dropdownPositionFixed"
                 :append-to-body="appendToBody"
                 class="dropdown-wrapper">
                 <div
-                    slot="trigger" slot-scope="{ toggle, isOpen }" :style="`border-color: ${borderColor}`"
-                    class="trigger" :size="size" :open="isOpen">
+                    slot="trigger"
+                    slot-scope="{ toggle, isOpen }"
+                    :style="`border-color: ${borderColor}`"
+                    class="trigger"
+                    :size="size"
+                    :open="isOpen">
                     <div class="more" @click="toggle">
                         <transition :name="counterUp ? 'counter-up' : 'counter-down'">
                             <span :key="collapsedCount" class="collapsed-count">+{{ collapsedCount }}</span>
                         </transition>
                     </div>
                 </div>
-                <DropdownItem v-for="collapsedUser in collapsed" :key="collapsedUser.key" :non-link="!collapsedUser.link">
-                    <a
-                        v-if="collapsedUser.link" class="list-item" :href="collapsedUser.link"
-                        target="_blank">
+                <DropdownItem
+                    v-for="collapsedUser in collapsed"
+                    :key="collapsedUser.key"
+                    :non-link="!collapsedUser.link">
+                    <a v-if="collapsedUser.link" class="list-item" :href="collapsedUser.link" target="_blank">
                         <Avatar
-                            tag="a" :link="collapsedUser.link" class="user-list-avatar"
-                            size="small" :status="collapsedUser.status" :outline="borderColor"
-                            :avatar="collapsedUser.avatar" :presence="collapsedUser.presence"/>
+                            tag="a"
+                            :link="collapsedUser.link"
+                            class="user-list-avatar"
+                            size="small"
+                            :status="collapsedUser.status"
+                            :outline="borderColor"
+                            :avatar="collapsedUser.avatar"
+                            :presence="collapsedUser.presence" />
                         <span class="user-name">{{ collapsedUser.displayName }}</span>
                     </a>
                     <div v-else class="list-item">
                         <Avatar
-                            tag="span" :link="collapsedUser.link" class="user-list-avatar"
-                            size="small" :status="collapsedUser.status" :outline="borderColor"
-                            :avatar="collapsedUser.avatar" :presence="collapsedUser.presence"/>
+                            tag="span"
+                            :link="collapsedUser.link"
+                            class="user-list-avatar"
+                            size="small"
+                            :status="collapsedUser.status"
+                            :outline="borderColor"
+                            :avatar="collapsedUser.avatar"
+                            :presence="collapsedUser.presence" />
                         <span class="user-name">{{ collapsedUser.displayName }}</span>
                     </div>
                 </DropdownItem>
@@ -72,7 +92,10 @@
     export default {
         name: 'AvatarGroup',
         components: {
-            Avatar, Dropdown, DropdownItem, Tooltip
+            Avatar,
+            Dropdown,
+            DropdownItem,
+            Tooltip
         },
         props: {
             users: {
@@ -137,167 +160,174 @@
 </script>
 
 <style scoped>
-.avatar-group {
-    line-height: 0;
-}
+    .avatar-group {
+        line-height: 0;
+    }
 
-.avatar-group-inner {
-    position: relative;
-    display: inline-flex;
-    margin-right: 8px;
-}
+    .avatar-group-inner {
+        position: relative;
+        display: inline-flex;
+        margin-right: 8px;
+    }
 
-.dropdown-wrapper {
-    position: absolute;
-    right: -8px;
-    z-index: 1;
-}
+    .dropdown-wrapper {
+        position: absolute;
+        right: -8px;
+        z-index: 1;
+    }
 
-.avatar {
-    margin-right: -8px;
-    position: relative;
-}
+    .avatar {
+        margin-right: -8px;
+        position: relative;
+    }
 
-.trigger {
-    float: right;
-    background-color: #fff;
-    border-radius: 50%;
-    box-sizing: border-box;
-}
+    .trigger {
+        float: right;
+        background-color: #fff;
+        border-radius: 50%;
+        box-sizing: border-box;
+    }
 
-.more {
-    background-color: rgb(223, 225, 230);
-    color: rgb(66, 82, 110);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 50%;
-    height: 100%;
-    width: 100%;
-    font-size: 14px;
-    transition: box-shadow 200ms ease 0s;
-}
+    .more {
+        background-color: rgb(223, 225, 230);
+        color: rgb(66, 82, 110);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+        font-size: 14px;
+        transition: box-shadow 200ms ease 0s;
+    }
 
-.trigger[open] {
-    background-color: rgb(38, 132, 255);
-    border-radius: 50%;
-}
+    .trigger[open] {
+        background-color: rgb(38, 132, 255);
+        border-radius: 50%;
+    }
 
-.trigger {
-    border-width: 2px;
-    border-style: solid;
-    position: relative;
-}
+    .trigger {
+        border-width: 2px;
+        border-style: solid;
+        position: relative;
+    }
 
-.trigger::after {
-    background-color: transparent;
-    bottom: 0;
-    content: " ";
-    left: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-    border-radius: 50%;
-    transition: opacity 200ms ease 0s;
-}
+    .trigger::after {
+        background-color: transparent;
+        bottom: 0;
+        content: ' ';
+        left: 0;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-radius: 50%;
+        transition: opacity 200ms ease 0s;
+    }
 
-.trigger:hover::after {
-    background-color: rgba(9, 30, 66, 0.36);
-    opacity: 1;
-}
+    .trigger:hover::after {
+        background-color: rgba(9, 30, 66, 0.36);
+        opacity: 1;
+    }
 
-.trigger[size='xxlarge'] {
-    height: 132px;
-    width: 132px;
-    font-size: 16px;
-}
+    .trigger[size='xxlarge'] {
+        height: 132px;
+        width: 132px;
+        font-size: 16px;
+    }
 
-.trigger[size='xlarge'] {
-    height: 100px;
-    width: 100px;
-    font-size: 16px;
-}
+    .trigger[size='xlarge'] {
+        height: 100px;
+        width: 100px;
+        font-size: 16px;
+    }
 
-.trigger[size='large'] {
-    height: 44px;
-    width: 44px;
-}
+    .trigger[size='large'] {
+        height: 44px;
+        width: 44px;
+    }
 
-.trigger[size='medium'] {
-    height: 36px;
-    width: 36px;
-}
+    .trigger[size='medium'] {
+        height: 36px;
+        width: 36px;
+    }
 
-.trigger[size='small'] {
-    height: 28px;
-    width: 28px;
-}
+    .trigger[size='small'] {
+        height: 28px;
+        width: 28px;
+    }
 
-.trigger[size='xsmall'] {
-    height: 20px;
-    width: 20px;
-}
+    .trigger[size='xsmall'] {
+        height: 20px;
+        width: 20px;
+    }
 
-.list-item {
-    display: flex;
-    outline: none;
-    align-items: center;
-    color: inherit;
-    text-decoration: none;
-}
+    .list-item {
+        display: flex;
+        outline: none;
+        align-items: center;
+        color: inherit;
+        text-decoration: none;
+    }
 
-.user-list-avatar {
-    margin-right: 8px;
-}
+    .user-list-avatar {
+        margin-right: 8px;
+    }
 
-.user-name {
-    text-overflow: ellipsis;
-    margin-right: 8px;
-}
+    .user-name {
+        text-overflow: ellipsis;
+        margin-right: 8px;
+    }
 
-.avatar-wrapper, .dropdown-wrapper {
-    transition: all .2s;
-}
+    .avatar-wrapper,
+    .dropdown-wrapper {
+        transition: all 0.2s;
+    }
 
-.avatar-wrapper.participant-enter, .avatar-wrapper.participant-leave-to {
-    opacity: 0;
-    transform: translateY(-50px);
-}
+    .avatar-wrapper.participant-enter,
+    .avatar-wrapper.participant-leave-to {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
 
-[over-limit] [last] {
-    opacity: 0;
-}
+    [over-limit] [last] {
+        opacity: 0;
+    }
 
-[over-limit] .avatar-wrapper.participant-enter[last], [over-limit] .avatar-wrapper.participant-leave-to[last] {
-    transform: none;
-}
+    [over-limit] .avatar-wrapper.participant-enter[last],
+    [over-limit] .avatar-wrapper.participant-leave-to[last] {
+        transform: none;
+    }
 
-.avatar-wrapper.participant-leave-active {
-    position: absolute;
-}
+    .avatar-wrapper.participant-leave-active {
+        position: absolute;
+    }
 
-.dropdown-wrapper.participant-enter, .dropdown-wrapper.participant-leave-to {
-    opacity: 0;
-}
+    .dropdown-wrapper.participant-enter,
+    .dropdown-wrapper.participant-leave-to {
+        opacity: 0;
+    }
 
-.collapsed-count {
-    transition: all .2s;
-}
+    .collapsed-count {
+        transition: all 0.2s;
+    }
 
-.counter-up-enter, .counter-down-leave-to {
-    opacity: 0;
-    transform: translateY(-15px);
-}
+    .counter-up-enter,
+    .counter-down-leave-to {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
 
-.counter-up-leave-to, .counter-down-enter {
-    opacity: 0;
-    transform: translateY(15px);
-}
+    .counter-up-leave-to,
+    .counter-down-enter {
+        opacity: 0;
+        transform: translateY(15px);
+    }
 
-.counter-up-leave-active, .counter-down-leave-active {
-    position: absolute;
-}
+    .counter-up-leave-active,
+    .counter-down-leave-active {
+        position: absolute;
+    }
 </style>

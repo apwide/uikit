@@ -1,23 +1,17 @@
 <template>
-    <div
-        v-if="issue" class="issue" :resolved="isResolved"
-        :appearance="appearance">
-        <IssueTypeRenderer v-if="issueType" class="issue-type" :value="issueType"/>
+    <div v-if="issue" class="issue" :resolved="isResolved" :appearance="appearance">
+        <IssueTypeRenderer v-if="issueType" class="issue-type" :value="issueType" />
         <div v-else class="issue-type unknown-type">
-            <QuestionIcon size="xsmall"/>
+            <QuestionIcon size="xsmall" />
         </div>
-        <a
-            class="issue-key" :href="href"
-            target="_blank">{{ issue.key }}</a>
+        <a class="issue-key" :href="href" target="_blank">{{ issue.key }}</a>
         <div v-if="appearance !== 'micro'" class="issue-summary" :title="fields.summary">
             {{ fields.summary }}
         </div>
         <template v-if="appearance === 'normal'">
-            <IssuePriorityRenderer v-if="priority" :value="priority"/>
-            <User
-                v-if="assignee" class="issue-assignee" :user="assignee"
-                :avatar-only="true"/>
-            <IssueStatusRenderer v-if="status" class="issue-status" :value="status"/>
+            <IssuePriorityRenderer v-if="priority" :value="priority" />
+            <User v-if="assignee" class="issue-assignee" :user="assignee" :avatar-only="true" />
+            <IssueStatusRenderer v-if="status" class="issue-status" :value="status" />
         </template>
     </div>
 </template>
@@ -32,7 +26,11 @@
     export default {
         name: 'IssueRenderer',
         components: {
-            IssueStatusRenderer, IssuePriorityRenderer, IssueTypeRenderer, User, QuestionIcon
+            IssueStatusRenderer,
+            IssuePriorityRenderer,
+            IssueTypeRenderer,
+            User,
+            QuestionIcon
         },
         props: {
             issue: {
@@ -46,7 +44,7 @@
             appearance: {
                 type: String,
                 default: 'normal',
-                validator: value => ['normal', 'compact', 'micro'].includes(value)
+                validator: (value) => ['normal', 'compact', 'micro'].includes(value)
             }
         },
         computed: {
@@ -101,7 +99,11 @@
         height: 14px;
     }
 
-    .issue-key, .issue-summary, .issue-priority-icon, .issue-assignee, .issue-status {
+    .issue-key,
+    .issue-summary,
+    .issue-priority-icon,
+    .issue-assignee,
+    .issue-status {
         margin-left: 8px;
     }
 

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Mark } from 'tiptap';
-import { breakout } from '@atlaskit/adf-schema'
+import { breakout } from '@atlaskit/adf-schema';
 
 export default class Breakout extends Mark {
     get name() {

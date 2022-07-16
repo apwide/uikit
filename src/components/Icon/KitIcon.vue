@@ -1,17 +1,19 @@
 <template>
-    <FontAwesomeIcon
-        class="kit-icon"
-        :icon="icon" :title="title" :size="iconSize"
-        :style="style" />
+    <FontAwesomeIcon class="kit-icon" :icon="icon" :title="title" :size="iconSize" :style="style" />
 </template>
 <script>
     import { library } from '@fortawesome/fontawesome-svg-core';
     import {
-        faAtlassian as brandsAtlassian, faGithub as brandsGithub, faMicrosoft as brandsMicrosoft, faSlack as brandsSlack
+        faAtlassian as brandsAtlassian,
+        faGithub as brandsGithub,
+        faMicrosoft as brandsMicrosoft,
+        faSlack as brandsSlack
     } from '@fortawesome/free-brands-svg-icons';
     import {
         faAngleDown,
-        faAngleRight, faArrowDown, faArrowUp,
+        faAngleRight,
+        faArrowDown,
+        faArrowUp,
         faAt,
         faCalendar,
         faCalendarAlt,
@@ -20,19 +22,23 @@
         faChevronLeft,
         faChevronRight,
         faCog,
-        faDownload, faEdit,
+        faDownload,
+        faEdit,
         faEllipsisH,
         faExternalLinkAlt,
         faEye,
         faEyeSlash,
         faHome,
-        faInfoCircle, faPen,
+        faInfoCircle,
+        faPen,
         faPlug,
         faPlus,
         faPlusCircle,
         faQuestionCircle,
         faRobot,
-        faSearch, faSearchMinus, faSearchPlus,
+        faSearch,
+        faSearchMinus,
+        faSearchPlus,
         faShareAlt,
         faShareAltSquare,
         faSlidersH,
@@ -41,7 +47,8 @@
         faTh,
         faThList,
         faTimes,
-        faTrash, faUndo,
+        faTrash,
+        faUndo,
         faUser,
         faUsers,
         faUsersCog,
@@ -272,6 +279,4 @@
             }
         }
     });
-
-
 </script>

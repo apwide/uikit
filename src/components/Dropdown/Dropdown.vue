@@ -1,21 +1,22 @@
 <template>
     <div ref="dropdown-container" class="dropdown-container">
         <slot
-            v-if="$scopedSlots.trigger" name="trigger"
+            v-if="$scopedSlots.trigger"
+            name="trigger"
             :is-open="open"
             :is-disabled="isDisabled"
-            :toggle="onTriggerClick"/>
-        <Button
-            v-else :is-selected="open" :appearance="appearance"
-            :is-disabled="isDisabled"
-            @click="onTriggerClick">
+            :toggle="onTriggerClick" />
+        <Button v-else :is-selected="open" :appearance="appearance" :is-disabled="isDisabled" @click="onTriggerClick">
             {{ label }}
-            <ChevronDownIcon slot="icon-after"/>
+            <ChevronDownIcon slot="icon-after" />
         </Button>
 
         <Popup
-            ref="menu" :is-open="open" :offset="[0,4]"
-            without-arrow with-light-shadows
+            ref="menu"
+            :is-open="open"
+            :offset="[0, 4]"
+            without-arrow
+            with-light-shadows
             :target-element="$refs['dropdown-container']"
             :boundaries-element="boundariesElement"
             :position-fixed="positionFixed"
@@ -23,7 +24,7 @@
             @click.native="onMenuClick">
             <slot name="dropdown-menu" :toggle="onTriggerClick">
                 <div class="dropdown-menu">
-                    <slot/>
+                    <slot />
                 </div>
             </slot>
         </Popup>
@@ -37,7 +38,9 @@
 
     export default {
         components: {
-            Button, ChevronDownIcon, Popup
+            Button,
+            ChevronDownIcon,
+            Popup
         },
         props: {
             label: {
@@ -155,7 +158,6 @@
     .dropdown-container[full-width],
     .dropdown-container[full-width] :deep(button),
     .dropdown-container[full-width] :deep(.kit-button__label) {
-      width: 100%;
+        width: 100%;
     }
-
 </style>

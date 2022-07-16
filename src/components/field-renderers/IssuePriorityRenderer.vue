@@ -1,8 +1,6 @@
 <template>
     <div class="priority">
-        <img
-            class="issue-priority-icon" :src="value.iconUrl" :alt="value.name"
-            :title="value.name">
+        <img class="issue-priority-icon" :src="value.iconUrl" :alt="value.name" :title="value.name" />
         <span>{{ value.name }}</span>
     </div>
 </template>

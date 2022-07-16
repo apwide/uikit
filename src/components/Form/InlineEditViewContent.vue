@@ -1,13 +1,14 @@
 <template>
     <div
-        tabindex="0" prevent-outline
+        tabindex="0"
+        prevent-outline
         data-cy="view-content"
         class="kit-inline-edit-view-content"
         @keyup.enter="onEnter"
         @click="onClick"
         @mousedown="onMouseDown">
         <div class="kit-inline-edit-view-content__label" data-cy="label" tabindex="-1">
-            <slot/>
+            <slot />
             <KitIconButton title="Edit this item" class="kit-inline-edit-view-content__pencil-icon">
                 <KitIcon type="pen" style="font-size: 0.8rem" />
             </KitIconButton>
@@ -44,11 +45,10 @@
             },
             mouseHasMoved({ clientX, clientY }) {
                 return (
-                    Math.abs(this.startX - clientX) >= DRAG_THRESHOLD
-                    || Math.abs(this.startY - clientY) >= DRAG_THRESHOLD
+                    Math.abs(this.startX - clientX) >= DRAG_THRESHOLD ||
+                    Math.abs(this.startY - clientY) >= DRAG_THRESHOLD
                 );
             }
-
         }
     };
 </script>
@@ -60,7 +60,7 @@
 
     .kit-inline-edit-view-content__label {
         display: flex;
-      justify-content: space-between;
+        justify-content: space-between;
         align-items: center;
         background-color: transparent;
         border-radius: 3px;
@@ -71,7 +71,7 @@
         padding: 6px;
     }
 
-    [align="end"] > .kit-inline-edit-view-content__label {
+    [align='end'] > .kit-inline-edit-view-content__label {
         justify-content: flex-end;
     }
 
@@ -80,12 +80,12 @@
     }
 
     :focus > .kit-inline-edit-view-content__label {
-        border: 2px solid #4C9AFF;
+        border: 2px solid #4c9aff;
         background: transparent;
     }
 
     .kit-inline-edit-view-content__label:hover {
-        background-color: #EBECF0;
+        background-color: #ebecf0;
     }
 
     .kit-inline-edit-view-content__pencil-icon {

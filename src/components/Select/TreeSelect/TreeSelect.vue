@@ -1,16 +1,20 @@
 <template>
     <div ref="target">
         <TextField
-            :is-focused="focused" :is-invalid="isInvalid" :is-loading="isLoading"
-            class="text-field" select tabindex="-1"
+            :is-focused="focused"
+            :is-invalid="isInvalid"
+            :is-loading="isLoading"
+            class="text-field"
+            select
+            tabindex="-1"
             @click="click">
-            <div
-                ref="list" class="flex-wrapper"
-                @dragover.prevent>
+            <div ref="list" class="flex-wrapper" @dragover.prevent>
                 <input
-                    ref="input" class="search"
+                    ref="input"
+                    class="search"
                     :value="search"
-                    :disabled="isLoading" :style="{width: currentWidth}"
+                    :disabled="isLoading"
+                    :style="{ width: currentWidth }"
                     @keydown.down.prevent="onNextSuggestion"
                     @keydown.up.prevent="onPreviousSuggestion"
                     @keydown.right.prevent="toggleExpand"
@@ -20,43 +24,51 @@
                     @focus="onFocus"
                     @blur="onBlur"
                     @keyup.esc="onEsc"
-                    @keydown.delete="removeOption">
+                    @keydown.delete="removeOption" />
             </div>
             <div v-if="!selected.length" class="text">
                 <slot
-                    v-if="!search && selected && $scopedSlots['selected']" name="selected"
+                    v-if="!search && selected && $scopedSlots['selected']"
+                    name="selected"
                     :ancestors="ancestors"
-                    :selected="selected"/>
+                    :selected="selected" />
                 <span v-else :placeholder="!search && !selected.label">
                     {{ input }}
                 </span>
             </div>
             <Icons
-                :is-selected="isAnyOptionSelected" :is-fetching="isFetching"
-                :is-clearable="isClearable" @clear="onClear"/>
+                :is-selected="isAnyOptionSelected"
+                :is-fetching="isFetching"
+                :is-clearable="isClearable"
+                @clear="onClear" />
         </TextField>
         <Popper
-            v-if="isOpen && !isDirty" ref="menu" offset="0,0"
+            v-if="isOpen && !isDirty"
+            ref="menu"
+            offset="0,0"
             :target-element="$refs.target"
             :boundaries-element="boundariesElement"
             placement="bottom-start">
             <SelectMenu
-                :selected="selected" :options="options"
+                :selected="selected"
+                :options="options"
                 :current-suggestion-id="currentSuggestionId"
                 :is-fetching="isFetching"
                 :async="async"
                 :search="search"
                 :contains-query="!!search"
-                :style="{width: selectWidth}"
+                :style="{ width: selectWidth }"
                 :has-suggestions="true"
                 :no-options-message="noOptionsMessage"
                 :placeholder="searchPromptText"
                 @mouseover="onMouseOverSuggestion"
                 @option-selected="onOptionSelected">
                 <slot
-                    slot="option" slot-scope="{option, isCurrent}" name="option"
+                    slot="option"
+                    slot-scope="{ option, isCurrent }"
+                    name="option"
                     :is-current="isCurrent"
-                    :option="option"/>
+                    :option="option" />
             </SelectMenu>
         </Popper>
     </div>
@@ -73,7 +85,10 @@
 
     export default {
         components: {
-            TextField, Popper, SelectMenu, Icons
+            TextField,
+            Popper,
+            SelectMenu,
+            Icons
         },
         props: {
             value: {
@@ -336,15 +351,13 @@
             updateVisibleNodes() {
                 this.$nextTick(() => {
                     if (this.$refs.menu) {
-                        const visibleNodes = Array.from(this.$refs.menu.$el
-                            .querySelectorAll('input[type="checkbox"]'))
-                            .filter(el => el.offsetHeight > 0);
-                        this.visibleNodesIds = visibleNodes.map(node => node.value);
+                        const visibleNodes = Array.from(
+                            this.$refs.menu.$el.querySelectorAll('input[type="checkbox"]')
+                        ).filter((el) => el.offsetHeight > 0);
+                        this.visibleNodesIds = visibleNodes.map((node) => node.value);
                     }
                 });
             }
-
-
         }
     };
 </script>
@@ -396,7 +409,7 @@
     }
 
     .ghost {
-        opacity: .4;
+        opacity: 0.4;
         background-color: #fff;
         pointer-events: none;
     }

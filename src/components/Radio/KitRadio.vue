@@ -1,12 +1,13 @@
 <template>
-    <label
-        ref="radio" class="kit-radio">
+    <label ref="radio" class="kit-radio">
         <input
-            ref="input" :checked="isChecked"
-            :name="name" type="radio"
+            ref="input"
+            :checked="isChecked"
+            :name="name"
+            type="radio"
             @blur="onBlur"
             @change="isChecked = value"
-            @focus="onFocus">
+            @focus="onFocus" />
         {{ value.label }}
     </label>
 </template>
@@ -67,43 +68,41 @@
 </script>
 
 <style scoped>
+    .kit-radio {
+        cursor: pointer;
+        padding: 2px 0;
+        margin-bottom: -2px;
+    }
 
-.kit-radio {
-  cursor: pointer;
-  padding: 2px 0;
-  margin-bottom: -2px;
-}
+    input {
+        appearance: none;
+        transition: 0.2s all linear;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 1px solid #999;
+        margin-right: 5px;
+        position: relative;
+        top: 3px;
+    }
 
-input {
-  appearance: none;
-  transition: 0.2s all linear;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 1px solid #999;
-  margin-right: 5px;
-  position: relative;
-  top: 3px;
-}
+    input:active {
+        border-color: #0066ff;
+        background-color: #b3d4ff;
+    }
 
-input:active {
-  border-color: #0066FF;
-  background-color: #B3D4FF;
-}
+    input:checked {
+        background-color: white;
+        border: 5px #6b778c solid;
+    }
 
-input:checked {
-  background-color: white;
-  border: 5px #6b778c solid;
-}
+    label[disabled],
+    label[disabled] input {
+        cursor: not-allowed;
+        color: rgb(151, 160, 175);
+    }
 
-label[disabled], label[disabled] input {
-  cursor: not-allowed;
-  color: rgb(151, 160, 175);
-}
-
-label:hover input[type=radio] {
-  background-color: rgb(235, 236, 240);
-}
-
-
+    label:hover input[type='radio'] {
+        background-color: rgb(235, 236, 240);
+    }
 </style>

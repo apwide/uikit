@@ -33,27 +33,27 @@
         content: '-';
     }
 
-    [appearance = 'added'] {
+    [appearance='added'] {
         background-color: rgb(227, 252, 239);
         color: rgb(0, 102, 68);
     }
 
-    [appearance = 'default'] {
+    [appearance='default'] {
         background-color: rgb(223, 225, 230);
         color: rgb(23, 43, 77);
     }
 
-    [appearance = 'important'] {
+    [appearance='important'] {
         background-color: rgb(222, 53, 11);
         color: rgb(255, 255, 255);
     }
 
-    [appearance = 'primary'] {
+    [appearance='primary'] {
         background-color: rgb(0, 82, 204);
         color: rgb(255, 255, 255);
     }
 
-    [appearance = 'removed'] {
+    [appearance='removed'] {
         background-color: rgb(255, 235, 230);
         color: rgb(191, 38, 0);
     }

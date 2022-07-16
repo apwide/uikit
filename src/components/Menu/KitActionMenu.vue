@@ -1,9 +1,5 @@
 <template>
-    <KitIconMenu
-        v-if="$scopedSlots.default"
-        :title="title"
-        :icon-size="iconSize"
-        :is-disabled="isDisabled">
+    <KitIconMenu v-if="$scopedSlots.default" :title="title" :icon-size="iconSize" :is-disabled="isDisabled">
         <template #icon>
             <AwesomeIcon type="ellipsis-h" />
         </template>

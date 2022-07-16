@@ -1,16 +1,12 @@
 <template>
-    <th
-        :sortable="column.sortable"
-        :style="style"
-        class="kit-table-header-cell"
-        @click="onClick">
+    <th :sortable="column.sortable" :style="style" class="kit-table-header-cell" @click="onClick">
         <span class="kit-table-header-cell__label-wrapper">
             <span>
                 {{ column.name }}
             </span>
             <template v-if="column.sortable">
-                <ChevronDownIcon v-if="sorted && sortedDesc" size="small"/>
-                <ChevronUpIcon v-if="sorted && !sortedDesc" size="small"/>
+                <ChevronDownIcon v-if="sorted && sortedDesc" size="small" />
+                <ChevronUpIcon v-if="sorted && !sortedDesc" size="small" />
             </template>
         </span>
     </th>
@@ -67,33 +63,32 @@
 </script>
 
 <style scoped>
-th {
-  background-color: white;
-  padding: 0;
-}
+    th {
+        background-color: white;
+        padding: 0;
+    }
 
-.kit-table-header-cell__label-wrapper {
-  box-sizing: border-box;
-  min-height: 40px;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 1.67;
-  letter-spacing: -0.1px;
-  color: rgb(94, 108, 132);
-  display: flex;
-  border-bottom: 2px solid #DFE1E6;
-  padding: 9px 16px 7px;
+    .kit-table-header-cell__label-wrapper {
+        box-sizing: border-box;
+        min-height: 40px;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 1.67;
+        letter-spacing: -0.1px;
+        color: rgb(94, 108, 132);
+        display: flex;
+        border-bottom: 2px solid #dfe1e6;
+        padding: 9px 16px 7px;
+    }
 
-}
+    th[sortable]:hover {
+        background-color: rgb(244, 245, 247);
+        cursor: pointer;
+    }
 
-th[sortable]:hover {
-  background-color: rgb(244, 245, 247);
-  cursor: pointer;
-}
-
-.kit-table-header-cell__label-wrapper {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+    .kit-table-header-cell__label-wrapper {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 </style>

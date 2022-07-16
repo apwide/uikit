@@ -1,8 +1,6 @@
 /* eslint-disable */
 import { Extension } from 'tiptap';
-import {
-    history, undo, redo
-} from 'prosemirror-history';
+import { history, undo, redo } from 'prosemirror-history';
 
 export default class History extends Extension {
     get name() {

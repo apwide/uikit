@@ -1,7 +1,7 @@
 <template>
     <ul>
         <li v-for="issue in issues" :key="issue.id">
-            <IssueRenderer :issue="issue" :base-url="baseUrl" :appearance="appearance"/>
+            <IssueRenderer :issue="issue" :base-url="baseUrl" :appearance="appearance" />
         </li>
     </ul>
 </template>
@@ -24,16 +24,16 @@
             appearance: {
                 type: String,
                 default: 'normal',
-                validator: value => ['normal', 'compact', 'micro'].includes(value)
+                validator: (value) => ['normal', 'compact', 'micro'].includes(value)
             }
         }
     };
 </script>
 
 <style scoped>
-ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
 </style>

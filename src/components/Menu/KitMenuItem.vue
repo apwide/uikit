@@ -12,8 +12,8 @@
     });
 </script>
 <style scoped>
-.kit-menu-item {
-  color: rgb(66, 82, 110);
-  min-width: 160px;
-}
+    .kit-menu-item {
+        color: rgb(66, 82, 110);
+        min-width: 160px;
+    }
 </style>

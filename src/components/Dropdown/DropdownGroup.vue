@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown-group">
-        <div class="header" @mouseover="hover=true" @mouseleave="hover=false">
+        <div class="header" @mouseover="hover = true" @mouseleave="hover = false">
             <div class="title">
                 {{ label }}
             </div>
@@ -8,7 +8,7 @@
                 <slot name="actions" :hover="hover" />
             </div>
         </div>
-        <slot/>
+        <slot />
     </div>
 </template>
 
@@ -39,8 +39,8 @@
         text-transform: uppercase;
     }
     .dropdown-group .header {
-      display: flex;
-      align-items: center;
-      min-height: 33px;
+        display: flex;
+        align-items: center;
+        min-height: 33px;
     }
 </style>

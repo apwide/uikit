@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { table } from '@atlaskit/adf-schema'
+import { table } from '@atlaskit/adf-schema';
 
 export default class Table extends Node {
     get name() {
@@ -12,7 +12,7 @@ export default class Table extends Node {
             ...table,
             attrs: {
                 isNumberColumnEnabled: { default: false },
-                layout: { default: 'default' },
+                layout: { default: 'default' }
             }
         };
     }

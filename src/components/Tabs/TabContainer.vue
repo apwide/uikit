@@ -7,15 +7,25 @@
         render(h, { slots, props, listeners }) {
             const { tabs = [], content = [] } = slots();
             return [
-                h('nav', tabs.map((vnode) => {
-                    const { componentOptions, data: { attrs, staticClass } } = vnode;
-                    return h(Tab, {
-                        props: { ...componentOptions.propsData, selected: props.value },
-                        attrs: { ...attrs },
-                        class: { ...(staticClass && { [staticClass]: true }) },
-                        on: { ...listeners }
-                    }, [vnode]);
-                })),
+                h(
+                    'nav',
+                    tabs.map((vnode) => {
+                        const {
+                            componentOptions,
+                            data: { attrs, staticClass }
+                        } = vnode;
+                        return h(
+                            Tab,
+                            {
+                                props: { ...componentOptions.propsData, selected: props.value },
+                                attrs: { ...attrs },
+                                class: { ...(staticClass && { [staticClass]: true }) },
+                                on: { ...listeners }
+                            },
+                            [vnode]
+                        );
+                    })
+                ),
                 h('div', [content.find(({ componentOptions }) => componentOptions.propsData.id === props.value)])
             ];
         }
@@ -32,7 +42,7 @@
     }
 
     nav:before {
-        content: "";
+        content: '';
         border-radius: 2px;
         bottom: 0px;
         margin: 0px;

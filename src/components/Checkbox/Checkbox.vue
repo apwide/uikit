@@ -1,16 +1,18 @@
 <template>
-    <label
-        ref="checkbox" class="checkbox-wrapper" :for="id"
-        tabindex="-1" :disabled="disabled">
+    <label ref="checkbox" class="checkbox-wrapper" :for="id" tabindex="-1" :disabled="disabled">
         <input
-            :id="id" ref="input" v-model="isChecked"
+            :id="id"
+            ref="input"
+            v-model="isChecked"
             :value="value"
-            type="checkbox" :is-invalid="isInvalid"
-            :disabled="disabled" @focus="onFocus"
-            @blur="onBlur">
-        <CheckboxIcon v-if="!indeterminate" class="icon"/>
-        <CheckboxIndeterminateIcon v-else class="indeterminate"/>
-        <span v-if="$slots['default']" class="input-label"><slot/></span>
+            type="checkbox"
+            :is-invalid="isInvalid"
+            :disabled="disabled"
+            @focus="onFocus"
+            @blur="onBlur" />
+        <CheckboxIcon v-if="!indeterminate" class="icon" />
+        <CheckboxIndeterminateIcon v-else class="indeterminate" />
+        <span v-if="$slots['default']" class="input-label"><slot /></span>
     </label>
 </template>
 
@@ -91,87 +93,87 @@
 </script>
 
 <style scoped>
-input[type="checkbox"] {
-    left: 50%;
-    margin: 0;
-    opacity: 0;
-    padding: 0;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    cursor: pointer;
-}
+    input[type='checkbox'] {
+        left: 50%;
+        margin: 0;
+        opacity: 0;
+        padding: 0;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        cursor: pointer;
+    }
 
-.checkbox-wrapper {
-    display: inline-flex;
-    position: relative;
-    cursor: pointer;
-    outline: none;
-}
+    .checkbox-wrapper {
+        display: inline-flex;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+    }
 
-.input-label {
-    padding: 2px 4px;
-    display: flex;
-    flex-grow: 1;
-    min-width: 0;
-}
+    .input-label {
+        padding: 2px 4px;
+        display: flex;
+        flex-grow: 1;
+        min-width: 0;
+    }
 
-input:checked + .icon :deep(rect) {
-    color: #0052cc;
-    stroke: #0052cc;
-}
+    input:checked + .icon :deep(rect) {
+        color: #0052cc;
+        stroke: #0052cc;
+    }
 
-input + .icon :deep(rect) {
-    color: #fafbfc;
-    stroke: #dfe1e6;
-}
+    input + .icon :deep(rect) {
+        color: #fafbfc;
+        stroke: #dfe1e6;
+    }
 
-label:hover input:not(:checked):not(:disabled) + .icon :deep(rect) {
-    fill: #EBECF0;
-}
+    label:hover input:not(:checked):not(:disabled) + .icon :deep(rect) {
+        fill: #ebecf0;
+    }
 
-label:hover input:not(:checked):not(:disabled) + .icon :deep(path) {
-    fill: #EBECF0;
-}
+    label:hover input:not(:checked):not(:disabled) + .icon :deep(path) {
+        fill: #ebecf0;
+    }
 
-label:hover input:checked:not(:disabled) + .icon :deep(rect) {
-    color: #0065ff;
-    stroke: #0065ff;
-}
+    label:hover input:checked:not(:disabled) + .icon :deep(rect) {
+        color: #0065ff;
+        stroke: #0065ff;
+    }
 
-input + .icon :deep(path) {
-    fill: #fafbfc;
-}
+    input + .icon :deep(path) {
+        fill: #fafbfc;
+    }
 
-input:not([is-invalid]):focus + .icon :deep(rect) {
-    stroke: #4c9aff;
-}
+    input:not([is-invalid]):focus + .icon :deep(rect) {
+        stroke: #4c9aff;
+    }
 
-input[is-invalid] + .icon :deep(rect) {
-    stroke: #FF5630;
-}
+    input[is-invalid] + .icon :deep(rect) {
+        stroke: #ff5630;
+    }
 
-input:checked[disabled] + .icon :deep(rect) {
-    stroke: #f4f5f7;
-    color: #f4f5f7;
-}
+    input:checked[disabled] + .icon :deep(rect) {
+        stroke: #f4f5f7;
+        color: #f4f5f7;
+    }
 
-input:checked[disabled] + .icon :deep(path) {
-    fill: #a5adba;
-}
+    input:checked[disabled] + .icon :deep(path) {
+        fill: #a5adba;
+    }
 
-label[disabled], label[disabled] input {
-    cursor: not-allowed;
-    color: rgb(151, 160, 175);
-}
+    label[disabled],
+    label[disabled] input {
+        cursor: not-allowed;
+        color: rgb(151, 160, 175);
+    }
 
-:not(.indeterminate) :deep(rect) {
-    transition: 0.2s ease-in-out;
-    stroke-width: 2px;
-}
+    :not(.indeterminate) :deep(rect) {
+        transition: 0.2s ease-in-out;
+        stroke-width: 2px;
+    }
 
-:deep(path) {
-    transition: 0.2s ease-in-out;
-}
-
+    :deep(path) {
+        transition: 0.2s ease-in-out;
+    }
 </style>

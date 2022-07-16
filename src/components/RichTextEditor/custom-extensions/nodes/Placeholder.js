@@ -22,7 +22,7 @@ export default class Placeholder extends Extension {
             new Plugin({
                 props: {
                     decorations: ({ doc, plugins, selection }) => {
-                        const editablePlugin = plugins.find(plugin => plugin.key.startsWith('editable$'));
+                        const editablePlugin = plugins.find((plugin) => plugin.key.startsWith('editable$'));
                         const editable = editablePlugin.props.editable();
                         const active = editable || !this.options.showOnlyWhenEditable;
                         const { anchor } = selection;
@@ -34,7 +34,7 @@ export default class Placeholder extends Extension {
                         }
 
                         doc.descendants((node, pos) => {
-                            const hasAnchor = anchor >= pos && anchor <= (pos + node.nodeSize);
+                            const hasAnchor = anchor >= pos && anchor <= pos + node.nodeSize;
                             const isNodeEmpty = node.content.size === 0;
 
                             if ((hasAnchor || !this.options.showOnlyCurrent) && isNodeEmpty) {
@@ -45,10 +45,11 @@ export default class Placeholder extends Extension {
                                 }
 
                                 const decoration = Decoration.node(pos, pos + node.nodeSize, {
-                                    class: classes.join(' '),
-                                    'data-empty-text': typeof this.options.emptyNodeText === 'function'
-                                        ? this.options.emptyNodeText(node)
-                                        : this.options.emptyNodeText
+                                    'class': classes.join(' '),
+                                    'data-empty-text':
+                                        typeof this.options.emptyNodeText === 'function'
+                                            ? this.options.emptyNodeText(node)
+                                            : this.options.emptyNodeText
                                 });
                                 decorations.push(decoration);
                             }

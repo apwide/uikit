@@ -1,11 +1,9 @@
 <template>
     <table>
         <tbody>
-            <tr v-for="(quarter,i) in monthsOfYear" :key="i">
+            <tr v-for="(quarter, i) in monthsOfYear" :key="i">
                 <td v-for="month in quarter" :key="month">
-                    <Button
-                        appearance="subtle" data-cy="month" class="month"
-                        @click="onMonthSelected(month)">
+                    <Button appearance="subtle" data-cy="month" class="month" @click="onMonthSelected(month)">
                         {{ month }}
                     </Button>
                 </td>
@@ -18,7 +16,20 @@
     import { chunk } from '../../utils/utils';
     import Button from '../Button/Button.vue';
 
-    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const MONTHS = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+    ];
     const MONTHS_PER_ROW = 3;
 
     export default {
@@ -39,20 +50,21 @@
 </script>
 
 <style scoped>
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-}
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
 
-thead, tbody {
-    border: none;
-}
+    thead,
+    tbody {
+        border: none;
+    }
 
-td {
-    text-align: center;
-}
+    td {
+        text-align: center;
+    }
 
-.month {
-    width: 100%;
-}
+    .month {
+        width: 100%;
+    }
 </style>

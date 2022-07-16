@@ -2,8 +2,7 @@
 import { Node } from 'tiptap';
 import { wrappingInputRule } from 'tiptap-commands';
 import { bulletList } from '@atlaskit/adf-schema';
-import { toggleList } from "../commands/toggleList";
-
+import { toggleList } from '../commands/toggleList';
 
 export default class BulletList extends Node {
     get name() {
@@ -25,8 +24,6 @@ export default class BulletList extends Node {
     }
 
     inputRules({ type }) {
-        return [
-            wrappingInputRule(/^\s*([-+*])\s$/, type)
-        ];
+        return [wrappingInputRule(/^\s*([-+*])\s$/, type)];
     }
 }

@@ -3,7 +3,7 @@
         <div v-if="label" class="menu-section-label">
             {{ label }}
         </div>
-        <slot/>
+        <slot />
     </div>
 </template>
 

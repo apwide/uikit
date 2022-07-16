@@ -1,20 +1,14 @@
 <template>
     <div class="image-container" :loading="isLoading">
-        <img
-            v-if="url"
-            class="image"
-            :src="url"
-            alt="attached image"
-            :height="height"
-            :width="width">
-        <div v-else class="placeholder" :style="{ width: `${placeholderSize}px`, height: `${placeholderSize}px` }"/>
+        <img v-if="url" class="image" :src="url" alt="attached image" :height="height" :width="width" />
+        <div v-else class="placeholder" :style="{ width: `${placeholderSize}px`, height: `${placeholderSize}px` }" />
         <div v-if="showActions && (url || $slots.actions)" class="actions">
             <a v-if="url && zoomable" :href="url" target="_blank">
                 <Button class="action-button" appearance="subtle">
-                    <SearchIcon/>
+                    <SearchIcon />
                 </Button>
             </a>
-            <slot name="actions"/>
+            <slot name="actions" />
         </div>
     </div>
 </template>
@@ -87,7 +81,12 @@
         opacity: 0;
         border-radius: 3px;
         animation: loading 1s infinite;
-        background-image: linear-gradient(90deg, rgba(9, 30, 66, 0.08) 30%, rgba(9, 30, 66, 0.16) 50%, rgba(9, 30, 66, 0.08) 70%);
+        background-image: linear-gradient(
+            90deg,
+            rgba(9, 30, 66, 0.08) 30%,
+            rgba(9, 30, 66, 0.16) 50%,
+            rgba(9, 30, 66, 0.08) 70%
+        );
         background-size: 300%;
         background-position: 0% 0%;
         pointer-events: none;
@@ -104,7 +103,7 @@
     }
 
     .image-container[loading] .image {
-        opacity: .5;
+        opacity: 0.5;
     }
 
     .actions {
@@ -115,7 +114,7 @@
         height: 100%;
         opacity: 0;
         background: rgba(9, 30, 66, 0.36);
-        transition: opacity .25s;
+        transition: opacity 0.25s;
         color: white;
         z-index: 1;
         display: flex;
@@ -132,19 +131,19 @@
         display: none;
     }
 
-    .actions :deep(button[appearance="subtle"]) {
+    .actions :deep(button[appearance='subtle']) {
         color: white;
     }
 
-    .actions :deep(button[appearance="subtle"]:not([selected]):not([disabled]):active) {
+    .actions :deep(button[appearance='subtle']:not([selected]):not([disabled]):active) {
         color: white;
     }
 
-    .actions :deep(button[appearance="subtle"]) {
+    .actions :deep(button[appearance='subtle']) {
         height: 36px;
     }
 
-    .actions :deep(button[appearance="subtle"] .wrapper) {
+    .actions :deep(button[appearance='subtle'] .wrapper) {
         padding: 0 2px;
     }
 

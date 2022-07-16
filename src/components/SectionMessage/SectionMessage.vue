@@ -1,14 +1,14 @@
 <template>
     <section class="kit-section-message" :appearance="appearance">
         <div class="kit-section-message__icon">
-            <component :is="`${appearance}-icon`"/>
+            <component :is="`${appearance}-icon`" />
         </div>
         <div class="kit-section-message__content-wrapper">
             <h1 v-if="title" class="kit-section-message__title">
                 {{ title }}
             </h1>
             <div class="kit-section-message__content">
-                <slot/>
+                <slot />
             </div>
             <div v-if="$slots.actions" class="kit-section-message__actions">
                 <slot name="actions" />
@@ -26,7 +26,11 @@
 
     export default {
         components: {
-            InfoIcon, WarningIcon, ErrorIcon, 'confirmation-icon': CheckCircleIcon, 'change-icon': QuestionCircleIcon
+            InfoIcon,
+            WarningIcon,
+            ErrorIcon,
+            'confirmation-icon': CheckCircleIcon,
+            'change-icon': QuestionCircleIcon
         },
         props: {
             title: {
@@ -36,7 +40,7 @@
             appearance: {
                 type: String,
                 default: 'info',
-                validator: value => ['info', 'warning', 'error', 'confirmation', 'change'].includes(value)
+                validator: (value) => ['info', 'warning', 'error', 'confirmation', 'change'].includes(value)
             }
         }
     };
@@ -56,38 +60,38 @@
         color: rgb(7, 71, 166);
     }
 
-    .kit-section-message[appearance=warning] {
+    .kit-section-message[appearance='warning'] {
         background-color: rgb(255, 250, 230);
     }
 
-    .kit-section-message[appearance=warning] .kit-section-message__icon {
+    .kit-section-message[appearance='warning'] .kit-section-message__icon {
         color: rgb(255, 139, 0);
         fill: rgb(255, 250, 230);
     }
 
-    .kit-section-message[appearance=error] {
+    .kit-section-message[appearance='error'] {
         background-color: rgb(255, 235, 230);
     }
 
-    .kit-section-message[appearance=error] .kit-section-message__icon {
+    .kit-section-message[appearance='error'] .kit-section-message__icon {
         color: rgb(191, 38, 0);
         fill: rgb(255, 235, 230);
     }
 
-    .kit-section-message[appearance=confirmation] {
+    .kit-section-message[appearance='confirmation'] {
         background-color: rgb(227, 252, 239);
     }
 
-    .kit-section-message[appearance=confirmation] .kit-section-message__icon {
+    .kit-section-message[appearance='confirmation'] .kit-section-message__icon {
         color: rgb(0, 102, 68);
         fill: rgb(227, 252, 239);
     }
 
-    .kit-section-message[appearance=change] {
+    .kit-section-message[appearance='change'] {
         background-color: rgb(234, 230, 255);
     }
 
-    .kit-section-message[appearance=change] .kit-section-message__icon {
+    .kit-section-message[appearance='change'] .kit-section-message__icon {
         color: rgb(64, 50, 148);
         fill: rgb(234, 230, 255);
     }
@@ -128,7 +132,7 @@
 
     .kit-section-message .kit-section-message__actions ul li + li::before {
         color: rgb(66, 82, 110);
-        content: "·";
+        content: '·';
         display: inline-block;
         text-align: center;
         vertical-align: middle;

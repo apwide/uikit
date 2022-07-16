@@ -1,7 +1,7 @@
 <template>
     <table>
         <tbody>
-            <tr v-for="(half_decade,i) in decade" :key="i">
+            <tr v-for="(half_decade, i) in decade" :key="i">
                 <td v-for="year in half_decade" :key="year">
                     <Button appearance="subtle" class="year" @click="onYearSelected(year)">
                         {{ year }}
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-
     import { chunk } from '../../utils/utils';
     import Button from '../Button/Button.vue';
 
@@ -42,25 +41,26 @@
 </script>
 
 <style scoped>
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-}
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
 
-thead, tbody {
-    border: none;
-}
+    thead,
+    tbody {
+        border: none;
+    }
 
-td {
-    text-align: center;
-    padding: 0;
-}
+    td {
+        text-align: center;
+        padding: 0;
+    }
 
-tr:last-child > td:first-child {
-    padding-right: 8px;
-}
+    tr:last-child > td:first-child {
+        padding-right: 8px;
+    }
 
-.year {
-    width: 100%;
-}
+    .year {
+        width: 100%;
+    }
 </style>

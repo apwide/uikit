@@ -1,9 +1,12 @@
 <template>
     <div class="kit-radio-group">
         <KitRadio
-            v-for="v in availableValues" :key="v.key" :checked="currentKey === v.key"
+            v-for="v in availableValues"
+            :key="v.key"
+            :checked="currentKey === v.key"
             :name="name"
-            :value="v" @input="currentKey = $event"/>
+            :value="v"
+            @input="currentKey = $event" />
     </div>
 </template>
 <script>
@@ -23,7 +26,7 @@
             },
             normalizer: {
                 type: Function,
-                default: str => ({ key: str, label: str, value: str })
+                default: (str) => ({ key: str, label: str, value: str })
             }
         },
         computed: {
@@ -31,7 +34,7 @@
                 return `kit-d-${Date.now()}`;
             },
             availableValues() {
-                return this.values.map(v => this.normalizer(v));
+                return this.values.map((v) => this.normalizer(v));
             },
             currentKey: {
                 get() {
@@ -43,12 +46,10 @@
             }
         }
     });
-
-
 </script>
 <style scoped>
-.kit-radio-group {
-  display: flex;
-  flex-direction: column;
-}
+    .kit-radio-group {
+        display: flex;
+        flex-direction: column;
+    }
 </style>

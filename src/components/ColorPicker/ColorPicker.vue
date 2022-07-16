@@ -1,17 +1,16 @@
 <template>
     <div ref="dropdown-container" class="color-picker">
-        <button type="button" :style="{cursor: editable ? 'pointer' : 'default'}" @click="onTriggerClick">
-            <div class="color" :style="style"/>
+        <button type="button" :style="{ cursor: editable ? 'pointer' : 'default' }" @click="onTriggerClick">
+            <div class="color" :style="style" />
         </button>
-        <Popup
-            :is-open="open" :offset="[0,8]"
-            :target-element="$refs['dropdown-container']"
-            placement="bottom-start">
+        <Popup :is-open="open" :offset="[0, 8]" :target-element="$refs['dropdown-container']" placement="bottom-start">
             <div class="content">
                 <ColorCard
-                    v-for="color in colors" :key="color" :color="color"
+                    v-for="color in colors"
+                    :key="color"
+                    :color="color"
                     :selected="selected"
-                    @color-selected="onColorSelected"/>
+                    @color-selected="onColorSelected" />
             </div>
         </Popup>
     </div>
@@ -72,29 +71,29 @@
 </script>
 
 <style scoped>
-button {
-    display: inline-block;
-    position: relative;
-    width: 30px;
-    height: 30px;
-    box-sizing: border-box;
-    background-color: transparent;
-    border: 2px solid transparent;
-    border-radius: 6px;
-    transition: border-color 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
-    padding: 0px;
-    outline: none;
-}
+    button {
+        display: inline-block;
+        position: relative;
+        width: 30px;
+        height: 30px;
+        box-sizing: border-box;
+        background-color: transparent;
+        border: 2px solid transparent;
+        border-radius: 6px;
+        transition: border-color 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+        padding: 0px;
+        outline: none;
+    }
 
-.color {
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
-}
+    .color {
+        width: 24px;
+        height: 24px;
+        border-radius: 3px;
+    }
 
-.content {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 4px;
-}
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 4px;
+    }
 </style>

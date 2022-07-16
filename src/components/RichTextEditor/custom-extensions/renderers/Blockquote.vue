@@ -1,5 +1,5 @@
 <template>
-    <blockquote ref="content" :contenteditable="view.editable.toString()"/>
+    <blockquote ref="content" :contenteditable="view.editable.toString()" />
 </template>
 
 <script>
@@ -10,24 +10,24 @@
 </script>
 
 <style scoped>
-blockquote:first-child {
-    margin-top: 0;
-}
+    blockquote:first-child {
+        margin-top: 0;
+    }
 
-blockquote::before {
-    content: '';
-}
+    blockquote::before {
+        content: '';
+    }
 
-blockquote::after {
-    content: none;
-}
+    blockquote::after {
+        content: none;
+    }
 
-blockquote p {
-    display: block;
-}
+    blockquote p {
+        display: block;
+    }
 
-blockquote table,
-blockquote table:last-child {
-    display: inline-table;
-}
+    blockquote table,
+    blockquote table:last-child {
+        display: inline-table;
+    }
 </style>

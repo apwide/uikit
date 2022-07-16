@@ -1,22 +1,33 @@
 <template>
     <div ref="date-picker" class="date-picker" @click.stop>
         <TextField
-            :is-focused="focused" :is-loading="isLoading" :disabled="disabled || isLoading"
-            :is-invalid="isInvalid" select @mousedown="toggle">
+            :is-focused="focused"
+            :is-loading="isLoading"
+            :disabled="disabled || isLoading"
+            :is-invalid="isInvalid"
+            select
+            @mousedown="toggle">
             <input
-                ref="input" :value="formattedDate" type="text"
-                width="50%" placeholder="e.g. 31/12/2018" :disabled="disabled || isLoading"
-                v-on="listeners" @keydown.enter="onEnter"
-                @input="onInput" @keyup.esc="onEsc"
-                @focus="onFocus" @blur="onBlur">
-            <CalendarIcon class="icon" size="small" @mousedown.native.prevent/>
+                ref="input"
+                :value="formattedDate"
+                type="text"
+                width="50%"
+                placeholder="e.g. 31/12/2018"
+                :disabled="disabled || isLoading"
+                v-on="listeners"
+                @keydown.enter="onEnter"
+                @input="onInput"
+                @keyup.esc="onEsc"
+                @focus="onFocus"
+                @blur="onBlur" />
+            <CalendarIcon class="icon" size="small" @mousedown.native.prevent />
         </TextField>
-        <Popup
-            :is-open="isOpen" :target-element="$refs['date-picker']" placement="bottom-start"
-            data-cy="select-menu">
+        <Popup :is-open="isOpen" :target-element="$refs['date-picker']" placement="bottom-start" data-cy="select-menu">
             <Calendar
-                :value="selectedDate" :disabled-range="disabledRange" :time-zone="timeZone"
-                @date-selected="onDateSelected"/>
+                :value="selectedDate"
+                :disabled-range="disabledRange"
+                :time-zone="timeZone"
+                @date-selected="onDateSelected" />
         </Popup>
     </div>
 </template>
@@ -35,7 +46,10 @@
     export default {
         name: 'DatePicker',
         components: {
-            TextField, Calendar, Popup, CalendarIcon
+            TextField,
+            Calendar,
+            Popup,
+            CalendarIcon
         },
         props: {
             value: {
@@ -105,7 +119,10 @@
             listeners() {
                 const {
                     // eslint-disable-next-line no-unused-vars
-                    focus, blur, input, ...listeners
+                    focus,
+                    blur,
+                    input,
+                    ...listeners
                 } = this.$listeners;
                 return listeners;
             }
