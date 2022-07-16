@@ -89,7 +89,7 @@
   margin-bottom: 5px;
 }
 
-.kit-modal >>> header {
+.kit-modal :deep(header) {
   display: block;
 }
 </style>

@@ -133,7 +133,7 @@ button[loading] span.kit-button__label {
     opacity: 0;
 }
 
-button[loading] >>> .spinner {
+button[loading] :deep(.spinner) {
     display: flex;
     position: absolute;
     left: 50%;
@@ -141,7 +141,7 @@ button[loading] >>> .spinner {
     transform: translate(-50%, -50%);
 }
 
-button[loading][selected] >>> .spinner {
+button[loading][selected] :deep(.spinner) {
     color: #FFF;
 }
 
@@ -165,7 +165,7 @@ button[appearance="default"]:not([disabled]):not([selected]):active {
     color: #0052CC;
 }
 
-button[appearance="default"]:active >>> svg {
+button[appearance="default"]:active :deep(svg) {
     color: #0052CC;
 }
 
@@ -184,7 +184,7 @@ button[appearance="primary"]:not([disabled]):not([selected]):active {
     background: #0747A6;
 }
 
-button[appearance="primary"][loading] >>> .spinner {
+button[appearance="primary"][loading] :deep(.spinner) {
     color: #FFF;
 }
 
@@ -255,9 +255,9 @@ button[appearance="warning"][selected]:hover {
     color: #172B4D;
 }
 
-button[appearance="warning"]:active >>> svg,
-button[appearance="warning"][selected] >>> svg,
-button[appearance="warning"][selected]:hover >>> svg {
+button[appearance="warning"]:active :deep(svg),
+button[appearance="warning"][selected] :deep(svg),
+button[appearance="warning"][selected]:hover :deep(svg) {
     color: #172B4D;
 }
 
@@ -281,7 +281,7 @@ button[appearance="danger"][selected]:hover {
     background: #BF2600;
 }
 
-button[appearance="danger"][loading] >>> .spinner {
+button[appearance="danger"][loading] :deep(.spinner) {
     color: #FFF;
 }
 
@@ -305,7 +305,7 @@ button[appearance="help"][selected]:hover {
   background: #352A8DFF;
 }
 
-button[appearance="help"][loading] >>> .spinner {
+button[appearance="help"][loading] :deep(.spinner) {
   color: #FFF;
 }
 
@@ -317,14 +317,14 @@ button[selected]:active {
     text-decoration: none;
 }
 
-button[selected] >>> svg,
-button[selected]:hover >>> svg,
-button[selected]:active >>> svg {
+button[selected] :deep(svg),
+button[selected]:hover :deep(svg),
+button[selected]:active :deep(svg) {
     color: rgb(244, 245, 247);
 }
 
 button[disabled] span.wrapper,
-button[disabled] >>> svg {
+button[disabled] :deep(svg) {
     color: rgb(165, 173, 186);
     pointer-events: none;
 }
@@ -333,7 +333,7 @@ button[disabled] {
     cursor: not-allowed;
 }
 
-button[loading][disabled] >>> .spinner {
+button[loading][disabled] :deep(.spinner) {
     color: #172B4D;
 }
 

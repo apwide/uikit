@@ -144,7 +144,7 @@
 </script>
 
 <style scoped>
-    >>> .spotlight-zindex {
+    :deep(.spotlight-zindex) {
         z-index: 999999 !important;
         pointer-events: none;
         border-radius: 3px;
@@ -152,11 +152,11 @@
         400ms ease-in-out 0s normal forwards shadowFadeIn;
     }
 
-    >>> .spotlight-relative {
+    :deep(.spotlight-relative) {
         position: relative !important;
     }
 
-    >>> .spotlight-parentfix {
+    :deep(.spotlight-parentfix) {
         z-index: auto !important;
         opacity: 1.0 !important;
         transform: none !important;

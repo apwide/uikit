@@ -248,21 +248,21 @@
     outline: none;
 }
 
-.editor-content >>> tt {
+.editor-content :deep(tt) {
     background-color: rgba(9, 30, 66, 0.08);
     padding: 1px 5px;
     display: inline-block;
     border-radius: 3px;
 }
 
-.editor-content >>> blockquote {
+.editor-content :deep(blockquote) {
     color: rgba(0, 0, 0, 0.8);
     padding-left: 0.8rem;
     font-style: italic;
     border-left: 3px solid rgba(0, 0, 0, 0.1);
 }
 
-.editor >>> p.is-editor-empty:first-child::before {
+.editor :deep(p.is-editor-empty:first-child::before) {
     content: attr(data-empty-text);
     float: left;
     color: #aaa;
@@ -271,7 +271,7 @@
     font-style: italic;
 }
 
-.editor >>> table {
+.editor :deep(table) {
     border-collapse: collapse;
     table-layout: fixed;
     font-size: 1em;
@@ -281,11 +281,11 @@
     border-image: initial;
 }
 
-.editor >>> table tbody {
+.editor :deep(table tbody) {
     border-bottom: none;
 }
 
-.editor >>> table th {
+.editor :deep(table th) {
     background-color: rgb(244, 245, 247);
     text-align: left;
     border-width: 1px 0px 0px 1px;
@@ -294,7 +294,7 @@
     padding: 8px;
 }
 
-.editor >>> table td {
+.editor :deep(table td) {
     border-width: 1px 0px 0px 1px;
     border-style: solid;
     border-color: rgb(193, 199, 208);

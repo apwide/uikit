@@ -78,14 +78,14 @@
     font-size: 14px;
 }
 
->>> .kit-icon {
+:deep(.kit-icon) {
     opacity: 0;
     cursor: pointer;
     transform: scale(0.8) translate(-6px, 1px);
     transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
 }
 
-.kit-wrapper:hover >>> .kit-icon {
+.kit-wrapper:hover :deep(.kit-icon) {
     opacity: 1;
     transform: scale(0.8) translate(8px, 1px);
 }

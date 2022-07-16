@@ -348,7 +348,7 @@ table .kit-infinite-scroll-loader {
   justify-content: center;
 }
 
->>> .kit-drag-dropzone__border {
+:deep(.kit-drag-dropzone__border) {
   margin: 4px 1px;
   min-height: 40px;
   border: 2px #B3BAC5 dashed;

@@ -80,7 +80,7 @@
         text-decoration: none;
     }
 
-    .dropdown-checkbox-item >>> .label {
+    .dropdown-checkbox-item :deep(.label) {
         overflow: hidden;
         display: flex;
         width: 100%;

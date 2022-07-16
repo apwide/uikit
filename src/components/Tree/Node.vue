@@ -192,7 +192,7 @@ li {
     transform: rotate(90deg);
 }
 
->>> .highlight {
+:deep(.highlight) {
     font-weight: bold;
     color: red;
 }

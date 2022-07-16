@@ -27,7 +27,7 @@
 .kit-button-group[data-spacing=narrow]{
   gap: 0;
 }
-.kit-button-group[data-spacing=narrow] >>> button {
+.kit-button-group[data-spacing=narrow] :deep(button) {
   margin-left: -5px;
   margin-right: -5px;
 }
