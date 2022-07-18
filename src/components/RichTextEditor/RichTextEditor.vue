@@ -1,6 +1,6 @@
 <template>
     <div class="rich-text-form" :is-empty="!value" :is-editing="editable">
-        <slot name="top" :insert="insertDocument"/>
+        <slot name="top" :insert="insertDocument" />
         <div class="editor" :is-editing="editable">
             <editor-menu-bar v-if="editable && menu" v-slot="{ commands, isActive }" :editor="editor">
                 <div class="menu-bar">
@@ -9,15 +9,11 @@
                         :is-selected="isActive.strong()"
                         spacing="none"
                         @click="commands.strong">
-                        <EditorBoldIcon slot="icon-before"/>
+                        <EditorBoldIcon slot="icon-before" />
                     </Button>
 
-                    <Button
-                        appearance="subtle"
-                        :is-selected="isActive.em()"
-                        spacing="none"
-                        @click="commands.em">
-                        <EditorItalicIcon slot="icon-before"/>
+                    <Button appearance="subtle" :is-selected="isActive.em()" spacing="none" @click="commands.em">
+                        <EditorItalicIcon slot="icon-before" />
                     </Button>
 
                     <Button
@@ -25,7 +21,7 @@
                         :is-selected="isActive.strike()"
                         spacing="none"
                         @click="commands.strike">
-                        <EditorStrikethroughIcon slot="icon-before"/>
+                        <EditorStrikethroughIcon slot="icon-before" />
                     </Button>
 
                     <Button
@@ -33,7 +29,7 @@
                         :is-selected="isActive.underline()"
                         spacing="none"
                         @click="commands.underline">
-                        <EditorUnderlineIcon slot="icon-before"/>
+                        <EditorUnderlineIcon slot="icon-before" />
                     </Button>
 
                     <Button
@@ -41,7 +37,7 @@
                         :is-selected="isActive.bulletList()"
                         spacing="none"
                         @click="commands.bulletList">
-                        <EditorBulletListIcon slot="icon-before"/>
+                        <EditorBulletListIcon slot="icon-before" />
                     </Button>
 
                     <Button
@@ -49,7 +45,7 @@
                         :is-selected="isActive.orderedList()"
                         spacing="none"
                         @click="commands.orderedList">
-                        <EditorNumberListIcon slot="icon-before"/>
+                        <EditorNumberListIcon slot="icon-before" />
                     </Button>
 
                     <Button
@@ -57,25 +53,24 @@
                         :class="{ 'is-active': isActive.blockquote() }"
                         spacing="none"
                         @click="commands.blockquote">
-                        <EditorQuoteIcon slot="icon-before"/>
+                        <EditorQuoteIcon slot="icon-before" />
                     </Button>
 
-                    <Button
-                        appearance="subtle"
-                        :is-selected="isActive.code()"
-                        spacing="none"
-                        @click="commands.code">
-                        <EditorCodeIcon slot="icon-before"/>
+                    <Button appearance="subtle" :is-selected="isActive.code()" spacing="none" @click="commands.code">
+                        <EditorCodeIcon slot="icon-before" />
                     </Button>
-                    <slot name="menu-bar" :insert="insertDocument"/>
+                    <slot name="menu-bar" :insert="insertDocument" />
                 </div>
             </editor-menu-bar>
             <editor-content
-                class="editor-content" :editable="editable" :read-only="!editable"
-                :editor="editor" :data-text="emptyFieldText"
-                @click.native="onEditRequested"/>
+                class="editor-content"
+                :editable="editable"
+                :read-only="!editable"
+                :editor="editor"
+                :data-text="emptyFieldText"
+                @click.native="onEditRequested" />
         </div>
-        <slot v-if="editable" name="actions" :setContent="editor.setContent"/>
+        <slot v-if="editable" name="actions" :setContent="editor.setContent" />
     </div>
 </template>
 
@@ -93,9 +88,7 @@
         EditorStrikethroughIcon
     } from '../Icon';
     import Button from '../Button/Button.vue';
-    import {
-        extensions, Placeholder, Image, Doc
-    } from './extensions';
+    import { extensions, Placeholder, Image, Doc } from './extensions';
 
     export default {
         components: {
@@ -146,19 +139,29 @@
                 updated: false,
                 editor: new Editor({
                     editable: this.editable,
-                    extensions: [new Doc(), new Image({ baseUrl: this.baseUrl }), ...extensions, new Placeholder({ emptyNodeText: this.placeholder })],
+                    extensions: [
+                        new Doc(),
+                        new Image({ baseUrl: this.baseUrl }),
+                        ...extensions,
+                        new Placeholder({ emptyNodeText: this.placeholder })
+                    ],
                     onFocus: this.onFocus,
                     content: this.value,
                     onUpdate: ({ getJSON }) => {
                         this.updated = true;
                         const json = getJSON();
                         const { content } = json;
-                        if (Array.isArray(content) && content.length === 1 && !Object.prototype.hasOwnProperty.call(content[0], 'content')) {
+                        if (
+                            Array.isArray(content) &&
+                            content.length === 1 &&
+                            !Object.prototype.hasOwnProperty.call(content[0], 'content')
+                        ) {
                             this.$emit('input', null);
                         } else {
                             const doc = JSON.parse(JSON.stringify(json, (k, v) => (v != null ? v : undefined)));
                             this.$emit('input', {
-                                ...doc, version: 1
+                                ...doc,
+                                version: 1
                             });
                         }
                     }
@@ -185,7 +188,6 @@
                 },
                 immediate: true
             }
-
         },
         beforeDestroy() {
             this.editor.destroy();
@@ -197,7 +199,10 @@
                 }
             },
             insertDocument(json) {
-                const { selection: { from, to }, doc } = this.editor.state;
+                const {
+                    selection: { from, to },
+                    doc
+                } = this.editor.state;
                 if (!doc.textContent) {
                     this.editor.setContent(json);
                 } else {
@@ -210,95 +215,95 @@
     };
 </script>
 <style scoped>
-.editor[is-editing] {
-    border: solid 1px rgb(223, 225, 230);
-    border-radius: 3px;
-}
+    .editor[is-editing] {
+        border: solid 1px rgb(223, 225, 230);
+        border-radius: 3px;
+    }
 
-.menu-bar {
-    padding: 8px 8px 0px 20px;
-    display: flex;
-}
+    .menu-bar {
+        padding: 8px 8px 0px 20px;
+        display: flex;
+    }
 
-.editor-content {
-    padding: 12px 8px;
-    position: relative;
-}
+    .editor-content {
+        padding: 12px 8px;
+        position: relative;
+    }
 
-[is-empty]:not([is-editing]) .editor-content::after {
-    display: block;
-    position: absolute;
-    padding: 12px 8px;
-    font-style: italic;
-    top: 0;
-    color: rgb(107, 119, 140);
-    content: attr(data-text);
-}
+    [is-empty]:not([is-editing]) .editor-content::after {
+        display: block;
+        position: absolute;
+        padding: 12px 8px;
+        font-style: italic;
+        top: 0;
+        color: rgb(107, 119, 140);
+        content: attr(data-text);
+    }
 
-.editor[is-editing] .editor-content {
-    padding: 20px;
-}
+    .editor[is-editing] .editor-content {
+        padding: 20px;
+    }
 
-.editor-content:not([editable]):not([read-only]):hover {
-    background-color: #EBECF0;
-    border-radius: 3px;
-}
+    .editor-content:not([editable]):not([read-only]):hover {
+        background-color: #ebecf0;
+        border-radius: 3px;
+    }
 
-.editor-content :focus {
-    outline: none;
-}
+    .editor-content :focus {
+        outline: none;
+    }
 
-.editor-content :deep(tt) {
-    background-color: rgba(9, 30, 66, 0.08);
-    padding: 1px 5px;
-    display: inline-block;
-    border-radius: 3px;
-}
+    .editor-content :deep(tt) {
+        background-color: rgba(9, 30, 66, 0.08);
+        padding: 1px 5px;
+        display: inline-block;
+        border-radius: 3px;
+    }
 
-.editor-content :deep(blockquote) {
-    color: rgba(0, 0, 0, 0.8);
-    padding-left: 0.8rem;
-    font-style: italic;
-    border-left: 3px solid rgba(0, 0, 0, 0.1);
-}
+    .editor-content :deep(blockquote) {
+        color: rgba(0, 0, 0, 0.8);
+        padding-left: 0.8rem;
+        font-style: italic;
+        border-left: 3px solid rgba(0, 0, 0, 0.1);
+    }
 
-.editor :deep(p.is-editor-empty:first-child::before) {
-    content: attr(data-empty-text);
-    float: left;
-    color: #aaa;
-    pointer-events: none;
-    height: 0;
-    font-style: italic;
-}
+    .editor :deep(p.is-editor-empty:first-child::before) {
+        content: attr(data-empty-text);
+        float: left;
+        color: #aaa;
+        pointer-events: none;
+        height: 0;
+        font-style: italic;
+    }
 
-.editor :deep(table) {
-    border-collapse: collapse;
-    table-layout: fixed;
-    font-size: 1em;
-    width: 100%;
-    margin: 24px 8px 0px 0px;
-    border: 1px solid rgb(193, 199, 208);
-    border-image: initial;
-}
+    .editor :deep(table) {
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 1em;
+        width: 100%;
+        margin: 24px 8px 0px 0px;
+        border: 1px solid rgb(193, 199, 208);
+        border-image: initial;
+    }
 
-.editor :deep(table tbody) {
-    border-bottom: none;
-}
+    .editor :deep(table tbody) {
+        border-bottom: none;
+    }
 
-.editor :deep(table th) {
-    background-color: rgb(244, 245, 247);
-    text-align: left;
-    border-width: 1px 0px 0px 1px;
-    border-style: solid;
-    border-color: rgb(193, 199, 208);
-    padding: 8px;
-}
+    .editor :deep(table th) {
+        background-color: rgb(244, 245, 247);
+        text-align: left;
+        border-width: 1px 0px 0px 1px;
+        border-style: solid;
+        border-color: rgb(193, 199, 208);
+        padding: 8px;
+    }
 
-.editor :deep(table td) {
-    border-width: 1px 0px 0px 1px;
-    border-style: solid;
-    border-color: rgb(193, 199, 208);
-    border-image: initial;
-    padding: 8px;
-}
+    .editor :deep(table td) {
+        border-width: 1px 0px 0px 1px;
+        border-style: solid;
+        border-color: rgb(193, 199, 208);
+        border-image: initial;
+        padding: 8px;
+    }
 </style>

@@ -1,5 +1,4 @@
 <script>
-
     const ARROW_RIGHT = 39;
     const ARROW_LEFT = 37;
     const ESC = 27;
@@ -23,10 +22,12 @@
                 return this.currentStep && this.enabledSpotlights[this.currentStep - 1];
             },
             currentTargets() {
-                return this.currentSpotlight && this.currentSpotlight.components.map(comp => comp.target);
+                return this.currentSpotlight && this.currentSpotlight.components.map((comp) => comp.target);
             },
             enabledSpotlights() {
-                return this.spotlights.filter(spot => spot.components.length === 0 || spot.components.some(comp => comp.enabled));
+                return this.spotlights.filter(
+                    (spot) => spot.components.length === 0 || spot.components.some((comp) => comp.enabled)
+                );
             },
             lastStep() {
                 return this.enabledSpotlights.length;
@@ -67,11 +68,11 @@
             },
             registerSpotlight(component) {
                 const { step } = component;
-                const spotlight = this.spotlights.find(spot => spot.step === step);
+                const spotlight = this.spotlights.find((spot) => spot.step === step);
                 if (spotlight) {
                     spotlight.components.push(component);
                 } else {
-                    const spotlightIndex = this.spotlights.findIndex(spot => spot.step > step);
+                    const spotlightIndex = this.spotlights.findIndex((spot) => spot.step > step);
                     if (spotlightIndex === -1) {
                         this.spotlights.push({ components: [component], step });
                     } else {
@@ -80,15 +81,16 @@
                 }
             },
             unRegisterSpotlight(component) {
-                this.spotlights = this.spotlights.map(spotlightIndex => ({
-                    ...spotlightIndex, components: spotlightIndex.components.filter(c => c !== component)
+                this.spotlights = this.spotlights.map((spotlightIndex) => ({
+                    ...spotlightIndex,
+                    components: spotlightIndex.components.filter((c) => c !== component)
                 }));
             },
             registerOverlay(overlay) {
                 this.overlay = overlay;
             },
             addClasses(targets) {
-                const elements = targets.map(target => target.elm || document.body);
+                const elements = targets.map((target) => target.elm || document.body);
                 elements.forEach((element) => {
                     element.classList.add('spotlight-zindex');
                     const position = document.defaultView.getComputedStyle(element, null).getPropertyValue('position');
@@ -100,8 +102,12 @@
                         if (!parent.tagName || parent.tagName.toLowerCase() === 'body') break;
 
                         const zindex = document.defaultView.getComputedStyle(parent, null).getPropertyValue('z-index');
-                        const transition = document.defaultView.getComputedStyle(parent, null).getPropertyValue('transition');
-                        const parentPosition = document.defaultView.getComputedStyle(parent, null).getPropertyValue('position');
+                        const transition = document.defaultView
+                            .getComputedStyle(parent, null)
+                            .getPropertyValue('transition');
+                        const parentPosition = document.defaultView
+                            .getComputedStyle(parent, null)
+                            .getPropertyValue('position');
                         const skip = elements.includes(parent) || parent.hasAttribute('spotlight-skip');
                         if ((parseInt(zindex, 10) || transition) && !skip) {
                             parent.classList.add('spotlight-parentfix');
@@ -114,12 +120,14 @@
                 });
             },
             clearClasses(targets) {
-                const elements = targets.map(target => target.elm || document.body);
+                const elements = targets.map((target) => target.elm || document.body);
 
                 elements.forEach((element) => {
                     element.classList.remove('spotlight-zindex', 'spotlight-relative');
                 });
-                [...document.querySelectorAll('.spotlight-parentfix')].forEach(element => element.classList.remove('spotlight-parentfix'));
+                [...document.querySelectorAll('.spotlight-parentfix')].forEach((element) =>
+                    element.classList.remove('spotlight-parentfix')
+                );
             },
 
             handleKeyPress(e) {
@@ -149,7 +157,7 @@
         pointer-events: none;
         border-radius: 3px;
         animation: 3000ms cubic-bezier(0.55, 0.055, 0.675, 0.19) 0s infinite normal none running pulse,
-        400ms ease-in-out 0s normal forwards shadowFadeIn;
+            400ms ease-in-out 0s normal forwards shadowFadeIn;
     }
 
     :deep(.spotlight-relative) {
@@ -158,17 +166,20 @@
 
     :deep(.spotlight-parentfix) {
         z-index: auto !important;
-        opacity: 1.0 !important;
+        opacity: 1 !important;
         transform: none !important;
         transition: none !important;
     }
 
     @keyframes pulse {
-        0%, 33% {
+        0%,
+        33% {
             box-shadow: inset 0 0 0 10000px #fff, rgb(101, 84, 192) 0px 0px 0px 2px, rgb(101, 84, 192) 0px 0px 0px 2px;
         }
-        66%, 100% {
-            box-shadow: inset 0 0 0 10000px #fff, rgb(101, 84, 192) 0px 0px 0px 2px, rgba(101, 84, 192, 0.01) 0px 0px 0px 10px;
+        66%,
+        100% {
+            box-shadow: inset 0 0 0 10000px #fff, rgb(101, 84, 192) 0px 0px 0px 2px,
+                rgba(101, 84, 192, 0.01) 0px 0px 0px 10px;
         }
     }
 

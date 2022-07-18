@@ -1,11 +1,8 @@
 <template>
-    <InlineEdit
-        v-if="editable"
-        :value="selectedValues"
-        :placement="placement"
-        @save-requested="onSaveRequested">
+    <InlineEdit v-if="editable" :value="selectedValues" :placement="placement" @save-requested="onSaveRequested">
         <Select
-            slot="editor" slot-scope="props"
+            slot="editor"
+            slot-scope="props"
             :value="props.value"
             :multi="true"
             :open-on-focus="true"
@@ -18,12 +15,12 @@
             @blur="props.blur"
             @confirm="props.confirm"
             @focus="props.focus"
-            @cancel="props.cancel"/>
+            @cancel="props.cancel" />
         <slot>
-            <MultiSelectRenderer :selected-values="selectedValues"/>
+            <MultiSelectRenderer :selected-values="selectedValues" />
         </slot>
     </InlineEdit>
-    <MultiSelectRenderer v-else :selected-values="selectedValues"/>
+    <MultiSelectRenderer v-else :selected-values="selectedValues" />
 </template>
 
 <script>

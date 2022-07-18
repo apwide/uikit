@@ -13,12 +13,12 @@
         @stop-editing="$emit('stop-editing')"
         @save-requested="onSaveRequested">
         <slot>
-            <StringLineRenderer :value="value"/>
+            <StringLineRenderer :value="value" />
         </slot>
     </InlineEdit>
     <div v-else>
         <slot>
-            <StringLineRenderer :value="value"/>
+            <StringLineRenderer :value="value" />
         </slot>
     </div>
 </template>

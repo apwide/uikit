@@ -6,10 +6,13 @@
             </th>
         </thead>
         <tbody>
-            <tr v-for="(week,i) in weeks" :key="i" class="week">
+            <tr v-for="(week, i) in weeks" :key="i" class="week">
                 <Day
-                    v-for="day in week" :key="day.date.getDate()" :day="day"
-                    data-cy="day" @date-selected="onDateSelected"/>
+                    v-for="day in week"
+                    :key="day.date.getDate()"
+                    :day="day"
+                    data-cy="day"
+                    @date-selected="onDateSelected" />
             </tr>
         </tbody>
     </table>
@@ -43,26 +46,27 @@
 </script>
 
 <style scoped>
-.weekday {
-    color: #6B778C;
-    font-size: 11px;
-    min-width: 40px;
-    box-sizing: border-box;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 8px;
-}
+    .weekday {
+        color: #6b778c;
+        font-size: 11px;
+        min-width: 40px;
+        box-sizing: border-box;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 8px;
+    }
 
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-}
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
 
-thead, tbody {
-    border: none;
-}
+    thead,
+    tbody {
+        border: none;
+    }
 
-td {
-    padding: 0;
-}
+    td {
+        padding: 0;
+    }
 </style>

@@ -6,26 +6,12 @@
         :height="height"
         version="1.1"
         :preserveAspectRatio="preserveAspectRatio">
-        <rect
-            :style="fill"
-            color="yellow"
-            :clip-path="clipPath"
-            x="0"
-            y="0"
-            width="100%"
-            height="100%"/>
+        <rect :style="fill" color="yellow" :clip-path="clipPath" x="0" y="0" width="100%" height="100%" />
 
         <defs>
             <clipPath :id="idClip">
-                <rect
-                    v-if="!$slots['default']"
-                    x="0"
-                    y="0"
-                    rx="3"
-                    ry="3"
-                    width="100%"
-                    height="100%"/>
-                <slot/>
+                <rect v-if="!$slots['default']" x="0" y="0" rx="3" ry="3" width="100%" height="100%" />
+                <slot />
             </clipPath>
 
             <linearGradient :id="idGradient">
@@ -35,7 +21,7 @@
                         attributeName="offset"
                         values="-2; 1"
                         :dur="speed"
-                        repeatCount="indefinite"/>
+                        repeatCount="indefinite" />
                 </stop>
                 <stop offset="50%" :stop-color="secondaryColor" :stop-opacity="secondaryOpacity">
                     <animate
@@ -43,7 +29,7 @@
                         attributeName="offset"
                         values="-1.5; 1.5"
                         :dur="speed"
-                        repeatCount="indefinite"/>
+                        repeatCount="indefinite" />
                 </stop>
                 <stop offset="100%" :stop-color="primaryColor" :stop-opacity="primaryOpacity">
                     <animate
@@ -51,7 +37,7 @@
                         attributeName="offset"
                         values="-1; 2"
                         :dur="speed"
-                        repeatCount="indefinite"/>
+                        repeatCount="indefinite" />
                 </stop>
             </linearGradient>
         </defs>

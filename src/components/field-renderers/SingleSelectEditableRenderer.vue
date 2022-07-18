@@ -10,7 +10,8 @@
         @stop-editing="$emit('stop-editing')"
         @save-requested="onSaveRequested">
         <Select
-            slot="editor" slot-scope="props"
+            slot="editor"
+            slot-scope="props"
             :value="props.value"
             :options="allowedValues"
             :open-on-focus="true"
@@ -24,29 +25,35 @@
             :filter-predicate="filterPredicate"
             style="flex: 1"
             :fixed-select-width="fixedSelectWidth"
-            @input="props.input($event);$emit('input',$event)"
-            @search-change="$emit('search-change',$event)"
-            @blur="props.blur($event);$emit('blur', $event)"
+            @input="
+                props.input($event);
+                $emit('input', $event);
+            "
+            @search-change="$emit('search-change', $event)"
+            @blur="
+                props.blur($event);
+                $emit('blur', $event);
+            "
             @confirm="props.confirm"
             @focus="props.focus"
             @cancel="props.cancel">
-            <template v-if="$scopedSlots.selected" #selected="{selected}">
-                <slot name="selected" :selected="selected"/>
+            <template v-if="$scopedSlots.selected" #selected="{ selected }">
+                <slot name="selected" :selected="selected" />
             </template>
-            <template #option="{option, isCurrent}">
-                <slot name="option" :option="option" :isCurrent="isCurrent"/>
+            <template #option="{ option, isCurrent }">
+                <slot name="option" :option="option" :isCurrent="isCurrent" />
             </template>
             <template #custom-action>
-                <slot name="custom-action"/>
+                <slot name="custom-action" />
             </template>
         </Select>
         <slot>
-            <StringLineRenderer :value="normalizedValueLabel"/>
+            <StringLineRenderer :value="normalizedValueLabel" />
         </slot>
     </InlineEdit>
     <div v-else>
         <slot>
-            <StringLineRenderer :value="normalizedValueLabel"/>
+            <StringLineRenderer :value="normalizedValueLabel" />
         </slot>
     </div>
 </template>
@@ -94,8 +101,11 @@
             },
             normalizer: {
                 type: Function,
-                default: value => ({
-                    id: value, value, label: value, disabled: false
+                default: (value) => ({
+                    id: value,
+                    value,
+                    label: value,
+                    disabled: false
                 })
             },
             icon: {

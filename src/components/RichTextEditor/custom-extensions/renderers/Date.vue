@@ -17,13 +17,13 @@
 </script>
 
 <style scoped>
-.date {
-    color: rgb(23, 43, 77);
-    white-space: nowrap;
-    background: rgba(9, 30, 66, 0.08);
-    border-radius: 3px;
-    padding: 2px 4px;
-    margin: 0px 1px;
-    transition: background 0.3s ease 0s;
-}
+    .date {
+        color: rgb(23, 43, 77);
+        white-space: nowrap;
+        background: rgba(9, 30, 66, 0.08);
+        border-radius: 3px;
+        padding: 2px 4px;
+        margin: 0px 1px;
+        transition: background 0.3s ease 0s;
+    }
 </style>

@@ -1,11 +1,10 @@
 <template>
     <div ref="container" :editing="isEditing" class="kit-inline-edit__wrapper">
-        <div
-            ref="text-field" :compact="compact" :is-invalid="!!error"
-            class="kit-inline-edit">
+        <div ref="text-field" :compact="compact" :is-invalid="!!error" class="kit-inline-edit">
             <div
-                v-if="isEditing" style="display: flex"
-                :class="{ 'kit-inline-edit--has-general-error': isGeneralError}">
+                v-if="isEditing"
+                style="display: flex"
+                :class="{ 'kit-inline-edit--has-general-error': isGeneralError }">
                 <slot
                     :blur="onBlur"
                     :cancel="cancelInlineEdit"
@@ -20,22 +19,28 @@
                     :value="editingValue"
                     name="editor">
                     <TextField
-                        :compact="compact" :is-disabled="isLoading"
+                        :compact="compact"
+                        :is-disabled="isLoading"
                         :is-focused="isFocused"
                         :is-invalid="!!error"
-                        :is-loading="isLoading" :style="{ minWidth: `${contentWidth}px` }"
+                        :is-loading="isLoading"
+                        :style="{ minWidth: `${contentWidth}px` }"
                         @click.stop
                         @hook:beforeMount="beforeTextFieldMount">
                         <input
-                            ref="input" v-model="editingValue"
-                            :align="align" :disabled="isLoading" :maxlength="maxlength"
-                            :step="step" :type="type"
+                            ref="input"
+                            v-model="editingValue"
+                            :align="align"
+                            :disabled="isLoading"
+                            :maxlength="maxlength"
+                            :step="step"
+                            :type="type"
                             class="input"
                             @blur="onBlur"
                             @focus="onFocus"
                             @keyup="onKeyUp"
                             @keydown.meta.enter="onKeyUp"
-                            @keydown.exact="validate">
+                            @keydown.exact="validate" />
                     </TextField>
                 </slot>
                 <div v-if="isGeneralError" class="kit-inline-edit__general-error">
@@ -43,30 +48,32 @@
                         ref="general-error-trigger"
                         title="Click to see the error"
                         @click="showGeneralError = !showGeneralError">
-                        <KitIcon
-                            class="kit-inline-edit__general-error-icon"
-                            type="exclamation-triangle"/>
+                        <KitIcon class="kit-inline-edit__general-error-icon" type="exclamation-triangle" />
                     </KitIconButton>
                 </div>
             </div>
             <InlineEditViewContent
-                v-else ref="value" :align="align"
+                v-else
+                ref="value"
+                :align="align"
                 :compact="compact"
-                :icon="icon" @edit-requested="onEditRequested">
-                <slot/>
+                :icon="icon"
+                @edit-requested="onEditRequested">
+                <slot />
             </InlineEditViewContent>
         </div>
         <Popper
-            v-if="$refs['text-field'] && isEditing && !isLoading && confirm" ref="buttons"
+            v-if="$refs['text-field'] && isEditing && !isLoading && confirm"
+            ref="buttons"
             :offset="offset"
             :target-element="$refs['text-field']">
-            <InlineEditButtons
-                @blur="onBlur" @cancel="cancelInlineEdit"
-                @confirm="confirmEditedValue"/>
+            <InlineEditButtons @blur="onBlur" @cancel="cancelInlineEdit" @confirm="confirmEditedValue" />
         </Popper>
         <InlineErrorMessage
-            v-if="isValidationError" :error="error" :placement="placement"
-            :target-element="$refs['text-field']"/>
+            v-if="isValidationError"
+            :error="error"
+            :placement="placement"
+            :target-element="$refs['text-field']" />
         <Popper
             v-if="isGeneralError && $refs['general-error-trigger'] && showGeneralError"
             :target-element="$refs['general-error-trigger'].$el"
@@ -76,7 +83,9 @@
                     {{ error.generalError }}
                 </SectionMessage>
                 <KitIconButton
-                    spacing="compact" class="kit-inline-edit__general-error-close" title="Close"
+                    spacing="compact"
+                    class="kit-inline-edit__general-error-close"
+                    title="Close"
                     @click="showGeneralError = false">
                     <KitIcon type="times" />
                 </KitIconButton>
@@ -303,10 +312,7 @@
                 }
             },
             beforeTextFieldMount() {
-                const {
-                    width,
-                    height
-                } = this.$refs.value.$el.getBoundingClientRect();
+                const { width, height } = this.$refs.value.$el.getBoundingClientRect();
                 this.contentWidth = width;
                 this.contentHeight = height;
             },
@@ -324,50 +330,50 @@
     };
 </script>
 <style scoped>
-.kit-inline-edit {
-  margin: -8px;
-}
+    .kit-inline-edit {
+        margin: -8px;
+    }
 
-.kit-inline-edit[compact] {
-  margin: -2px;
-}
+    .kit-inline-edit[compact] {
+        margin: -2px;
+    }
 
-input {
-  font-family: inherit;
-}
+    input {
+        font-family: inherit;
+    }
 
-input[align="end"] {
-  text-align: right;
-}
+    input[align='end'] {
+        text-align: right;
+    }
 
-.kit-inline-edit__general-error-dialog {
-  z-index: 500;
-  max-width: 400px;
-  min-width: 200px;
-  font-size: inherit;
-  font-weight: inherit;
-}
+    .kit-inline-edit__general-error-dialog {
+        z-index: 500;
+        max-width: 400px;
+        min-width: 200px;
+        font-size: inherit;
+        font-weight: inherit;
+    }
 
-/* Clearly a hack */
-.kit-inline-edit--has-general-error :deep(.kit-text-field) {
-  padding-right: 25px;
-}
+    /* Clearly a hack */
+    .kit-inline-edit--has-general-error :deep(.kit-text-field) {
+        padding-right: 25px;
+    }
 
-.kit-inline-edit__general-error {
-  position: relative;
-  right: 0;
-  margin-bottom: -2px;
-  margin-left: -35px;
-  display: flex;
-}
+    .kit-inline-edit__general-error {
+        position: relative;
+        right: 0;
+        margin-bottom: -2px;
+        margin-left: -35px;
+        display: flex;
+    }
 
-.kit-inline-edit__general-error-icon {
-  color: rgb(191, 38, 0)
-}
+    .kit-inline-edit__general-error-icon {
+        color: rgb(191, 38, 0);
+    }
 
-.kit-inline-edit__general-error-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
+    .kit-inline-edit__general-error-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 </style>

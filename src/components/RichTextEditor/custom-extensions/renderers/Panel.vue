@@ -1,7 +1,7 @@
 <template>
     <section class="message" :appearance="appearance">
         <div class="icon">
-            <component :is="`${appearance}-icon`"/>
+            <component :is="`${appearance}-icon`" />
         </div>
         <span>{{ node.textContent }}</span>
     </section>
@@ -52,38 +52,40 @@
         color: rgb(7, 71, 166);
     }
 
-    .message[appearance=warning] {
+    .message[appearance='warning'] {
         background-color: rgb(255, 250, 230);
     }
 
-    .message[appearance=warning] .icon {
+    .message[appearance='warning'] .icon {
         color: rgb(255, 139, 0);
         fill: rgb(255, 250, 230);
     }
 
-    .message[appearance=error] {
+    .message[appearance='error'] {
         background-color: rgb(255, 235, 230);
     }
 
-    .message[appearance=error] .icon {
+    .message[appearance='error'] .icon {
         color: rgb(191, 38, 0);
         fill: rgb(255, 235, 230);
     }
 
-    .message[appearance=success], .message[appearance=tip] {
+    .message[appearance='success'],
+    .message[appearance='tip'] {
         background-color: rgb(227, 252, 239);
     }
 
-    .message[appearance=success] .icon, .message[appearance=tip] .icon {
+    .message[appearance='success'] .icon,
+    .message[appearance='tip'] .icon {
         color: rgb(0, 102, 68);
         fill: rgb(227, 252, 239);
     }
 
-    .message[appearance=note] {
+    .message[appearance='note'] {
         background-color: rgb(234, 230, 255);
     }
 
-    .message[appearance=note] .icon {
+    .message[appearance='note'] .icon {
         color: rgb(64, 50, 148);
         fill: rgb(234, 230, 255);
     }

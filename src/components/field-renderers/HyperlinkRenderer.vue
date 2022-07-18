@@ -1,7 +1,5 @@
 <template>
-    <a
-        class="hyperlink" target="_top" :href="link"
-        v-text="link"/>
+    <a class="hyperlink" target="_top" :href="link" v-text="link" />
 </template>
 
 <script>

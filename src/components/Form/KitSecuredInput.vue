@@ -9,9 +9,10 @@
             v-bind="$attrs"
             :maxlength="maxlength"
             :disabled="disabled"
-            @focus="onFocus" @blur="onBlur">
+            @focus="onFocus"
+            @blur="onBlur" />
         <KitIconButton :title="title" @click.stop.prevent="toggleFieldType">
-            <KitIcon v-if="obfuscated" type="eye"/>
+            <KitIcon v-if="obfuscated" type="eye" />
             <KitIcon v-else type="eye-slash" />
         </KitIconButton>
     </TextField>

@@ -1,8 +1,6 @@
 <template>
-    <transition
-        name="expand" @enter="enter" @after-enter="afterEnter"
-        @leave="leave">
-        <slot/>
+    <transition name="expand" @enter="enter" @after-enter="afterEnter" @leave="leave">
+        <slot />
     </transition>
 </template>
 <script>
@@ -72,13 +70,13 @@
 </script>
 
 <style scoped>
-.expand-enter-active,
-.expand-leave-active {
-    transition: all 0.3s ease-in-out;
-}
+    .expand-enter-active,
+    .expand-leave-active {
+        transition: all 0.3s ease-in-out;
+    }
 
-.expand-enter,
-.expand-leave-to {
-    height: 0;
-}
+    .expand-enter,
+    .expand-leave-to {
+        height: 0;
+    }
 </style>

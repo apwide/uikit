@@ -4,14 +4,19 @@
             <div class="header">
                 <div class="icon">
                     <component
-                        :is="flag.name" :primary-color="flag.primary" :secondary-color="flag.secondary"
-                        class="icon"/>
+                        :is="flag.name"
+                        :primary-color="flag.primary"
+                        :secondary-color="flag.secondary"
+                        class="icon" />
                 </div>
                 <span class="title">{{ title }}</span>
                 <ChevronDownIcon
-                    v-if="appearance !== 'default'" class="chevron" size="large"
-                    :expanded="expanded" @click.native="onExpand"/>
-                <EditorCloseIcon v-else class="close" @click.native="$emit('close')"/>
+                    v-if="appearance !== 'default'"
+                    class="chevron"
+                    size="large"
+                    :expanded="expanded"
+                    @click.native="onExpand" />
+                <EditorCloseIcon v-else class="close" @click.native="$emit('close')" />
             </div>
             <slot>
                 <div class="content" :expanded="expanded">
@@ -19,9 +24,9 @@
                         {{ description }}
                     </div>
                     <div class="actions">
-                        <a
-                            v-for="action in actions" :key="action.content" class="action"
-                            @click="onClick(action)">{{ action.content }}</a>
+                        <a v-for="action in actions" :key="action.content" class="action" @click="onClick(action)">{{
+                            action.content
+                        }}</a>
                     </div>
                 </div>
             </slot>
@@ -30,14 +35,17 @@
 </template>
 
 <script>
-    import {
-        ChevronDownIcon, CheckCircleIcon, InfoIcon, WarningIcon, ErrorIcon, EditorCloseIcon
-    } from '../Icon';
+    import { ChevronDownIcon, CheckCircleIcon, InfoIcon, WarningIcon, ErrorIcon, EditorCloseIcon } from '../Icon';
 
     export default {
         name: 'Flag',
         components: {
-            ChevronDownIcon, success: CheckCircleIcon, info: InfoIcon, warning: WarningIcon, error: ErrorIcon, EditorCloseIcon
+            ChevronDownIcon,
+            success: CheckCircleIcon,
+            info: InfoIcon,
+            warning: WarningIcon,
+            error: ErrorIcon,
+            EditorCloseIcon
         },
         props: {
             title: {
@@ -117,131 +125,133 @@
 </script>
 
 <style scoped>
-.notification {
-    background-color: rgb(255, 255, 255);
-    box-sizing: border-box;
-    box-shadow: rgba(9, 30, 66, 0.31) 0px 0px 1px, rgba(9, 30, 66, 0.25) 0px 20px 32px -8px;
-    width: 100%;
-    z-index: 600;
-    border-radius: 3px;
-    padding: 16px;
-    max-width: 600px;
-    transition: all 0.5s;
-}
+    .notification {
+        background-color: rgb(255, 255, 255);
+        box-sizing: border-box;
+        box-shadow: rgba(9, 30, 66, 0.31) 0px 0px 1px, rgba(9, 30, 66, 0.25) 0px 20px 32px -8px;
+        width: 100%;
+        z-index: 600;
+        border-radius: 3px;
+        padding: 16px;
+        max-width: 600px;
+        transition: all 0.5s;
+    }
 
-.icon {
-    margin-right: 8px;
-    flex: 0 0 auto;
-    vertical-align: middle;
-}
+    .icon {
+        margin-right: 8px;
+        flex: 0 0 auto;
+        vertical-align: middle;
+    }
 
-.header {
-    display: flex;
-    height: 32px;
-}
+    .header {
+        display: flex;
+        height: 32px;
+    }
 
-.title {
-    font-weight: 600;
-    flex: 1 1 0%;
-    line-height: 1.5;
-}
+    .title {
+        font-weight: 600;
+        flex: 1 1 0%;
+        line-height: 1.5;
+    }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 0px;
-    flex: 1 1 100%;
-    padding: 0px 0px 0px 40px;
-}
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0px;
+        flex: 1 1 100%;
+        padding: 0px 0px 0px 40px;
+    }
 
-.notification:not([appearance="default"]) .content {
-    max-height: 0px;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease 0s, opacity 0.3s ease 0s;
-}
+    .notification:not([appearance='default']) .content {
+        max-height: 0px;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease 0s, opacity 0.3s ease 0s;
+    }
 
-.notification:not([appearance="default"]) .content[expanded="true"] {
-    max-height: 150px;
-    opacity: 1;
-    overflow: visible;
-}
+    .notification:not([appearance='default']) .content[expanded='true'] {
+        max-height: 150px;
+        opacity: 1;
+        overflow: visible;
+    }
 
-.chevron {
-    cursor: pointer;
-}
+    .chevron {
+        cursor: pointer;
+    }
 
-.actions {
-    padding-top: 8px;
-}
+    .actions {
+        padding-top: 8px;
+    }
 
-.action ~ .action {
-    margin-left: 8px;
-}
+    .action ~ .action {
+        margin-left: 8px;
+    }
 
-[appearance="default"] .action {
-    color: #0052CC;
-    padding-left: 0;
-}
+    [appearance='default'] .action {
+        color: #0052cc;
+        padding-left: 0;
+    }
 
-.action {
-    background: rgba(255, 255, 255, 0.08);
-    padding: 0 8px;
-    height: 24px;
-    line-height: 24px;
-    display: inline-block;
-    color: inherit;
-    border-radius: 3px;
-    font-weight: bold;
-    outline: none;
-    cursor: pointer;
-}
+    .action {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 0 8px;
+        height: 24px;
+        line-height: 24px;
+        display: inline-block;
+        color: inherit;
+        border-radius: 3px;
+        font-weight: bold;
+        outline: none;
+        cursor: pointer;
+    }
 
-[appearance="warning"] .action {
-    background: rgba(9, 30, 66, 0.08);
-}
+    [appearance='warning'] .action {
+        background: rgba(9, 30, 66, 0.08);
+    }
 
-.action:last-of-type::before {
-    text-align: center;
-    vertical-align: middle;
-    display: inline-block;
-}
+    .action:last-of-type::before {
+        text-align: center;
+        vertical-align: middle;
+        display: inline-block;
+    }
 
-[appearance="error"] {
-    background-color: rgb(222, 53, 11);
-    color: #fff;
-}
+    [appearance='error'] {
+        background-color: rgb(222, 53, 11);
+        color: #fff;
+    }
 
-[appearance="info"] {
-    background-color: rgb(66, 82, 110);
-    color: #fff;
-}
+    [appearance='info'] {
+        background-color: rgb(66, 82, 110);
+        color: #fff;
+    }
 
-[appearance="success"] {
-    background-color: rgb(0, 135, 90);
-    color: #fff;
-}
+    [appearance='success'] {
+        background-color: rgb(0, 135, 90);
+        color: #fff;
+    }
 
-[appearance="warning"] {
-    background-color: rgb(255, 196, 0);
-}
+    [appearance='warning'] {
+        background-color: rgb(255, 196, 0);
+    }
 
-.chevron[expanded="true"] {
-    transform: rotateZ(180deg);
-}
+    .chevron[expanded='true'] {
+        transform: rotateZ(180deg);
+    }
 
-.flag-enter, .flag-leave-active {
-    opacity: 0;
-    transform: translateX(300px);
-}
+    .flag-enter,
+    .flag-leave-active {
+        opacity: 0;
+        transform: translateX(300px);
+    }
 
-.flag-left-enter, .flag-left-leave-active {
-    opacity: 0;
-    transform: translateX(-300px);
-}
+    .flag-left-enter,
+    .flag-left-leave-active {
+        opacity: 0;
+        transform: translateX(-300px);
+    }
 
-.close {
-    cursor: pointer;
-}
+    .close {
+        cursor: pointer;
+    }
 </style>

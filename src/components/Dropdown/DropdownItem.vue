@@ -1,7 +1,7 @@
 <template>
-    <div class="dropdown-item" v-on="$listeners" @click="$emit('select',value)">
+    <div class="dropdown-item" v-on="$listeners" @click="$emit('select', value)">
         <span class="dropdown-item-label">
-            <slot/>
+            <slot />
         </span>
     </div>
 </template>
@@ -45,7 +45,7 @@
     }
 
     .dropdown-item[disabled] {
-      cursor: not-allowed;
-      color: #5e6c84;
+        cursor: not-allowed;
+        color: #5e6c84;
     }
 </style>

@@ -10,10 +10,11 @@
         @start-editing="onStartEditing"
         @stop-editing="onStopEditing">
         <slot>
-            <MultiLineRenderer :value="value"/>
+            <MultiLineRenderer :value="value" />
         </slot>
         <TextArea
-            slot="editor" slot-scope="{ value, input, isFocused, isInvalid, isLoading, blur, focus, confirm, cancel }"
+            slot="editor"
+            slot-scope="{ value, input, isFocused, isInvalid, isLoading, blur, focus, confirm, cancel }"
             :value="value"
             :is-focused="isFocused"
             :is-invalid="isInvalid"
@@ -24,11 +25,11 @@
             @keyup.esc="cancel"
             @input="onInput($event, input)"
             @blur="blur"
-            @focus="focus"/>
+            @focus="focus" />
     </InlineEdit>
     <div v-else>
         <slot>
-            <MultiLineRenderer :value="value"/>
+            <MultiLineRenderer :value="value" />
         </slot>
     </div>
 </template>

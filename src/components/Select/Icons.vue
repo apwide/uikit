@@ -1,14 +1,14 @@
 <template>
     <div class="icons">
-        <Spinner v-if="isFetching" class="spinner-icon" size="icon"/>
+        <Spinner v-if="isFetching" class="spinner-icon" size="icon" />
         <Clear
             v-if="shouldShowClearIcon"
             size="xsmall"
             class="clear-icon"
             primary-color="#A5ADBA"
-            @click.native="onClear"/>
+            @click.native="onClear" />
         <slot>
-            <Caret v-if="!createable" size="xsmall"/>
+            <Caret v-if="!createable" size="xsmall" />
         </slot>
     </div>
 </template>
@@ -53,19 +53,19 @@
 </script>
 
 <style scoped>
-.icons {
-    display: inline-flex;
-    align-items: center;
-    position: absolute;
-    right: 6px;
-}
+    .icons {
+        display: inline-flex;
+        align-items: center;
+        position: absolute;
+        right: 6px;
+    }
 
-.clear-icon,
-.spinner-icon {
-    margin-right: 3px;
-}
+    .clear-icon,
+    .spinner-icon {
+        margin-right: 3px;
+    }
 
-.clear-icon:hover {
-    cursor: pointer;
-}
+    .clear-icon:hover {
+        cursor: pointer;
+    }
 </style>

@@ -14,10 +14,12 @@
         @save-requested="onSaveRequested">
         <template #editor="props">
             <TextField
-                :compact="props.compact" :is-disabled="props.isLoading"
+                :compact="props.compact"
+                :is-disabled="props.isLoading"
                 :is-focused="props.isFocused"
                 :is-invalid="!!props.error"
-                :is-loading="props.isLoading" style="width: 100%"
+                :is-loading="props.isLoading"
+                style="width: 100%"
                 @click.stop>
                 <input
                     ref="input"
@@ -29,21 +31,21 @@
                     @input="props.input($event.target.value)"
                     @blur.stop.prevent="onBlur(props.blur, $event)"
                     @keydown.meta.enter="props.confirm"
-                    @keydown.exact.esc="props.cancel">
+                    @keydown.exact.esc="props.cancel" />
 
                 <KitIconButton :title="title" @click.stop.prevent="toggleFieldType">
-                    <KitIcon v-if="obfuscated" type="eye"/>
+                    <KitIcon v-if="obfuscated" type="eye" />
                     <KitIcon v-else type="eye-slash" />
                 </KitIconButton>
             </TextField>
         </template>
         <slot>
-            <SecureStringLineRenderer :html-value="htmlValue" :value="value"/>
+            <SecureStringLineRenderer :html-value="htmlValue" :value="value" />
         </slot>
     </InlineEdit>
     <div v-else>
         <slot>
-            <SecureStringLineRenderer :html-value="htmlValue" :value="value"/>
+            <SecureStringLineRenderer :html-value="htmlValue" :value="value" />
         </slot>
     </div>
 </template>

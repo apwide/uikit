@@ -1,13 +1,14 @@
 <template>
     <div class="footer">
         <Button
-            :auto-focus="autoFocus" type="submit" :is-disabled="pending || !shouldAllowSubmit"
-            :is-loading="pending" :appearance="appearance">
+            :auto-focus="autoFocus"
+            type="submit"
+            :is-disabled="pending || !shouldAllowSubmit"
+            :is-loading="pending"
+            :appearance="appearance">
             {{ submit }}
         </Button>
-        <Button
-            v-if="cancel" appearance="subtle" :is-disabled="pending"
-            @click="onCancel">
+        <Button v-if="cancel" appearance="subtle" :is-disabled="pending" @click="onCancel">
             {{ cancel }}
         </Button>
     </div>
@@ -66,8 +67,8 @@
 </script>
 
 <style scoped>
-.footer {
-    display: flex;
-    justify-content: flex-end;
-}
+    .footer {
+        display: flex;
+        justify-content: flex-end;
+    }
 </style>

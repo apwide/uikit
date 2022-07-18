@@ -1,17 +1,19 @@
 <template>
-    <FontAwesomeIcon
-        class="kit-icon"
-        :icon="icon" :title="title" :size="iconSize"
-        :style="style" />
+    <FontAwesomeIcon class="kit-icon" :icon="icon" :title="title" :size="iconSize" :style="style" />
 </template>
-<script>
+<script lang="ts">
     import { library } from '@fortawesome/fontawesome-svg-core';
     import {
-        faAtlassian as brandsAtlassian, faGithub as brandsGithub, faMicrosoft as brandsMicrosoft, faSlack as brandsSlack
+        faAtlassian as brandsAtlassian,
+        faGithub as brandsGithub,
+        faMicrosoft as brandsMicrosoft,
+        faSlack as brandsSlack
     } from '@fortawesome/free-brands-svg-icons';
     import {
         faAngleDown,
-        faAngleRight, faArrowDown, faArrowUp,
+        faAngleRight,
+        faArrowDown,
+        faArrowUp,
         faAt,
         faCalendar,
         faCalendarAlt,
@@ -20,19 +22,23 @@
         faChevronLeft,
         faChevronRight,
         faCog,
-        faDownload, faEdit,
+        faDownload,
+        faEdit,
         faEllipsisH,
         faExternalLinkAlt,
         faEye,
         faEyeSlash,
         faHome,
-        faInfoCircle, faPen,
+        faInfoCircle,
+        faPen,
         faPlug,
         faPlus,
         faPlusCircle,
         faQuestionCircle,
         faRobot,
-        faSearch, faSearchMinus, faSearchPlus,
+        faSearch,
+        faSearchMinus,
+        faSearchPlus,
         faShareAlt,
         faShareAltSquare,
         faSlidersH,
@@ -41,7 +47,8 @@
         faTh,
         faThList,
         faTimes,
-        faTrash, faUndo,
+        faTrash,
+        faUndo,
         faUser,
         faUsers,
         faUsersCog,
@@ -126,9 +133,6 @@
         faSearchPlus,
         faChevronLeft,
         faDownload,
-        faAtlassian,
-        faGithub,
-        faSearch,
         faSearchMinus,
         faTimes,
         faShareAltSquare,
@@ -177,7 +181,7 @@
         faVideo
     );
 
-    function prefix(/** @type: string */ style) {
+    function prefix(style: string) {
         if (style === 'solid') {
             return 'fas';
         }
@@ -203,7 +207,7 @@
                 type: String,
                 default: 'solid',
                 required: false,
-                validator(v) {
+                validator(v: string) {
                     return ['solid', 'regular', 'brands'].includes(v);
                 }
             },
@@ -238,15 +242,14 @@
             }
         },
         computed: {
-            icon() {
+            icon(): Record<'prefix' | 'iconName', string> {
                 return {
                     prefix: prefix(this.iconStyle),
                     iconName: this.type
                 };
             },
-            style() {
-                /** @type CSSStyleDeclaration */
-                const style = this.$props.style || {};
+            style(): CSSStyleDeclaration {
+                const style: CSSStyleDeclaration = this.$props.style! || {};
                 if (this.color && this.color !== 'inherit') {
                     style.color = this.color;
                 }
@@ -264,14 +267,12 @@
                 }
                 return style;
             },
-            iconSize() {
+            iconSize(): string {
                 if (/(em|px)$/.test(this.size)) {
                     return '1x';
                 }
-                return this.size;
+                return this.size || '';
             }
         }
     });
-
-
 </script>

@@ -1,12 +1,8 @@
 <template>
-    <InlineEdit
-        v-if="editable"
-        :value="timestamp"
-        type="date"
-        :placement="placement"
-        @save-requested="onSaveRequested">
+    <InlineEdit v-if="editable" :value="timestamp" type="date" :placement="placement" @save-requested="onSaveRequested">
         <DatePicker
-            slot="editor" slot-scope="props"
+            slot="editor"
+            slot-scope="props"
             :value="props.value"
             :is-invalid="props.isInvalid"
             :is-focused="props.isFocused"
@@ -15,10 +11,10 @@
             @blur="props.blur"
             @focus="props.focus"
             @confirm="props.confirm"
-            @keyup.esc="props.cancel"/>
-        <DateRenderer :date="timestamp"/>
+            @keyup.esc="props.cancel" />
+        <DateRenderer :date="timestamp" />
     </InlineEdit>
-    <DateRenderer v-else :date="timestamp"/>
+    <DateRenderer v-else :date="timestamp" />
 </template>
 
 <script>

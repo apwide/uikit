@@ -1,13 +1,9 @@
 <template>
-    <Tooltip
-        :label="tooltip" :placement="placement" :spacing="spacing"
-        :disabled="hasTitle">
+    <Tooltip :label="tooltip" :placement="placement" :spacing="spacing" :disabled="hasTitle">
         <div class="content" :title="displayedTitle" @click.stop.prevent="onClick">
             <slot :copied="copied">
                 <Button :appearance="appearance">
-                    <KitIcon
-                        v-if="!copied" :type="iconType" :size="iconSize"
-                        :icon-style="iconStyle" />
+                    <KitIcon v-if="!copied" :type="iconType" :size="iconSize" :icon-style="iconStyle" />
                     <KitIcon v-else type="check" />
                 </Button>
             </slot>
@@ -92,7 +88,7 @@
 </script>
 
 <style scoped>
-.content {
-    display: flex;
-}
+    .content {
+        display: flex;
+    }
 </style>

@@ -1,14 +1,13 @@
 <template>
     <div
-        ref="label" class="node-label" :current="current"
+        ref="label"
+        class="node-label"
+        :current="current"
         :selected="checked"
         :style="{ 'padding-left': `${indent}px` }"
         :indent-left="$slots['chevron']">
-        <slot name="chevron"/>
-        <Checkbox
-            v-model="checked"
-            :value="node.id"
-            class="label">
+        <slot name="chevron" />
+        <Checkbox v-model="checked" :value="node.id" class="label">
             <slot>{{ node.label }}</slot>
         </Checkbox>
     </div>
@@ -93,37 +92,37 @@
 </script>
 
 <style scoped>
-.label :deep(.icon),
-.label :deep(.indeterminate) {
-    display: none;
-}
+    .label :deep(.icon),
+    .label :deep(.indeterminate) {
+        display: none;
+    }
 
-.node-label {
-    font-size: inherit;
-    width: 100%;
-    box-sizing: border-box;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: flex;
-    align-items: center;
-}
+    .node-label {
+        font-size: inherit;
+        width: 100%;
+        box-sizing: border-box;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+    }
 
-.label {
-    padding: 6px 6px 6px 0;
-    flex-grow: 1;
-}
+    .label {
+        padding: 6px 6px 6px 0;
+        flex-grow: 1;
+    }
 
-.node-label[selected] {
-    background-color: #42526E;
-    color: #fff;
-}
+    .node-label[selected] {
+        background-color: #42526e;
+        color: #fff;
+    }
 
-.node-label[current] {
-    background-color: #EBECF0;
-    color: inherit;
-}
+    .node-label[current] {
+        background-color: #ebecf0;
+        color: inherit;
+    }
 
-:deep(input:not([is-invalid]):focus + .icon rect) {
-    /*stroke: #dfe1e6;*/
-}
+    :deep(input:not([is-invalid]):focus + .icon rect) {
+        /*stroke: #dfe1e6;*/
+    }
 </style>

@@ -1,12 +1,11 @@
 <template>
     <div class="kit-field-group">
         <div class="top">
-            <span class="kit-field-group__label">{{ label }}</span><slot name="after"/>
+            <span class="kit-field-group__label">{{ label }}</span
+            ><slot name="after" />
         </div>
-        <slot/>
-        <div
-            v-for="error in errors" ref="error" :key="error"
-            class="kit-field-group__error-message">
+        <slot />
+        <div v-for="error in errors" ref="error" :key="error" class="kit-field-group__error-message">
             {{ error }}
         </div>
     </div>
@@ -50,7 +49,7 @@
     }
 
     [required] .kit-field-group__label::after {
-        color: #DE350B;
+        color: #de350b;
         font-size: 12px;
         line-height: 1.33;
         font-weight: 600;

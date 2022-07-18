@@ -1,62 +1,62 @@
 <template>
     <div ref="date-picker" class="date-picker" @click.stop>
         <TextField
-            :is-focused="focused" :is-loading="isLoading" :disabled="isLoading"
-            :is-invalid="isInvalid" select @mousedown="toggle">
+            :is-focused="focused"
+            :is-loading="isLoading"
+            :disabled="isLoading"
+            :is-invalid="isInvalid"
+            select
+            @mousedown="toggle">
             <div class="input-from-wrapper">
                 <span class="input-from-ghost">{{ formattedDateFrom || `e.g. ${placeholderDate}` }}</span>
                 <input
-                    ref="input-from" :value="formattedDateFrom" type="text"
+                    ref="input-from"
+                    :value="formattedDateFrom"
+                    type="text"
                     class="input-from"
-                    :placeholder="`e.g. ${placeholderDate}`" :disabled="isLoading"
-                    v-on="listeners" @keydown.enter="onEnter"
-                    @input="onInputFrom" @keyup.esc="onEsc"
-                    @focus="onFocus" @blur="onBlur">
+                    :placeholder="`e.g. ${placeholderDate}`"
+                    :disabled="isLoading"
+                    v-on="listeners"
+                    @keydown.enter="onEnter"
+                    @input="onInputFrom"
+                    @keyup.esc="onEsc"
+                    @focus="onFocus"
+                    @blur="onBlur" />
             </div>
             <span>-</span>
             <input
-                ref="input-to" :value="formattedDateTo" type="text"
+                ref="input-to"
+                :value="formattedDateTo"
+                type="text"
                 class="input-to"
-                :placeholder="placeholderDate" :disabled="isLoading"
-                v-on="listeners" @keydown.enter="onEnter"
-                @input="onInputTo" @keyup.esc="onEsc"
-                @focus="onFocus" @blur="onBlur">
-            <CalendarIcon
-                class="icon" size="small" :disabled-range="disabledRange"
-                @mousedown.native.prevent/>
+                :placeholder="placeholderDate"
+                :disabled="isLoading"
+                v-on="listeners"
+                @keydown.enter="onEnter"
+                @input="onInputTo"
+                @keyup.esc="onEsc"
+                @focus="onFocus"
+                @blur="onBlur" />
+            <CalendarIcon class="icon" size="small" :disabled-range="disabledRange" @mousedown.native.prevent />
         </TextField>
         <Popup :is-open="isOpen" :target-element="$refs['date-picker']" placement="bottom-start">
             <div class="date-range">
                 <Calendar
-                    :value="dateRange" :range-value="true" :visible-date="visibleDate"
+                    :value="dateRange"
+                    :range-value="true"
+                    :visible-date="visibleDate"
                     :time-zone="timeZone"
-                    @date-selected="onDateSelected"/>
+                    @date-selected="onDateSelected" />
                 <div v-if="showQuickRanges" class="quick-ranges" tabindex="-1">
                     <DropdownGroup label="Quick ranges">
-                        <DropdownItem @click="onQuickRange('this-week')">
-                            This week
-                        </DropdownItem>
-                        <DropdownItem @click="onQuickRange('this-month')">
-                            This month
-                        </DropdownItem>
-                        <DropdownItem @click="onQuickRange('last-week')">
-                            Last week
-                        </DropdownItem>
-                        <DropdownItem @click="onQuickRange('last-month')">
-                            Last month
-                        </DropdownItem>
-                        <DropdownItem @click="onQuickRange('last-7days')">
-                            Last 7 days
-                        </DropdownItem>
-                        <DropdownItem @click="onQuickRange('last-30days')">
-                            Last 30 days
-                        </DropdownItem>
-                        <DropdownItem @click="onQuickRange('this-year')">
-                            This year
-                        </DropdownItem>
-                        <DropdownItem @click="onQuickRange('last-year')">
-                            Last year
-                        </DropdownItem>
+                        <DropdownItem @click="onQuickRange('this-week')"> This week </DropdownItem>
+                        <DropdownItem @click="onQuickRange('this-month')"> This month </DropdownItem>
+                        <DropdownItem @click="onQuickRange('last-week')"> Last week </DropdownItem>
+                        <DropdownItem @click="onQuickRange('last-month')"> Last month </DropdownItem>
+                        <DropdownItem @click="onQuickRange('last-7days')"> Last 7 days </DropdownItem>
+                        <DropdownItem @click="onQuickRange('last-30days')"> Last 30 days </DropdownItem>
+                        <DropdownItem @click="onQuickRange('this-year')"> This year </DropdownItem>
+                        <DropdownItem @click="onQuickRange('last-year')"> Last year </DropdownItem>
                     </DropdownGroup>
                 </div>
             </div>
@@ -67,8 +67,22 @@
 <script>
     import format from 'date-fns/format';
     import {
-        fromUnixTime, parse, isValid, isBefore, isAfter, startOfWeek, endOfWeek,
-        startOfMonth, endOfMonth, subMonths, subWeeks, subDays, startOfYear, endOfYear, subYears, getTime
+        fromUnixTime,
+        parse,
+        isValid,
+        isBefore,
+        isAfter,
+        startOfWeek,
+        endOfWeek,
+        startOfMonth,
+        endOfMonth,
+        subMonths,
+        subWeeks,
+        subDays,
+        startOfYear,
+        endOfYear,
+        subYears,
+        getTime
     } from 'date-fns';
     import TextField from '../Form/TextField.vue';
     import Calendar from './Calendar.vue';
@@ -82,7 +96,12 @@
     export default {
         name: 'DateRangePicker',
         components: {
-            TextField, Calendar, Popup, CalendarIcon, DropdownItem, DropdownGroup
+            TextField,
+            Calendar,
+            Popup,
+            CalendarIcon,
+            DropdownItem,
+            DropdownGroup
         },
         props: {
             value: {
@@ -187,14 +206,16 @@
             listeners() {
                 const {
                     // eslint-disable-next-line no-unused-vars
-                    focus, blur, input, ...listeners
+                    focus,
+                    blur,
+                    input,
+                    ...listeners
                 } = this.$listeners;
                 return listeners;
             },
             placeholderDate() {
                 return format(new Date(), this.dateFormat);
             }
-
         },
         watch: {
             isFocused: {
@@ -255,7 +276,8 @@
                 }
                 const focusedInput = this.getFocusedInput();
                 if (focusedInput) {
-                    this.visibleDate = focusedInput === this.$refs['input-from'] ? this.selectedDateFrom : this.selectedDateTo;
+                    this.visibleDate =
+                        focusedInput === this.$refs['input-from'] ? this.selectedDateFrom : this.selectedDateTo;
                 }
             },
             onBlur(e) {

@@ -1,18 +1,28 @@
 <template>
     <div ref="calendar" class="calendar" tabindex="-1">
         <CalendarHeader
-            :month="month" :year="year" :decade="decade"
+            :month="month"
+            :year="year"
+            :decade="decade"
             :current-interval="currentInterval"
             data-cy="header"
             @change-interval="onIntervalChange"
-            @next="onNext" @prev="onPrev"/>
+            @next="onNext"
+            @prev="onPrev" />
         <Weeks
-            v-if="currentInterval === 'days'" :weeks="weeks" :disabled-range="disabledRange"
-            @date-selected="onDateSelected"/>
-        <Months v-else-if="currentInterval === 'months'" :disabled-range="disabledRange" @month-selected="onMonthSelected"/>
+            v-if="currentInterval === 'days'"
+            :weeks="weeks"
+            :disabled-range="disabledRange"
+            @date-selected="onDateSelected" />
+        <Months
+            v-else-if="currentInterval === 'months'"
+            :disabled-range="disabledRange"
+            @month-selected="onMonthSelected" />
         <Years
-            v-else :years-of-decade="yearsOfDecade" :disabled-range="disabledRange"
-            @year-selected="onYearSelected"/>
+            v-else
+            :years-of-decade="yearsOfDecade"
+            :disabled-range="disabledRange"
+            @year-selected="onYearSelected" />
     </div>
 </template>
 
@@ -34,10 +44,7 @@
         setYear,
         setMonth
     } from 'date-fns';
-    import {
-        utcToZonedTime,
-        zonedTimeToUtc
-    } from 'date-fns-tz';
+    import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 
     import { chunk } from '../../utils/utils';
     import CalendarHeader from './CalendarHeader.vue';
@@ -45,14 +52,30 @@
     import Months from './Months.vue';
     import Years from './Years.vue';
 
-    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const MONTHS = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+    ];
     const DAYS_IN_WEEK = 7;
     const TODAY = new Date();
 
     export default {
         name: 'DatePicker',
         components: {
-            CalendarHeader, Weeks, Months, Years
+            CalendarHeader,
+            Weeks,
+            Months,
+            Years
         },
         props: {
             value: {
@@ -109,13 +132,15 @@
                     start: startOfWeek(monthFirstDate),
                     end: lastDayOfWeek(monthLastDate)
                 });
-                const enrichedDays = daysOfMonth.map(day => this.enrichDay(day));
+                const enrichedDays = daysOfMonth.map((day) => this.enrichDay(day));
                 return chunk(enrichedDays, DAYS_IN_WEEK);
             },
             yearsOfDecade() {
                 const start = startOfDecade(this.currentDate).getFullYear();
                 const end = endOfDecade(this.currentDate).getFullYear();
-                return Array(end - start + 1).fill().map((_, idx) => start + idx);
+                return Array(end - start + 1)
+                    .fill()
+                    .map((_, idx) => start + idx);
             },
             disabledFrom() {
                 return this.disabledRange && this.disabledRange.from && startOfDay(this.disabledRange.from);
@@ -170,9 +195,11 @@
             isDisabled(date) {
                 if (!this.disabledFrom && !this.disabledTo) {
                     return false;
-                } if (!this.disabledFrom) {
+                }
+                if (!this.disabledFrom) {
                     return !isAfter(date, this.disabledTo);
-                } if (!this.disabledTo) {
+                }
+                if (!this.disabledTo) {
                     return !isBefore(date, this.disabledFrom);
                 }
                 return !isAfter(date, this.disabledTo) && !isBefore(date, this.disabledFrom);
@@ -217,8 +244,8 @@
 </script>
 
 <style scoped>
-.calendar {
-    padding: 15px;
-    width: 301px;
-}
+    .calendar {
+        padding: 15px;
+        width: 301px;
+    }
 </style>

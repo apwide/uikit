@@ -41,27 +41,27 @@
         cursor: default;
     }
 
-    .status[status-color="medium-gray"] {
+    .status[status-color='medium-gray'] {
         background-color: #dfe1e6;
         color: #42526e;
     }
 
-    .status[status-color="green"] {
+    .status[status-color='green'] {
         background-color: #e3fcef;
         color: #064;
     }
 
-    .status[status-color="yellow"] {
+    .status[status-color='yellow'] {
         background-color: #fff0b3;
         color: #172b4d;
     }
 
-    .status[status-color="warm-red"] {
+    .status[status-color='warm-red'] {
         background-color: #ffebe6;
         color: #bf2600;
     }
 
-    .status[status-color="blue-gray"] {
+    .status[status-color='blue-gray'] {
         background-color: #deebff;
         color: #0747a6;
     }

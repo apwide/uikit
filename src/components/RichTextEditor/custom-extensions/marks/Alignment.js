@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Mark } from 'tiptap';
-import { alignment } from '@atlaskit/adf-schema'
+import { alignment } from '@atlaskit/adf-schema';
 
 export default class Alignment extends Mark {
     get name() {
@@ -14,13 +14,13 @@ export default class Alignment extends Mark {
                 return [
                     'div',
                     {
-                        class: `fabric-editor-block-mark fabric-editor-align-${mark.attrs.align}`,
+                        'class': `fabric-editor-block-mark fabric-editor-align-${mark.attrs.align}`,
                         'data-align': mark.attrs.align,
-                        style: 'text-align: ' + mark.attrs.align
+                        'style': 'text-align: ' + mark.attrs.align
                     },
-                    0,
+                    0
                 ];
-            },
+            }
         };
     }
 }

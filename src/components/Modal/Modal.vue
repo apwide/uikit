@@ -6,18 +6,22 @@
                     <slot>
                         <header v-if="!noHeader">
                             <slot name="header">
-                                <Header :heading="heading" :appearance="appearance"/>
+                                <Header :heading="heading" :appearance="appearance" />
                             </slot>
                         </header>
                         <div class="content">
-                            <slot name="content"/>
+                            <slot name="content" />
                         </div>
                         <footer v-if="!noFooter">
                             <slot name="footer">
-                                <slot name="progress"/>
+                                <slot name="progress" />
                                 <Footer
-                                    :actions="actions" :auto-focus="autoFocus" :appearance="appearance"
-                                    :should-allow-submit="shouldAllowSubmit" :pending="pending" @cancel="onCancel"/>
+                                    :actions="actions"
+                                    :auto-focus="autoFocus"
+                                    :appearance="appearance"
+                                    :should-allow-submit="shouldAllowSubmit"
+                                    :pending="pending"
+                                    @cancel="onCancel" />
                             </slot>
                         </footer>
                     </slot>
@@ -37,7 +41,10 @@
     export default {
         name: 'Modal',
         components: {
-            Blanket, PositionerAbsolute, Header, Footer
+            Blanket,
+            PositionerAbsolute,
+            Header,
+            Footer
         },
         props: {
             heading: {
@@ -134,9 +141,8 @@
 <style scoped>
     .modal-container {
         background-color: rgb(255, 255, 255);
-        box-shadow: rgba(9, 30, 66, 0.08) 0 0 0 1px,
-        rgba(9, 30, 66, 0.08) 0 2px 1px,
-        rgba(9, 30, 66, 0.31) 0 0 20px -6px;
+        box-shadow: rgba(9, 30, 66, 0.08) 0 0 0 1px, rgba(9, 30, 66, 0.08) 0 2px 1px,
+            rgba(9, 30, 66, 0.31) 0 0 20px -6px;
         color: rgb(9, 30, 66);
         display: flex;
         flex-direction: column;
@@ -173,7 +179,8 @@
         transform: translateY(-20px);
     }
 
-    header, footer {
+    header,
+    footer {
         align-items: center;
         display: flex;
         z-index: 1;
@@ -188,7 +195,7 @@
     }
 </style>
 <style>
-body.kit-modal-is-open {
-  overflow: hidden !important;
-}
+    body.kit-modal-is-open {
+        overflow: hidden !important;
+    }
 </style>

@@ -1,24 +1,19 @@
 <template>
     <div ref="overflowContainer" class="multiselect overflow-container">
-        <span
-            v-for="(value, i) in visibleValues" :key="i" ref="tag"
-            class="tag" :title="value">
+        <span v-for="(value, i) in visibleValues" :key="i" ref="tag" class="tag" :title="value">
             {{ value }}
         </span>
         <Button
-            v-if="hiddenValues.length > 0" ref="target" spacing="none"
+            v-if="hiddenValues.length > 0"
+            ref="target"
+            spacing="none"
             :is-selected="isOpen"
             @click="toggleDropdown">
             +{{ hiddenValues.length }}
         </Button>
-        <Popper
-            v-if="isOpen" ref="popper" :target-element="$refs.target.$el"
-            offset="0,5"
-            placement="bottom-end">
+        <Popper v-if="isOpen" ref="popper" :target-element="$refs.target.$el" offset="0,5" placement="bottom-end">
             <div ref="dropdown" class="dropdown-list">
-                <div
-                    v-for="(value, i) in hiddenValues" :key="i" class="item"
-                    :title="value">
+                <div v-for="(value, i) in hiddenValues" :key="i" class="item" :title="value">
                     {{ value }}
                 </div>
             </div>
@@ -79,7 +74,10 @@
                     this.breakPoints[this.visibleCount] = overflowContainer.clientWidth;
                     this.visibleCount -= 1;
                 }
-                while (overflowContainer.clientWidth > this.breakPoints[this.visibleCount + 1] && this.visibleCount < this.selectedValues.length) {
+                while (
+                    overflowContainer.clientWidth > this.breakPoints[this.visibleCount + 1] &&
+                    this.visibleCount < this.selectedValues.length
+                ) {
                     this.visibleCount += 1;
                 }
             },
@@ -123,7 +121,8 @@
         margin-left: 0;
     }
 
-    .multiselect > .tag:last-child, .ellipsis {
+    .multiselect > .tag:last-child,
+    .ellipsis {
         margin-right: 0;
     }
 

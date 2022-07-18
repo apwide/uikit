@@ -1,6 +1,6 @@
 <template>
     <component :is="tag" ref="infinite-scroll-loader" class="infinite-scroll-loader">
-        <Spinner size="small"/>
+        <Spinner size="small" />
     </component>
 </template>
 
@@ -50,11 +50,11 @@
 </script>
 
 <style scoped>
-.infinite-scroll-loader {
-    box-sizing: border-box;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    padding: 5px;
-}
+    .infinite-scroll-loader {
+        box-sizing: border-box;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        padding: 5px;
+    }
 </style>

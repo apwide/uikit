@@ -11,14 +11,14 @@
         v-on="$listeners"
         @open="loadInitialOptions"
         @search-change="debouncedGetUsers">
-        <div slot="option" slot-scope="{option}" class="label">
-            <UserRenderer tag="span" :user="option"/>
+        <div slot="option" slot-scope="{ option }" class="label">
+            <UserRenderer tag="span" :user="option" />
         </div>
-        <div slot="selected" slot-scope="{selected}" class="label">
-            <UserRenderer tag="span" :user="selected"/>
+        <div slot="selected" slot-scope="{ selected }" class="label">
+            <UserRenderer tag="span" :user="selected" />
         </div>
-        <div slot="tag" slot-scope="{tag}" class="user-tag">
-            <UserRenderer appearance="micro" tag="span" :user="tag.value"/>
+        <div slot="tag" slot-scope="{ tag }" class="user-tag">
+            <UserRenderer appearance="micro" tag="span" :user="tag.value" />
         </div>
     </Select>
 </template>
@@ -50,7 +50,7 @@
             },
             mapper: {
                 type: Function,
-                default: list => list
+                default: (list) => list
             },
             placeholder: {
                 type: String,

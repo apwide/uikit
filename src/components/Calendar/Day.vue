@@ -1,12 +1,13 @@
 <template>
-    <td
-        class="day" :highlighted="isHighlighted" :range-start="isRangeStart"
-        :range-end="isRangeEnd">
+    <td class="day" :highlighted="isHighlighted" :range-start="isRangeStart" :range-end="isRangeEnd">
         <Button
-            appearance="subtle" class="date" :today="day.isToday"
+            appearance="subtle"
+            class="date"
+            :today="day.isToday"
             :disabled="isDisabled"
             :is-not-same-month="day.isNotSameMonth"
-            :is-selected="day.isSelected" @click.stop="onDateSelected">
+            :is-selected="day.isSelected"
+            @click.stop="onDateSelected">
             {{ date }}
         </Button>
     </td>
@@ -50,42 +51,41 @@
 </script>
 
 <style scoped>
+    .date {
+        width: 100%;
+    }
 
-.date{
-    width: 100%;
-}
+    [highlighted] {
+        background-color: rgb(244, 245, 247);
+    }
 
-[highlighted] {
-    background-color: rgb(244, 245, 247);
-}
+    [range-start] [selected] {
+        border-radius: 3px 0 0 3px;
+    }
 
-[range-start] [selected] {
-    border-radius: 3px 0 0 3px;
-}
+    [range-end] [selected] {
+        border-radius: 0 3px 3px 0;
+    }
 
-[range-end] [selected] {
-    border-radius: 0 3px 3px 0;
-}
+    [today] {
+        font-weight: 500;
+        background-color: transparent;
+        position: relative;
+        color: #0052cc;
+    }
 
-[today] {
-    font-weight: 500;
-    background-color: transparent;
-    position: relative;
-    color: #0052CC;
-}
+    [today]::after {
+        background-color: #0052cc;
+        bottom: 2px;
+        content: '';
+        display: block;
+        height: 2px;
+        left: 2px;
+        position: absolute;
+        right: 2px;
+    }
 
-[today]::after {
-    background-color: #0052CC;
-    bottom: 2px;
-    content: "";
-    display: block;
-    height: 2px;
-    left: 2px;
-    position: absolute;
-    right: 2px;
-}
-
-[is-not-same-month]:not([today]) {
-    color: #cacaca;
-}
+    [is-not-same-month]:not([today]) {
+        color: #cacaca;
+    }
 </style>

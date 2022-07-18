@@ -1,8 +1,6 @@
 <template>
     <div class="kit-modal-header__header">
-        <component
-            :is="icon" v-if="appearance" class="kit-modal-header__icon"
-            :primary-color="color"/>
+        <component :is="icon" v-if="appearance" class="kit-modal-header__icon" :primary-color="color" />
         <h1 class="kit-modal-header__title">
             {{ heading }}
         </h1>
@@ -38,16 +36,16 @@
 </script>
 
 <style scoped>
-.kit-modal-header__header {
-    display: flex;
-    align-items: center;
-}
+    .kit-modal-header__header {
+        display: flex;
+        align-items: center;
+    }
 
-.kit-modal-header__icon {
-    margin-right: 8px;
-}
+    .kit-modal-header__icon {
+        margin-right: 8px;
+    }
 
-.kit-modal-header__title {
-    margin-top: 0;
-}
+    .kit-modal-header__title {
+        margin-top: 0;
+    }
 </style>

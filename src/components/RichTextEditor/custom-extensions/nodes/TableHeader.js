@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { tableHeader } from '@atlaskit/adf-schema'
+import { tableHeader } from '@atlaskit/adf-schema';
 
 export default class TableCell extends Node {
     get name() {

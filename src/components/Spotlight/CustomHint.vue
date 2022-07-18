@@ -6,13 +6,15 @@
                     <span>{{ title }}</span>
                 </h4>
                 <CrossIcon
-                    class="close-icon" :primary-color="color" size="small"
+                    class="close-icon"
+                    :primary-color="color"
+                    size="small"
                     @click.native="onClose"
                     @mouseenter.native="onEnter"
-                    @mouseleave.native="onLeave"/>
+                    @mouseleave.native="onLeave" />
             </header>
             <div ref="content" class="content">
-                <slot/>
+                <slot />
             </div>
         </div>
     </transition>
@@ -91,7 +93,6 @@
 </script>
 
 <style scoped>
-
     .spotlight-message {
         z-index: 9999999;
         color: rgb(255, 255, 255);
@@ -126,17 +127,19 @@
         vertical-align: middle;
     }
 
-    .fade-in-enter-active, .fade-in-leave-active {
-        transition: opacity .1s ease-out;
+    .fade-in-enter-active,
+    .fade-in-leave-active {
+        transition: opacity 0.1s ease-out;
     }
 
-    .fade-in-enter, .fade-in-leave-to {
+    .fade-in-enter,
+    .fade-in-leave-to {
         opacity: 0;
     }
 
     .content {
         margin-right: 30px;
-        color: #FFF;
+        color: #fff;
     }
 
     .close-icon:hover {

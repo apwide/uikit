@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Mark } from 'tiptap';
-import { strong } from '@atlaskit/adf-schema'
+import { strong } from '@atlaskit/adf-schema';
 import { toggleMark, markInputRule, markPasteRule } from 'tiptap-commands';
 
 export default class Bold extends Mark {
@@ -23,14 +23,10 @@ export default class Bold extends Mark {
     }
 
     inputRules({ type }) {
-        return [
-            markInputRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type)
-        ];
+        return [markInputRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type)];
     }
 
     pasteRules({ type }) {
-        return [
-            markPasteRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)/g, type)
-        ];
+        return [markPasteRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)/g, type)];
     }
 }

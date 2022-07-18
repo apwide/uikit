@@ -2,8 +2,7 @@
 import { Node } from 'tiptap';
 import { wrappingInputRule } from 'tiptap-commands';
 import { orderedList } from '@atlaskit/adf-schema';
-import { toggleList } from "../commands/toggleList";
-
+import { toggleList } from '../commands/toggleList';
 
 export default class OrderedList extends Node {
     get name() {
@@ -29,11 +28,9 @@ export default class OrderedList extends Node {
             wrappingInputRule(
                 /^(\d+)\.\s$/,
                 type,
-                match => ({ order: +match[1] }),
-                (match, node) => node.childCount + node.attrs.order === +match[1],
+                (match) => ({ order: +match[1] }),
+                (match, node) => node.childCount + node.attrs.order === +match[1]
             )
         ];
     }
 }
-
-

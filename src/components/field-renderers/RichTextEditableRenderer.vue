@@ -1,25 +1,26 @@
 <template>
     <div ref="editor" class="rich-text-editable-renderer">
         <RichTextEditor
-            v-model="content" :editable="isEditing" :empty-field-text="emptyFieldText"
-            :base-url="baseUrl" @edit-requested="onEditRequested">
+            v-model="content"
+            :editable="isEditing"
+            :empty-field-text="emptyFieldText"
+            :base-url="baseUrl"
+            @edit-requested="onEditRequested">
             <template #actions>
                 <div class="buttons">
                     <Button
-                        type="submit" :is-loading="isLoading" :is-disabled="isDisabled"
+                        type="submit"
+                        :is-loading="isLoading"
+                        :is-disabled="isDisabled"
                         appearance="primary"
                         @click="onSave">
                         Save
                     </Button>
-                    <Button @click="onCancel">
-                        Cancel
-                    </Button>
+                    <Button @click="onCancel"> Cancel </Button>
                 </div>
             </template>
         </RichTextEditor>
-        <InlineErrorMessage
-            v-if="error" :error="error" :target-element="$refs['editor']"
-            :placement="placement"/>
+        <InlineErrorMessage v-if="error" :error="error" :target-element="$refs['editor']" :placement="placement" />
     </div>
 </template>
 
@@ -27,7 +28,6 @@
     import RichTextEditor from '../RichTextEditor/RichTextEditor.vue';
     import InlineErrorMessage from '../Form/InlineErrorMessage.vue';
     import Button from '../Button/Button.vue';
-
 
     export default {
         name: 'RichTextEditableRenderer',

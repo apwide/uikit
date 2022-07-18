@@ -7,9 +7,12 @@
             :level="level"
             @mouseenter.native="$emit('highlight', node.id.toString())">
             <div
-                v-if="hasChildNodes" slot="chevron" class="icon"
-                :expanded="isExpanded" @click="$emit('toggle-expand',node.id.toString())">
-                <ChevronRightIcon/>
+                v-if="hasChildNodes"
+                slot="chevron"
+                class="icon"
+                :expanded="isExpanded"
+                @click="$emit('toggle-expand', node.id.toString())">
+                <ChevronRightIcon />
             </div>
             <slot name="label">
                 {{ node.label }}
@@ -17,7 +20,8 @@
         </Label>
         <ul v-show="isExpanded" class="sub-tree">
             <Node
-                v-for="child in node.children" :key="child.id"
+                v-for="child in node.children"
+                :key="child.id"
                 :selected="selected"
                 :node="child"
                 :ancestors="parentNodes"
@@ -32,8 +36,8 @@
                 @input="onSelect"
                 @expand="onExpand"
                 @highlight="onHover">
-                <template #label="{node}">
-                    <slot :node="node" name="label"/>
+                <template #label="{ node }">
+                    <slot :node="node" name="label" />
                 </template>
             </Node>
         </ul>
@@ -92,7 +96,7 @@
         computed: {
             parentNodes() {
                 const { id, label } = this.parent;
-                return [...this.ancestors, ...id ? [{ id, label }] : []];
+                return [...this.ancestors, ...(id ? [{ id, label }] : [])];
             },
             isExpanded() {
                 return this.hasChildNodes && this.expanded.includes(this.node.id.toString());
@@ -104,13 +108,13 @@
                 return this.getChildNodes(this.node.children);
             },
             hasMatchedChildNodes() {
-                return this.search && !!this.childNodes.map(node => node.label).filter(this.isMatch).length;
+                return this.search && !!this.childNodes.map((node) => node.label).filter(this.isMatch).length;
             },
             isMatched() {
                 return this.node.label.toLowerCase().includes(this.search.toLowerCase());
             },
             shouldBeDisplayedInSearchResults() {
-                return this.search ? (this.hasMatchedChildNodes || this.isMatched) : true;
+                return this.search ? this.hasMatchedChildNodes || this.isMatched : true;
             },
 
             checked: {
@@ -134,7 +138,10 @@
                 this.$emit('toggle-expand', this.node.id);
             }
             if (this.checked) {
-                this.$emit('expand', this.parentNodes.map(node => node.id));
+                this.$emit(
+                    'expand',
+                    this.parentNodes.map((node) => node.id)
+                );
             }
         },
         methods: {
@@ -156,10 +163,7 @@
                 this.$emit('toggle-expand', id);
             },
             isMatch(label) {
-                return label
-                    .toString()
-                    .toLowerCase()
-                    .includes(this.search.toLowerCase().trim());
+                return label.toString().toLowerCase().includes(this.search.toLowerCase().trim());
             },
             onExpand(ids) {
                 this.$emit('expand', ids);
@@ -169,31 +173,31 @@
 </script>
 
 <style scoped>
-ul.sub-tree {
-    list-style-type: none;
-    padding: 0;
-}
+    ul.sub-tree {
+        list-style-type: none;
+        padding: 0;
+    }
 
-li {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
+    li {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
 
-.icon {
-    width: 24px;
-    display: inline-flex;
-    margin-left: 2px;
-    background-color: transparent;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-}
+    .icon {
+        width: 24px;
+        display: inline-flex;
+        margin-left: 2px;
+        background-color: transparent;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+    }
 
-.icon[expanded] {
-    transform: rotate(90deg);
-}
+    .icon[expanded] {
+        transform: rotate(90deg);
+    }
 
-:deep(.highlight) {
-    font-weight: bold;
-    color: red;
-}
+    :deep(.highlight) {
+        font-weight: bold;
+        color: red;
+    }
 </style>

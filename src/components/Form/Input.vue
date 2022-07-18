@@ -1,12 +1,15 @@
 <template>
     <TextField :is-focused="isFocused">
         <input
-            ref="input" v-model="input" :type="type"
+            ref="input"
+            v-model="input"
+            :type="type"
             :placeholder="placeholder"
             :step="step"
             v-bind="$attrs"
             :maxlength="maxlength"
-            @focus="onFocus" @blur="onBlur">
+            @focus="onFocus"
+            @blur="onBlur" />
     </TextField>
 </template>
 

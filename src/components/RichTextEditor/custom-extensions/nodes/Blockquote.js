@@ -1,33 +1,33 @@
 /* eslint-disable */
-import { Node } from "tiptap";
-import { blockquote } from "@atlaskit/adf-schema";
-import Renderer from "../renderers/Blockquote.vue";
-import { wrappingInputRule, toggleWrap } from "tiptap-commands";
+import { Node } from 'tiptap';
+import { blockquote } from '@atlaskit/adf-schema';
+import Renderer from '../renderers/Blockquote.vue';
+import { wrappingInputRule, toggleWrap } from 'tiptap-commands';
 
 export default class Blockquote extends Node {
-  get name() {
-    return "blockquote";
-  }
+    get name() {
+        return 'blockquote';
+    }
 
-  get schema() {
-    return blockquote;
-  }
+    get schema() {
+        return blockquote;
+    }
 
-  commands({ type, schema }) {
-    return () => toggleWrap(type, schema.nodes.paragraph);
-  }
+    commands({ type, schema }) {
+        return () => toggleWrap(type, schema.nodes.paragraph);
+    }
 
-  keys({ type }) {
-    return {
-      "Ctrl->": toggleWrap(type),
-    };
-  }
+    keys({ type }) {
+        return {
+            'Ctrl->': toggleWrap(type)
+        };
+    }
 
-  inputRules({ type }) {
-    return [wrappingInputRule(/^\s*>\s$/, type)];
-  }
+    inputRules({ type }) {
+        return [wrappingInputRule(/^\s*>\s$/, type)];
+    }
 
-  get view() {
-    return Renderer;
-  }
+    get view() {
+        return Renderer;
+    }
 }

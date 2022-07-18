@@ -5,7 +5,7 @@
             <span>{{ progress }}%</span>
         </div>
         <div class="progress-bar">
-            <span ref="progress" class="progress" :style="{ width: `${progress}%`, transitionDuration }"/>
+            <span ref="progress" class="progress" :style="{ width: `${progress}%`, transitionDuration }" />
         </div>
     </div>
 </template>

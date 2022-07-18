@@ -8,7 +8,9 @@
         @open="isLocalOpen = true">
         <template #trigger="{ toggle, isOpen, isDisabled }">
             <KitIconButton
-                :is-selected="isOpen" :is-disabled="isDisabled" :style="{ fontSize: iconSize }"
+                :is-selected="isOpen"
+                :is-disabled="isDisabled"
+                :style="{ fontSize: iconSize }"
                 :title="title"
                 @click="toggle">
                 <slot name="icon" :is-open="isOpen" />
@@ -47,7 +49,7 @@
     });
 </script>
 <style scoped>
-.kit-icon-menu {
-  color: #091e42;
-}
+    .kit-icon-menu {
+        color: #091e42;
+    }
 </style>

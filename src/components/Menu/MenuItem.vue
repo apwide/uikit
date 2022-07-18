@@ -1,10 +1,10 @@
 <template>
     <div class="menu-item" :active="active" v-on="$listeners">
         <span v-if="$slots['icon-before']" class="menu-item-icon-before">
-            <slot name="icon-before"/>
+            <slot name="icon-before" />
         </span>
         <span class="menu-item-label">
-            <slot/>
+            <slot />
         </span>
     </div>
 </template>
@@ -49,8 +49,9 @@
         margin-right: 12px;
     }
 
-    .menu-item:hover, .menu-item[active] {
-        background-color: rgba(0,25,75,0.043);
+    .menu-item:hover,
+    .menu-item[active] {
+        background-color: rgba(0, 25, 75, 0.043);
         color: rgb(23, 43, 77);
         fill: rgb(244, 245, 247);
         text-decoration: none;

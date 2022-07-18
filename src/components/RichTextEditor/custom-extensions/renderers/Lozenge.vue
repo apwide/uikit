@@ -39,27 +39,27 @@
         white-space: nowrap;
     }
 
-    .lozenge[appearance="green"] {
+    .lozenge[appearance='green'] {
         background-color: rgb(227, 252, 239);
         color: rgb(0, 102, 68);
     }
 
-    .lozenge[appearance="red"] {
+    .lozenge[appearance='red'] {
         background-color: rgb(255, 235, 230);
         color: rgb(191, 38, 0);
     }
 
-    .lozenge[appearance="blue"] {
+    .lozenge[appearance='blue'] {
         background-color: rgb(222, 235, 255);
         color: rgb(7, 71, 166);
     }
 
-    .lozenge[appearance="purple"] {
+    .lozenge[appearance='purple'] {
         background-color: rgb(234, 230, 255);
         color: rgb(64, 50, 148);
     }
 
-    .lozenge[appearance="yellow"] {
+    .lozenge[appearance='yellow'] {
         background-color: rgb(255, 240, 179);
         color: rgb(23, 43, 77);
     }

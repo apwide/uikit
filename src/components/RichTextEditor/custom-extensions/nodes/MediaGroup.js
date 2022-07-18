@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { mediaGroup } from '@atlaskit/adf-schema'
+import { mediaGroup } from '@atlaskit/adf-schema';
 
 export default class MediaGroup extends Node {
     get name() {

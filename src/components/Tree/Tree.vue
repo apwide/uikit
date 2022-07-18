@@ -14,8 +14,8 @@
             @input="onSelect"
             @expand="onExpand"
             @highlight="highlight">
-            <template #label="{node}">
-                <slot :node="node" name="label"/>
+            <template #label="{ node }">
+                <slot :node="node" name="label" />
             </template>
         </Node>
     </ul>
@@ -97,7 +97,11 @@
         },
         methods: {
             onSelect(id, ancestors = []) {
-                this.$emit('input', this.childNodes.find(node => node.id === id), ancestors);
+                this.$emit(
+                    'input',
+                    this.childNodes.find((node) => node.id === id),
+                    ancestors
+                );
             },
             highlight(id) {
                 this.hovered = id;
@@ -106,8 +110,8 @@
                 this.hovered = undefined;
             },
             onToggleExpand(toggled) {
-                this.expanded = this.expanded.some(id => toggled === id)
-                    ? this.expanded.filter(id => toggled !== id)
+                this.expanded = this.expanded.some((id) => toggled === id)
+                    ? this.expanded.filter((id) => toggled !== id)
                     : [...this.expanded, toggled];
             },
             getChildNodes(children = []) {
@@ -128,8 +132,8 @@
 </script>
 
 <style scoped>
-ul {
-    list-style-type: none;
-    padding-left: 0;
-}
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
 </style>

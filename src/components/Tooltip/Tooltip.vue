@@ -1,15 +1,16 @@
 <template>
     <div class="kit-tooltip">
-        <div
-            ref="target" class="target" @mouseenter="onMouseEnter"
-            @mouseleave="onMouseLeave">
-            <slot/>
+        <div ref="target" class="target" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+            <slot />
         </div>
         <TooltipContent
-            v-if="show" ref="popper"
+            v-if="show"
+            ref="popper"
             :target-element="$refs.target"
             :boundaries-element="boundariesElement"
-            :placement="placement" :offset="offset" :label="label"/>
+            :placement="placement"
+            :offset="offset"
+            :label="label" />
     </div>
 </template>
 
@@ -80,8 +81,8 @@
 </script>
 
 <style scoped>
-.kit-tooltip {
-    display: inline-block;
-    min-width: 20px;
-}
+    .kit-tooltip {
+        display: inline-block;
+        min-width: 20px;
+    }
 </style>

@@ -1,8 +1,6 @@
 <template>
     <div class="type">
-        <img
-            class="issue-type-icon" :src="typeIconUrl" :alt="typeName"
-            :title="typeName">
+        <img class="issue-type-icon" :src="typeIconUrl" :alt="typeName" :title="typeName" />
         <span v-if="compact">{{ value.name }}</span>
     </div>
 </template>

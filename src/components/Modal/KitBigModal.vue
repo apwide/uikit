@@ -1,17 +1,11 @@
 <template>
-    <Modal
-        class="kit-modal" no-footer
-        v-bind="$attrs" :width="width"
-        v-on="$listeners">
+    <Modal class="kit-modal" no-footer v-bind="$attrs" :width="width" v-on="$listeners">
         <template #header>
             <div class="kit-modal__header-pre-title">
                 <slot name="breadcrumb" class="" />
                 <KitButtonGroup spacing="normal">
-                    <slot name="actions"/>
-                    <KitIconButton
-                        class="kit-modal__close"
-                        title="close"
-                        @click="$emit('cancel');" >
+                    <slot name="actions" />
+                    <KitIconButton class="kit-modal__close" title="close" @click="$emit('cancel')">
                         <CrossIcon />
                     </KitIconButton>
                 </KitButtonGroup>
@@ -23,7 +17,7 @@
             </div>
         </template>
         <div slot="content" class="kit-modal__content">
-            <slot/>
+            <slot />
         </div>
     </Modal>
 </template>
@@ -76,20 +70,20 @@
     });
 </script>
 <style scoped>
-.kit-modal__content {
-  padding-bottom: 10px;
-}
+    .kit-modal__content {
+        padding-bottom: 10px;
+    }
 
-.kit-modal__header-pre-title {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
+    .kit-modal__header-pre-title {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
 
-.kit-modal :deep(header) {
-  display: block;
-}
+    .kit-modal :deep(header) {
+        display: block;
+    }
 </style>

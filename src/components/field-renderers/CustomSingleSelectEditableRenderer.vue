@@ -6,7 +6,8 @@
         :placement="placement"
         @save-requested="onSaveRequested">
         <Select
-            slot="editor" slot-scope="props"
+            slot="editor"
+            slot-scope="props"
             :value="props.value"
             :options="options"
             :normalizer="normalizer"
@@ -21,17 +22,13 @@
             @confirm="props.confirm"
             @focus="props.focus"
             @cancel="props.cancel">
-            <slot
-                slot="selected" slot-scope="{selected}" name="selected"
-                :selected="selected"/>
-            <slot
-                slot="option" slot-scope="{option}" name="option"
-                :option="option"/>
+            <slot slot="selected" slot-scope="{ selected }" name="selected" :selected="selected" />
+            <slot slot="option" slot-scope="{ option }" name="option" :option="option" />
         </Select>
-        <slot/>
+        <slot />
     </InlineEdit>
     <div v-else class="slot">
-        <slot/>
+        <slot />
     </div>
 </template>
 
@@ -69,8 +66,11 @@
             },
             normalizer: {
                 type: Function,
-                default: value => ({
-                    id: value, label: value, value, disabled: false
+                default: (value) => ({
+                    id: value,
+                    label: value,
+                    value,
+                    disabled: false
                 })
             },
             confirm: {

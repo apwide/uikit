@@ -12,21 +12,23 @@
                 type: String,
                 default: 'bottom-end',
                 validator(value) {
-                    return ['auto',
-                            'auto-start',
-                            'auto-end',
-                            'top',
-                            'top-start',
-                            'top-end',
-                            'bottom',
-                            'bottom-start',
-                            'bottom-end',
-                            'right',
-                            'right-start',
-                            'right-end',
-                            'left',
-                            'left-start',
-                            'left-end'].includes(value);
+                    return [
+                        'auto',
+                        'auto-start',
+                        'auto-end',
+                        'top',
+                        'top-start',
+                        'top-end',
+                        'bottom',
+                        'bottom-start',
+                        'bottom-end',
+                        'right',
+                        'right-start',
+                        'right-end',
+                        'left',
+                        'left-start',
+                        'left-end'
+                    ].includes(value);
                 }
             },
             offset: {
@@ -57,8 +59,8 @@
         methods: {
             initPopper() {
                 const [defaultSlot] = this.$slots.default;
-                const boundariesElement = typeof this.boundariesElement === 'function' ? this.boundariesElement() : this.boundariesElement;
-
+                const boundariesElement =
+                    typeof this.boundariesElement === 'function' ? this.boundariesElement() : this.boundariesElement;
 
                 this.popper = createPopper(this.targetElement, defaultSlot.elm, {
                     placement: this.placement,

@@ -1,11 +1,6 @@
 <template>
-    <td
-        ref="cellElement"
-        class="kit-table-row-cell">
-        <slot
-            :value="value"
-            :is-active-row="isActiveRow"
-            :cell-element="$refs.cellElement">
+    <td ref="cellElement" class="kit-table-row-cell">
+        <slot :value="value" :is-active-row="isActiveRow" :cell-element="$refs.cellElement">
             <span class="kit-table-row-cell__value">
                 {{ value }}
             </span>

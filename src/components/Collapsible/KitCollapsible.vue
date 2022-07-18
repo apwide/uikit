@@ -1,26 +1,25 @@
 <template>
     <div class="kit-collapsible">
-        <slot
-            :isCollapsed="isCollapsed" :toggle="toggle" name="trigger">
+        <slot :isCollapsed="isCollapsed" :toggle="toggle" name="trigger">
             <div style="margin-left: -4px">
                 <KitButton
-                    appearance="subtle" class="kit-collapsible-trigger" spacing="none"
-                    style="font-size: 1rem;"
+                    appearance="subtle"
+                    class="kit-collapsible-trigger"
+                    spacing="none"
+                    style="font-size: 1rem"
                     @click="toggle">
                     <template #icon-before>
-                        <span style="width: 20px;">
-                            <KitIcon v-if="isCollapsed" type="angle-right"/>
-                            <KitIcon v-else type="angle-down"/>
+                        <span style="width: 20px">
+                            <KitIcon v-if="isCollapsed" type="angle-right" />
+                            <KitIcon v-else type="angle-down" />
                         </span>
                     </template>
                     {{ label }}
-                </kitbutton>
+                </KitButton>
             </div>
         </slot>
-        <div
-            v-if="!isCollapsed" ref="content" :style="{ maxHeight: maxHeight}"
-            class="kit-collapsible-content">
-            <slot/>
+        <div v-if="!isCollapsed" ref="content" :style="{ maxHeight: maxHeight }" class="kit-collapsible-content">
+            <slot />
         </div>
     </div>
 </template>
@@ -115,19 +114,18 @@
     });
 </script>
 <style scoped>
-.kit-collapsible {
-  margin: 8px 0;
-}
+    .kit-collapsible {
+        margin: 8px 0;
+    }
 
-.kit-collapsible-content {
-  transition: max-height 0.4s ease-in;
-  overflow: hidden;
-  margin-top: 10px;
-  margin-left: 20px;
-}
+    .kit-collapsible-content {
+        transition: max-height 0.4s ease-in;
+        overflow: hidden;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
 
-.kit-collapsible-trigger {
-  font-weight: 700;
-}
-
+    .kit-collapsible-trigger {
+        font-weight: 700;
+    }
 </style>

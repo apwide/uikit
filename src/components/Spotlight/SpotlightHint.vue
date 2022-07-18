@@ -2,21 +2,19 @@
     <transition name="fade-in" mode="out-in">
         <div v-if="hasMessage" ref="message" class="spotlight-message">
             <CrossIcon
-                class="close-icon" :primary-color="color" size="small"
+                class="close-icon"
+                :primary-color="color"
+                size="small"
                 @click.native="onClose"
                 @mouseenter.native="onEnter"
-                @mouseleave.native="onLeave"/>
+                @mouseleave.native="onLeave" />
             <div ref="content" class="content">
-                <slot/>
+                <slot />
             </div>
             <div class="footer">
-                <div class="count">
-                    {{ step }}/{{ total }}
-                </div>
+                <div class="count">{{ step }}/{{ total }}</div>
                 <div class="buttons">
-                    <button v-if="step !== 1" ref="prev" @click="prev">
-                        Prev
-                    </button>
+                    <button v-if="step !== 1" ref="prev" @click="prev">Prev</button>
                     <button ref="next" @click="next">
                         {{ lastStep ? 'Finish' : 'Next' }}
                     </button>
@@ -117,7 +115,6 @@
 </script>
 
 <style scoped>
-
     .spotlight-message {
         z-index: 9999999;
         color: rgb(255, 255, 255);
@@ -131,7 +128,6 @@
     }
 
     .spotlight-message > * {
-
     }
 
     .content {
@@ -149,7 +145,7 @@
 
     button {
         padding: 6px 16px;
-        background-color: #523FAD;
+        background-color: #523fad;
         outline: none;
         border: none;
         color: #fff;
@@ -160,20 +156,22 @@
         cursor: pointer;
     }
 
-    .fade-in-enter-active, .fade-in-leave-active {
-        transition: opacity .1s ease-out;
+    .fade-in-enter-active,
+    .fade-in-leave-active {
+        transition: opacity 0.1s ease-out;
     }
 
-    .fade-in-enter, .fade-in-leave-to {
+    .fade-in-enter,
+    .fade-in-leave-to {
         opacity: 0;
     }
 
     button:focus {
-        box-shadow: #998DD9 0 0 0 2px;
+        box-shadow: #998dd9 0 0 0 2px;
     }
 
     .content h4 {
-        color: #FFF;
+        color: #fff;
     }
 
     .close-icon {

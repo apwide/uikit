@@ -1,17 +1,16 @@
 <template>
     <div ref="dialog-container" class="kit-dialog-container">
-        <slot
-            :is-open="open"
-            :toggle="onTriggerClick"
-            name="trigger"/>
+        <slot :is-open="open" :toggle="onTriggerClick" name="trigger" />
         <Popup
-            ref="dialog" :boundaries-element="boundariesElement" :is-open="open"
+            ref="dialog"
+            :boundaries-element="boundariesElement"
+            :is-open="open"
             :offset="offset"
             :placement="placement"
             :position-fixed="positionFixed"
             :target-element="$refs['dialog-container']">
             <div ref="dialog-content" class="kit-dialog-content">
-                <slot/>
+                <slot />
             </div>
         </Popup>
     </div>
@@ -91,14 +90,14 @@
 </script>
 
 <style scoped>
-.kit-dialog-container {
-  display: inline-block;
-}
+    .kit-dialog-container {
+        display: inline-block;
+    }
 
-.kit-dialog-content {
-  background-color: white;
-  max-width: 300px;
-  max-height: 400px;
-  overflow: auto;
-}
+    .kit-dialog-content {
+        background-color: white;
+        max-width: 300px;
+        max-height: 400px;
+        overflow: auto;
+    }
 </style>

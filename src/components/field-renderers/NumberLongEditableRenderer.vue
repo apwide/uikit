@@ -7,10 +7,10 @@
         :placement="placement"
         @save-requested="onSaveRequested">
         <slot>
-            <NumberLongRenderer :value="value"/>
+            <NumberLongRenderer :value="value" />
         </slot>
     </InlineEdit>
-    <NumberLongRenderer v-else :value="value"/>
+    <NumberLongRenderer v-else :value="value" />
 </template>
 
 <script>

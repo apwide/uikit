@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Node } from 'tiptap';
-import { image } from '@atlaskit/adf-schema'
+import { image } from '@atlaskit/adf-schema';
 
 export default class Image extends Node {
     get name() {
@@ -26,7 +26,7 @@ export default class Image extends Node {
                             width: domNode.getAttribute('width'),
                             style: 'vertical-align: text-bottom'
                         };
-                    },
+                    }
                 },
                 {
                     tag: 'span.image-wrap',
@@ -36,11 +36,11 @@ export default class Image extends Node {
                             src: this.options.baseUrl + dom.getAttribute('src'),
                             alt: dom.getAttribute('alt'),
                             title: dom.getAttribute('title'),
-                            width: '100%',
+                            width: '100%'
                         };
-                    },
+                    }
                 },
-                ...image.parseDOM,
+                ...image.parseDOM
             ]
         };
     }
