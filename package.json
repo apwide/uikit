@@ -1,18 +1,22 @@
 {
-    "name": "test-lib",
-    "private": true,
+    "name": "@apwide/uikit",
     "version": "0.0.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/apwide/uikit"
+    },
+    "license": "MIT",
     "type": "module",
-    "main": "dist/bob-lib.umd.cjs",
-    "browser": "dist/bob.lib.js",
+    "main": "dist/uikit.umd.cjs",
+    "browser": "dist/uikit.lib.js",
     "files": [
         "dist",
         "src"
     ],
     "exports": {
         ".": {
-            "import": "./dist/bob-lib.js",
-            "require": "./dist/bob-lib.umd.cjs"
+            "import": "./dist/uikit.js",
+            "require": "./dist/uikit.umd.cjs"
         },
         "./dist/style.css": {
             "import": "./dist/style.css",

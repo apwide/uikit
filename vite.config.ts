@@ -12,8 +12,8 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(__dirname, 'src', 'index.ts'),
-            name: 'bob',
-            fileName: 'bob-lib'
+            name: 'uikit',
+            fileName: 'uikit'
         },
         rollupOptions: {
             external: ['vue'],
