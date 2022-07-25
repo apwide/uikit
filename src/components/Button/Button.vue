@@ -18,10 +18,11 @@
     </button>
 </template>
 
-<script>
+<script lang="ts">
+    import Vue, { defineComponent } from 'vue';
     import Spinner from '../Spinner/Spinner.vue';
 
-    export default {
+    export default Vue.component('KitButton', {
         name: 'Button',
         components: {
             Spinner
@@ -36,13 +37,13 @@
             round: { type: Boolean, default: false }
         },
         computed: {
-            iconIsOnlyChild() {
-                return (
+            iconIsOnlyChild(): boolean {
+                return Boolean(
                     !!(this.$slots['icon-after'] && !this.$slots['icon-before'] && !this.$slots.default) ||
                     (!this.$slots['icon-after'] && this.$slots['icon-before'] && !this.$slots.default)
                 );
             },
-            listeners() {
+            listeners():Record<string, Function | Function[]> {
                 return this.$listeners;
             }
         },
@@ -51,7 +52,7 @@
                 this.$nextTick(() => this.$refs.button.focus());
             }
         }
-    };
+    })
 </script>
 
 <style scoped>

@@ -9,19 +9,19 @@
     "type": "module",
     "main": "dist/lib/uikit.umd.cjs",
     "browser": "dist/lib/uikit.lib.js",
-    "types": "./dist/types/index.d.ts",
+    "types": "./dist/types/src/index.d.ts",
     "files": [
         "dist",
         "src"
     ],
     "exports": {
         ".": {
-            "import": "./dist/uikit.js",
-            "require": "./dist/uikit.umd.cjs"
+            "import": "./dist/lib/uikit.js",
+            "require": "./dist/lib/uikit.umd.cjs"
         },
-        "./dist/style.css": {
-            "import": "./dist/style.css",
-            "require": "./dist/style.css"
+        "./style.css": {
+            "import": "./dist/lib/style.css",
+            "require": "./dist/lib/style.css"
         }
     },
     "scripts": {
@@ -44,6 +44,7 @@
         "prettier": "2.7.1",
         "prosemirror-history": "1.2.0",
         "tiptap": "1.32.2",
+        "vite-plugin-dts": "^1.4.0",
         "vue": "2.7.6",
         "vue-tsc": "0.38.5"
     }
