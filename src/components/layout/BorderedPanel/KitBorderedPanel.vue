@@ -74,10 +74,6 @@
         padding: 12px 12px 8px 12px;
     }
 
-    .kit-bordered-panel__header-actions {
-        /*margin-top: -5px;*/
-        /*margin-bottom: -5px;*/
-    }
 
     .kit-bordered-panel__body :deep(.kit-bordered-panel__row:last-child) {
         margin-bottom: 6px;
