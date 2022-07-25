@@ -7,8 +7,9 @@
     },
     "license": "MIT",
     "type": "module",
-    "main": "dist/uikit.umd.cjs",
-    "browser": "dist/uikit.lib.js",
+    "main": "dist/lib/uikit.umd.cjs",
+    "browser": "dist/lib/uikit.lib.js",
+    "types": "./dist/types/index.d.ts",
     "files": [
         "dist",
         "src"
@@ -25,7 +26,7 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc --noEmit && vite build",
+        "build": "vue-tsc --declaration --emitDeclarationOnly && vite build",
         "preview": "vite preview"
     },
     "devDependencies": {

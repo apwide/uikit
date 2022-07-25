@@ -18,7 +18,8 @@
     "allowJs": true,
     "types": [
       "vite/client"
-    ]
+    ],
+    "declarationDir": "./dist/types"
   },
   "include": [
     "src/**/*.ts",

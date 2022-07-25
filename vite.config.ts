@@ -10,6 +10,7 @@ export default defineConfig({
         // svgLoader()
     ],
     build: {
+        outDir: resolve(__dirname, 'dist', 'lib'),
         lib: {
             entry: resolve(__dirname, 'src', 'index.ts'),
             name: 'uikit',
