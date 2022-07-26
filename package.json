@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "rimraf dist && rollup -c",
+    "rebuild": "rollup -c",
     "storybook": "start-storybook -p 9001 -s ./public -c .storybook",
     "lint": "eslint src stories tests --ext .js,.vue,.ts",
     "lint-fix": "eslint src stories tests --fix --ext .js,.vue,.ts",
@@ -20,8 +21,6 @@
     "cypress:test": "wait-on http://localhost:9001 && cypress run",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
-    "release": "np",
-    "version": "npm run build-storybook",
     "prepublishOnly": "npm run build"
   },
   "sideEffects": [
@@ -74,7 +73,6 @@
     "install": "0.13.0",
     "jest": "24.9.0",
     "lint-staged": "12.3.7",
-    "np": "6.5.0",
     "p-debounce": "4.0.0",
     "prettier": "^2.7.1",
     "rimraf": "3.0.2",

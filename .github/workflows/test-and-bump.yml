@@ -1,0 +1,35 @@
+name: Test and bump
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  tests:
+    if: "!startsWith(github.event.head_commit.message, 'chore: version bump')"
+    name: Run the tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+  bump:
+    needs: [tests]
+    if: success() && github.ref_name == 'main'
+    name: 'Automated Version Bump'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          major-wording: 'BREAKING'
+          minor-wording: 'feat'
+          patch-wording: 'fix,chore'
+          commit-message: 'chore: version bump to {{version}}'
+
