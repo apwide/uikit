@@ -269,6 +269,7 @@ export default Vue.extend({
       return style
     },
     iconSize() {
+      console.log('size', this.size, /(em|px)$/.test(this.size) ? '1x' : this.size)
       if (/(em|px)$/.test(this.size)) {
         return '1x'
       }

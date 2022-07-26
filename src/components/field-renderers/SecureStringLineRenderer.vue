@@ -13,8 +13,8 @@
       <CopyToClipboard :text="value" title="Copy to clipboard">
         <template #default="{ copied }">
           <KitIconButton class="secure-string-line__icon" title="Copy to clipboard">
-            <KitIcon v-if="!copied" type="clone" icon-style="regular" size="small" />
-            <KitIcon v-else type="check" size="small" />
+            <KitIcon v-if="!copied" type="clone" icon-style="regular" />
+            <KitIcon v-else type="check" />
           </KitIconButton>
         </template>
       </CopyToClipboard>
