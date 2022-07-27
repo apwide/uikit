@@ -3,7 +3,10 @@ on:
   push:
     branches:
       - 'patch/**'
-
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.vue'
 jobs:
   tests:
     name: Run the tests

@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.vue'
 
 jobs:
   tests:

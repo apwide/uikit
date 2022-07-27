@@ -7,7 +7,7 @@
 npm install @apwide/uikit
 ```
 
-### ES6
+### how to use
 ```js
 //
 // Register a component manually for optimal tree shaking
@@ -29,12 +29,19 @@ import '@apwide/uikit/dist/bundle.css';
 
 ## Automation
 
-Pushing to `main`:
+Pushing or merging to the `main` branch (aka normal development):
 
-- releases the current version to NPM
-- generates the docs site
+1. runs the tests
+2. updates the minor version in package.json
+3. releases the new version to NPM
+4. generates the docs site
+5. deploys the docs to gh-pages
 
-Currently, the version is not updated automatically.
+Pushing to a `patch` branch (aka production patch)
+
+Same things happen except it increment by patch level.
+
+If a major bump is required, the work BREAKING must be in a git commit (on `main`)
 
 ## Developing this library
 
@@ -43,4 +50,4 @@ If you need to work on a project with an unreleased version of this library:
 1. in this project directory: `<npm|yarn> link`
 2. in the other project's directory: `<npm|yarn> link @apwide/uikit`
 
-To stop, make sure to unlink `<npm|yarn> unlink @apwide/uikit` and read to output for further actions to perform.
+To stop, make sure to unlink `<npm|yarn> unlink @apwide/uikit` and read to output for further actions to perform on your project.
