@@ -2,7 +2,7 @@ name: Test and bump
 on:
   push:
     branches:
-      - "*"
+      - '*'
 
 jobs:
   tests:
@@ -15,14 +15,12 @@ jobs:
           node-version: 16
           cache: 'npm'
       - run: npm ci
+      - run: npm run lint
       - run: npm test
   bump:
     needs: [tests]
-    if: |
-      success() 
-      && !startsWith(github.event.head_commit.message, 'chore: version bump') 
-      && github.ref_name == 'main'
     name: 'Automated Version Bump'
+    if: "success() && !startsWith(github.event.head_commit.message, 'chore: version bump') && github.ref_name == 'main'"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,11 +35,9 @@ jobs:
 
   publish:
     needs: [tests, bump]
-    name: Release on NPM
+    name: 'Release on NPM'
     runs-on: ubuntu-latest
-    if: |
-      success() 
-      && startsWith(github.event.head_commit.message, 'chore: version bump')
+    if: "success() && startsWith(github.event.head_commit.message, 'chore: version bump') && github.ref_name == 'main'"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
