@@ -1,0 +1,55 @@
+name: Test Bump and Release Main
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  tests:
+    name: Run the tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+  bump-and-publish:
+    needs: [tests]
+    name: 'Automated Version Bump'
+    if: "success() && !startsWith(github.event.head_commit.message, 'chore: version bump')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Bump
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          major-wording: 'BREAKING'
+          default: 'minor'
+          commit-message: 'chore: version bump to {{version}}'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - name: Install
+        run: npm ci
+      - name: Publish on NPM
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+      - name: Build doc
+        run: npm run build-storybook
+      - name: Deploy doc to GitHub Pages
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: gh-pages
+          build_dir: docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
