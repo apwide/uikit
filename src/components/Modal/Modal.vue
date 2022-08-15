@@ -2,7 +2,7 @@
   <transition name="modal" appear>
     <Blanket class="dialog" :z-index="zIndex">
       <PositionerAbsolute :width="currentWidth">
-        <form class="modal-container" novalidate @submit.prevent="onSubmit">
+        <form class="kit-modal modal-container" novalidate @submit.prevent="onSubmit">
           <slot>
             <header v-if="!noHeader">
               <slot name="header">
@@ -110,7 +110,12 @@ export default {
     document.addEventListener('keyup', this.onEsc)
   },
   beforeDestroy() {
-    document.body.classList.remove('kit-modal-is-open')
+    // make sure that there is no modal on the current page before removing the scroll lock class
+    const modals = document.querySelectorAll('.kit-modal')
+    if (!modals.length) {
+      document.body.classList.remove('kit-modal-is-open')
+    }
+
     document.removeEventListener('keyup', this.onEsc)
     try {
       document.body.removeChild(this.$el)
