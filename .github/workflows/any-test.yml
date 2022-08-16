@@ -1,5 +1,6 @@
-name: Test Bump and Release Main
+name: Test
 on:
+  pull_request:
   push:
     branches:
       - '!main'
