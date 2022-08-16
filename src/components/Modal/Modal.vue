@@ -109,13 +109,14 @@ export default {
     document.body.classList.add('kit-modal-is-open')
     document.addEventListener('keyup', this.onEsc)
   },
-  beforeDestroy() {
+  destroyed() {
     // make sure that there is no modal on the current page before removing the scroll lock class
     const modals = document.querySelectorAll('.kit-modal')
     if (!modals.length) {
       document.body.classList.remove('kit-modal-is-open')
     }
-
+  },
+  beforeDestroy() {
     document.removeEventListener('keyup', this.onEsc)
     try {
       document.body.removeChild(this.$el)
