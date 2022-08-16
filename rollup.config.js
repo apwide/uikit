@@ -31,7 +31,9 @@ export default [
     output: [
       {
         format: 'es',
-        dir: 'dist'
+        dir: 'dist',
+        preserveModules: true,
+        preserveModulesRoot: 'src'
       },
       {
         format: 'cjs',
