@@ -1,5 +1,4 @@
 <script>
-// import Popper from 'popper.js';
 import { createPopper } from '@popperjs/core'
 
 export default {
@@ -49,12 +48,22 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      contentWidth: 0,
+      popper: null,
+      interval: null
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       this.initPopper()
     })
+
+    this.interval = setInterval(this.updateBasedOnContent, 250)
   },
   beforeDestroy() {
+    clearInterval(this.interval)
     setTimeout(() => this.popper.destroy(), this.transitionDelay)
   },
   methods: {
@@ -77,6 +86,19 @@ export default {
           }
         ]
       })
+    },
+    updateBasedOnContent() {
+      try {
+        const [defaultSlot] = this.$slots.default
+        const contentWidth = defaultSlot.elm.getBoundingClientRect().width
+
+        if (contentWidth !== this.contentWidth) {
+          this.contentWidth = contentWidth
+          this.popper.update()
+        }
+      } catch (e) {
+        // ignore
+      }
     },
     update() {
       if (this.popper) {
