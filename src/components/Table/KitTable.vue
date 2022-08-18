@@ -156,6 +156,11 @@ export default {
     this.createObserver()
     this.setupDragRows()
   },
+  beforeDestroy() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  },
   methods: {
     onRowClick(row, event) {
       this.$emit('row-click', {
@@ -168,7 +173,9 @@ export default {
         this.observer.unobserve(this.$refs['infinite-scroll-loader'])
       }
       this.observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
+        // TODO: investigate why we got some case of twice the same element in the
+        // entries. Seems to be related to the change of size of the observed element
+        if (entries.some(({ isIntersecting }) => isIntersecting)) {
           this.tableBottomReached()
         }
       })
