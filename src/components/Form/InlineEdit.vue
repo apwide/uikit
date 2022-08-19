@@ -216,11 +216,21 @@ export default {
     },
     value() {
       this.editingValue = this.value
+    },
+    forceIsEditing(forceIsEditing) {
+      if (forceIsEditing) {
+        this.editingRequested()
+      }
     }
   },
   async mounted() {
     // We need the "normal" rendering before forcing the edit mode.
     if (this.forceIsEditing) {
+      await this.editingRequested()
+    }
+  },
+  methods: {
+    async editingRequested() {
       await this.$nextTick()
       this.isEditing = this.forceIsEditing
       // as we might pass data, we must set is as dirty to make sure it will propose to save
@@ -230,9 +240,7 @@ export default {
       if (input && typeof input.focus === 'function') {
         input.focus()
       }
-    }
-  },
-  methods: {
+    },
     onInput(value) {
       this.editingValue = value
       if (!this.confirm) {
