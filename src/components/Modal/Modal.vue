@@ -1,8 +1,8 @@
 <template>
   <transition name="modal" appear>
-    <Blanket class="dialog" :z-index="zIndex">
+    <Blanket class="dialog" :z-index="zIndex" @click.native="clicked">
       <PositionerAbsolute :width="currentWidth">
-        <form class="kit-modal modal-container" novalidate @submit.prevent="onSubmit">
+        <form class="kit-modal modal-container" novalidate @submit.prevent="onSubmit" ref="form">
           <slot>
             <header v-if="!noHeader">
               <slot name="header">
@@ -83,6 +83,10 @@ export default {
       type: Boolean,
       default: true
     },
+    closeOnOutsideClick: {
+      type: Boolean,
+      default: false
+    },
     noFooter: {
       type: Boolean,
       default: false
@@ -139,6 +143,18 @@ export default {
     },
     onSubmit() {
       this.$emit('submit')
+    },
+    clicked(event) {
+      if (this.closeOnOutsideClick && this.isClickedOutside(event)) {
+        this.onCancel()
+      }
+    },
+    isClickedOutside(event) {
+      const { x, y, width, height } = this.$refs.form.getBoundingClientRect()
+      const x1 = x + width
+      const y1 = y + height
+      const { clientX, clientY } = event
+      return clientX < x || x1 < clientX || clientY < y || y1 < clientY
     }
   }
 }
