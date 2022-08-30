@@ -20,7 +20,7 @@
         @keyup.esc="onEsc"
         @focus="onFocus"
         @blur="onBlur" />
-      <KitIcon type="calendar" class="kit-icon" />
+      <KitIcon type="calendar-alt" class="kit-icon" />
     </TextField>
     <Popup :is-open="isOpen" :target-element="$refs['date-picker']" placement="bottom-start" data-cy="select-menu">
       <Calendar

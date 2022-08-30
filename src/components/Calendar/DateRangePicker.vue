@@ -37,7 +37,7 @@
         @keyup.esc="onEsc"
         @focus="onFocus"
         @blur="onBlur" />
-      <KitIcon type="calendar" class="kit-icon" />
+      <KitIcon type="calendar-alt" class="kit-icon" />
     </TextField>
     <Popup :is-open="isOpen" :target-element="$refs['date-picker']" placement="bottom-start">
       <div class="kit-daterange-picker__date-range">
