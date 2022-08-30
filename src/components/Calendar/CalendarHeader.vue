@@ -1,8 +1,8 @@
 <template>
-  <div class="header">
-    <Button appearance="subtle" spacing="none" @click="onPrev">
-      <ChevronLeftLargeIcon slot="icon-before" />
-    </Button>
+  <div class="kit-calendar-header">
+    <KitIconButton appearance="subtle" spacing="compact" @click="onPrev" title="Previous month">
+      <KitIcon type="chevron-left" />
+    </KitIconButton>
     <header>
       <transition :name="transition">
         <strong :key="interval.header" class="interval" :interval="currentInterval" @click="changeInterval">
@@ -10,23 +10,22 @@
         </strong>
       </transition>
     </header>
-    <Button appearance="subtle" spacing="none" @click="onNext">
-      <ChevronRightLargeIcon slot="icon-before" />
-    </Button>
+    <KitIconButton appearance="subtle" spacing="compact" @click="onNext" title="Next month">
+      <KitIcon type="chevron-right" />
+    </KitIconButton>
   </div>
 </template>
 
 <script>
-import { addMonths, addYears, subYears, subMonths } from 'date-fns'
-import ChevronLeftLargeIcon from '../Icon/ChevronLeftLargeIcon'
-import ChevronRightLargeIcon from '../Icon/ChevronRightLargeIcon'
-import Button from '../Button/Button'
+import { addMonths, addYears, subMonths, subYears } from 'date-fns'
+import KitIconButton from '../Button/KitIconButton'
+import KitIcon from '../Icon/KitIcon'
 
 const DECADE = 10
 
 export default {
   name: 'KitCalendarHeader',
-  components: { ChevronLeftLargeIcon, ChevronRightLargeIcon, Button },
+  components: { KitIcon, KitIconButton },
   props: {
     month: {
       type: String,
@@ -93,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-.header {
+.kit-calendar-header {
   justify-content: stretch;
   align-items: center;
   display: flex;

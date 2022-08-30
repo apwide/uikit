@@ -3,7 +3,7 @@
     <tbody>
       <tr v-for="(half_decade, i) in decade" :key="i">
         <td v-for="year in half_decade" :key="year">
-          <Button appearance="subtle" class="year" @click="onYearSelected(year)">
+          <Button appearance="subtle" class="kit-calendar-year" @click="onYearSelected(year)">
             {{ year }}
           </Button>
         </td>
@@ -44,6 +44,7 @@ export default {
 table {
   border-collapse: collapse;
   table-layout: fixed;
+  width: 100%;
 }
 
 thead,
@@ -60,7 +61,7 @@ tr:last-child > td:first-child {
   padding-right: 8px;
 }
 
-.year {
+.kit-calendar-year {
   width: 100%;
 }
 </style>

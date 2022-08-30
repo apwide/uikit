@@ -1,5 +1,5 @@
 <template>
-  <div ref="date-picker" class="date-picker" @click.stop>
+  <div ref="date-picker" class="kit-daterange-picker" @click.stop>
     <TextField
       :is-focused="focused"
       :is-loading="isLoading"
@@ -7,13 +7,13 @@
       :is-invalid="isInvalid"
       select
       @mousedown="toggle">
-      <div class="input-from-wrapper">
-        <span class="input-from-ghost">{{ formattedDateFrom || `e.g. ${placeholderDate}` }}</span>
+      <div class="kit-daterange-picker__input-from-wrapper">
+        <span class="kit-daterange-picker__input-from-ghost">{{ formattedDateFrom || `e.g. ${placeholderDate}` }}</span>
         <input
           ref="input-from"
           :value="formattedDateFrom"
           type="text"
-          class="input-from"
+          class="kit-daterange-picker__input-from"
           :placeholder="`e.g. ${placeholderDate}`"
           :disabled="isLoading"
           v-on="listeners"
@@ -28,7 +28,7 @@
         ref="input-to"
         :value="formattedDateTo"
         type="text"
-        class="input-to"
+        class="kit-daterange-picker__input-to"
         :placeholder="placeholderDate"
         :disabled="isLoading"
         v-on="listeners"
@@ -37,17 +37,17 @@
         @keyup.esc="onEsc"
         @focus="onFocus"
         @blur="onBlur" />
-      <CalendarIcon class="icon" size="small" :disabled-range="disabledRange" @mousedown.native.prevent />
+      <KitIcon type="calendar" class="kit-icon" />
     </TextField>
     <Popup :is-open="isOpen" :target-element="$refs['date-picker']" placement="bottom-start">
-      <div class="date-range">
+      <div class="kit-daterange-picker__date-range">
         <Calendar
           :value="dateRange"
           :range-value="true"
           :visible-date="visibleDate"
           :time-zone="timeZone"
           @date-selected="onDateSelected" />
-        <div v-if="showQuickRanges" class="quick-ranges" tabindex="-1">
+        <div v-if="showQuickRanges" class="kit-daterange-picker__quick-ranges" tabindex="-1">
           <DropdownGroup label="Quick ranges">
             <DropdownItem @click="onQuickRange('this-week')"> This week </DropdownItem>
             <DropdownItem @click="onQuickRange('this-month')"> This month </DropdownItem>
@@ -67,28 +67,28 @@
 <script>
 import format from 'date-fns/format'
 import {
-  fromUnixTime,
-  parse,
-  isValid,
-  isBefore,
-  isAfter,
-  startOfWeek,
-  endOfWeek,
-  startOfMonth,
   endOfMonth,
+  endOfWeek,
+  endOfYear,
+  fromUnixTime,
+  getTime,
+  isAfter,
+  isBefore,
+  isValid,
+  parse,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+  subDays,
   subMonths,
   subWeeks,
-  subDays,
-  startOfYear,
-  endOfYear,
-  subYears,
-  getTime
+  subYears
 } from 'date-fns'
 import TextField from '../Form/TextField'
 import Popup from '../common/Popup'
-import CalendarIcon from '../Icon/CalendarIcon'
 import DropdownItem from '../Dropdown/DropdownItem'
 import DropdownGroup from '../Dropdown/DropdownGroup'
+import KitIcon from '../Icon/KitIcon'
 import Calendar from './Calendar'
 
 const MILISECONDS_IN_SECOND = 1000
@@ -96,10 +96,10 @@ const MILISECONDS_IN_SECOND = 1000
 export default {
   name: 'KitDateRangePicker',
   components: {
+    KitIcon,
     TextField,
     Calendar,
     Popup,
-    CalendarIcon,
     DropdownItem,
     DropdownGroup
   },
@@ -340,34 +340,34 @@ export default {
 }
 </script>
 <style scoped>
-.icon {
-  padding-right: 8px;
+.kit-icon {
+  padding-right: 8px !important;
 }
 
-.date-range {
+.kit-daterange-picker__date-range {
   display: flex;
 }
 
-.input-from-wrapper {
+.kit-daterange-picker__input-from-wrapper {
   position: relative;
   height: 32px;
 }
 
-.input-from-ghost {
+.kit-daterange-picker__input-from-ghost {
   visibility: hidden;
   white-space: nowrap;
   padding: 6px;
   display: block;
 }
 
-.input-from {
+.kit-daterange-picker__input-from {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-.quick-ranges {
+.kit-daterange-picker__quick-ranges {
   padding: 4px 0;
   box-shadow: rgba(9, 30, 66, 0.31) 0px 0px 1px;
 }

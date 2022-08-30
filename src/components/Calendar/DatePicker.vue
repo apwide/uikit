@@ -1,5 +1,5 @@
 <template>
-  <div ref="date-picker" class="date-picker" @click.stop>
+  <div ref="date-picker" class="kit-date-picker" @click.stop>
     <TextField
       :is-focused="focused"
       :is-loading="isLoading"
@@ -20,7 +20,7 @@
         @keyup.esc="onEsc"
         @focus="onFocus"
         @blur="onBlur" />
-      <CalendarIcon class="icon" size="small" @mousedown.native.prevent />
+      <KitIcon type="calendar" class="kit-icon" />
     </TextField>
     <Popup :is-open="isOpen" :target-element="$refs['date-picker']" placement="bottom-start" data-cy="select-menu">
       <Calendar
@@ -38,7 +38,7 @@ import { fromUnixTime, parse, isValid } from 'date-fns'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 import TextField from '../Form/TextField'
 import Popup from '../common/Popup'
-import CalendarIcon from '../Icon/CalendarIcon'
+import KitIcon from '../Icon/KitIcon'
 import Calendar from './Calendar'
 
 const MILISECONDS_IN_SECOND = 1000
@@ -46,10 +46,10 @@ const MILISECONDS_IN_SECOND = 1000
 export default {
   name: 'KitDatePicker',
   components: {
+    KitIcon,
     TextField,
     Calendar,
-    Popup,
-    CalendarIcon
+    Popup
   },
   props: {
     value: {
@@ -188,7 +188,7 @@ export default {
 }
 </script>
 <style scoped>
-.icon {
-  padding-right: 8px;
+.kit-icon {
+  padding-right: 8px !important;
 }
 </style>

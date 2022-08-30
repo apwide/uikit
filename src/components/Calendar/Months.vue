@@ -3,7 +3,7 @@
     <tbody>
       <tr v-for="(quarter, i) in monthsOfYear" :key="i">
         <td v-for="month in quarter" :key="month">
-          <Button appearance="subtle" data-cy="month" class="month" @click="onMonthSelected(month)">
+          <Button appearance="subtle" data-cy="month" class="kit-calendar-month" @click="onMonthSelected(month)">
             {{ month }}
           </Button>
         </td>
@@ -53,6 +53,7 @@ export default {
 table {
   border-collapse: collapse;
   table-layout: fixed;
+  width: 100%;
 }
 
 thead,
@@ -64,7 +65,7 @@ td {
   text-align: center;
 }
 
-.month {
+.kit-calendar-month {
   width: 100%;
 }
 </style>
