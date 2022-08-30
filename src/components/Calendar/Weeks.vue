@@ -1,12 +1,12 @@
 <template>
   <table>
-    <thead class="weekdays">
-      <th v-for="weekday in weekdays" :key="weekday" class="weekday">
+    <thead class="kit-calendar-weeks">
+      <th v-for="weekday in weekdays" :key="weekday" class="kit-calendar-weeks__weekday">
         {{ weekday }}
       </th>
     </thead>
     <tbody>
-      <tr v-for="(week, i) in weeks" :key="i" class="week">
+      <tr v-for="(week, i) in weeks" :key="i" class="kit-calendar-weeks__week">
         <Day v-for="day in week" :key="day.date.getDate()" :day="day" data-cy="day" @date-selected="onDateSelected" />
       </tr>
     </tbody>
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-.weekday {
+.kit-calendar-weeks__weekday {
   color: #6b778c;
   font-size: 11px;
   min-width: 40px;
@@ -54,6 +54,7 @@ export default {
 table {
   border-collapse: collapse;
   table-layout: fixed;
+  width: 100%;
 }
 
 thead,

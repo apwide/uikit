@@ -1,8 +1,8 @@
 <template>
-  <td class="day" :highlighted="isHighlighted" :range-start="isRangeStart" :range-end="isRangeEnd">
+  <td class="kit-calendar-day" :highlighted="isHighlighted" :range-start="isRangeStart" :range-end="isRangeEnd">
     <Button
       appearance="subtle"
-      class="date"
+      class="kit-calendar-day__date"
       :today="day.isToday"
       :disabled="isDisabled"
       :is-not-same-month="day.isNotSameMonth"
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style scoped>
-.date {
+.kit-calendar-day__date {
   width: 100%;
 }
 

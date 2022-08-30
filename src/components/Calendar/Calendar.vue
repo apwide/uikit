@@ -1,5 +1,5 @@
 <template>
-  <div ref="calendar" class="calendar" tabindex="-1">
+  <div ref="calendar" class="kit-calendar" tabindex="-1">
     <CalendarHeader
       :month="month"
       :year="year"
@@ -239,7 +239,7 @@ export default {
 </script>
 
 <style scoped>
-.calendar {
+.kit-calendar {
   padding: 15px;
   width: 301px;
 }
