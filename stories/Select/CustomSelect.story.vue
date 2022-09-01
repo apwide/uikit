@@ -11,7 +11,7 @@
         :options="options">
         <SearchIcon slot="icon" size="small" />
         <Button slot="custom-action" appearance="subtle" class="create">
-          <AddIcon slot="icon-before" size="xsmall" />
+          <KitIcon type="plus" slot="icon-before" size="xsmall" />
           Create Issue
         </Button>
       </Select>
@@ -34,18 +34,18 @@
 <script>
 import FieldGroup from '../../src/components/Form/FieldGroup'
 import { cities } from '../api-mocks/fake-data'
+import KitIcon from '../../src/components/Icon/KitIcon'
 import Select from '@/components/Select/Select'
 import Button from '@/components/Button/Button'
 import SearchIcon from '@/components/Icon/SearchIcon'
-import AddIcon from '@/components/Icon/AddIcon'
 
 export default {
   components: {
+    KitIcon,
     FieldGroup,
     Select,
     SearchIcon,
-    Button,
-    AddIcon
+    Button
   },
   data() {
     return {

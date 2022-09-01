@@ -1,45 +1,41 @@
 <template>
   <div>
     <h3>Only last + Copy</h3>
-    <Breadcrumbs :wrap="false" :copy="true" :items="items" />
+    <Breadcrumbs :copy="true" :items="items" :wrap="false" />
     <h3>Custom</h3>
     <Breadcrumbs>
       <BreadcrumbItem text="Board">
-        <BoardIcon slot="icon" size="xsmall" />
+        <KitIcon slot="icon" size="sm" type="columns" />
       </BreadcrumbItem>
       <BreadcrumbItem text="Agile Poooooooooooker">
-        <IssuesIcon slot="icon" size="xsmall" />
+        <KitIcon slot="icon" size="sm" type="robot" />
       </BreadcrumbItem>
       <BreadcrumbItem class="last" text="Awesome Session Name">
         <Tooltip slot="icon" label="Private session">
-          <LockFilledIcon class="icon" size="small" />
+          <KitIcon class="icon" size="sm" type="lock" />
         </Tooltip>
-        <Tooltip slot="link" label="Session" class="tooltip">
-          <a href="#" target="_top" class="link">Session Name loooooong</a>
+        <Tooltip slot="link" class="tooltip" label="Session">
+          <a class="link" href="#" target="_top">Session Name loooooong</a>
         </Tooltip>
       </BreadcrumbItem>
     </Breadcrumbs>
     <h3>With very short items</h3>
-    <Breadcrumbs copy :items="[{ text: 'Home' }, { text: 'dev' }, { text: 2, link: '#test/path' }]" />
+    <Breadcrumbs :items="[{ text: 'Home' }, { text: 'dev' }, { text: '2', link: '#test/path' }]" copy />
   </div>
 </template>
 
 <script>
-import BoardIcon from '../../src/components/Icon/BoardIcon'
-import IssuesIcon from '../../src/components/Icon/IssuesIcon'
-import LockFilledIcon from '../../src/components/Icon/LockFilledIcon'
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs'
-import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem'
-import Tooltip from '@/components/Tooltip/Tooltip'
+import KitIcon from '../../src/components/Icon/KitIcon'
+import Breadcrumbs from '../../src/components/Breadcrumbs/Breadcrumbs'
+import BreadcrumbItem from '../../src/components/Breadcrumbs/BreadcrumbItem'
+import Tooltip from '../../src/components/Tooltip/Tooltip'
 
 export default {
   name: 'BreadcrumbsStory',
   components: {
+    KitIcon,
     Breadcrumbs,
-    BoardIcon,
     BreadcrumbItem,
-    IssuesIcon,
-    LockFilledIcon,
     Tooltip
   },
   data() {
