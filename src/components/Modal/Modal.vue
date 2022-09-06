@@ -150,6 +150,12 @@ export default {
       }
     },
     isClickedOutside(event) {
+      if (event.x === 0 && event.y === 0) {
+        // This is a "false" click let's ignore it.
+        // This solves the case of an inline edit present on the modal that is navigated with the keyboard.
+        return false
+      }
+
       const { x, y, width, height } = this.$refs.form.getBoundingClientRect()
       const x1 = x + width
       const y1 = y + height
