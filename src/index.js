@@ -58,7 +58,7 @@ import SpotlightContext from './components/Spotlight/SpotlightContext'
 import SpotlightOverlay from './components/Spotlight/SpotlightOverlay'
 import CustomHint from './components/Spotlight/CustomHint'
 import CustomSingleSelectEditableRenderer from './components/field-renderers/CustomSingleSelectEditableRenderer'
-import { TabContainer, TabHeader, TabContent } from './components/Tabs'
+import { KitTabHeader, KitTabContent, KitTabContainer } from './components/Tabs'
 import tooltip from './directives/tooltip'
 import KitBigModal from './components/Modal/KitBigModal'
 import KitButtonGroup from './components/Button/KitButtonGroup'
@@ -103,9 +103,9 @@ export {
   KitBigModal,
   KitInlineEdit,
   Menu as KitMenu,
-  TabContainer as KitTabContainer,
-  TabHeader as KitTabHeader,
-  TabContent as KitTabContent,
+  KitTabContainer,
+  KitTabHeader,
+  KitTabContent,
   BreadcrumbItem as KitBreadcrumbItem,
   Breadcrumbs as KitBreadcrumbs,
   Flag as KitFlag,
@@ -175,9 +175,6 @@ export {
   BreadcrumbItem,
   Breadcrumbs,
   CustomHint,
-  TabContainer,
-  TabHeader,
-  TabContent,
   tooltip
 }
 export * from './components/layout'

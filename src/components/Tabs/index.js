@@ -1,40 +1,5 @@
-import TabContainer from './TabContainer'
+import KitTabContainer from './KitTabContainer'
+import KitTabHeader from './KitTabHeader'
+import KitTabContent from './KitTabContent'
 
-const TabItem = (content) => ({
-  ...content,
-  render() {
-    return this.$slots.default.filter((vnode) => vnode.tag !== undefined)
-  }
-})
-
-const TabHeader = TabItem({
-  name: 'KitTabHeader',
-  props: {
-    id: {
-      type: [String, Number],
-      required: true
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    stretch: {
-      type: Boolean,
-      default: false
-    },
-    inactive: {
-      type: Boolean,
-      default: false
-    }
-  }
-})
-const TabContent = TabItem({
-  name: 'KitTabContent',
-  props: {
-    id: {
-      type: [String, Number],
-      required: true
-    }
-  }
-})
-export { TabContainer, TabHeader, TabContent }
+export { KitTabContainer, KitTabHeader, KitTabContent }

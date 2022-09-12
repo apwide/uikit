@@ -2,7 +2,7 @@
 import Tab from './Tab'
 
 export default {
-  name: 'KitTabs',
+  name: 'KitTabContainer',
   functional: true,
   render(h, { slots, props, listeners }) {
     const { tabs = [], content = [] } = slots()
