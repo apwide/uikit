@@ -1,13 +1,13 @@
 <template>
-  <a
-    href="#"
+  <button
+    type="button"
     :active="selected === id"
     :disabled="disabled"
     :stretch="stretch"
     :inactive="inactive"
     @click.prevent="onClick">
     <slot />
-  </a>
+  </button>
 </template>
 <script>
 export default {
@@ -34,11 +34,6 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      hideTooltip: false
-    }
-  },
   methods: {
     onClick() {
       if (!this.disabled && !this.inactive) {
@@ -50,10 +45,13 @@ export default {
 </script>
 
 <style scoped>
-a {
+button {
+  background: none;
+  border: none;
+  font: inherit;
   cursor: pointer;
   line-height: 1.8;
-  margin: 0px;
+  margin: 0;
   text-decoration: none;
   color: rgb(66, 82, 110);
   outline: none;
@@ -68,7 +66,7 @@ a {
   flex-grow: 1;
 }
 
-a:not([inactive]) hover {
+button:not([inactive]):hover {
   color: #0052cc;
 }
 
@@ -79,14 +77,14 @@ a:not([inactive]) hover {
 [active]:after {
   content: '';
   border-radius: 2px;
-  bottom: 0px;
-  margin: 0px;
+  bottom: 0;
+  margin: 0;
   position: absolute;
   width: inherit;
-  left: 8px;
-  right: 8px;
+  left: 5px;
+  right: 5px;
   border-bottom: 2px solid rgb(0, 82, 204);
-  height: 0px;
+  height: 0;
 }
 
 [inactive] {
