@@ -9,7 +9,7 @@
     :spacing="spacing"
     :round="round"
     v-on="listeners">
-    <span class="wrapper" tabindex="-1" :icon-is-only-child="iconIsOnlyChild">
+    <span class="kit-button__wrapper" tabindex="-1" :icon-is-only-child="iconIsOnlyChild">
       <slot v-if="!isLoading" name="icon-before" />
       <span v-if="$slots.default" ref="label" class="kit-button__label"><slot /></span>
       <slot v-if="!isLoading" name="icon-after" />
@@ -99,11 +99,11 @@ button[spacing='none'] {
   line-height: inherit;
 }
 
-[spacing='none'] span.wrapper {
+[spacing='none'] span.kit-button__wrapper {
   padding: 0;
 }
 
-span.wrapper {
+span.kit-button__wrapper {
   border-radius: 3px;
   outline: none;
   display: flex;
@@ -113,7 +113,7 @@ span.wrapper {
   padding: 0 8px;
 }
 
-[spacing='compact'] span.wrapper[icon-is-only-child] {
+[spacing='compact'] span.kit-button__wrapper[icon-is-only-child] {
   padding: 0 4px;
 }
 
@@ -127,7 +127,7 @@ span.kit-button__label {
 
 span.kit-button__label,
 button[loading],
-button[loading] span.wrapper {
+button[loading] span.kit-button__wrapper {
   pointer-events: none;
 }
 
@@ -325,7 +325,7 @@ button[selected]:active >>> svg {
   color: rgb(244, 245, 247);
 }
 
-button[disabled] span.wrapper,
+button[disabled] span.kit-button__wrapper,
 button[disabled] >>> svg {
   color: rgb(165, 173, 186);
   pointer-events: none;

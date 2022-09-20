@@ -1,7 +1,7 @@
 <template>
-  <div class="outer" :style="`zIndex: ${zIndex}`">
+  <div class="kit-avatar__outer" :style="`zIndex: ${zIndex}`">
     <slot name="avatar-header" />
-    <component :is="tag" :href="link" target="_blank" class="wrapper" :square="`${square}`" :size="size" :style="style">
+    <component :is="tag" :href="link" target="_blank" class="kit-avatar__wrapper" :square="`${square}`" :size="size" :style="style">
       <img v-if="avatar && !error" draggable="false" :src="avatar" alt="avatar" @error="error = true" />
       <svg v-else viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <g>
@@ -14,8 +14,8 @@
           </g>
         </g>
       </svg>
-      <component :is="status" v-if="status" class="status" :size="size" />
-      <component :is="presence" v-if="presence" :size="size" class="presence" primary-color="green" />
+      <component :is="status" v-if="status" class="kit-avatar__status" :size="size" />
+      <component :is="presence" v-if="presence" :size="size" class="kit-avatar__presence" primary-color="green" />
       <slot name="avatar-footer" />
     </component>
   </div>
@@ -86,11 +86,11 @@ export default {
 </script>
 
 <style scoped>
-.outer {
+.kit-avatar__outer {
   display: inline-block;
 }
 
-.wrapper {
+.kit-avatar__wrapper {
   padding: 2px;
   display: inline-block;
   box-sizing: border-box;
@@ -100,7 +100,7 @@ export default {
   outline: none;
 }
 
-.wrapper::after {
+.kit-avatar__wrapper::after {
   background-color: transparent;
   bottom: 2px;
   content: ' ';
@@ -114,7 +114,7 @@ export default {
   transition: opacity 200ms ease 0s;
 }
 
-a.wrapper:hover::after {
+a.kit-avatar__wrapper:hover::after {
   background-color: rgba(9, 30, 66, 0.36);
   opacity: 1;
 }
@@ -126,48 +126,48 @@ img {
   user-select: none;
 }
 
-.wrapper[square='false'] img {
+.kit-avatar__wrapper[square='false'] img {
   border-radius: 50%;
 }
 
-.wrapper[square='true'] img {
+.kit-avatar__wrapper[square='true'] img {
   border-radius: 10%;
 }
 
-.wrapper[square='false'] img {
+.kit-avatar__wrapper[square='false'] img {
   border-radius: 50%;
 }
 
-.wrapper[square='true'] {
+.kit-avatar__wrapper[square='true'] {
   border-radius: 10%;
 }
 
-.wrapper[size='xxlarge'] {
+.kit-avatar__wrapper[size='xxlarge'] {
   height: 132px;
   width: 132px;
 }
 
-.wrapper[size='xlarge'] {
+.kit-avatar__wrapper[size='xlarge'] {
   height: 100px;
   width: 100px;
 }
 
-.wrapper[size='large'] {
+.kit-avatar__wrapper[size='large'] {
   height: 44px;
   width: 44px;
 }
 
-.wrapper[size='medium'] {
+.kit-avatar__wrapper[size='medium'] {
   height: 36px;
   width: 36px;
 }
 
-.wrapper[size='small'] {
+.kit-avatar__wrapper[size='small'] {
   height: 28px;
   width: 28px;
 }
 
-.wrapper[size='xsmall'] {
+.kit-avatar__wrapper[size='xsmall'] {
   height: 20px;
   width: 20px;
 }
@@ -181,48 +181,48 @@ g {
   fill: rgb(255, 255, 255);
 }
 
-.presence,
-.status {
+.kit-avatar__presence,
+.kit-avatar__status {
   pointer-events: none;
   position: absolute;
   z-index: 2;
 }
 
-[size='xxlarge'] .presence,
-[size='xxlarge'] .status,
-[size='xsmall'] .presence,
-[size='xsmall'] .status {
+[size='xxlarge'] .kit-avatar__presence,
+[size='xxlarge'] .kit-avatar__status,
+[size='xsmall'] .kit-avatar__presence,
+[size='xsmall'] .kit-avatar__status {
   display: none;
 }
 
-[size='xlarge'] .presence {
+[size='xlarge'] .kit-avatar__presence {
   bottom: 7px;
   right: 7px;
 }
 
-[size='xlarge'] .status {
+[size='xlarge'] .kit-avatar__status {
   top: 7px;
   right: 7px;
 }
 
-[size='large'] .presence {
+[size='large'] .kit-avatar__presence {
   bottom: 1px;
   right: 1px;
 }
 
-[size='large'] .status {
+[size='large'] .kit-avatar__status {
   top: 1px;
   right: 1px;
 }
 
-[size='medium'] .presence,
-[size='small'] .presence {
+[size='medium'] .kit-avatar__presence,
+[size='small'] .kit-avatar__presence {
   bottom: 0;
   right: 0;
 }
 
-[size='medium'] .status,
-[size='small'] .status {
+[size='medium'] .kit-avatar__status,
+[size='small'] .kit-avatar__status {
   top: 0;
   right: 0;
 }
