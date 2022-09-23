@@ -14,10 +14,15 @@ export default {
             componentOptions,
             data: { attrs, staticClass }
           } = vnode
+
+          if (typeof attrs['no-button'] !== 'undefined') {
+            return h('span', [vnode])
+          }
+
           return h(
             Tab,
             {
-              props: { ...componentOptions.propsData, selected: props.value },
+              props: { ...(componentOptions || {}).propsData, selected: props.value },
               attrs: { ...attrs },
               class: { ...(staticClass && { [staticClass]: true }) },
               on: { ...listeners }

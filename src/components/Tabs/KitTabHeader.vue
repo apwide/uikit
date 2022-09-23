@@ -1,3 +1,8 @@
+<template>
+  <div class="kit-tab-header">
+    <slot />
+  </div>
+</template>
 <script>
 import Vue from 'vue'
 
@@ -20,12 +25,6 @@ export default Vue.extend({
       type: Boolean,
       default: false
     }
-  },
-  render() {
-    if (this.$slots.default?.length) {
-      return this.$slots.default[0]
-    }
-    return null
   }
 })
 </script>

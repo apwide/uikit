@@ -10,7 +10,7 @@
       :position-fixed="positionFixed"
       :target-element="$refs['dialog-container']">
       <div ref="dialog-content" class="kit-dialog-content">
-        <slot />
+        <slot :toggle="onTriggerClick" />
       </div>
     </Popup>
   </div>
