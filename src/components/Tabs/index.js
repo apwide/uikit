@@ -1,5 +1,8 @@
-import KitTabContainer from './KitTabContainer'
+import KitTabProvider from './KitTabProvider'
+import KitTabButton from './KitTabButton'
+import KitTabHeaders from './KitTabHeaders'
+import KitTabPanel from './KitTabPanel'
 import KitTabHeader from './KitTabHeader'
-import KitTabContent from './KitTabContent'
+import KitTabPanels from './KitTabPanels'
 
-export { KitTabContainer, KitTabHeader, KitTabContent }
+export { KitTabPanel, KitTabHeaders, KitTabButton, KitTabProvider, KitTabHeader, KitTabPanels }
