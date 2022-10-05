@@ -1,59 +1,110 @@
 <template>
   <div>
     <h3>Simple</h3>
-    <KitTabContainer v-model="active">
-      <KitTabHeader v-for="i in tabs" :id="i" :key="i" slot="tabs" :disabled="i === 4">
-        <span>Tab {{ i }}</span>
-      </KitTabHeader>
-      <KitTabContent v-for="i in tabs" :id="i" slot="content" :key="i">
-        <span class="content">Tab Content {{ i }}</span>
-      </KitTabContent>
-    </KitTabContainer>
+    <KitTabProvider v-model="active">
+      <KitTabHeaders>
+        <KitTabHeader v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
+          <span>Tab {{ i }}</span>
+        </KitTabHeader>
+      </KitTabHeaders>
+      <KitTabPanels>
+        <KitTabPanel v-for="i in tabs" :id="i" :key="i">
+          <div class="content">Tab Content {{ i }}</div>
+        </KitTabPanel>
+      </KitTabPanels>
+    </KitTabProvider>
+
     <h3>With tooltip and badge</h3>
-    <KitTabContainer v-model="active">
-      <KitTabHeader v-for="i in tabs" :id="i" :key="i" slot="tabs" :disabled="i === 4">
-        <KitTooltip :label="'Tab ' + i" append-to-body>
-          <div class="tab-item">
-            <span class="title">Tab {{ i }}</span>
-            <KitBadge appearance="default" :value="i" />
-          </div>
-        </KitTooltip>
-      </KitTabHeader>
-      <KitTabHeader id="custom" key="custom" slot="tabs" :inactive="true"> Inactive Tab </KitTabHeader>
-      <KitTabContent v-for="i in tabs" :id="i" slot="content" :key="i">
+    <KitTabProvider v-model="active">
+      <KitTabHeaders>
+        <KitTabHeader v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
+          <KitTooltip :label="'Tab ' + i" append-to-body>
+            <div class="tab-item">
+              <span class="title">Tab {{ i }}</span>
+              <KitBadge :value="i" appearance="default" />
+            </div>
+          </KitTooltip>
+        </KitTabHeader>
+      </KitTabHeaders>
+      <KitTabPanel v-for="i in tabs" :id="i" :key="i">
         <span class="content">Tab Content {{ i }}</span>
-      </KitTabContent>
-    </KitTabContainer>
+      </KitTabPanel>
+    </KitTabProvider>
+
     <h3>Very long</h3>
-    <KitTabContainer v-model="active">
-      <KitTabHeader v-for="i in tabs" :id="i" :key="i" slot="tabs" :disabled="i === 4">
-        Verrryyy Loooooong Tab {{ i }}
-      </KitTabHeader>
-      <KitTabContent v-for="i in tabs" :id="i" slot="content" :key="i">
-        <span class="content">Verrryyy Loooooong Tab Content {{ i }}</span>
-      </KitTabContent>
-    </KitTabContainer>
+    <KitTabProvider v-model="active">
+      <KitTabHeaders>
+        <KitTabHeader v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
+          Verrryyy Loooooong Tab {{ i }}
+        </KitTabHeader>
+      </KitTabHeaders>
+      <KitTabPanel v-for="i in tabs" :id="i" :key="i">
+        <span class="content">Tab Content {{ i }}</span>
+      </KitTabPanel>
+    </KitTabProvider>
+
+    <h3>With custom tab headers</h3>
+    <KitTabProvider v-model="active">
+      <KitTabHeaders>
+        <KitTabHeader v-for="i in tabs" :id="i" :key="i" custom>
+          <KitTabButton :id="i" :disabled="i === 4"> Tab {{ i }} </KitTabButton>
+          <KitIconButton @click="click" title="Configure tabs">
+            <KitIcon type="cog" spacing="compact" />
+          </KitIconButton>
+        </KitTabHeader>
+        <KitTabHeader id="cog" custom>
+          <KitActionMenu>
+            <KitMenuItem>Entry 1</KitMenuItem>
+            <KitMenuItem>Entry 2</KitMenuItem>
+          </KitActionMenu>
+        </KitTabHeader>
+      </KitTabHeaders>
+      <KitTabPanel v-for="i in tabs" :id="i" :key="i">
+        <span class="content">Tab Content {{ i }}</span>
+      </KitTabPanel>
+    </KitTabProvider>
   </div>
 </template>
 
 <script>
 import KitTooltip from '../../src/components/Tooltip/Tooltip'
 import KitBadge from '../../src/components/Badge/Badge'
-import { KitTabContainer, KitTabContent, KitTabHeader } from '@/components/Tabs'
+import KitTabProvider from '../../src/components/Tabs/KitTabProvider'
+import KitTabHeaders from '../../src/components/Tabs/KitTabHeaders'
+import KitTabHeader from '../../src/components/Tabs/KitTabHeader'
+import KitTabPanel from '../../src/components/Tabs/KitTabPanel'
+import KitTabButton from '../../src/components/Tabs/KitTabButton'
+import KitIconButton from '../../src/components/Button/KitIconButton'
+import KitIcon from '../../src/components/Icon/KitIcon'
+import KitActionMenu from '../../src/components/Menu/KitActionMenu'
+import KitMenuItem from '../../src/components/Menu/KitMenuItem'
+import KitTabPanels from '../../src/components/Tabs/KitTabPanels'
 
 export default {
   name: 'TabsStory',
   components: {
+    KitTabPanels,
+    KitMenuItem,
+    KitActionMenu,
+    KitIcon,
+    KitIconButton,
+    KitTabButton,
+    KitTabPanel,
+    KitTabHeaders,
+    KitTabProvider,
+    KitTabHeader,
     KitBadge,
-    KitTooltip,
-    KitTabContainer,
-    KitTabContent,
-    KitTabHeader
+    KitTooltip
   },
   data() {
     return {
       active: 1,
       tabs: 8
+    }
+  },
+  methods: {
+    click() {
+      alert('clicked')
     }
   }
 }

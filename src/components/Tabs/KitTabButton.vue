@@ -1,23 +1,24 @@
 <template>
-  <button
-    type="button"
-    :active="selected === id"
-    :disabled="disabled"
-    :stretch="stretch"
-    :inactive="inactive"
-    @click.prevent="onClick">
-    <slot />
-  </button>
+  <button class="kit-tab-button" type="button" @click="onClick" :disabled="disabled"><slot /></button>
 </template>
 <script>
 export default {
-  name: 'KitTabItem',
+  name: 'KitTabButton',
+  inject: {
+    select: {
+      default: () => () => {
+        // eslint-disable-next-line no-console
+        console.error('TabKitButton: this component can only be used with KitTabProvider.')
+      }
+    },
+    state: {
+      default: () => ({
+        activeTab: undefined
+      })
+    }
+  },
   props: {
     id: {
-      type: [String, Number],
-      required: true
-    },
-    selected: {
       type: [String, Number],
       required: true
     },
@@ -28,16 +29,12 @@ export default {
     stretch: {
       type: Boolean,
       default: false
-    },
-    inactive: {
-      type: Boolean,
-      default: false
     }
   },
   methods: {
     onClick() {
       if (!this.disabled && !this.inactive) {
-        this.$emit('input', this.id)
+        this.select(this.id)
       }
     }
   }
@@ -52,16 +49,15 @@ button {
   cursor: pointer;
   line-height: 1.8;
   margin: 0;
+  text-align: left;
   text-decoration: none;
   color: rgb(66, 82, 110);
   outline: none;
   padding: 4px 8px;
-  position: relative;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: 70px;
 }
 
+/*
 [stretch] {
   flex-grow: 1;
 }
@@ -91,7 +87,7 @@ button:not([inactive]):hover {
   color: rgb(66, 82, 110);
   cursor: default;
 }
-
+*/
 [disabled] {
   color: rgb(165, 173, 186);
   pointer-events: none;
