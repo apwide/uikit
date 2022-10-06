@@ -13,6 +13,25 @@
         </KitTabPanel>
       </KitTabPanels>
     </KitTabProvider>
+    <hr />
+
+    <h3>Draggable</h3>
+    <KitTabProvider v-model="active">
+      <KitTabHeaders
+        reorderable
+        :reorderable-ids-list="tabs"
+        reorderable-items-draggable-class="demo-draggable"
+        @reorder="onReorder">
+        <KitTabHeader class="demo-draggable" v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
+          <span>Tab {{ i }}</span>
+        </KitTabHeader>
+      </KitTabHeaders>
+      <KitTabPanels>
+        <KitTabPanel v-for="i in tabs" :id="i" :key="i">
+          <div class="content">Tab Content {{ i }}</div>
+        </KitTabPanel>
+      </KitTabPanels>
+    </KitTabProvider>
 
     <h3>With tooltip and badge</h3>
     <KitTabProvider v-model="active">
@@ -99,12 +118,16 @@ export default {
   data() {
     return {
       active: 1,
-      tabs: 8
+      tabs: [0, 1, 2, 3, 4, 5, 6]
     }
   },
   methods: {
     click() {
       alert('clicked')
+    },
+    onReorder(newList) {
+      this.tabs = newList
+      console.log('Tabs reordered', newList)
     }
   }
 }
