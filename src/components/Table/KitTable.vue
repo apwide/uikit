@@ -14,23 +14,30 @@
             @sorted="onSorted(column)" />
         </tr>
       </thead>
-      <TransitionGroup tag="tbody" type="transition">
-        <TableRow
-          v-for="row in data"
-          :key="row.id"
-          :columns="actualColumns"
-          :row="row"
-          @click="onRowClick(row, $event)">
-          <template #kitDragHandle>
-            <span class="kit-table__grab-handle">
-              <KitIcon type="grip-vertical" />
-            </span>
-          </template>
-          <template v-for="column in columns" #[column.id]="props">
-            <slot :name="column.id" v-bind="props" />
-          </template>
-        </TableRow>
-      </TransitionGroup>
+      <KitDraggable
+        :enabled="dragRows"
+        :list="data"
+        draggable-class="kit-table-draggable"
+        @reorder="$emit('rows-reordered', $event)">
+        <TransitionGroup tag="tbody" type="transition">
+          <TableRow
+            class="kit-table-draggable"
+            v-for="row in data"
+            :key="row.id"
+            :columns="actualColumns"
+            :row="row"
+            @click="onRowClick(row, $event)">
+            <template #kitDragHandle>
+              <span class="kit-table__grab-handle">
+                <KitIcon type="grip-vertical" />
+              </span>
+            </template>
+            <template v-for="column in columns" #[column.id]="props">
+              <slot :name="column.id" v-bind="props" />
+            </template>
+          </TableRow>
+        </TransitionGroup>
+      </KitDraggable>
       <tfoot v-show="infiniteScroll && !showLoadMore">
         <tr>
           <td ref="infinite-scroll-loader" :colspan="columns.length" class="kit-infinite-scroll-loader">
@@ -41,7 +48,7 @@
       <tfoot v-if="showLoadMore && !infiniteScroll">
         <tr>
           <td :colspan="columns.length">
-            <KitButton appearance="subtle" style="width: 100%" @click="$emit('load-more')"> Load more </KitButton>
+            <KitButton appearance="subtle" style="width: 100%" @click="$emit('load-more')"> Load more</KitButton>
           </td>
         </tr>
       </tfoot>
@@ -56,13 +63,13 @@
 import Spinner from '../Spinner/Spinner'
 import KitIcon from '../Icon/KitIcon'
 import KitButton from '../Button/Button'
+import KitDraggable from '../common/KitDraggable'
 import TableRow from './TableRow'
 import TableHeaderCell from './TableHeaderCell'
 
-const draggableUnitSelector = 'tbody tr'
-
 export default {
   components: {
+    KitDraggable,
     KitIcon,
     TableHeaderCell,
     TableRow,
@@ -122,18 +129,6 @@ export default {
     }
   },
   computed: {
-    ghostElement() {
-      const div = document.createElement('div')
-      div.innerHTML = '&nbsp;'
-      div.className = 'kit-drag-dropzone__border'
-      const td = document.createElement('td')
-      td.colSpan = this.actualColumns.length
-      td.appendChild(div)
-      const tr = document.createElement('tr')
-      tr.appendChild(td)
-      tr.className = 'kit-drag-dropzone'
-      return tr
-    },
     actualColumns() {
       if (this.dragRows) {
         return [
@@ -147,14 +142,8 @@ export default {
       return this.columns
     }
   },
-  watch: {
-    data() {
-      this.setupDragRows()
-    }
-  },
   mounted() {
     this.createObserver()
-    this.setupDragRows()
   },
   beforeDestroy() {
     if (this.observer) {
@@ -191,97 +180,6 @@ export default {
         id: column.id,
         desc: this.sortedBy === column.id ? !this.sortedDesc : false
       })
-    },
-    // Drag specific
-    async setupDragRows() {
-      if (this.dragRows) {
-        await this.$nextTick()
-        const draggableElements = this.$el.querySelectorAll(draggableUnitSelector)
-        if (draggableElements) {
-          const now = Date.now()
-          let order = 0
-          Array.from(draggableElements).forEach((element) => {
-            element.setAttribute('draggable', 'true')
-            element.id = `o-${now}-${order}`
-            order += 1
-          })
-
-          this.positionIndex = this.data.reduce((acc, row, index) => {
-            acc[draggableElements[index].id] = row
-            return acc
-          }, {})
-        }
-
-        this.$el.addEventListener('dragstart', this.onDragStart)
-      }
-    },
-    findDraggableParent(startNode) {
-      let dragged = null
-      let candidate = startNode
-
-      while (!dragged && this.$el.contains(candidate)) {
-        const filteredSiblings = candidate.parentNode.querySelectorAll(draggableUnitSelector)
-        if (filteredSiblings && Array.from(filteredSiblings).includes(candidate)) {
-          dragged = candidate
-        } else {
-          candidate = candidate.parentNode
-        }
-      }
-      return dragged
-    },
-    async onDragStart(event) {
-      this.draggedElement = this.findDraggableParent(event.target)
-
-      if (!this.draggedElement) {
-        return
-      }
-
-      this.draggedElement.style.opacity = 0.2
-      this.lastDragYposition = event.clientY
-
-      this.$el.addEventListener('dragover', this.onDragOver)
-      this.$el.addEventListener('dragend', this.onDragEnd)
-    },
-    onDragOver(event) {
-      event.preventDefault()
-
-      const target = this.findDraggableParent(event.target)
-      const parent = target?.parentElement
-      event.dataTransfer.dropEffect = 'move'
-
-      if (!parent || !target) {
-        return
-      }
-
-      if (target !== this.draggedElement) {
-        const deltaY = this.lastDragYposition - event.clientY
-        // Sorting
-        if (target === parent.firstChild) {
-          parent.insertBefore(this.ghostElement, target)
-        } else if (target === parent.lastChild) {
-          parent.appendChild(this.ghostElement)
-        } else {
-          parent.insertBefore(this.ghostElement, deltaY > 0 ? target : target.nextSibling)
-        }
-      } else if (this.ghostElement.parentNode) {
-        parent.removeChild(this.ghostElement)
-      }
-      this.lastDragYposition = event.clientY
-    },
-    onDragEnd(event) {
-      event.preventDefault()
-      this.$el.removeEventListener('dragover', this.onDragOver, false)
-      this.$el.removeEventListener('dragend', this.onDragEnd, false)
-
-      if (this.ghostElement.parentNode) {
-        // a change happened
-        this.ghostElement.replaceWith(this.draggedElement)
-
-        const rows = Array.from(this.$el.querySelectorAll(draggableUnitSelector))
-        const newDataOrder = rows.map((row) => this.positionIndex[row.id])
-        this.$emit('rows-reordered', newDataOrder)
-      }
-      this.draggedElement.style.opacity = 1
     }
   }
 }
@@ -343,12 +241,6 @@ table .kit-infinite-scroll-loader {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
->>> .kit-drag-dropzone__border {
-  margin: 4px 1px;
-  min-height: 40px;
-  border: 2px #b3bac5 dashed;
 }
 
 .kit-table__grab-handle {
