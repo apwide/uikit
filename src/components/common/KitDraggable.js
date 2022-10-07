@@ -190,10 +190,13 @@ export default Vue.extend({
       const parent = this.ghostElement.parentNode
       this.ghostElement.parentNode.replaceChild(this.itemsList[this.draggedElementIndex], this.ghostElement)
 
-      const newOrder = Array.from(parent.childNodes).map((node) => {
-        const index = this.itemsList.indexOf(node)
-        return this.list[index]
-      })
+      const newOrder = Array.from(parent.childNodes)
+        .map((node) => {
+          const index = this.itemsList.indexOf(node)
+          return this.list[index]
+        })
+        // as the parent might contain also none draggable items.
+        .filter(Boolean)
 
       this.draggedElementIndex = null
 
