@@ -16,6 +16,7 @@
           class="kit-daterange-picker__input-from"
           :placeholder="`e.g. ${placeholderDate}`"
           :disabled="isLoading"
+          :readonly="disabledTyping"
           v-on="listeners"
           @keydown.enter="onEnter"
           @input="onInputFrom"
@@ -31,6 +32,7 @@
         class="kit-daterange-picker__input-to"
         :placeholder="placeholderDate"
         :disabled="isLoading"
+        :readonly="disabledTyping"
         v-on="listeners"
         @keydown.enter="onEnter"
         @input="onInputTo"
@@ -123,6 +125,10 @@ export default {
     dateFormat: {
       type: String,
       default: 'dd/MM/y'
+    },
+    disabledTyping: {
+      type: Boolean,
+      default: false
     },
     showQuickRanges: {
       type: Boolean,
