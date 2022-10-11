@@ -14,7 +14,7 @@
       data-cy="cancel-button"
       spacing="none"
       @blur="onBlur"
-      @click="onCancel"
+      @mousedown="onCancel"
       @focus="onFocus">
       <EditorCloseIcon slot="icon-before" size="small" />
     </Button>
@@ -37,6 +37,7 @@ export default {
     onConfirm() {
       this.$emit('confirm')
     },
+    /* cancel on mousedown to be triggered before blur of input component */
     onCancel() {
       this.$emit('cancel')
     },

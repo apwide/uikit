@@ -60,7 +60,7 @@
       </InlineEditViewContent>
     </div>
     <Popper
-      v-if="$refs['text-field'] && isEditing && !isLoading && confirm"
+      v-if="$refs['text-field'] && isEditing && !isLoading"
       ref="buttons"
       :offset="offset"
       :target-element="$refs['text-field']">
