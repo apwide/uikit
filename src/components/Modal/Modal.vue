@@ -1,12 +1,12 @@
 <template>
-  <transition name="modal" appear>
-    <Blanket class="dialog" :z-index="zIndex" @click.native="clicked">
+  <transition appear name="modal">
+    <Blanket :z-index="zIndex" class="dialog" @click.native="clicked">
       <PositionerAbsolute :width="currentWidth">
-        <form class="kit-modal modal-container" novalidate @submit.prevent="onSubmit" ref="form">
+        <form ref="form" class="kit-modal modal-container" novalidate @submit.prevent="onSubmit">
           <slot>
             <header v-if="!noHeader">
               <slot name="header">
-                <Header :heading="heading" :appearance="appearance" />
+                <Header :appearance="appearance" :heading="heading" />
               </slot>
             </header>
             <div class="content">
@@ -17,10 +17,10 @@
                 <slot name="progress" />
                 <Footer
                   :actions="actions"
-                  :auto-focus="autoFocus"
                   :appearance="appearance"
-                  :should-allow-submit="shouldAllowSubmit"
+                  :auto-focus="autoFocus"
                   :pending="pending"
+                  :should-allow-submit="shouldAllowSubmit"
                   @cancel="onCancel" />
               </slot>
             </footer>
@@ -36,6 +36,21 @@ import Blanket from './Blanket'
 import PositionerAbsolute from './PositionerAbsolute'
 import Header from './Header'
 import Footer from './Footer'
+
+function collectAllChildRectangles(node, collector) {
+  if (Object.hasOwnProperty.call(node, 'getBoundingClientRect')) {
+    const { x, y, height, width } = node.getBoundingClientRect()
+    collector.push({ x, y, height, width })
+  }
+  if (node.hasChildNodes()) {
+    for (const childNode of node.childNodes) {
+      collectAllChildRectangles(childNode, collector)
+    }
+  }
+}
+
+const validateIfInRectangle = (testedX, TestedY, { x, y, height, width }) =>
+  x < testedX && testedX < x + width && y < TestedY && TestedY < y + height
 
 const ESC = 27
 export default {
@@ -156,11 +171,28 @@ export default {
         return false
       }
 
-      const { x, y, width, height } = this.$refs.form.getBoundingClientRect()
-      const x1 = x + width
-      const y1 = y + height
+      if (event.target.classList.contains('blanket')) {
+        return true
+      }
+
       const { clientX, clientY } = event
-      return clientX < x || x1 < clientX || clientY < y || y1 < clientY
+
+      // If it is physically inside the modal box.
+      if (validateIfInRectangle(clientX, clientY, this.$refs.form.getBoundingClientRect())) {
+        return false
+      }
+
+      // If the target is an (in)direct child node of the modal.
+      if (this.$refs.form.contains(event.target)) {
+        return false
+      }
+
+      // Heavy artillery: if the click happen over a child node outside its parent boundaries.
+      // This should solve most append-to-body component as the "floating element" should be on top
+      // of its parent.
+      const collector = []
+      collectAllChildRectangles(this.$refs.form, collector)
+      return !collector.some((rectangle) => validateIfInRectangle(clientX, clientY, rectangle))
     }
   }
 }
