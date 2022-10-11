@@ -8,13 +8,13 @@
       select
       @mousedown="toggle">
       <div class="kit-daterange-picker__input-from-wrapper">
-        <span class="kit-daterange-picker__input-from-ghost">{{ formattedDateFrom || `e.g. ${placeholderDate}` }}</span>
+        <span class="kit-daterange-picker__input-from-ghost">{{ formattedDateFrom || displayedFromPlaceholder }}</span>
         <input
           ref="input-from"
           :value="formattedDateFrom"
           type="text"
           class="kit-daterange-picker__input-from"
-          :placeholder="`e.g. ${placeholderDate}`"
+          :placeholder="displayedFromPlaceholder"
           :disabled="isLoading"
           :readonly="disabledTyping"
           v-on="listeners"
@@ -30,7 +30,7 @@
         :value="formattedDateTo"
         type="text"
         class="kit-daterange-picker__input-to"
-        :placeholder="placeholderDate"
+        :placeholder="displayedToPlaceholder"
         :disabled="isLoading"
         :readonly="disabledTyping"
         v-on="listeners"
@@ -144,6 +144,12 @@ export default {
     timeZone: {
       type: String,
       default: undefined
+    },
+    fromPlaceholder: {
+      type: String
+    },
+    toPlaceholder: {
+      type: String
     }
   },
   data() {
@@ -216,6 +222,12 @@ export default {
     },
     placeholderDate() {
       return format(new Date(), this.dateFormat)
+    },
+    displayedFromPlaceholder() {
+      return this.fromPlaceholder || `e.g. ${this.placeholderDate}`
+    },
+    displayedToPlaceholder() {
+      return this.toPlaceholder || this.placeholderDate
     }
   },
   watch: {
@@ -290,10 +302,24 @@ export default {
       }
     },
     onDateSelected(date) {
-      if (this.isInputFromFocused()) {
-        this.selectedDateFrom = Date.parse(date)
+      if (this.disabledTyping) {
+        if (!this.selectedDateFrom) {
+          this.selectedDateFrom = Date.parse(date)
+        } else if (!this.selectedDateTo) {
+          this.selectedDateTo = Date.parse(date)
+        } else {
+          if (Date.parse(date) < this.selectedDateFrom) {
+            this.selectedDateFrom = Date.parse(date)
+          } else {
+            this.selectedDateTo = Date.parse(date)
+          }
+        }
       } else {
-        this.selectedDateTo = Date.parse(date)
+        if (this.isInputFromFocused()) {
+          this.selectedDateFrom = Date.parse(date)
+        } else {
+          this.selectedDateTo = Date.parse(date)
+        }
       }
 
       if (!this.firstDateSelected) {
