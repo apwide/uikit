@@ -6,6 +6,7 @@
     :icon="icon"
     :placement="placement"
     :force-is-editing="forceIsEditing"
+    :hide-confirm-buttons="!confirm"
     @start-editing="$emit('start-editing')"
     @stop-editing="$emit('stop-editing')"
     @save-requested="onSaveRequested">
@@ -25,6 +26,7 @@
       :filter-predicate="filterPredicate"
       style="flex: 1"
       :fixed-select-width="fixedSelectWidth"
+      :confirm="confirm"
       @input="
         props.input($event)
         $emit('input', $event)

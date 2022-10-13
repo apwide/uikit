@@ -60,7 +60,7 @@
       </InlineEditViewContent>
     </div>
     <Popper
-      v-if="$refs['text-field'] && isEditing && !isLoading"
+      v-if="$refs['text-field'] && isEditing && !isLoading && !hideConfirmButtons"
       ref="buttons"
       :offset="offset"
       :target-element="$refs['text-field']">
@@ -147,6 +147,10 @@ export default {
     confirm: {
       type: Boolean,
       default: true
+    },
+    hideConfirmButtons: {
+      type: Boolean,
+      default: false
     },
     icon: {
       type: Boolean,
