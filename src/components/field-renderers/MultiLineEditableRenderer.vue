@@ -6,6 +6,7 @@
     pencil-style="floating"
     :placement="placement"
     :force-is-editing="forceIsEditing"
+    :confirm="confirm"
     @save-requested="onSaveRequested"
     @start-editing="onStartEditing"
     @stop-editing="onStopEditing">
@@ -66,6 +67,10 @@ export default {
     forceIsEditing: {
       type: Boolean,
       default: false
+    },
+    confirm: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {

@@ -243,9 +243,6 @@ export default {
     },
     onInput(value) {
       this.editingValue = value
-      if (!this.confirm) {
-        this.$nextTick(() => this.confirmEditedValue())
-      }
     },
     onBlur(event) {
       if (!this.confirm) {
