@@ -84,7 +84,9 @@ export default Vue.extend({
   },
   mounted() {
     if (this.enabled) {
-      this.setupDrag()
+      setTimeout(() => {
+        this.setupDrag()
+      }, 500)
     }
   },
 
@@ -150,28 +152,37 @@ export default Vue.extend({
     },
     onDragOver(event) {
       const target = closest(event.target, this.draggableClass)
+      const parent = target.parentNode
 
       if (!target || !this.itemsList.includes(target)) {
-        return
-      }
-      clearTimeout(this.timerToRemoveGhost)
-
-      const parent = target.parentNode
-      const index = this.itemsList.indexOf(target)
-
-      if (index === this.draggedElementIndex) {
         try {
           parent.removeChild(this.ghostElement)
         } catch (e) {
           // ignore
         }
-      } else if (index < this.draggedElementIndex) {
+        return
+      }
+      clearTimeout(this.timerToRemoveGhost)
+
+      const siblings = Array.from(parent.childNodes)
+      const indexInItems = this.itemsList.indexOf(target)
+
+      const indexInSiblings = siblings.indexOf(target)
+      if (indexInItems === this.draggedElementIndex) {
+        try {
+          parent.removeChild(this.ghostElement)
+        } catch (e) {
+          // ignore
+        }
+      } else if (indexInItems < this.draggedElementIndex) {
+        // add on left of element
         parent.insertBefore(this.ghostElement, target)
       } else {
-        if (index === this.itemsList.length - 1) {
+        // add on right of element
+        if (indexInSiblings === siblings.length - 1) {
           parent.append(this.ghostElement)
         } else {
-          parent.insertBefore(this.ghostElement, this.itemsList[index + 1])
+          parent.insertBefore(this.ghostElement, siblings[indexInSiblings + 1])
         }
       }
     },
