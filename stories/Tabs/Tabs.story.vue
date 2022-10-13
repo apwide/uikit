@@ -25,6 +25,9 @@
         <KitTabHeader class="demo-draggable" v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
           <span>Tab {{ i }}</span>
         </KitTabHeader>
+        <KitTabHeader id="cog">
+          <KitIcon type="cog" />
+        </KitTabHeader>
       </KitTabHeaders>
       <KitTabPanels>
         <KitTabPanel v-for="i in tabs" :id="i" :key="i">
