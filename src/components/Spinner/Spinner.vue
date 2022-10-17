@@ -66,7 +66,6 @@ export default {
   height: 30px;
   color: #42526e;
   display: inline-block;
-  z-index: 2000000000;
 }
 
 .spinner[size='small'] {
