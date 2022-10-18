@@ -1,5 +1,5 @@
 <template>
-  <div class="blanket" :style="{ zIndex }">
+  <div class="kit-blanket" :style="{ zIndex }">
     <slot />
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style scoped>
-.blanket {
+.kit-blanket {
   right: 0;
   top: 0;
   bottom: 0;

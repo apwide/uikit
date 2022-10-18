@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="kit-modal-footer">
     <Button
       :auto-focus="autoFocus"
       type="submit"
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style scoped>
-.footer {
+.kit-modal-footer {
   display: flex;
   justify-content: flex-end;
 }
