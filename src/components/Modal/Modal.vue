@@ -1,15 +1,15 @@
 <template>
-  <transition appear name="modal">
-    <Blanket :z-index="zIndex" class="dialog" @click.native="clicked">
+  <transition appear name="kit-modal-transition">
+    <Blanket ref="blanket" :z-index="zIndex" class="kit-dialog" @click.native="clicked">
       <PositionerAbsolute :width="currentWidth">
-        <form ref="form" class="kit-modal modal-container" novalidate @submit.prevent="onSubmit">
+        <form ref="form" class="kit-modal kit-modal-container" novalidate @submit.prevent="onSubmit">
           <slot>
             <header v-if="!noHeader">
               <slot name="header">
                 <Header :appearance="appearance" :heading="heading" />
               </slot>
             </header>
-            <div class="content">
+            <div class="kit-content">
               <slot name="content" />
             </div>
             <footer v-if="!noFooter">
@@ -36,21 +36,6 @@ import Blanket from './Blanket'
 import PositionerAbsolute from './PositionerAbsolute'
 import Header from './Header'
 import Footer from './Footer'
-
-function collectAllChildRectangles(node, collector) {
-  if (Object.hasOwnProperty.call(node, 'getBoundingClientRect')) {
-    const { x, y, height, width } = node.getBoundingClientRect()
-    collector.push({ x, y, height, width })
-  }
-  if (node.hasChildNodes()) {
-    for (const childNode of node.childNodes) {
-      collectAllChildRectangles(childNode, collector)
-    }
-  }
-}
-
-const validateIfInRectangle = (testedX, TestedY, { x, y, height, width }) =>
-  x < testedX && testedX < x + width && y < TestedY && TestedY < y + height
 
 const ESC = 27
 export default {
@@ -165,41 +150,14 @@ export default {
       }
     },
     isClickedOutside(event) {
-      if (event.x === 0 && event.y === 0) {
-        // This is a "false" click let's ignore it.
-        // This solves the case of an inline edit present on the modal that is navigated with the keyboard.
-        return false
-      }
-
-      if (event.target.classList.contains('blanket')) {
-        return true
-      }
-
-      const { clientX, clientY } = event
-
-      // If it is physically inside the modal box.
-      if (validateIfInRectangle(clientX, clientY, this.$refs.form.getBoundingClientRect())) {
-        return false
-      }
-
-      // If the target is an (in)direct child node of the modal.
-      if (this.$refs.form.contains(event.target)) {
-        return false
-      }
-
-      // Heavy artillery: if the click happen over a child node outside its parent boundaries.
-      // This should solve most append-to-body component as the "floating element" should be on top
-      // of its parent.
-      const collector = []
-      collectAllChildRectangles(this.$refs.form, collector)
-      return !collector.some((rectangle) => validateIfInRectangle(clientX, clientY, rectangle))
+      return event.target === this.$refs.blanket.$el
     }
   }
 }
 </script>
 
 <style scoped>
-.modal-container {
+.kit-modal-container {
   background-color: rgb(255, 255, 255);
   box-shadow: rgba(9, 30, 66, 0.08) 0 0 0 1px, rgba(9, 30, 66, 0.08) 0 2px 1px, rgba(9, 30, 66, 0.31) 0 0 20px -6px;
   color: rgb(9, 30, 66);
@@ -210,30 +168,30 @@ export default {
   border-radius: 3px;
   outline: 0;
   overflow: hidden;
-  padding: 0px 28px;
+  padding: 0 28px;
 }
 
-.content {
+.kit-content {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1 1 auto;
-  padding: 2px 0px;
+  padding: 2px 0;
 }
 
-.modal-enter {
+.kit-modal-transition-enter {
   opacity: 0;
 }
 
-.modal-leave-active {
+.kit-modal-transition-leave-active {
   opacity: 0;
 }
 
-.modal-enter .positioner {
+.kit-modal-transition-enter .kit-positioner {
   opacity: 0;
   transform: translateY(20px);
 }
 
-.modal-leave-active .positioner {
+.kit-modal-transition-leave-active .kit-positioner {
   opacity: 0;
   transform: translateY(-20px);
 }

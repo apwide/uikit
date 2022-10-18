@@ -1,5 +1,5 @@
 <template>
-  <div class="positioner" :style="{ width: currentWidth, minWidth: currentWidth }">
+  <div class="kit-positioner" :style="{ width: currentWidth, minWidth: currentWidth }">
     <slot />
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-.positioner {
+.kit-positioner {
   display: flex;
   flex-direction: column;
   height: calc(100% - 120px);
