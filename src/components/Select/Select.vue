@@ -1,59 +1,60 @@
 <template>
-  <div ref="target" class="select" :disabled="isDisabled">
+  <div ref="target" :disabled="isDisabled" class="select">
     <TextField
       :is-focused="focused"
       :is-invalid="isInvalid"
       :is-loading="isLoading"
-      class="select-wrapper"
       :select="select"
+      class="select-wrapper"
       tabindex="-1"
       @click="click">
-      <div ref="list" class="flex-wrapper" :gap="multi && !!selected.length" @dragover.prevent>
+      <div ref="list" :gap="multi && !!selected.length" class="flex-wrapper" @dragover.prevent>
         <template v-if="multi">
           <Tag
             v-for="(tag, i) in selected"
             :key="`${tag.id}-${i}`"
-            :tag="tag"
-            :index="i"
             :count="selected.length"
+            :index="i"
             :min="min"
+            :tag="tag"
             data-cy="tag"
-            @dragend="onDragEnd"
             @drag="handleDrag"
+            @dragend="onDragEnd"
             @dragstart="onDragStart"
             @on-remove="onRemove">
-            <slot name="tag" :tag="tag" />
+            <slot :tag="tag" name="tag" />
           </Tag>
         </template>
         <input
           ref="input"
-          class="search"
-          :value="search"
           :disabled="isDisabled"
           :style="{ width: currentWidth }"
+          :value="search"
+          class="search"
+          @blur="onBlur"
+          @focus="onFocus"
+          @input="onInput"
           @keydown.down.prevent="onNextSuggestion"
           @keydown.up.prevent="onPreviousSuggestion"
+          @keydown.tab="onTab"
           @keydown.enter="onSuggestionSelected"
-          @input="onInput"
-          @focus="onFocus"
-          @blur="onBlur"
           @keyup.esc="onEsc"
           @keydown.delete="removeOption" />
       </div>
       <div v-if="!selected.length" class="text">
         <slot
           v-if="!search && selected.value && $scopedSlots['selected'] && !multi"
-          name="selected"
-          :selected="selected.value" />
+          :selected="selected.value"
+          name="selected" />
         <span v-else :placeholder="!search && !selected.label">
           {{ input }}
         </span>
       </div>
       <Icons
-        :is-selected="isAnyOptionSelected"
-        :is-fetching="isFetching"
         :createable="createable"
         :is-clearable="showClearIcon"
+        :is-fetching="isFetching"
+        :is-selected="isAnyOptionSelected"
         @clear="onClear">
         <slot name="icon" />
       </Icons>
@@ -61,27 +62,27 @@
     <Popper
       v-if="shouldOpenMenu"
       ref="menu"
+      :boundaries-element="boundariesElement"
       :offset="[0, 0]"
       :target-element="$refs.target"
-      :boundaries-element="boundariesElement"
       placement="bottom-start">
       <SelectMenu
-        :selected="selected"
-        :options="suggestions"
-        :current-suggestion-index="currentSuggestionIndex"
-        :is-fetching="isFetching"
-        :async="async"
         :append-to-body="appendToBody"
+        :async="async"
         :contains-query="!!search"
-        :style="{ width: selectWidth }"
+        :current-suggestion-index="currentSuggestionIndex"
         :has-suggestions="hasSuggestions"
+        :is-fetching="isFetching"
         :no-options-message="noOptionsMessage"
+        :options="suggestions"
         :placeholder="searchPromptText"
+        :selected="selected"
+        :style="{ width: selectWidth }"
         data-cy="select-menu"
-        @update-popper-position="updatePopperPosition"
         @mouseover="onMouseOverSuggestion"
+        @update-popper-position="updatePopperPosition"
         @option-selected="onOptionSelected">
-        <slot slot="option" slot-scope="{ option, isCurrent }" name="option" :is-current="isCurrent" :option="option" />
+        <slot slot="option" slot-scope="{ option, isCurrent }" :is-current="isCurrent" :option="option" name="option" />
         <slot name="custom-action" />
       </SelectMenu>
     </Popper>
@@ -224,6 +225,10 @@ export default {
       default: undefined
     },
     selectFirstEntry: {
+      type: Boolean,
+      default: false
+    },
+    allowTabToSelect: {
       type: Boolean,
       default: false
     }
@@ -487,6 +492,19 @@ export default {
         this.currentSuggestionIndex -= 1
         if (this.currentSuggestionIndex < 0) {
           this.currentSuggestionIndex = this.suggestions.length - 1
+        }
+      }
+    },
+
+    onTab(e) {
+      if (this.allowTabToSelect) {
+        if (this.suggestions.length === 1 || this.selectFirstEntry) {
+          this.currentSuggestionIndex = 0
+
+          // `this.confirm` is bypassed
+          this.$emit('input', this.suggestions[0].value)
+        } else {
+          e.preventDefault()
         }
       }
     },
