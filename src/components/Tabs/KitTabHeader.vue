@@ -1,21 +1,25 @@
 <template>
-  <div class="kit-tab-header" :active="active" :disabled="disabled">
+  <div class="kit-tab-header" :class="{ 'kit-is-reorderable' : isReorderable}" :active="active" :disabled="disabled">
+    <template v-if="isReorderable">
+      <KitIcon class="kit-drag-handle" type="grip-vertical"/>
+    </template>
     <span v-if="custom" class="kit-tab-header__custom">
-      <slot />
+      <slot/>
     </span>
     <KitTabButton v-else :id="id" class="kit-tab-header__button" :disabled="disabled" @click="onClick">
-      <slot />
+      <slot/>
     </KitTabButton>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import KitIcon from "../Icon/KitIcon.vue";
 import KitTabButton from './KitTabButton.vue'
 
 export default Vue.extend({
   name: 'KitTabHeader',
-  components: { KitTabButton },
+  components: {KitIcon, KitTabButton},
   inject: {
     select: {
       default: () => () => {
@@ -25,7 +29,8 @@ export default Vue.extend({
     },
     state: {
       default: () => ({
-        activeTab: undefined
+        activeTab: undefined,
+        reorderable: undefined
       })
     }
   },
@@ -43,11 +48,21 @@ export default Vue.extend({
       type: Boolean,
       default: false
     },
-    disabled: Boolean
+    disabled: Boolean,
+    reorderable: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     active() {
       return String(this.state.activeTab) === String(this.id)
+    },
+    isReorderable() {
+      if (!this.state) {
+        return false
+      }
+      return this.state.reorderable && this.reorderable || false
     }
   },
   methods: {
@@ -63,6 +78,12 @@ export default Vue.extend({
   padding: 0 5px;
   position: relative;
   white-space: normal;
+  display: flex;
+  align-items: center;
+}
+
+.kit-drag-handle {
+  cursor: grab;
 }
 
 :not([disabled]):hover {

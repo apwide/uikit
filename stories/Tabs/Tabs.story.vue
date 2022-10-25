@@ -20,9 +20,8 @@
       <KitTabHeaders
         reorderable
         :reorderable-ids-list="tabs"
-        reorderable-items-draggable-class="demo-draggable"
         @reorder="onReorder">
-        <KitTabHeader class="demo-draggable" v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
+        <KitTabHeader reorderable v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
           <span>Tab {{ i }}</span>
         </KitTabHeader>
         <KitTabHeader id="cog">

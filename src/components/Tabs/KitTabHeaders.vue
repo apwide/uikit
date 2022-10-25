@@ -3,7 +3,8 @@
     <KitDraggable
       :enabled="reorderable"
       :list="reorderableIdsList"
-      :draggable-class="reorderableItemsDraggableClass"
+      handleSelector=".kit-drag-handle"
+      draggable-class="kit-is-reorderable"
       @reorder="$emit('reorder', $event)">
       <nav>
         <slot />
@@ -19,6 +20,19 @@ import KitDraggable from '../common/KitDraggable'
 export default Vue.extend({
   name: 'KitTabHeaders',
   components: { KitDraggable },
+  provide() {
+    const state = this.state
+    Object.defineProperty(state, 'reorderable', {
+      enumerable: true,
+      get: () => {
+        return this.reorderable
+      }
+    })
+
+    return {
+      state,
+    }
+  },
   inject: {
     select: {
       default: () => () => {
@@ -51,7 +65,6 @@ export default Vue.extend({
 <style scoped>
 .kit-tab-headers {
   position: relative;
-  /*margin: 0 -8px 0 -8px;*/
   width: 100%;
 }
 
@@ -73,12 +86,5 @@ nav::before {
   right: 0;
   background-color: rgb(235, 236, 240);
   height: 2px;
-}
-
->>> [draggable='true']::before {
-  cursor: grab;
-  color: #7a869a;
-  font-weight: 900;
-  content: '::';
 }
 </style>

@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rimraf dist && rollup -c",
     "rebuild": "rollup -c",
-    "storybook": "start-storybook -p 9001 -s ./public -c .storybook",
+    "storybook": "start-storybook -p 9001 -s ./public -c .storybook --ci",
     "lint": "eslint src stories tests --ext .js,.vue,.ts",
     "lint-fix": "eslint src stories tests --fix --ext .js,.vue,.ts",
     "test": "npm run lint && jest && concurrently 'npm run storybook' 'npm run cypress:test' -k -s first",
