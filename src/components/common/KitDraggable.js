@@ -33,20 +33,19 @@ function ghostFactory(item) {
 
   // make it sexy for the drop
   ghost.addEventListener('dragenter', (event) => event.preventDefault())
-  ghost.addEventListener('dragover', (event) => event.preventDefault())
+  ghost.addEventListener('dragover', (event) => {
+    event.dataTransfer.dropEffect = "move";
+    event.preventDefault()
+  })
 
   // make it sexy for the eye when hovering the dropzone
   styledElement.addEventListener('dragenter', () => {
     styledElement.classList.add(`${ghostClass}-hover`)
     styledElement.style.borderColor = '#bababa'
-    // styledElement.style.borderWidth = '3px'
-    // styledElement.style.padding = '1px'
     styledElement.style.backgroundColor = '#f3f3f3'
   })
   styledElement.addEventListener('dragleave', () => {
     styledElement.classList.remove(`${ghostClass}-hover`)
-    // styledElement.style.borderWidth = '2px'
-    // styledElement.style.padding = '2px'
     styledElement.style.borderColor = '#b3bac5'
     styledElement.style.backgroundColor = 'transparent'
   })
@@ -80,6 +79,10 @@ export default Vue.extend({
     },
     draggableClass: {
       type: String
+    },
+    handleSelector: {
+      type: String,
+      default: ''
     }
   },
   mounted() {
@@ -89,13 +92,14 @@ export default Vue.extend({
       }, 500)
     }
   },
-
+  beforeDestroy() {
+    this.removeMouseDown()
+  },
   data() {
     return {
       itemsList: [],
       items: [],
       ghostElement: null,
-      draggedElementIndex: -1,
       timerToRemoveGhost: null
     }
   },
@@ -110,17 +114,23 @@ export default Vue.extend({
       await this.$nextTick()
       const parent = this.$parent.$el
       const draggableItems = parent.querySelectorAll(`.${this.draggableClass}`)
-      if (draggableItems.length !== this.list.length) {
+      if (!draggableItems || draggableItems.length !== this.list.length) {
         throw new Error(
           `KitDraggable: draggableItems count should be the same as the list length ${draggableItems.length} vs ${this.list.length}`
         )
       }
 
       for (const draggableItem of draggableItems) {
-        draggableItem.draggable = true
-        draggableItem.addEventListener('dragstart', this.onDragStart)
-        draggableItem.addEventListener('dragover', this.onDragOver)
-        draggableItem.addEventListener('dragend', this.onDragEnd)
+        let handle = draggableItem
+        if (this.handleSelector) {
+          handle = draggableItem.querySelector(this.handleSelector)
+          if (!handle) {
+            throw new Error(`No handle found (${this.handleSelector})`)
+          }
+        }
+
+        handle.addEventListener('mousedown', this.onMouseDown)
+
         this.itemsList.push(draggableItem)
       }
       draggableItems.item(draggableItems.length - 1)
@@ -132,9 +142,7 @@ export default Vue.extend({
     },
     teardown() {
       const parent = this.$parent.$el
-
       this.itemsList = []
-
       const draggableItems = parent.querySelectorAll(`.${this.draggableClass}`)
 
       for (const draggableItem of draggableItems) {
@@ -144,15 +152,38 @@ export default Vue.extend({
         draggableItem.removeEventListener('dragend', this.onDragEnd)
       }
     },
+    onMouseDown() {
+      this.itemsList.forEach(item => {
+        item.draggable = true
+        item.addEventListener('dragstart', this.onDragStart)
+        item.addEventListener('dragover', this.onDragOver)
+        item.addEventListener('dragend', this.onDragEnd)
+      })
+    },
+    removeMouseDown() {
+      this.itemsList.forEach(item => {
+        let handle = item
+        if (this.handleSelector) {
+          handle = item.querySelector(this.handleSelector)
+          if (!handle) {
+            throw new Error(`No handle found (${this.handleSelector})`)
+          }
+        }
+
+        handle.removeEventListener('mousedown', this.onMouseDown)
+      })
+    },
     onDragStart(event) {
       if (!this.itemsList.includes(event.target)) {
         return
       }
-      this.draggedElementIndex = this.itemsList.indexOf(event.target)
+      event.dataTransfer.setData("text/plain", this.itemsList.indexOf(event.target))
     },
     onDragOver(event) {
       const target = closest(event.target, this.draggableClass)
       const parent = target.parentNode
+      const draggedElementIndex = Number(event.dataTransfer.getData('text/plain'))
+
 
       if (!target || !this.itemsList.includes(target)) {
         try {
@@ -168,13 +199,13 @@ export default Vue.extend({
       const indexInItems = this.itemsList.indexOf(target)
 
       const indexInSiblings = siblings.indexOf(target)
-      if (indexInItems === this.draggedElementIndex) {
+      if (indexInItems === draggedElementIndex) {
         try {
           parent.removeChild(this.ghostElement)
         } catch (e) {
           // ignore
         }
-      } else if (indexInItems < this.draggedElementIndex) {
+      } else if (indexInItems < draggedElementIndex) {
         // add on left of element
         parent.insertBefore(this.ghostElement, target)
       } else {
@@ -188,18 +219,20 @@ export default Vue.extend({
     },
     onDragEnd() {
       this.timerToRemoveGhost = setTimeout(() => {
-        this.draggedElementIndex = null
         try {
+          this.teardown()
           this.ghostElement.parentNode.removeChild(this.ghostElement)
         } catch (e) {
           // ignore
         }
       }, 50)
     },
-    onDrop() {
+    onDrop(event) {
+      const draggedElementIndex = Number(event.dataTransfer.getData('text/plain'))
+
       // visually do the thing
       const parent = this.ghostElement.parentNode
-      this.ghostElement.parentNode.replaceChild(this.itemsList[this.draggedElementIndex], this.ghostElement)
+      this.ghostElement.parentNode.replaceChild(this.itemsList[draggedElementIndex], this.ghostElement)
 
       const newOrder = Array.from(parent.childNodes)
         .map((node) => {
@@ -207,9 +240,9 @@ export default Vue.extend({
           return this.list[index]
         })
         // as the parent might contain also none draggable items.
-        .filter(Boolean)
+        .filter(item => typeof item !== 'undefined')
 
-      this.draggedElementIndex = null
+      this.teardown()
 
       this.$emit('reorder', newOrder)
     }
