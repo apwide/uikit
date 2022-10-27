@@ -1,25 +1,25 @@
 <template>
-  <div class="kit-tab-header" :class="{ 'kit-is-reorderable' : isReorderable}" :active="active" :disabled="disabled">
+  <div class="kit-tab-header" :class="{ 'kit-is-reorderable': isReorderable }" :active="active" :disabled="disabled">
     <template v-if="isReorderable">
-      <KitIcon class="kit-drag-handle" type="grip-vertical"/>
+      <KitIcon class="kit-drag-handle" type="grip-vertical" />
     </template>
     <span v-if="custom" class="kit-tab-header__custom">
-      <slot/>
+      <slot />
     </span>
     <KitTabButton v-else :id="id" class="kit-tab-header__button" :disabled="disabled" @click="onClick">
-      <slot/>
+      <slot />
     </KitTabButton>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import KitIcon from "../Icon/KitIcon.vue";
+import KitIcon from '../Icon/KitIcon.vue'
 import KitTabButton from './KitTabButton.vue'
 
 export default Vue.extend({
   name: 'KitTabHeader',
-  components: {KitIcon, KitTabButton},
+  components: { KitIcon, KitTabButton },
   inject: {
     select: {
       default: () => () => {
@@ -62,7 +62,7 @@ export default Vue.extend({
       if (!this.state) {
         return false
       }
-      return this.state.reorderable && this.reorderable || false
+      return (this.state.reorderable && this.reorderable) || false
     }
   },
   methods: {
@@ -84,6 +84,8 @@ export default Vue.extend({
 
 .kit-drag-handle {
   cursor: grab;
+  color: #a5adba;
+  font-size: 0.68em;
 }
 
 :not([disabled]):hover {
