@@ -34,7 +34,7 @@ function ghostFactory(item) {
   // make it sexy for the drop
   ghost.addEventListener('dragenter', (event) => event.preventDefault())
   ghost.addEventListener('dragover', (event) => {
-    event.dataTransfer.dropEffect = "move";
+    event.dataTransfer.dropEffect = 'move'
     event.preventDefault()
   })
 
@@ -97,13 +97,17 @@ export default Vue.extend({
   },
   data() {
     return {
-      itemsList: [],
-      items: [],
       ghostElement: null,
-      timerToRemoveGhost: null
+      timerToRemoveGhost: null,
+      // needed for Chrome
+      draggedElementIndex: null
     }
   },
   methods: {
+    itemList() {
+      const parent = this.$parent.$el
+      return Array.from(parent.querySelectorAll(`.${this.draggableClass}`))
+    },
     async setupDrag() {
       if (!this.list.length) {
         throw new Error('KitDraggable only works with a list of items')
@@ -112,8 +116,8 @@ export default Vue.extend({
         throw new Error('KitDraggable only works with a class to find draggable items')
       }
       await this.$nextTick()
-      const parent = this.$parent.$el
-      const draggableItems = parent.querySelectorAll(`.${this.draggableClass}`)
+
+      const draggableItems = this.itemList()
       if (!draggableItems || draggableItems.length !== this.list.length) {
         throw new Error(
           `KitDraggable: draggableItems count should be the same as the list length ${draggableItems.length} vs ${this.list.length}`
@@ -130,20 +134,15 @@ export default Vue.extend({
         }
 
         handle.addEventListener('mousedown', this.onMouseDown)
-
-        this.itemsList.push(draggableItem)
       }
-      draggableItems.item(draggableItems.length - 1)
 
-      const ghostElement = ghostFactory(this.itemsList[0])
+      const ghostElement = ghostFactory(draggableItems[0])
       ghostElement.addEventListener('drop', this.onDrop)
 
       this.ghostElement = ghostElement
     },
     teardown() {
-      const parent = this.$parent.$el
-      this.itemsList = []
-      const draggableItems = parent.querySelectorAll(`.${this.draggableClass}`)
+      const draggableItems = this.itemList()
 
       for (const draggableItem of draggableItems) {
         draggableItem.draggable = false
@@ -153,7 +152,7 @@ export default Vue.extend({
       }
     },
     onMouseDown() {
-      this.itemsList.forEach(item => {
+      this.itemList().forEach((item) => {
         item.draggable = true
         item.addEventListener('dragstart', this.onDragStart)
         item.addEventListener('dragover', this.onDragOver)
@@ -161,7 +160,7 @@ export default Vue.extend({
       })
     },
     removeMouseDown() {
-      this.itemsList.forEach(item => {
+      this.itemList().forEach((item) => {
         let handle = item
         if (this.handleSelector) {
           handle = item.querySelector(this.handleSelector)
@@ -174,18 +173,25 @@ export default Vue.extend({
       })
     },
     onDragStart(event) {
-      if (!this.itemsList.includes(event.target)) {
+      const items = this.itemList()
+      if (!items.includes(event.target)) {
         return
       }
-      event.dataTransfer.setData("text/plain", this.itemsList.indexOf(event.target))
+
+      event.dataTransfer.dropEffect = 'move'
+
+      event.dataTransfer.setData('text', String(items.indexOf(event.target)))
+      // Needed as Chrome does not permit to `getData`in other events than `drop`
+      this.draggedElementIndex = items.indexOf(event.target)
     },
     onDragOver(event) {
       const target = closest(event.target, this.draggableClass)
       const parent = target.parentNode
-      const draggedElementIndex = Number(event.dataTransfer.getData('text/plain'))
+      const items = this.itemList()
 
+      const draggedElementIndex = this.draggedElementIndex
 
-      if (!target || !this.itemsList.includes(target)) {
+      if (!target || !items.includes(target)) {
         try {
           parent.removeChild(this.ghostElement)
         } catch (e) {
@@ -196,7 +202,7 @@ export default Vue.extend({
       clearTimeout(this.timerToRemoveGhost)
 
       const siblings = Array.from(parent.childNodes)
-      const indexInItems = this.itemsList.indexOf(target)
+      const indexInItems = items.indexOf(target)
 
       const indexInSiblings = siblings.indexOf(target)
       if (indexInItems === draggedElementIndex) {
@@ -228,19 +234,20 @@ export default Vue.extend({
       }, 50)
     },
     onDrop(event) {
-      const draggedElementIndex = Number(event.dataTransfer.getData('text/plain'))
+      const draggedElementIndex = Number(event.dataTransfer.getData('text'))
 
+      const items = this.itemList()
       // visually do the thing
       const parent = this.ghostElement.parentNode
-      this.ghostElement.parentNode.replaceChild(this.itemsList[draggedElementIndex], this.ghostElement)
+      this.ghostElement.parentNode.replaceChild(items[draggedElementIndex], this.ghostElement)
 
       const newOrder = Array.from(parent.childNodes)
         .map((node) => {
-          const index = this.itemsList.indexOf(node)
+          const index = items.indexOf(node)
           return this.list[index]
         })
         // as the parent might contain also none draggable items.
-        .filter(item => typeof item !== 'undefined')
+        .filter((item) => typeof item !== 'undefined')
 
       this.teardown()
 
