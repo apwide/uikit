@@ -419,6 +419,7 @@ export default {
     },
 
     onClear() {
+      this.search = ''
       this.$emit('input', this.nonClearableOptions)
       this.isOpen = false
       this.$nextTick(() => this.$refs.input.focus())
