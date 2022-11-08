@@ -2,7 +2,12 @@
   <transition appear name="kit-modal-transition">
     <Blanket ref="blanket" :z-index="zIndex" class="kit-dialog" @click.native="clicked">
       <PositionerAbsolute :width="currentWidth">
-        <form ref="form" class="kit-modal kit-modal-container" novalidate @submit.prevent="onSubmit">
+        <form
+          ref="form"
+          :no-padding="noPadding"
+          class="kit-modal kit-modal-container"
+          novalidate
+          @submit.prevent="onSubmit">
           <slot>
             <header v-if="!noHeader">
               <slot name="header">
@@ -94,6 +99,10 @@ export default {
     noHeader: {
       type: Boolean,
       default: false
+    },
+    noPadding: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -169,6 +178,10 @@ export default {
   outline: 0;
   overflow: hidden;
   padding: 0 28px;
+}
+
+.kit-modal-container[no-padding] {
+  padding: 0;
 }
 
 .kit-content {

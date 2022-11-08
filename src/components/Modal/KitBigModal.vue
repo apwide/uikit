@@ -1,5 +1,5 @@
 <template>
-  <Modal class="kit-modal" no-footer v-bind="$attrs" :width="width" v-on="$listeners">
+  <Modal class="kit-modal" no-footer v-bind="$attrs" :width="width" v-on="$listeners" no-padding>
     <template #header>
       <div class="kit-modal__header-pre-title">
         <slot name="breadcrumb" class="" />
@@ -76,11 +76,15 @@ export default Vue.extend({
 
 .kit-modal__header-pre-title {
   display: flex;
-  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 5px;
+}
+
+.kit-modal__header-pre-title,
+.kit-modal__header-title {
+  padding: 0 10px 0 20px;
 }
 
 .kit-modal >>> header {
