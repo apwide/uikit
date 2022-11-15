@@ -20,6 +20,7 @@
       :is-focused="props.isFocused"
       :is-loading="props.isLoading"
       :placeholder="placeholder"
+      :noOptionsMessage="noOptionsMessage"
       :append-to-body="appendToBody"
       :normalizer="normalizer"
       :is-clearable="isClearable"
@@ -92,6 +93,10 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    },
+    noOptionsMessage: {
+      type: String,
+      default: 'No options'
     },
     appendToBody: {
       type: Boolean,
