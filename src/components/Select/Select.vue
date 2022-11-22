@@ -499,11 +499,22 @@ export default {
 
     onTab(e) {
       if (this.allowTabToSelect) {
-        if (this.suggestions.length === 1 || this.selectFirstEntry) {
-          this.currentSuggestionIndex = 0
+        if (!this.currentSuggestionIndex) {
+          if (this.suggestions.length === 1 || this.selectFirstEntry) {
+            this.currentSuggestionIndex = 0
+          }
+        }
 
+        if (typeof this.currentSuggestionIndex !== 'undefined') {
+          const option = this.suggestions[this.currentSuggestionIndex]
+          const selected = this.multi ? [...this.selected.map((e) => e.value), option.value] : option.value
           // `this.confirm` is bypassed
-          this.$emit('input', this.suggestions[0].value)
+          this.$emit('input', selected)
+          e.preventDefault()
+
+          if (!this.keepFilterOnSelect) {
+            this.search = ''
+          }
         } else {
           e.preventDefault()
         }
