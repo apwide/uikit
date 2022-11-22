@@ -498,14 +498,14 @@ export default {
     },
 
     onTab(e) {
-      if (this.allowTabToSelect) {
-        if (!this.currentSuggestionIndex) {
+      if (this.allowTabToSelect && this.isOpen) {
+        if (!this.currentSuggestionIndex || this.suggestions.length <= this.currentSuggestionIndex) {
           if (this.suggestions.length === 1 || this.selectFirstEntry) {
             this.currentSuggestionIndex = 0
           }
         }
 
-        if (typeof this.currentSuggestionIndex !== 'undefined') {
+        if (typeof this.currentSuggestionIndex !== 'undefined' && this.currentSuggestionIndex < this.suggestions.length) {
           const option = this.suggestions[this.currentSuggestionIndex]
           const selected = this.multi ? [...this.selected.map((e) => e.value), option.value] : option.value
           // `this.confirm` is bypassed
