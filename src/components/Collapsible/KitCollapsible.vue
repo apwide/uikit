@@ -18,7 +18,11 @@
         </KitButton>
       </div>
     </slot>
-    <div v-if="!isCollapsed" ref="content" :style="{ maxHeight: maxHeight }" class="kit-collapsible-content">
+    <div
+      v-if="!isCollapsed"
+      ref="content"
+      :style="{ maxHeight: maxHeight, overflow: overflow }"
+      class="kit-collapsible-content">
       <slot />
     </div>
   </div>
@@ -52,7 +56,9 @@ export default Vue.extend({
   data() {
     return {
       maxHeight: '',
-      storedCollapsed: this.collapsed
+      overflow: 'hidden',
+      storedCollapsed: this.collapsed,
+      timeout: null
     }
   },
   computed: {
@@ -99,9 +105,17 @@ export default Vue.extend({
       }
     },
     async toggle() {
+      clearTimeout(this.timeout)
       this.storedCollapsed = !this.isCollapsed
+      this.overflow = this.storedCollapsed ? 'initial' : 'hidden'
       await this.$nextTick()
       this.writeToSession()
+      this.timeout = setTimeout(() => {
+        if (!this.isCollapsed) {
+          this.overflow = 'initial'
+          this.maxHeight = 'fit-content'
+        }
+      }, 50 + 400)
       setTimeout(() => {
         this.maxHeight = this.calculateMaxHeight(this.isCollapsed)
       }, 50)
@@ -122,7 +136,6 @@ export default Vue.extend({
 
 .kit-collapsible-content {
   transition: max-height 0.4s ease-in;
-  overflow: hidden;
   margin-top: 10px;
   margin-left: 20px;
 }
