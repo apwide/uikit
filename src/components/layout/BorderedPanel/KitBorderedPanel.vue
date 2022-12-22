@@ -10,7 +10,7 @@
         <slot name="actions" />
       </div>
     </div>
-    <div class="kit-bordered-panel__body">
+    <div class="kit-bordered-panel__body" v-if="$slots.default">
       <slot />
     </div>
   </aside>
