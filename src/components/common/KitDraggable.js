@@ -16,7 +16,7 @@ function ghostFactory(item) {
   } else {
     ghost.appendChild(styledElement)
   }
-
+  ghost.classList.add(`${ghostClass}-container`)
   styledElement.classList.add(ghostClass)
 
   const style = `
@@ -269,6 +269,11 @@ export default Vue.extend({
     }
   },
   render() {
+    if (this.$slots.default.length > 1) {
+      throw new Error(
+        `KitDraggable: There should be only one item inside the KitDraggable component, currently there are ${this.$slots.default.length}.`
+      )
+    }
     return this.$slots.default[0]
   }
 })

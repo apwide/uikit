@@ -42,6 +42,7 @@ import KitSecuredInput from './components/Form/KitSecuredInput.vue'
 import KitCard from './components/Card/KitCard.vue'
 import KitRadioGroup from './components/Radio/KitRadioGroup'
 import KitCollapsible from './components/Collapsible/KitCollapsible'
+import KitDraggable from './components/common/KitDraggable'
 
 export {
   KitCard,
@@ -92,7 +93,8 @@ export {
   KitIconButton,
   InlineDialog as KitInlineDialog,
   KitTable,
-  tooltip
+  tooltip,
+  KitDraggable
 }
 export * from './components/layout'
 export * from './components/Menu'
