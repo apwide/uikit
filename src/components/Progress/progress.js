@@ -64,7 +64,9 @@ export default class ProgressBar {
   }
 
   setProgress() {
-    this.el.style.width = `${this.progress * 100}%`
+    if (this.el) {
+      this.el.style.width = `${this.progress * 100}%`
+    }
   }
 
   increase(amount) {
