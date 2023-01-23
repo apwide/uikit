@@ -17,6 +17,7 @@
             :index="i"
             :min="min"
             :tag="tag"
+            :class="tag.class"
             data-cy="tag"
             @drag="handleDrag"
             @dragend="onDragEnd"
