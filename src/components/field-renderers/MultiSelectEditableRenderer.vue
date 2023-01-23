@@ -1,26 +1,69 @@
 <template>
-  <InlineEdit v-if="editable" :value="selectedValues" :placement="placement" @save-requested="onSaveRequested">
+  <InlineEdit
+      v-if="editable"
+      :value="value"
+      :confirm="confirm"
+      :placement="placement"
+      :force-is-editing="forceIsEditing"
+      :hide-confirm-buttons="!confirm"
+      @start-editing="$emit('start-editing')"
+      @stop-editing="$emit('stop-editing')"
+      @save-requested="onSaveRequested">
     <Select
       slot="editor"
       slot-scope="props"
       :value="props.value"
-      :multi="true"
+      :options="allowedValues"
       :open-on-focus="true"
-      :options="options"
       :is-invalid="props.isInvalid"
       :is-focused="props.isFocused"
       :is-loading="props.isLoading"
+      :is-fetching="isFetching"
+      :placeholder="placeholder"
+      :no-options-message="noOptionsMessage"
+      :append-to-body="appendToBody"
+      :normalizer="normalizer"
+      :is-clearable="isClearable"
       style="flex: 1"
-      @input="props.input"
-      @blur="props.blur"
+      :fixed-select-width="fixedSelectWidth"
+      :multi="true"
+      :async="async"
+      :confirm="confirm"
+      :keep-open-on-select="keepOpenOnSelect"
+      @input="
+        props.input($event)
+        $emit('input', $event)
+      "
+      @search-change="$emit('search-change', $event)"
+      @blur="
+        props.blur($event)
+        $emit('blur', $event)
+      "
       @confirm="props.confirm"
       @focus="props.focus"
-      @cancel="props.cancel" />
+      @cancel="props.cancel">
+      <template v-if="$scopedSlots.tag" #tag="{ tag }">
+        <slot name="tag" :tag="tag" />
+      </template>
+      <template #option="{ option, isCurrent }">
+        <slot name="option" :option="option" :isCurrent="isCurrent" />
+      </template>
+      <template #custom-action>
+        <slot name="custom-action" />
+      </template>
+      <template #icon>
+        <slot name="icon" />
+      </template>
+    </Select>
     <slot>
-      <MultiSelectRenderer :selected-values="selectedValues" />
+      <MultiSelectRenderer :selected-values="selectedValueLabels" />
     </slot>
   </InlineEdit>
-  <MultiSelectRenderer v-else :selected-values="selectedValues" />
+  <div v-else>
+    <slot>
+      <MultiSelectRenderer :selected-values="selectedValueLabels" />
+    </slot>
+  </div>
 </template>
 
 <script>
@@ -32,7 +75,7 @@ export default {
   name: 'KitMultiSelectEditableRenderer',
   components: { MultiSelectRenderer, InlineEdit, Select },
   props: {
-    selectedValues: {
+    value: {
       type: Array,
       default: () => []
     },
@@ -47,11 +90,55 @@ export default {
     allowedValues: {
       type: Array,
       default: () => []
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    noOptionsMessage: {
+      type: String,
+      default: 'No options'
+    },
+    isClearable: {
+      type: Boolean
+    },
+    isFetching: {
+      type: Boolean
+    },
+    async: {
+      type: Boolean
+    },
+    forceIsEditing: {
+      type: Boolean,
+      default: false
+    },
+    appendToBody: {
+      type: Boolean,
+      default: false
+    },
+    confirm: {
+      type: Boolean,
+      default: true
+    },
+    normalizer: {
+      type: Function,
+      default: (value) => ({
+        id: value,
+        value,
+        label: value,
+        disabled: false
+      })
+    },
+    fixedSelectWidth: {
+      type: String
+    },
+    keepOpenOnSelect: {
+      type: Boolean
     }
   },
-  data() {
-    return {
-      options: this.allowedValues
+  computed: {
+    selectedValueLabels() {
+      return this.value.map(this.normalizer).map(({ label }) => label)
     }
   },
   methods: {
