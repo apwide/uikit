@@ -1,8 +1,6 @@
 <template>
-  <span>
-    <span class="kit-lozenge" :appearance="appearance" :subtle="subtle">
-      <slot />
-    </span>
+  <span class="kit-lozenge" :appearance="appearance" :subtle="subtle">
+    <slot />
   </span>
 </template>
 
@@ -29,9 +27,8 @@ export default {
   background-color: rgb(66, 82, 110);
   color: rgb(255, 255, 255);
   box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  text-align: center;
+  /* do not change this to inline-flex, it breaks the ellipsis */
+  display: inline-block;
   font-size: 11px;
   font-weight: 700;
   line-height: 1;
@@ -39,6 +36,8 @@ export default {
   vertical-align: baseline;
   border-radius: 3px;
   padding: 2px 4px 2px;
+  /* to reset the baseline */
+  margin-bottom: -3px;
   overflow: hidden;
   max-width: 200px;
   text-overflow: ellipsis;

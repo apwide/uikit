@@ -5,12 +5,11 @@
       <Lozenge :appearance="appearance">
         {{ appearance }}
       </Lozenge>
+      with some text
     </p>
     <h3>Subtle</h3>
     <p v-for="appearance in appearances" :key="appearance">
-      <Lozenge :appearance="appearance" subtle>
-        {{ appearance }}
-      </Lozenge>
+      <Lozenge :appearance="appearance" subtle> {{ appearance }} </Lozenge> with some text
     </p>
     <h3>Long text</h3>
     <p>
