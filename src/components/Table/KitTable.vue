@@ -18,6 +18,7 @@
         :enabled="dragEnabled"
         :list="data"
         draggable-class="kit-table-draggable"
+        handle-selector=".kit-table__grab-handle"
         @reorder="$emit('rows-reordered', $event)">
         <tbody>
           <TableRow
