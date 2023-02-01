@@ -160,6 +160,9 @@ export default Vue.extend({
       })
     },
     removeMouseDown() {
+      if (!this.enabled) {
+        return
+      }
       this.itemList().forEach((item) => {
         let handle = item
         if (this.handleSelector) {
