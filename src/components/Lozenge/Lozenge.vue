@@ -35,7 +35,7 @@ export default {
   text-transform: uppercase;
   vertical-align: baseline;
   border-radius: 3px;
-  padding: 2px 4px 2px;
+  padding: 2px 4px 3px;
   /* to reset the baseline */
   margin-bottom: -3px;
   overflow: hidden;
