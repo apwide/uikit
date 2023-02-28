@@ -189,8 +189,6 @@ export default {
 
 <style scoped>
 .kit-table-wrapper {
-  /* to really hide the overflow */
-  position: relative;
   width: 100%;
   max-height: 100%;
   overflow: auto;
