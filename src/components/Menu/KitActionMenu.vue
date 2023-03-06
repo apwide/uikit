@@ -1,5 +1,11 @@
 <template>
-  <KitIconMenu v-if="$scopedSlots.default" :title="title" :icon-size="iconSize" :is-disabled="isDisabled">
+  <KitIconMenu
+    v-if="$scopedSlots.default"
+    :title="title"
+    :icon-size="iconSize"
+    :is-disabled="isDisabled"
+    :spacing="spacing"
+    :appearance="appearance">
     <template #icon>
       <AwesomeIcon type="ellipsis-h" />
     </template>
@@ -28,6 +34,14 @@ export default Vue.extend({
     isDisabled: {
       type: Boolean,
       default: false
+    },
+    spacing: {
+      type: String,
+      default: 'compact'
+    },
+    appearance: {
+      type: String,
+      default: 'subtle'
     }
   }
 })

@@ -12,6 +12,8 @@
         :is-disabled="isDisabled"
         :style="{ fontSize: iconSize }"
         :title="title"
+        :spacing="spacing"
+        :appearance="appearance"
         @click="toggle">
         <slot name="icon" :is-open="isOpen" />
       </KitIconButton>
@@ -31,6 +33,13 @@ export default Vue.extend({
     title: {
       type: String,
       default: 'Select your action'
+    },
+    spacing: {
+      type: String
+    },
+    appearance: {
+      type: String,
+      default: 'subtle'
     },
     iconSize: {
       type: String,
