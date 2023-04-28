@@ -1,6 +1,6 @@
 {
   "name": "@apwide/uikit",
-  "version": "3.27.0",
+  "version": "3.28.0",
   "description": "Apwide ui components",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
