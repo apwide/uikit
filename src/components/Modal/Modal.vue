@@ -188,7 +188,7 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1 1 auto;
-  padding: 2px 0;
+  padding: 2px 10px 2px 0px;
 }
 
 .kit-modal-transition-enter {
