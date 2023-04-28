@@ -249,10 +249,10 @@ export default {
       this.editingValue = value
     },
     onBlur(event) {
-      if (!this.confirm) {
+      const focusWithinComponent = this.$refs.container.contains(event.relatedTarget)
+      if (!focusWithinComponent && !this.confirm) {
         this.confirmEditedValue()
       }
-      const focusWithinComponent = this.$refs.container.contains(event.relatedTarget)
 
       if (!this.isEditing || this.isLoading) return
       if (!focusWithinComponent && !this.forceIsEditing) {

@@ -134,17 +134,16 @@ export default {
       this.$emit('stop-editing')
     },
     onBlur(originalBlur, data) {
-      if (!this.justClickedOnTypeSwitch) {
-        originalBlur(data)
-      }
-      this.justClickedOnTypeSwitch = false
+      originalBlur(data)
     },
     onSaveRequested(...args) {
       this.$emit('save-requested', ...args)
     },
     toggleFieldType() {
       this.obfuscated = !this.obfuscated
-      this.justClickedOnTypeSwitch = true
+      if (this.$refs.input) {
+        this.$refs.input.focus()
+      }
     }
   }
 }
