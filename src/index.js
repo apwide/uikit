@@ -8,6 +8,7 @@ import Toggle from './components/Toggle/Toggle'
 import Modal from './components/Modal/Modal'
 import DatePicker from './components/Calendar/DatePicker'
 import DateRangePicker from './components/Calendar/DateRangePicker'
+import TimePicker from './components/Calendar/TimePicker'
 import Select from './components/Select/Select'
 import Lozenge from './components/Lozenge/Lozenge'
 import Dropdown from './components/Dropdown/Dropdown'
@@ -63,6 +64,7 @@ export {
   Checkbox as KitCheckbox,
   Toggle as KitToggle,
   DatePicker as KitDatePicker,
+  TimePicker as KitTimePicker,
   Select as KitSelect,
   SectionMessage as KitSectionMessage,
   Avatar as KitAvatar,
