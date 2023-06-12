@@ -37,7 +37,7 @@ export default {
   border-radius: 3px;
   padding: 2px 4px 2px 4px;
   /* to reset the baseline */
-  margin-bottom: -2px;
+  margin-bottom: -3px;
   overflow: hidden;
   max-width: 200px;
   text-overflow: ellipsis;
