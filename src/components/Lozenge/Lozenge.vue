@@ -1,6 +1,8 @@
 <template>
-  <span class="kit-lozenge" :appearance="appearance" :subtle="subtle">
-    <slot />
+  <span class="kit-lozenge-wrapper">
+    <span class="kit-lozenge" :appearance="appearance" :subtle="subtle">
+      <slot />
+    </span>
   </span>
 </template>
 
@@ -23,11 +25,15 @@ export default {
 </script>
 
 <style scoped>
+/* NOTE: this wrapper is needed in order to simplify alignement in flex containers */
+.kit-lozenge-wrapper {
+  box-sizing: border-box;
+}
+
 .kit-lozenge {
+  box-sizing: border-box;
   background-color: rgb(66, 82, 110);
   color: rgb(255, 255, 255);
-  box-sizing: border-box;
-  /* do not change this to inline-flex, it breaks the ellipsis */
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
@@ -35,10 +41,9 @@ export default {
   text-transform: uppercase;
   vertical-align: baseline;
   border-radius: 3px;
-  padding: 2px 4px 2px 4px;
-  /* to reset the baseline */
-  margin-bottom: -3px;
+  padding: 2px 4px 1px 4px;
   overflow: hidden;
+  margin-bottom: -3px;
   max-width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;

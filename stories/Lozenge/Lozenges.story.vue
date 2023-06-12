@@ -5,6 +5,9 @@
       <Lozenge :appearance="appearance">
         {{ appearance }}
       </Lozenge>
+      <button style="all: unset; cursor: pointer">
+        <Lozenge :appearance="appearance"> {{ appearance }} (button) </Lozenge>
+      </button>
       with some text
     </p>
     <h3>Subtle</h3>
