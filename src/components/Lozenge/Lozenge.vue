@@ -41,9 +41,9 @@ export default {
   text-transform: uppercase;
   vertical-align: baseline;
   border-radius: 3px;
-  padding: 2px 4px 1px 4px;
+  padding: 2px 5px 3px 5px;
   overflow: hidden;
-  margin-bottom: -3px;
+  margin-bottom: -4px;
   max-width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;
