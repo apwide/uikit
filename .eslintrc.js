@@ -43,7 +43,8 @@ module.exports = {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     'vue/no-unused-components': ['error'],
-    'vue/no-reserved-component-names': ['off']
+    'vue/no-reserved-component-names': ['off'],
+    'vue/multi-word-component-names': ['off']
   },
 
   overrides: [
