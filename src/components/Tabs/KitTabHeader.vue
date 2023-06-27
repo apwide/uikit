@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitTabButton from './KitTabButton.vue'

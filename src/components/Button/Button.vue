@@ -18,40 +18,47 @@
   </button>
 </template>
 
-<script>
-import Spinner from '../Spinner/Spinner'
+<script setup lang="ts">
+import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue'
+import Spinner from '../Spinner/Spinner.vue'
 
-export default {
-  name: 'KitButton',
-  components: {
-    Spinner
-  },
-  props: {
-    isSelected: { type: Boolean, default: false },
-    isDisabled: { type: Boolean, default: false },
-    appearance: { type: String, default: 'default' },
-    autoFocus: { type: Boolean, default: false },
-    isLoading: { type: Boolean, default: false },
-    spacing: { type: String, default: 'default' },
-    round: { type: Boolean, default: false }
-  },
-  computed: {
-    iconIsOnlyChild() {
-      return (
-        !!(this.$slots['icon-after'] && !this.$slots['icon-before'] && !this.$slots.default) ||
-        (!this.$slots['icon-after'] && this.$slots['icon-before'] && !this.$slots.default)
-      )
-    },
-    listeners() {
-      return this.$listeners
-    }
-  },
-  mounted() {
-    if (this.autoFocus) {
-      this.$nextTick(() => this.$refs.button.focus())
-    }
-  }
+type Props = {
+  appearance?: string
+  spacing?: string
+  isSelected?: boolean
+  isDisabled?: boolean
+  autoFocus?: boolean
+  isLoading?: boolean
+  round?: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  appearance: 'default',
+  spacing: 'default',
+  isSelected: false,
+  isDisabled: false,
+  autoFocus: false,
+  isLoading: false,
+  round: false
+})
+
+const instance = getCurrentInstance()
+const iconIsOnlyChild = computed(() => {
+  const me = instance.proxy
+  return (
+    !!(me.$slots['icon-after'] && !me.$slots['icon-before'] && !me.$slots.default) ||
+    (!me.$slots['icon-after'] && me.$slots['icon-before'] && !me.$slots.default)
+  )
+})
+const listeners = computed(() => instance.proxy.$listeners)
+const button = ref<HTMLButtonElement>()
+
+onMounted(async () => {
+  if (props.autoFocus) {
+    await nextTick()
+    button.value.focus()
+  }
+})
 </script>
 
 <style scoped>

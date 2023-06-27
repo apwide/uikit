@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import KitDraggable from '../common/KitDraggable'
 
@@ -30,7 +30,7 @@ export default Vue.extend({
     })
 
     return {
-      state,
+      state
     }
   },
   inject: {

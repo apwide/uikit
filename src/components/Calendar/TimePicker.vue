@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import TextField from '../Form/TextField'
 import Popup from '../common/Popup'
 import TimePickerMenu from './TimePickerMenu'
