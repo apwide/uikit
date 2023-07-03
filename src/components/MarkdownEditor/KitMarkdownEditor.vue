@@ -156,7 +156,6 @@ onUnmounted(() => {
 .kit-markdown-editor >>> .cm-url {
   color: #0052cc;
 }
-
 .kit-markdown-editor >>> .CodeMirror-line {
   color: #172b4d;
 }
