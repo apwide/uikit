@@ -24,7 +24,7 @@ import KitIssueStatusRenderer from './IssueStatusRenderer'
 import KitIssueTypeRenderer from './IssueTypeRenderer'
 import KitIssueRenderer from './IssueRenderer'
 import KitLinkedIssuesList from './LinkedIssuesList'
-import KitRichTextEditableRenderer from './RichTextEditableRenderer'
+import KitMarkdownEditableRenderer from './KitMarkdownEditableRenderer.vue'
 import KitMultiLineEditableRenderer from './MultiLineEditableRenderer'
 import KitMultiLineRenderer from './MultiLineRenderer'
 
@@ -55,7 +55,7 @@ export {
   KitIssueTypeRenderer,
   KitIssueRenderer,
   KitLinkedIssuesList,
-  KitRichTextEditableRenderer,
+  KitMarkdownEditableRenderer,
   KitMultiLineEditableRenderer,
   KitMultiLineRenderer,
   KitCheckboxEditableRenderer as CheckboxEditableRenderer,
@@ -84,7 +84,6 @@ export {
   KitIssueTypeRenderer as IssueTypeRenderer,
   KitIssueRenderer as IssueRenderer,
   KitLinkedIssuesList as LinkedIssuesList,
-  KitRichTextEditableRenderer as RichTextEditableRenderer,
   KitMultiLineEditableRenderer as MultiLineEditableRenderer,
   KitMultiLineRenderer as MultiLineRenderer
 }

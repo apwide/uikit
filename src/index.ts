@@ -1,3 +1,4 @@
+import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import Button from './components/Button/Button.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
@@ -25,7 +26,6 @@ import Avatar from './components/Avatar/Avatar.vue'
 import Badge from './components/Badge/Badge.vue'
 import ColorPicker from './components/ColorPicker/ColorPicker.vue'
 import ProgressBar from './components/ProgressBar/ProgressBar.vue'
-import RichTextEditor from './components/RichTextEditor/RichTextEditor.vue'
 import Tag from './components/Tag/Tag.vue'
 import Flag from './components/Flag/Flag.vue'
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs.vue'
@@ -97,13 +97,13 @@ export {
   ColorPicker as KitColorPicker,
   DateRangePicker as KitDateRangePicker,
   Progress as KitProgress,
-  RichTextEditor as KitRichTextEditor,
   KitButtonGroup,
   KitIconButton,
   InlineDialog as KitInlineDialog,
   KitTable,
   tooltip,
-  KitDraggable
+  KitDraggable,
+  KitMarkdownEditor
 }
 export * from './components/layout/index'
 export * from './components/Menu/index'

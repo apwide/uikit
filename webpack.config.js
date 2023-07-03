@@ -40,7 +40,7 @@ const config = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [['@babel/preset-env', { targets: 'defaults' }], 'babel-preset-typescript-vue'],
+              presets: [['@babel/preset-env', { targets: 'defaults' }], require('./modules/babel-preset-typescript')],
               plugins: [
                 '@babel/plugin-proposal-optional-chaining',
                 // '@babel/plugin-proposal-object-rest-spread'
@@ -80,7 +80,8 @@ const config = {
   resolve: {
     extensions: ['.ts', '.js', '.vue'],
     alias: {
-      vue$: 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      '@components': path.resolve(__dirname, './src/components')
     }
   }
 }

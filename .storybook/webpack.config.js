@@ -4,7 +4,8 @@ const resolve = {
   extensions: ['.ts', '.js', '.vue', '.json'],
   symlinks: false,
   alias: {
-    '@': path.resolve(__dirname, '../src')
+    '@': path.resolve(__dirname, '../src'),
+    '@components': path.resolve(__dirname, '../src/components')
   }
 }
 
@@ -13,9 +14,11 @@ module.exports = async ({ config }) => {
     test: /\.ts$/,
     use: [
       {
-        loader: 'ts-loader',
+        loader: 'babel-loader',
         options: {
-          appendTsSuffixTo: [/\.vue$/]
+          presets: [['@babel/preset-env', { targets: 'defaults' }], require('../modules/babel-preset-typescript')],
+          plugins: ['@babel/plugin-proposal-optional-chaining', '@babel/plugin-proposal-nullish-coalescing-operator'],
+          babelrc: false
         }
       }
     ]

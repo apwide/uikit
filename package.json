@@ -101,7 +101,8 @@
     }
   },
   "dependencies": {
-    "@atlaskit/adf-schema": "25.7.0",
+    "@babel/helper-plugin-utils": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
     "@fortawesome/free-regular-svg-icons": "5.15.4",
@@ -110,16 +111,7 @@
     "@popperjs/core": "2.11.7",
     "date-fns": "2.29.2",
     "date-fns-tz": "2.0.0",
-    "prosemirror-history": "1.3.2",
-    "prosemirror-model": "1.19.2",
-    "prosemirror-schema-list": "1.3.0",
-    "prosemirror-utils": "0.9.6",
-    "prosemirror-view": "1.31.5",
-    "tiptap": "1.32.2",
-    "tiptap-commands": "1.17.1",
+    "easymde": "^2.18.0",
     "vue-promised": "1.2.2"
-  },
-  "resolutions": {
-    "prosemirror-model": "1.8.2"
   }
 }
