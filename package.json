@@ -9,7 +9,6 @@
   },
   "scripts": {
     "build": "webpack --mode=production --node-env=production",
-    "rebuild": "rollup -c",
     "storybook": "start-storybook -p 9001 -s ./public -c .storybook --ci",
     "lint": "eslint src stories tests --ext .js,.vue,.ts",
     "lint-fix": "eslint src stories tests --fix --ext .js,.vue,.ts",
@@ -75,7 +74,6 @@
     "mini-css-extract-plugin": "1.6.2",
     "p-debounce": "4.0.0",
     "prettier": "2.8.8",
-    "rimraf": "5.0.1",
     "storybook-addon-vue-info": "1.4.2",
     "style-loader": "3.3.3",
     "ts-loader": "8.4.0",

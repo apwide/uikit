@@ -5,6 +5,12 @@
 
     <h5>Editable:</h5>
     <KitMarkdownEditableRenderer :value="text" allow-blur-to-save @save-requested="onSaveRequested" />
+
+    <h5>Fewer edition options</h5>
+    <KitMarkdownEditableRenderer
+      value="has a small text"
+      :toolbar="['bold', 'italic']"
+      @save-requested="onSaveRequested" />
   </div>
 </template>
 
