@@ -86,7 +86,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    if (this.enabled) {
+    if (this.enabled && this.list.length) {
       setTimeout(() => {
         this.setupDrag()
       }, 500)
@@ -115,13 +115,24 @@ export default Vue.extend({
       if (!this.draggableClass || !this.draggableClass.length) {
         throw new Error('KitDraggable only works with a class to find draggable items')
       }
-      await this.$nextTick()
 
-      const draggableItems = this.itemList()
-      if (!draggableItems || draggableItems.length !== this.list.length) {
-        throw new Error(
-          `KitDraggable: draggableItems count should be the same as the list length ${draggableItems.length} vs ${this.list.length}`
-        )
+      let draggableItems = []
+      let hasItems = false
+      let hasTheRightAmountOfItems = false
+      const start = Date.now()
+      const waitTime = 10_000 // ms
+      while (!hasItems || !hasTheRightAmountOfItems) {
+        const now = Date.now()
+        if (now - start > waitTime) {
+          // let's abandon
+          throw new Error(
+            `KitDraggable: draggableItems count should be the same as the list length ${draggableItems.length} vs ${this.list.length}`
+          )
+        }
+        await this.$nextTick()
+        draggableItems = this.itemList()
+        hasItems = draggableItems.length > 0
+        hasTheRightAmountOfItems = draggableItems.length === this.list.length
       }
 
       for (const draggableItem of draggableItems) {
@@ -260,13 +271,13 @@ export default Vue.extend({
   watch: {
     list() {
       this.teardown()
-      if (this.enabled) {
+      if (this.enabled && this.list.length) {
         this.setupDrag()
       }
     },
     enabled() {
       this.teardown()
-      if (this.enabled) {
+      if (this.enabled && this.list.length) {
         this.setupDrag()
       }
     }
