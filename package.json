@@ -9,7 +9,6 @@
   },
   "scripts": {
     "build": "webpack --mode=production --node-env=production",
-    "rebuild": "rollup -c",
     "storybook": "start-storybook -p 9001 -s ./public -c .storybook --ci",
     "lint": "eslint src stories tests --ext .js,.vue,.ts",
     "lint-fix": "eslint src stories tests --fix --ext .js,.vue,.ts",
@@ -72,7 +71,6 @@
     "mini-css-extract-plugin": "1.6.2",
     "p-debounce": "4.0.0",
     "prettier": "2.8.8",
-    "rimraf": "5.0.1",
     "storybook-addon-vue-info": "1.4.2",
     "style-loader": "3.3.3",
     "ts-loader": "8.4.0",
@@ -101,8 +99,8 @@
     }
   },
   "dependencies": {
-    "@babel/helper-plugin-utils": "^7.22.5",
-    "@babel/preset-typescript": "^7.22.5",
+    "@babel/helper-plugin-utils": "7.22.5",
+    "@babel/preset-typescript": "7.22.5",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
     "@fortawesome/free-regular-svg-icons": "5.15.4",
@@ -111,7 +109,7 @@
     "@popperjs/core": "2.11.7",
     "date-fns": "2.29.2",
     "date-fns-tz": "2.0.0",
-    "easymde": "^2.18.0",
+    "easymde": "2.18.0",
     "vue-promised": "1.2.2"
   }
 }

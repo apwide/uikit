@@ -9,16 +9,43 @@ import { nextTick, onMounted, onUnmounted, ref, unref, watch } from 'vue'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
 
+export type ToolbarItem =
+  | 'heading'
+  | 'bold'
+  | 'italic'
+  | 'unordered-list'
+  | 'ordered-list'
+  | 'link'
+  | 'preview'
+  | 'code'
+  | 'image'
+  | '|'
+
 type Props = {
   value: string
   readonly?: boolean
   placeholder?: string
+  toolbar?: ToolbarItem[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
   value: '',
   readonly: false,
-  placeholder: ''
+  placeholder: '',
+  toolbar: () => [
+    'heading',
+    'bold',
+    'italic',
+    'code',
+    '|',
+    'unordered-list',
+    'ordered-list',
+    '|',
+    'link',
+    'image',
+    '|',
+    'preview'
+  ]
 })
 const emit = defineEmits<{
   (event: 'input', data: string)
@@ -46,23 +73,17 @@ function handleClickOutside(event) {
 onMounted(() => {
   let toolbar = null
   if (!props.readonly) {
-    toolbar = [
-      {
-        name: 'others',
-        className: 'fa fa-header',
-        title: 'Headings',
-        children: ['heading-1', 'heading-2', 'heading-3']
-      },
-      'bold',
-      'italic',
-      '|',
-      'unordered-list',
-      'ordered-list',
-      '|',
-      'link',
-      '|',
-      'preview'
-    ]
+    toolbar = props.toolbar.map((item) => {
+      if (item === 'heading') {
+        return {
+          name: 'others',
+          className: 'fa fa-header',
+          title: 'Headings',
+          children: ['heading-1', 'heading-2', 'heading-3']
+        }
+      }
+      return item
+    })
   }
 
   const minHeight = props.readonly ? '2em' : '300px'
@@ -76,6 +97,7 @@ onMounted(() => {
     toolbar
   })
   editor.value.value(props.value)
+
   updateEditor()
 })
 
@@ -94,6 +116,7 @@ async function updateEditor() {
   if (!cm || !cm.codemirror) {
     return
   }
+
   cm.codemirror.off('change', onChange)
   cm.codemirror.off('focus', onFocus)
   cm.codemirror.off('blur', onBlur)
@@ -107,9 +130,11 @@ async function updateEditor() {
     cm.codemirror.focus()
   } else {
     await nextTick()
-    EasyMDE.togglePreview(cm)
+    if (!cm.isPreviewActive()) {
+      EasyMDE.togglePreview(cm)
+    }
   }
-  // This musst happen after togglePreview
+  // This must happen after togglePreview
   cm.codemirror.setOption('readOnly', props.readonly)
 }
 
