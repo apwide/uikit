@@ -14,6 +14,7 @@
         <KitMarkdownEditor
           :placeholder="placeholder"
           :value="editProps.value"
+          :toolbar="toolbar"
           @input="onInput(editProps.input, $event)"
           @focus="editProps.focus"
           @blur="onBlur(editProps.blur, $event)" />
@@ -27,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
+import KitMarkdownEditor, { ToolbarItem } from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import KitInlineEdit from '@components/Form/InlineEdit.vue'
 import { nextTick, ref } from 'vue'
 
@@ -37,6 +38,7 @@ type Props = {
   forceIsEditing?: boolean
   allowBlurToSave?: boolean
   placeholder?: string
+  toolbar?: ToolbarItem[]
 }
 const props = withDefaults(defineProps<Props>(), {
   value: '',

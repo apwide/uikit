@@ -1,14 +1,32 @@
 <template>
   <div>
     <h2>Editable</h2>
-    <MarkdownEditor v-model="text" />
+    <MarkdownEditor v-model="text" style="margin-bottom: 10px" />
     <Button appearance="primary" @click="save">Save</Button>
 
     <h2>Readonly</h2>
-    <MarkdownEditor readonly v-model="text" />
-    <h2>Few content</h2>
+    <MarkdownEditor readonly v-model="text" style="margin-bottom: 10px" />
+
+    <h2>Little content</h2>
     <MarkdownEditor readonly value="This is a test" />
     <Button appearance="primary" @click="save">Save</Button>
+
+    <h2>Different toolbar</h2>
+    <p>Available values</p>
+    <ul>
+      <li>heading,</li>
+      <li>bold,</li>
+      <li>italic,</li>
+      <li>unordered-list,</li>
+      <li>ordered-list,</li>
+      <li>link,</li>
+      <li>preview,</li>
+      <li>code,</li>
+      <li>image,</li>
+      <li>|</li>
+    </ul>
+
+    <MarkdownEditor value="" placeholder="Type something..." :toolbar="['bold', 'italic', '|', 'image', 'link']" />
   </div>
 </template>
 
