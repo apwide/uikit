@@ -1,4 +1,5 @@
 import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
+import KitDraggable from '@components/common/KitDraggable'
 import Button from './components/Button/Button.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
@@ -50,7 +51,6 @@ import KitSecuredInput from './components/Form/KitSecuredInput.vue'
 import KitCard from './components/Card/KitCard.vue'
 import KitRadioGroup from './components/Radio/KitRadioGroup.vue'
 import KitCollapsible from './components/Collapsible/KitCollapsible.vue'
-import KitDraggable from './components/common/KitDraggable'
 
 export {
   KitCard,
