@@ -1,7 +1,9 @@
 import Vue from 'vue'
 
-function ghostFactory(item) {
+function ghostFactory(item: HTMLElement) {
+  console.log(item)
   const tag = item.tagName.toLowerCase()
+  const box = item.getBoundingClientRect()
   const ghostClass = 'kit-draggable__ghost-element'
 
   const ghost = document.createElement(tag)
@@ -18,10 +20,11 @@ function ghostFactory(item) {
   }
   ghost.classList.add(`${ghostClass}-container`)
   styledElement.classList.add(ghostClass)
+  // styledElement.appendChild(item)
 
   const style = `
     min-width: 20px;
-    min-height: 1.5em;
+    min-height: ${box.height}px;
     border-style: dashed;
     border-color: #b3bac5;
     border-width: 2px;
@@ -146,11 +149,6 @@ export default Vue.extend({
 
         handle.addEventListener('mousedown', this.onMouseDown)
       }
-
-      const ghostElement = ghostFactory(draggableItems[0])
-      ghostElement.addEventListener('drop', this.onDrop)
-
-      this.ghostElement = ghostElement
     },
     teardown() {
       const draggableItems = this.itemList()
@@ -186,17 +184,24 @@ export default Vue.extend({
         handle.removeEventListener('mousedown', this.onMouseDown)
       })
     },
-    onDragStart(event) {
+    onDragStart(event: DragEvent) {
       const items = this.itemList()
       if (!items.includes(event.target)) {
         return
       }
 
-      event.dataTransfer.dropEffect = 'move'
+      const draggedItem = event.target as HTMLElement
+      draggedItem.style.opacity = '0.5'
 
-      event.dataTransfer.setData('text', String(items.indexOf(event.target)))
+      event.dataTransfer.dropEffect = 'none'
+      this.draggedElementIndex = items.indexOf(draggedItem)
+
+      event.dataTransfer.setData('text', String(this.draggedElementIndex))
+
+      const ghostElement = ghostFactory(draggedItem)
       // Needed as Chrome does not permit to `getData`in other events than `drop`
-      this.draggedElementIndex = items.indexOf(event.target)
+      ghostElement.addEventListener('drop', this.onDrop)
+      this.ghostElement = ghostElement
     },
     onDragOver(event) {
       const target = closest(event.target, this.draggableClass)
@@ -237,7 +242,7 @@ export default Vue.extend({
         }
       }
     },
-    onDragEnd() {
+    onDragEnd(event: DragEvent) {
       this.timerToRemoveGhost = setTimeout(() => {
         try {
           this.teardown()
@@ -254,6 +259,7 @@ export default Vue.extend({
       // visually do the thing
       const parent = this.ghostElement.parentNode
       this.ghostElement.parentNode.replaceChild(items[draggedElementIndex], this.ghostElement)
+      items[draggedElementIndex].style.opacity = '1'
 
       const newOrder = Array.from(parent.childNodes)
         .map((node) => {
