@@ -155,6 +155,7 @@ onUnmounted(() => {
 .kit-markdown-editor {
   width: 100%;
 }
+/** PREVIEW */
 .kit-markdown-editor >>> .editor-preview h1,
 .kit-markdown-editor >>> .editor-preview h2,
 .kit-markdown-editor >>> .editor-preview h3 {
@@ -166,13 +167,18 @@ onUnmounted(() => {
 .kit-markdown-editor >>> .editor-preview ol {
   margin-bottom: 15px;
 }
+
+/** EDIT */
 .kit-markdown-editor >>> .cm-header-1 {
+  margin-top: 0;
   font-size: 22px;
 }
 .kit-markdown-editor >>> .cm-header-2 {
+  margin-top: 0;
   font-size: 18px;
 }
 .kit-markdown-editor >>> .cm-header-3 {
+  margin-top: 0;
   font-size: 16px;
 }
 .kit-markdown-editor >>> .cm-link {
@@ -184,18 +190,32 @@ onUnmounted(() => {
 .kit-markdown-editor >>> .CodeMirror-line {
   color: #172b4d;
 }
+
+/** Editor style cancelling when not editing */
 .kit-markdown-editor[data-readonly='true'] >>> .CodeMirror {
   border: none !important;
   padding: 10px 0 !important;
   background: none;
 }
 .kit-markdown-editor[data-readonly='true'] >>> .editor-preview {
+  position: inherit;
   background-color: transparent;
   padding: 0;
 }
-.kit-markdown-editor[data-readonly='true'] >>> .CodeMirror-scroll {
-  visibility: hidden;
+.kit-markdown-editor[data-readonly='true'] >>> .editor-preview p {
+  margin: 0;
 }
+.kit-markdown-editor[data-readonly='true'] >>> .editor-preview p ~ p {
+  margin-top: 10px;
+}
+
+.kit-markdown-editor[data-readonly='true'] >>> .CodeMirror-scroll {
+  display: none;
+}
+.kit-markdown-editor[data-readonly='true'] >>> .CodeMirror-vscrollbar {
+  display: none !important;
+}
+
 .kit-markdown-editor[data-readonly='false'] {
   margin-bottom: 10px;
 }
