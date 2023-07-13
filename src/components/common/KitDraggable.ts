@@ -1,7 +1,8 @@
 import Vue from 'vue'
 
-function ghostFactory(item) {
+function ghostFactory(item: HTMLElement) {
   const tag = item.tagName.toLowerCase()
+  const box = item.getBoundingClientRect()
   const ghostClass = 'kit-draggable__ghost-element'
 
   const ghost = document.createElement(tag)
@@ -21,7 +22,7 @@ function ghostFactory(item) {
 
   const style = `
     min-width: 20px;
-    min-height: 1.5em;
+    min-height: ${box.height * 0.95}px;
     border-style: dashed;
     border-color: #b3bac5;
     border-width: 2px;
@@ -53,17 +54,17 @@ function ghostFactory(item) {
   return ghost
 }
 
-function closest(node, classToFind) {
+function closest(node: HTMLElement, classToFind): HTMLElement | null {
   if (!node.classList) {
     return null
   }
   if (node.classList.contains(classToFind)) {
     return node
   }
-  if (!node.parentNode) {
+  if (!node.parentElement) {
     return null
   }
-  return closest(node.parentNode, classToFind)
+  return closest(node.parentElement, classToFind)
 }
 
 export default Vue.extend({
@@ -146,11 +147,6 @@ export default Vue.extend({
 
         handle.addEventListener('mousedown', this.onMouseDown)
       }
-
-      const ghostElement = ghostFactory(draggableItems[0])
-      ghostElement.addEventListener('drop', this.onDrop)
-
-      this.ghostElement = ghostElement
     },
     teardown() {
       const draggableItems = this.itemList()
@@ -186,24 +182,27 @@ export default Vue.extend({
         handle.removeEventListener('mousedown', this.onMouseDown)
       })
     },
-    onDragStart(event) {
+    onDragStart(event: DragEvent) {
       const items = this.itemList()
       if (!items.includes(event.target)) {
         return
       }
 
-      event.dataTransfer.dropEffect = 'move'
+      const draggedItem = event.target as HTMLElement
+      const ghostElement = ghostFactory(draggedItem)
 
-      event.dataTransfer.setData('text', String(items.indexOf(event.target)))
-      // Needed as Chrome does not permit to `getData`in other events than `drop`
-      this.draggedElementIndex = items.indexOf(event.target)
+      draggedItem.style.opacity = '0.5'
+
+      event.dataTransfer.dropEffect = 'move'
+      this.draggedElementIndex = items.indexOf(draggedItem)
+
+      ghostElement.addEventListener('drop', this.onDrop)
+      this.ghostElement = ghostElement
     },
-    onDragOver(event) {
-      const target = closest(event.target, this.draggableClass)
+    onDragOver(event: DragEvent) {
+      const target = closest(event.target as HTMLElement, this.draggableClass)
       const parent = target.parentNode
       const items = this.itemList()
-
-      const draggedElementIndex = this.draggedElementIndex
 
       if (!target || !items.includes(target)) {
         try {
@@ -219,13 +218,13 @@ export default Vue.extend({
       const indexInItems = items.indexOf(target)
 
       const indexInSiblings = siblings.indexOf(target)
-      if (indexInItems === draggedElementIndex) {
+      if (indexInItems === this.draggedElementIndex) {
         try {
           parent.removeChild(this.ghostElement)
         } catch (e) {
           // ignore
         }
-      } else if (indexInItems < draggedElementIndex) {
+      } else if (indexInItems < this.draggedElementIndex) {
         // add on left of element
         parent.insertBefore(this.ghostElement, target)
       } else {
@@ -238,6 +237,8 @@ export default Vue.extend({
       }
     },
     onDragEnd() {
+      const items = this.itemList()
+      items[this.draggedElementIndex].style.opacity = '1'
       this.timerToRemoveGhost = setTimeout(() => {
         try {
           this.teardown()
@@ -247,13 +248,12 @@ export default Vue.extend({
         }
       }, 50)
     },
-    onDrop(event) {
-      const draggedElementIndex = Number(event.dataTransfer.getData('text'))
-
+    onDrop() {
       const items = this.itemList()
+      items[this.draggedElementIndex].style.opacity = '1'
       // visually do the thing
       const parent = this.ghostElement.parentNode
-      this.ghostElement.parentNode.replaceChild(items[draggedElementIndex], this.ghostElement)
+      this.ghostElement.parentNode.replaceChild(items[this.draggedElementIndex], this.ghostElement)
 
       const newOrder = Array.from(parent.childNodes)
         .map((node) => {
