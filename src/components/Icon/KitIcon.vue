@@ -28,6 +28,7 @@ import {
   faExternalLinkAlt,
   faEye,
   faEyeSlash,
+  faForward,
   faHome,
   faInfoCircle,
   faPen,
@@ -35,6 +36,7 @@ import {
   faPlus,
   faPlusCircle,
   faQuestionCircle,
+  faQuestion,
   faRobot,
   faSearch,
   faSearchMinus,
@@ -89,6 +91,7 @@ import {
   faClone,
   faEye as regularEye,
   faEyeSlash as regularEyeSlash,
+  faQuestionCircle as regularQuestionCircle,
   faCalendarAlt as regularCalendarAlt,
   faTimesCircle as regularTimesCircle,
   faCheckSquare as regularCheckSquare,
@@ -103,6 +106,7 @@ library.add(
   regularSquare,
   regularEye,
   regularEyeSlash,
+  regularQuestionCircle,
   brandsAtlassian,
   brandsGithub,
   brandsMicrosoft,
@@ -151,6 +155,7 @@ library.add(
   faUsers,
   faAt,
   faQuestionCircle,
+  faQuestion,
   faCloud,
   faCloudUploadAlt,
   faCalendar,
@@ -179,7 +184,8 @@ library.add(
   regularCalendarAlt,
   faColumns,
   faDotCircle,
-  faVideo
+  faVideo,
+  faForward
 )
 
 function prefix(/** @type: string */ style) {
