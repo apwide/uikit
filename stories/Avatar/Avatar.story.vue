@@ -15,7 +15,7 @@ export default {
   components: { Avatar },
   data() {
     return {
-      avatar: `https://i.pravatar.cc/300?u=${faker.random.uuid()}`,
+      avatar: `https://i.pravatar.cc/300?u=${faker.datatype.uuid()}`,
       sizes: ['xxlarge', 'xlarge', 'large', 'medium', 'small', 'xsmall'],
       presences: ['online', 'busy', 'focus', 'offline', '']
     }

@@ -5,7 +5,7 @@ import { many } from './helpers'
 export const createPerson = ({
   name = faker.name.findName(),
   key,
-  avatar = `https://i.pravatar.cc/300?u=${faker.random.uuid()}`
+  avatar = `https://i.pravatar.cc/300?u=${faker.datatype.uuid()}`
 } = {}) => {
   const person = {
     name,
