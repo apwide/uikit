@@ -81,6 +81,7 @@ const config = {
     extensions: ['.ts', '.js', '.vue'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
+      '@': path.resolve(__dirname, './src'),
       '@components': path.resolve(__dirname, './src/components')
     }
   }

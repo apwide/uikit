@@ -1,4 +1,10 @@
 import Vue from 'vue'
+import { closest } from '@/utils/dom'
+
+function droptargetOnDragOver(event) {
+  event.dataTransfer.dropEffect = 'move'
+  event.preventDefault()
+}
 
 function ghostFactory(item: HTMLElement) {
   const tag = item.tagName.toLowerCase()
@@ -32,39 +38,10 @@ function ghostFactory(item: HTMLElement) {
 
   styledElement.setAttribute('style', style)
 
-  // make it sexy for the drop
   ghost.addEventListener('dragenter', (event) => event.preventDefault())
-  ghost.addEventListener('dragover', (event) => {
-    event.dataTransfer.dropEffect = 'move'
-    event.preventDefault()
-  })
-
-  // make it sexy for the eye when hovering the dropzone
-  styledElement.addEventListener('dragenter', () => {
-    styledElement.classList.add(`${ghostClass}-hover`)
-    styledElement.style.borderColor = '#bababa'
-    styledElement.style.backgroundColor = '#f3f3f3'
-  })
-  styledElement.addEventListener('dragleave', () => {
-    styledElement.classList.remove(`${ghostClass}-hover`)
-    styledElement.style.borderColor = '#b3bac5'
-    styledElement.style.backgroundColor = 'transparent'
-  })
+  ghost.addEventListener('dragover', droptargetOnDragOver)
 
   return ghost
-}
-
-function closest(node: HTMLElement, classToFind): HTMLElement | null {
-  if (!node.classList) {
-    return null
-  }
-  if (node.classList.contains(classToFind)) {
-    return node
-  }
-  if (!node.parentElement) {
-    return null
-  }
-  return closest(node.parentElement, classToFind)
 }
 
 export default Vue.extend({
@@ -151,20 +128,37 @@ export default Vue.extend({
     teardown() {
       const draggableItems = this.itemList()
 
+      try {
+        draggableItems[this.draggedElementIndex].style.opacity = '1'
+      } catch (e) {
+        // we don't care
+      }
+
       for (const draggableItem of draggableItems) {
         draggableItem.draggable = false
         draggableItem.removeEventListener('dragstart', this.onDragStart)
-        draggableItem.removeEventListener('dragover', this.onDragOver)
+        draggableItem.removeEventListener('dragenter', this.onDragEnter)
+        draggableItem.removeEventListener('dragover', droptargetOnDragOver)
+        draggableItem.removeEventListener('dragover', this.cancelGhostRemoval)
+        draggableItem.removeEventListener('dragleave', this.planRemoveToRemoveGhost)
         draggableItem.removeEventListener('dragend', this.onDragEnd)
       }
     },
+    // Start the drag-n-drop
     onMouseDown() {
-      this.itemList().forEach((item) => {
-        item.draggable = true
-        item.addEventListener('dragstart', this.onDragStart)
-        item.addEventListener('dragover', this.onDragOver)
-        item.addEventListener('dragend', this.onDragEnd)
-      })
+      for (const draggableItem of this.itemList()) {
+        draggableItem.draggable = true
+        // Event triggered when an element starts to be dragged by the user
+        draggableItem.addEventListener('dragstart', this.onDragStart)
+        // Event triggered when an element enters a valid drop target
+        draggableItem.addEventListener('dragenter', this.onDragEnter)
+        draggableItem.addEventListener('dragover', this.cancelGhostRemoval)
+        // Needed to become a drop target
+        draggableItem.addEventListener('dragover', droptargetOnDragOver)
+        // Needed to be able to "cancel" drag-n-drop by dragging away from any target
+        draggableItem.addEventListener('dragleave', this.planRemoveToRemoveGhost)
+        draggableItem.addEventListener('dragend', this.onDragEnd)
+      }
     },
     removeMouseDown() {
       if (!this.enabled) {
@@ -182,10 +176,22 @@ export default Vue.extend({
         handle.removeEventListener('mousedown', this.onMouseDown)
       })
     },
+    preventDefault(event: DragEvent) {
+      event.preventDefault()
+    },
+    // happens on dragged element
     onDragStart(event: DragEvent) {
       const items = this.itemList()
       if (!items.includes(event.target)) {
         return
+      }
+
+      // Remove text that has been selected on screen
+      try {
+        const selection = window.getSelection()
+        selection.removeAllRanges()
+      } catch (e) {
+        // We probably don't care
       }
 
       const draggedItem = event.target as HTMLElement
@@ -196,12 +202,20 @@ export default Vue.extend({
       event.dataTransfer.dropEffect = 'move'
       this.draggedElementIndex = items.indexOf(draggedItem)
 
+      ghostElement.removeEventListener('dragenter', this.cancelGhostRemoval)
+      ghostElement.removeEventListener('dragover', this.cancelGhostRemoval)
+      ghostElement.removeEventListener('dragleave', this.planRemoveToRemoveGhost)
+      ghostElement.removeEventListener('drop', this.onDrop)
+      ghostElement.addEventListener('dragenter', this.cancelGhostRemoval)
+      ghostElement.addEventListener('dragover', this.cancelGhostRemoval)
+      ghostElement.addEventListener('dragleave', this.planRemoveToRemoveGhost)
       ghostElement.addEventListener('drop', this.onDrop)
+
       this.ghostElement = ghostElement
     },
-    onDragOver(event: DragEvent) {
+    onDragEnter(event: DragEvent) {
       const target = closest(event.target as HTMLElement, this.draggableClass)
-      const parent = target.parentNode
+      const parent = target.parentElement
       const items = this.itemList()
 
       if (!target || !items.includes(target)) {
@@ -212,7 +226,8 @@ export default Vue.extend({
         }
         return
       }
-      clearTimeout(this.timerToRemoveGhost)
+      event.preventDefault()
+      this.cancelGhostRemoval()
 
       const siblings = Array.from(parent.childNodes)
       const indexInItems = items.indexOf(target)
@@ -225,47 +240,58 @@ export default Vue.extend({
           // ignore
         }
       } else if (indexInItems < this.draggedElementIndex) {
-        // add on left of element
+        // add before element
         parent.insertBefore(this.ghostElement, target)
       } else {
-        // add on right of element
+        // add after element
         if (indexInSiblings === siblings.length - 1) {
           parent.append(this.ghostElement)
         } else {
           parent.insertBefore(this.ghostElement, siblings[indexInSiblings + 1])
         }
       }
+
+      if (siblings.indexOf(target) !== this.draggedElementIndex) {
+        target.addEventListener('drop', this.onDrop)
+      }
     },
     onDragEnd() {
-      const items = this.itemList()
-      items[this.draggedElementIndex].style.opacity = '1'
-      this.timerToRemoveGhost = setTimeout(() => {
-        try {
-          this.teardown()
-          this.ghostElement.parentNode.removeChild(this.ghostElement)
-        } catch (e) {
-          // ignore
-        }
-      }, 50)
+      this.teardown()
     },
-    onDrop() {
-      const items = this.itemList()
-      items[this.draggedElementIndex].style.opacity = '1'
+    onDrop(event: DragEvent) {
+      event.preventDefault()
+      const draggableItems = this.itemList()
       // visually do the thing
       const parent = this.ghostElement.parentNode
-      this.ghostElement.parentNode.replaceChild(items[this.draggedElementIndex], this.ghostElement)
+      draggableItems[this.draggedElementIndex].style.opacity = '1'
+
+      this.ghostElement.parentNode.replaceChild(draggableItems[this.draggedElementIndex], this.ghostElement)
 
       const newOrder = Array.from(parent.childNodes)
         .map((node) => {
-          const index = items.indexOf(node)
+          const index = draggableItems.indexOf(node)
           return this.list[index]
         })
         // as the parent might contain also none draggable items.
         .filter((item) => typeof item !== 'undefined')
 
+      event.preventDefault()
+
       this.teardown()
 
       this.$emit('reorder', newOrder)
+    },
+    planRemoveToRemoveGhost() {
+      this.timerToRemoveGhost = setTimeout(() => {
+        try {
+          this.ghostElement.parentNode.removeChild(this.ghostElement)
+        } catch (e) {
+          // ignore
+        }
+      }, 250)
+    },
+    cancelGhostRemoval() {
+      clearTimeout(this.timerToRemoveGhost)
     }
   },
   watch: {
