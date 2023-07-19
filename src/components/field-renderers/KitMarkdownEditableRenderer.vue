@@ -16,6 +16,7 @@
           :value="editProps.value"
           :size-limit="sizeLimit"
           :toolbar="toolbar"
+          :min-height="minHeight"
           @input="onInput(editProps.input, $event)"
           @focus="editProps.focus"
           @blur="onBlur(editProps.blur, $event)" />
@@ -35,12 +36,13 @@ import { nextTick, ref } from 'vue'
 
 type Props = {
   value?: string
-  editable?: boolean
-  forceIsEditing?: boolean
-  allowBlurToSave?: boolean
   placeholder?: string
   toolbar?: ToolbarItem[]
   sizeLimit?: number
+  minHeight?: number
+  editable?: boolean
+  forceIsEditing?: boolean
+  allowBlurToSave?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   value: '',
