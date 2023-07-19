@@ -8,6 +8,7 @@
 import { nextTick, onMounted, onUnmounted, ref, unref, watch } from 'vue'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
+import { hasHeadings } from '@components/MarkdownEditor/utils'
 
 export type ToolbarItem =
   | 'heading'
@@ -26,6 +27,7 @@ type Props = {
   readonly?: boolean
   placeholder?: string
   toolbar?: ToolbarItem[]
+  sizeLimit: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -70,6 +72,24 @@ function handleClickOutside(event) {
   emit('blur', new FocusEvent('blur'))
 }
 
+function buildCharacterCounter(limit: number) {
+  return {
+    className: 'kit-markdown-editor-characters',
+    onUpdate: (el: HTMLElement) => {
+      const count = editor.value.value().length
+      const charMaxClass = 'kit-markdown-editor-characters__too-many'
+      const ratio = `${count}/${limit}`
+      if (count > props.sizeLimit) {
+        el.classList.add(charMaxClass)
+        el.innerText = `WARNING: field is limited in size: ${ratio}`
+      } else {
+        el.classList.remove(charMaxClass)
+        el.innerHTML = ratio
+      }
+    }
+  }
+}
+
 onMounted(() => {
   let toolbar = null
   if (!props.readonly) {
@@ -86,13 +106,40 @@ onMounted(() => {
     })
   }
 
+  const status: any[] = []
+
+  if (props.toolbar.length) {
+    // Just to display a warning when using markdown than might be breaking layouts
+    status.push({
+      className: 'kit-markdown-unsupported-warning',
+      onUpdate: (el: HTMLElement) => {
+        const value = editor.value.value()
+
+        const issues: string[] = []
+
+        if (!props.toolbar.includes('heading') && hasHeadings(value)) {
+          issues.push('headings')
+        }
+
+        if (issues.length) {
+          el.innerText = `Some markdown (${issues.join(', ')}) might lead to unexpected layouts`
+        } else {
+          el.innerText = ''
+        }
+      }
+    })
+  }
+  if (props.sizeLimit) {
+    status.push(buildCharacterCounter(props.sizeLimit))
+  }
+
   const minHeight = props.readonly ? '2em' : '300px'
 
   editor.value = new EasyMDE({
     element: me.value,
     minHeight,
     placeholder: props.placeholder,
-    status: false,
+    status,
     spellChecker: false,
     toolbar
   })
@@ -105,7 +152,7 @@ function onFocus() {
   emit('focus', new FocusEvent('focus'))
 }
 function onChange() {
-  emit('input', editor.value.value())
+  emit('input', editor.value.value().trim())
 }
 function onBlur() {
   emit('focus', new FocusEvent('blur'))
@@ -218,5 +265,16 @@ onUnmounted(() => {
 
 .kit-markdown-editor[data-readonly='false'] {
   margin-bottom: 10px;
+}
+
+.kit-markdown-editor >>> .kit-markdown-editor-characters {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.kit-markdown-editor >>> .kit-markdown-unsupported-warning,
+.kit-markdown-editor >>> .kit-markdown-editor-characters__too-many {
+  background-color: #edc8be;
+  color: #8b0000;
 }
 </style>

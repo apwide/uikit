@@ -6,9 +6,10 @@
     <h5>Editable:</h5>
     <KitMarkdownEditableRenderer :value="text" allow-blur-to-save @save-requested="onSaveRequested" />
 
-    <h5>Fewer edition options</h5>
+    <h5>Fewer edition options and limiting allowed characters</h5>
     <KitMarkdownEditableRenderer
       value="has a small text"
+      :size-limit="50"
       :toolbar="['bold', 'italic']"
       @save-requested="onSaveRequested" />
   </div>

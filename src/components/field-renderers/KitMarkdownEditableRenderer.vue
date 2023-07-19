@@ -14,6 +14,7 @@
         <KitMarkdownEditor
           :placeholder="placeholder"
           :value="editProps.value"
+          :size-limit="sizeLimit"
           :toolbar="toolbar"
           @input="onInput(editProps.input, $event)"
           @focus="editProps.focus"
@@ -39,6 +40,7 @@ type Props = {
   allowBlurToSave?: boolean
   placeholder?: string
   toolbar?: ToolbarItem[]
+  sizeLimit?: number
 }
 const props = withDefaults(defineProps<Props>(), {
   value: '',
@@ -72,9 +74,13 @@ function onStopEditing() {
   isEditing.value = false
   emit('stop-editing')
 }
-function onSaveRequested(...args) {
+function onSaveRequested(value: string, callback) {
+  if (props.sizeLimit && value.trim().length > props.sizeLimit) {
+    callback(new Error(`Too many characters, field is limited to ${props.sizeLimit}`))
+    return
+  }
   hasPendingChanges.value = false
-  emit('save-requested', ...args)
+  emit('save-requested', value, callback)
 }
 </script>
 
