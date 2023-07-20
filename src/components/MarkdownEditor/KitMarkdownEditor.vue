@@ -23,11 +23,12 @@ export type ToolbarItem =
   | '|'
 
 type Props = {
-  value: string
+  value?: string
   readonly?: boolean
   placeholder?: string
   toolbar?: ToolbarItem[]
-  sizeLimit: number
+  sizeLimit?: number
+  minHeight?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -47,7 +48,8 @@ const props = withDefaults(defineProps<Props>(), {
     'image',
     '|',
     'preview'
-  ]
+  ],
+  minHeight: 300
 })
 const emit = defineEmits<{
   (event: 'input', data: string)
@@ -133,7 +135,7 @@ onMounted(() => {
     status.push(buildCharacterCounter(props.sizeLimit))
   }
 
-  const minHeight = props.readonly ? '2em' : '300px'
+  const minHeight = props.readonly ? '1em' : `${props.minHeight}px`
 
   editor.value = new EasyMDE({
     element: me.value,
@@ -255,7 +257,10 @@ onUnmounted(() => {
 .kit-markdown-editor[data-readonly='true'] >>> .editor-preview p ~ p {
   margin-top: 10px;
 }
-
+.kit-markdown-editor[data-readonly='true'] >>> .editor-preview ul {
+  padding-left: 15px;
+}
+.kit-markdown-editor[data-readonly='true'] >>> .editor-statusbar,
 .kit-markdown-editor[data-readonly='true'] >>> .CodeMirror-scroll {
   display: none;
 }
