@@ -107,7 +107,7 @@ const TAB = 9
 const Status = { VALIDATION_ERROR: 422 }
 
 type Props = {
-  value: unknown
+  value: any
   type?: string
   step?: string
   maxlength?: number
@@ -124,6 +124,7 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  value: '',
   type: 'text',
   step: 'any',
   compact: false,
@@ -139,7 +140,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const showGeneralError = ref(false)
 const isFocused = ref(false)
-const isEditing = ref(false)
+const isEditing = ref(props.forceIsEditing)
 const isLoading = ref(false)
 const editingValue = ref(props.value)
 const error = ref<Error | GeneralError>()
@@ -267,9 +268,11 @@ function confirmEditedValue() {
   }
 }
 function beforeTextFieldMount() {
-  const { width, height } = valueView.value.$el.getBoundingClientRect()
-  contentWidth.value = width
-  contentHeight.value = height
+  if (valueView.value) {
+    const { width, height } = valueView.value.$el.getBoundingClientRect()
+    contentWidth.value = width
+    contentHeight.value = height
+  }
 }
 function validate(e) {
   if (!props.pattern) return
