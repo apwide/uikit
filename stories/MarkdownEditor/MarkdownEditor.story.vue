@@ -3,13 +3,21 @@
     <h2>Editable</h2>
     <MarkdownEditor v-model="text" style="margin-bottom: 10px" />
     <Button appearance="primary" @click="save">Save</Button>
+    <hr />
+    <h2>Editable with limited width</h2>
+    <div style="width: 300px">
+      <MarkdownEditor :value="text" style="margin-bottom: 10px" />
+    </div>
+    <hr />
 
     <h2>Readonly</h2>
     <MarkdownEditor readonly v-model="text" style="margin-bottom: 10px" />
+    <hr />
 
     <h2>Little content</h2>
     <MarkdownEditor readonly value="This is a test" />
     <Button appearance="primary" @click="save">Save</Button>
+    <hr />
 
     <h2>Different toolbar</h2>
     <p>Available values</p>
@@ -25,7 +33,6 @@
       <li>image,</li>
       <li>|</li>
     </ul>
-
     <MarkdownEditor value="" placeholder="Type something..." :toolbar="['bold', 'italic', '|', 'image', 'link']" />
   </div>
 </template>

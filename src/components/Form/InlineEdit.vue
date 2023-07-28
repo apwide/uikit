@@ -1,6 +1,6 @@
 <template>
-  <div ref="container" :editing="isEditing" class="kit-inline-edit__wrapper">
-    <div ref="text-field" :compact="compact" :is-invalid="!!error" class="kit-inline-edit">
+  <div ref="wrapperContainer" :editing="isEditing" class="kit-inline-edit__wrapper">
+    <div ref="container" :compact="compact" :is-invalid="!!error" class="kit-inline-edit">
       <div v-if="isEditing" style="display: flex" :class="{ 'kit-inline-edit--has-general-error': isGeneralError }">
         <slot
           :blur="onBlur"
@@ -42,7 +42,7 @@
         </slot>
         <div v-if="isGeneralError" class="kit-inline-edit__general-error">
           <KitIconButton
-            ref="general-error-trigger"
+            ref="generalErrorTrigger"
             title="Click to see the error"
             @click="showGeneralError = !showGeneralError">
             <KitIcon class="kit-inline-edit__general-error-icon" type="exclamation-triangle" />
@@ -51,7 +51,7 @@
       </div>
       <InlineEditViewContent
         v-else
-        ref="value"
+        ref="valueView"
         :align="align"
         :compact="compact"
         :icon="icon"
@@ -60,20 +60,17 @@
       </InlineEditViewContent>
     </div>
     <Popper
-      v-if="$refs['text-field'] && isEditing && !isLoading && !hideConfirmButtons"
+      v-if="container && isEditing && !isLoading && !hideConfirmButtons"
       ref="buttons"
       :offset="offset"
-      :target-element="$refs['text-field']">
+      :target-element="container">
       <InlineEditButtons @blur="onBlur" @cancel="cancelInlineEdit" @confirm="confirmEditedValue" />
     </Popper>
-    <InlineErrorMessage
-      v-if="isValidationError"
-      :error="error"
-      :placement="placement"
-      :target-element="$refs['text-field']" />
+    <InlineErrorMessage v-if="isValidationError" :error="error" :placement="placement" :target-element="container" />
     <Popper
-      v-if="isGeneralError && $refs['general-error-trigger'] && showGeneralError"
-      :target-element="$refs['general-error-trigger'].$el"
+      v-if="isGeneralError && generalErrorTrigger && showGeneralError"
+      :target-element="generalErrorTrigger.$el"
+      :placement="buttonsPlacement"
       appearance="top">
       <div class="kit-inline-edit__general-error-dialog">
         <SectionMessage appearance="error">
@@ -91,15 +88,17 @@
   </div>
 </template>
 
-<script>
-import Popper from '../Popper/Popper'
-import KitIcon from '../Icon/KitIcon'
-import KitIconButton from '../Button/KitIconButton'
-import SectionMessage from '../SectionMessage/SectionMessage'
-import TextField from './TextField'
-import InlineEditButtons from './InlineEditButtons'
-import InlineEditViewContent from './InlineEditViewContent'
-import InlineErrorMessage from './InlineErrorMessage'
+<script setup lang="ts">
+import { computed, nextTick, ref, watch, watchEffect } from 'vue'
+import GeneralError from '@components/Form/GeneralError'
+import Popper from '../Popper/Popper.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import KitIconButton from '../Button/KitIconButton.vue'
+import SectionMessage from '../SectionMessage/SectionMessage.vue'
+import TextField from './TextField.vue'
+import InlineEditButtons from './InlineEditButtons.vue'
+import InlineEditViewContent from './InlineEditViewContent.vue'
+import InlineErrorMessage from './InlineErrorMessage.vue'
 
 const ENTER = 13
 const ESC = 27
@@ -107,233 +106,195 @@ const BACKSPACE = 8
 const TAB = 9
 const Status = { VALIDATION_ERROR: 422 }
 
-export default {
-  name: 'KitInlineEdit',
-  components: {
-    SectionMessage,
-    KitIconButton,
-    KitIcon,
-    TextField,
-    InlineEditButtons,
-    InlineEditViewContent,
-    InlineErrorMessage,
-    Popper
-  },
-  props: {
-    value: {
-      type: [Number, String, Boolean, Array, Object],
-      default: undefined
-    },
-    type: {
-      type: String,
-      default: 'text'
-    },
-    step: {
-      type: String,
-      default: 'any'
-    },
-    maxlength: {
-      type: Number,
-      default: undefined
-    },
-    compact: {
-      type: Boolean,
-      default: false
-    },
-    offset: {
-      type: Array,
-      default: () => [0, 5]
-    },
-    confirm: {
-      type: Boolean,
-      default: true
-    },
-    hideConfirmButtons: {
-      type: Boolean,
-      default: false
-    },
-    icon: {
-      type: Boolean,
-      default: true
-    },
-    align: {
-      type: String,
-      default: undefined
-    },
-    pattern: {
-      type: String,
-      default: ''
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    },
-    forceIsEditing: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      showGeneralError: false,
-      isFocused: false,
-      isEditing: false,
-      isLoading: false,
-      editingValue: this.value,
-      error: undefined,
-      isDirty: false,
-      contentWidth: 0,
-      contentHeight: 0
-    }
-  },
-  computed: {
-    isValidationError() {
-      if (!this.error) {
-        return false
-      }
-      if (this.error.status) {
-        return this.error.status === Status.VALIDATION_ERROR
-      }
-      return !this.error.generalError
-    },
-    isGeneralError() {
-      return this.error && this.error.generalError
-    }
-  },
-  watch: {
-    isEditing(isEditing) {
-      if (isEditing) {
-        this.$emit('start-editing')
-      } else {
-        this.$refs['text-field'].style['min-width'] = 'auto'
-        this.error = undefined
-        this.$emit('stop-editing')
-      }
-    },
-    editingValue() {
-      this.isDirty = true
-      this.$nextTick(() => {
-        if (this.$refs.buttons) {
-          this.$refs.buttons.update()
-        }
-      })
-    },
-    value() {
-      this.editingValue = this.value
-    },
-    forceIsEditing(forceIsEditing) {
-      if (forceIsEditing) {
-        this.editingRequested()
-      }
-    }
-  },
-  async mounted() {
-    // We need the "normal" rendering before forcing the edit mode.
-    if (this.forceIsEditing) {
-      await this.editingRequested()
-    }
-  },
-  methods: {
-    async editingRequested() {
-      await this.$nextTick()
-      this.isEditing = this.forceIsEditing
-      // as we might pass data, we must set is as dirty to make sure it will propose to save
-      this.isDirty = true
-      await this.$nextTick()
-      const { input } = this.$refs
-      if (input && typeof input.focus === 'function') {
-        input.focus()
-      }
-    },
-    onInput(value) {
-      this.editingValue = value
-    },
-    onBlur(event) {
-      const focusWithinComponent = this.$refs.container.contains(event.relatedTarget)
-      if (!focusWithinComponent && !this.confirm) {
-        this.confirmEditedValue()
-      }
+type Props = {
+  value: unknown
+  type?: string
+  step?: string
+  maxlength?: number
+  compact?: boolean
+  offset?: [number, number]
+  confirm?: boolean
+  hideConfirmButtons?: boolean
+  icon?: boolean
+  align?: string
+  pattern?: string
+  placement?: string
+  forceIsEditing?: boolean
+  buttonsPlacement?: string
+}
 
-      if (!this.isEditing || this.isLoading) return
-      if (!focusWithinComponent && !this.forceIsEditing) {
-        this.$nextTick(() => this.cancelInlineEdit())
-      }
-      this.isFocused = false
-    },
-    onFocus() {
-      this.isFocused = true
-    },
-    onKeyUp(e) {
-      if (e.keyCode === ENTER) this.confirmEditedValue()
-      if (e.keyCode === ESC) this.cancelInlineEdit()
-    },
-    onEditRequested() {
-      this.isEditing = true
-      this.isFocused = true
-      this.$nextTick(() => {
-        if (this.$refs.input) {
-          this.$refs.input.focus()
-        }
-      })
-    },
-    saveInlineEdit(error) {
-      this.isDirty = false
-      if (error) {
-        this.onValidateError(error)
-        return
-      }
-      this.isLoading = false
-      this.isEditing = false
-      this.editingValue = this.value
-    },
-    cancelInlineEdit() {
-      this.isEditing = false
-      this.editingValue = this.value
-    },
-    onValidateError(error) {
-      this.isLoading = false
-      this.isFocused = false
-      this.error = error
-      this.$nextTick(() => {
-        this.isFocused = true
-        if (this.$refs.input) {
-          this.$refs.input.focus()
-        }
-      })
-    },
-    confirmEditedValue() {
-      // in the case of forceEditing, value might not change
-      if (!this.forceIsEditing && this.value === this.editingValue) {
-        this.isEditing = false
-        this.error = undefined
-        return
-      }
-      if (!this.isLoading) {
-        if (this.isDirty) {
-          this.isLoading = true
-          this.$emit('save-requested', this.editingValue, this.saveInlineEdit)
-        } else if (this.error) {
-          this.onValidateError(this.error)
-        }
-      }
-    },
-    beforeTextFieldMount() {
-      const { width, height } = this.$refs.value.$el.getBoundingClientRect()
-      this.contentWidth = width
-      this.contentHeight = height
-    },
-    validate(e) {
-      if (!this.pattern) return
-      if (![TAB, BACKSPACE].includes(e.keyCode) && !this.isValidId(e.key)) {
-        e.preventDefault()
-      }
-    },
-    isValidId(key) {
-      const pattern = new RegExp(this.pattern)
-      return pattern.test(key)
+const props = withDefaults(defineProps<Props>(), {
+  type: 'text',
+  step: 'any',
+  compact: false,
+  offset: () => [0, 5],
+  confirm: true,
+  hideConfirmButtons: false,
+  icon: true,
+  pattern: '',
+  placement: 'right',
+  forceIsEditing: false,
+  buttonsPlacement: 'bottom-end'
+})
+
+const showGeneralError = ref(false)
+const isFocused = ref(false)
+const isEditing = ref(false)
+const isLoading = ref(false)
+const editingValue = ref(props.value)
+const error = ref<Error | GeneralError>()
+const isDirty = ref(false)
+const contentWidth = ref(0)
+const contentHeight = ref(0)
+
+const container = ref<HTMLDivElement>()
+const buttons = ref()
+const input = ref()
+const wrapperContainer = ref<HTMLDivElement>()
+const valueView = ref()
+const generalErrorTrigger = ref()
+
+const emit = defineEmits<{
+  (event: 'start-editing')
+  (event: 'stop-editing')
+  (event: 'save-requested', value: any, callback: (e: Error) => void)
+}>()
+
+const isValidationError = computed(() => {
+  if (!error.value) {
+    return false
+  }
+  if (error.value.status) {
+    return error.value.status === Status.VALIDATION_ERROR
+  }
+  return !(error.value as GeneralError).generalError
+})
+const isGeneralError = computed(() => error.value && (error.value as GeneralError).generalError)
+
+watchEffect(() => {
+  if (isEditing.value) {
+    emit('start-editing')
+  } else {
+    if (container.value) {
+      container.value.style['min-width'] = 'auto'
+    }
+    error.value = undefined
+    emit('stop-editing')
+  }
+})
+
+async function editingRequested() {
+  await nextTick()
+  isEditing.value = props.forceIsEditing
+  // as we might pass data, we must set is as dirty to make sure it will propose to save
+  isDirty.value = true
+  await nextTick()
+
+  if (input.value && typeof input.value.focus === 'function') {
+    input.value.focus()
+  }
+}
+function onInput(value) {
+  editingValue.value = value
+}
+async function onBlur(event) {
+  const focusWithinComponent = wrapperContainer.value.contains(event.relatedTarget)
+  if (!focusWithinComponent && !props.confirm) {
+    confirmEditedValue()
+  }
+
+  if (!isEditing.value || isLoading.value) return
+  if (!focusWithinComponent && !props.forceIsEditing) {
+    await nextTick()
+    cancelInlineEdit()
+  }
+  isFocused.value = false
+}
+function onFocus() {
+  isFocused.value = true
+}
+function onKeyUp(e) {
+  if (e.keyCode === ENTER) confirmEditedValue()
+  if (e.keyCode === ESC) cancelInlineEdit()
+}
+async function onEditRequested() {
+  isEditing.value = true
+  isFocused.value = true
+  await nextTick()
+
+  if (input.value) {
+    input.value.focus()
+  }
+}
+function saveInlineEdit(err) {
+  isDirty.value = false
+  if (err) {
+    onValidateError(err)
+    return
+  }
+  isLoading.value = false
+  isEditing.value = false
+  editingValue.value = props.value
+}
+function cancelInlineEdit() {
+  isEditing.value = false
+  editingValue.value = props.value
+}
+async function onValidateError(err) {
+  isLoading.value = false
+  isFocused.value = false
+  error.value = err
+  await nextTick()
+  isFocused.value = true
+  if (input.value) {
+    input.value.focus()
+  }
+}
+function confirmEditedValue() {
+  // in the case of forceEditing, value might not change
+  if (!props.forceIsEditing && props.value === editingValue.value) {
+    isEditing.value = false
+    error.value = undefined
+    return
+  }
+  if (!isLoading.value) {
+    if (isDirty.value) {
+      isLoading.value = true
+      emit('save-requested', editingValue.value, saveInlineEdit)
+    } else if (error.value) {
+      onValidateError(error.value)
     }
   }
 }
+function beforeTextFieldMount() {
+  const { width, height } = valueView.value.$el.getBoundingClientRect()
+  contentWidth.value = width
+  contentHeight.value = height
+}
+function validate(e) {
+  if (!props.pattern) return
+  if (![TAB, BACKSPACE].includes(e.keyCode) && !isValidId(e.key)) {
+    e.preventDefault()
+  }
+}
+function isValidId(key) {
+  const pattern = new RegExp(props.pattern)
+  return pattern.test(key)
+}
+
+watch(editingValue, async () => {
+  isDirty.value = true
+  await nextTick()
+  if (buttons.value) {
+    buttons.value.update()
+  }
+})
+watchEffect(() => (editingValue.value = props.value))
+watchEffect(() => {
+  if (props.forceIsEditing) {
+    editingRequested()
+  }
+})
 </script>
 <style scoped>
 .kit-inline-edit {

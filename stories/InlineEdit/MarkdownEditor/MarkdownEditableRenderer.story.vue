@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div style="padding-bottom: 50px">
     <h5>Editable - callback with error:</h5>
     <KitMarkdownEditableRenderer allow-blur-to-save :value="text" @save-requested="onSaveError" />
-
+    <hr />
     <h5>Editable:</h5>
     <KitMarkdownEditableRenderer :value="text" allow-blur-to-save @save-requested="onSaveRequested" />
+    <hr />
 
     <h5>Fewer edition options and limiting allowed characters</h5>
     <KitMarkdownEditableRenderer
       value="has a small text"
       :size-limit="50"
       :toolbar="['bold', 'italic']"
+      style="margin-bottom: 100px"
       @save-requested="onSaveRequested" />
   </div>
 </template>

@@ -188,7 +188,7 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1 1 auto;
-  padding: 2px 10px 2px 0px;
+  padding: 2px 10px 2px 0;
 }
 
 .kit-modal-transition-enter {
@@ -217,7 +217,7 @@ footer {
   box-shadow: none;
   flex: 0 0 auto;
   transition: box-shadow 200ms ease 0s;
-  padding: 20px 0px 14px;
+  padding: 20px 0 14px;
 }
 
 footer {

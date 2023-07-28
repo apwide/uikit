@@ -1,5 +1,5 @@
 <template>
-  <div class="kit-markdown-editable-renderer" style="padding: 10px 0">
+  <div class="kit-markdown-editable-renderer" style="padding: 10px 0" :data-disabled-ok="hasOkDisabled">
     <KitInlineEdit
       v-if="editable"
       :confirm="!allowBlurToSave"
@@ -51,6 +51,8 @@ const props = withDefaults(defineProps<Props>(), {
   allowBlurToSave: false
 })
 const isEditing = ref(false)
+const currentValue = ref(props.value)
+const hasOkDisabled = ref(false)
 
 const emit = defineEmits<{
   (event: 'save-requested', value: string, callback: (error?: Error) => void)
@@ -60,10 +62,12 @@ const emit = defineEmits<{
 const hasPendingChanges = ref(false)
 function onInput(originalOnInput: (data: string) => void, value: string) {
   originalOnInput(value)
+  currentValue.value = value
+  hasOkDisabled.value = Boolean(props.sizeLimit) && currentValue.value.length > props.sizeLimit
   hasPendingChanges.value = value !== props.value
 }
 function onBlur(originalOnBlur: (event: FocusEvent) => void, event: FocusEvent) {
-  if (props.allowBlurToSave) {
+  if (props.allowBlurToSave && !(props.sizeLimit && props.sizeLimit < currentValue.value.length)) {
     originalOnBlur(event)
   }
 }
@@ -86,4 +90,8 @@ function onSaveRequested(value: string, callback) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.kit-markdown-editable-renderer[data-disabled-ok='true'] >>> .kit-buttons-wrapper__ok {
+  visibility: hidden;
+}
+</style>

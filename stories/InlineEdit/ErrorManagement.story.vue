@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import GeneralError from '@components/Form/GeneralError'
 import StringLineEditableRenderer from '../../src/components/field-renderers/StringLineEditableRenderer'
 import SecureSingleLineEditableRenderer from '../../src/components/field-renderers/SecureStringLineEditableRenderer'
 import MultiLineEditableRenderer from '../../src/components/field-renderers/MultiLineEditableRenderer'
@@ -57,10 +58,11 @@ export default {
       callback(new Error('Something went wrong'))
     },
     onGeneralError(value, callback) {
-      const error = new Error('General Error')
-      error.generalError =
-        // eslint-disable-next-line max-len
-        'Something went wrong, your request was refused by the big biss of the database. The issue is unrelated to the current edition, make sure to check you entries.'
+      const error = new GeneralError(
+        'General Error',
+        'Something went wrong, your request was refused by the big boss of the database. ' +
+          'The issue is unrelated to the current edition, make sure to check you entries.'
+      )
       callback(error)
     }
   }

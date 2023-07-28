@@ -64,5 +64,6 @@ export default Vue.extend({
 
 .kit-bordered-panel-row__value {
   width: 60%;
+  min-width: 280px;
 }
 </style>

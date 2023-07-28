@@ -1,5 +1,5 @@
 <template>
-  <div class="kit-markdown-editor" ref="container" :data-readonly="readonly">
+  <div class="kit-markdown-editor" ref="container" :data-readonly="readonly" :data-has-status-bar="hasStatusBar">
     <textarea ref="me" />
   </div>
 </template>
@@ -59,6 +59,7 @@ const emit = defineEmits<{
 const me = ref<HTMLDivElement>()
 const container = ref<HTMLDivElement>()
 const editor = ref<EasyMDE>()
+const hasStatusBar = ref(false)
 
 function handleClickOutside(event) {
   if (props.readonly) {
@@ -110,7 +111,7 @@ onMounted(() => {
 
   const status: any[] = []
 
-  if (props.toolbar.length) {
+  if (props.toolbar.length && !props.toolbar.includes('heading')) {
     // Just to display a warning when using markdown than might be breaking layouts
     status.push({
       className: 'kit-markdown-unsupported-warning',
@@ -135,6 +136,7 @@ onMounted(() => {
     status.push(buildCharacterCounter(props.sizeLimit))
   }
 
+  hasStatusBar.value = status.length > 0
   const minHeight = props.readonly ? '1em' : `${props.minHeight}px`
 
   editor.value = new EasyMDE({
@@ -239,11 +241,20 @@ onUnmounted(() => {
 .kit-markdown-editor >>> .CodeMirror-line {
   color: #172b4d;
 }
+.kit-markdown-editor[data-has-status-bar='true'] >>> .CodeMirror {
+  border-bottom: none;
+}
+
+.kit-markdown-editor[data-has-status-bar='true'] >>> .editor-statusbar {
+  border: 1px solid #ced4da;
+  border-top: none;
+  padding: 2px 2px;
+}
 
 /** Editor style cancelling when not editing */
 .kit-markdown-editor[data-readonly='true'] >>> .CodeMirror {
   border: none !important;
-  padding: 10px 0 !important;
+  padding: 0 !important;
   background: none;
 }
 .kit-markdown-editor[data-readonly='true'] >>> .editor-preview {
@@ -271,14 +282,13 @@ onUnmounted(() => {
 .kit-markdown-editor[data-readonly='false'] {
   margin-bottom: 10px;
 }
-
 .kit-markdown-editor >>> .kit-markdown-editor-characters {
   padding-left: 5px;
-  padding-right: 5px;
 }
-
 .kit-markdown-editor >>> .kit-markdown-unsupported-warning,
 .kit-markdown-editor >>> .kit-markdown-editor-characters__too-many {
+  padding-left: 5px;
+  padding-right: 5px;
   background-color: #edc8be;
   color: #8b0000;
 }

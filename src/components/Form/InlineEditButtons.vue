@@ -1,22 +1,26 @@
 <template>
   <div class="kit-buttons-wrapper">
     <Button
-      class="kit-box-shadow-wrapper"
+      class="kit-box-shadow-wrapper kit-buttons-wrapper__ok"
       data-cy="submit-button"
       spacing="none"
       @blur="onBlur"
       @click="onConfirm"
       @focus="onFocus">
-      <EditorDoneIcon slot="icon-before" size="small" />
+      <template #icon-before>
+        <EditorDoneIcon size="small" />
+      </template>
     </Button>
     <Button
-      class="kit-box-shadow-wrapper"
+      class="kit-box-shadow-wrapper kit-buttons-wrapper__cancel"
       data-cy="cancel-button"
       spacing="none"
       @blur="onBlur"
       @mousedown="onCancel"
       @focus="onFocus">
-      <EditorCloseIcon slot="icon-before" size="small" />
+      <template #icon-before>
+        <EditorCloseIcon size="small" />
+      </template>
     </Button>
   </div>
 </template>
