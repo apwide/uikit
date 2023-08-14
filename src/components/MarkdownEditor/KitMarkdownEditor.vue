@@ -75,21 +75,43 @@ function handleClickOutside(event) {
   emit('blur', new FocusEvent('blur'))
 }
 
-function buildCharacterCounter(limit: number) {
-  return {
-    className: 'kit-markdown-editor-characters',
-    onUpdate: (el: HTMLElement) => {
-      const count = editor.value.value().length
-      const charMaxClass = 'kit-markdown-editor-characters__too-many'
-      const ratio = `${count}/${limit}`
-      if (count > props.sizeLimit) {
-        el.classList.add(charMaxClass)
-        el.innerText = `WARNING: field is limited in size: ${ratio}`
-      } else {
-        el.classList.remove(charMaxClass)
-        el.innerHTML = ratio
+function buildCharacterCounter(limit: number, propsToolbar?: ToolbarItem[]) {
+  function onUpdate(el: HTMLElement) {
+    const value = editor.value.value()
+    const count = value.length
+    const spans: Node[] = []
+
+    if (propsToolbar?.length && !propsToolbar.includes('heading')) {
+      const issues: string[] = []
+
+      if (!propsToolbar.includes('heading') && hasHeadings(value)) {
+        issues.push('headings')
+      }
+
+      if (issues.length) {
+        const span = document.createElement('span')
+        span.classList.add('kit-markdown-editor__error')
+        span.innerText = `Some markdown (${issues.join(', ')}) might lead to unexpected layouts`
+        spans.push(span)
       }
     }
+
+    if (limit) {
+      const span = document.createElement('span')
+      span.innerText = `${count}/${limit}`
+      if (count > limit) {
+        span.classList.add('kit-markdown-editor__error')
+      }
+      spans.push(span)
+    }
+    if (spans.length) {
+      el.replaceChildren(...spans)
+    }
+  }
+
+  return {
+    className: 'kit-markdown-editor__status',
+    onUpdate
   }
 }
 
@@ -109,32 +131,7 @@ onMounted(() => {
     })
   }
 
-  const status: any[] = []
-
-  if (props.toolbar.length && !props.toolbar.includes('heading')) {
-    // Just to display a warning when using markdown than might be breaking layouts
-    status.push({
-      className: 'kit-markdown-unsupported-warning',
-      onUpdate: (el: HTMLElement) => {
-        const value = editor.value.value()
-
-        const issues: string[] = []
-
-        if (!props.toolbar.includes('heading') && hasHeadings(value)) {
-          issues.push('headings')
-        }
-
-        if (issues.length) {
-          el.innerText = `Some markdown (${issues.join(', ')}) might lead to unexpected layouts`
-        } else {
-          el.innerText = ''
-        }
-      }
-    })
-  }
-  if (props.sizeLimit) {
-    status.push(buildCharacterCounter(props.sizeLimit))
-  }
+  const status: any[] = [buildCharacterCounter(props.sizeLimit, props.toolbar)]
 
   hasStatusBar.value = status.length > 0
   const minHeight = props.readonly ? '1em' : `${props.minHeight}px`
@@ -243,6 +240,8 @@ onUnmounted(() => {
 }
 .kit-markdown-editor[data-has-status-bar='true'] >>> .CodeMirror {
   border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .kit-markdown-editor[data-has-status-bar='true'] >>> .editor-statusbar {
@@ -282,13 +281,26 @@ onUnmounted(() => {
 .kit-markdown-editor[data-readonly='false'] {
   margin-bottom: 10px;
 }
-.kit-markdown-editor >>> .kit-markdown-editor-characters {
-  padding-left: 5px;
+
+.kit-markdown-editor >>> .kit-markdown-editor__status {
+  text-align: left;
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin: 0;
 }
-.kit-markdown-editor >>> .kit-markdown-unsupported-warning,
-.kit-markdown-editor >>> .kit-markdown-editor-characters__too-many {
+
+.kit-markdown-editor >>> .kit-markdown-editor__status > span {
   padding-left: 5px;
   padding-right: 5px;
+  min-width: auto;
+  margin: 0;
+}
+
+.kit-markdown-editor >>> .kit-markdown-editor__error {
+  border-radius: 3px;
   background-color: #edc8be;
   color: #8b0000;
 }
