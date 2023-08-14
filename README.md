@@ -51,3 +51,7 @@ If you need to work on a project with an unreleased version of this library:
 2. in the other project's directory: `<npm|yarn> link @apwide/uikit`
 
 To stop, make sure to unlink `<npm|yarn> unlink @apwide/uikit` and read to output for further actions to perform on your project.
+
+### Storybook
+
+If you use Node >16 make sure to add `export NODE_OPTIONS=--openssl-legacy-provider` before running storybook  (`npm run storybook`). 
