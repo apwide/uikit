@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref, unref, watch } from 'vue'
+import * as DOMPurify from 'dompurify'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
 import { hasHeadings } from '@components/MarkdownEditor/utils'
@@ -29,6 +30,7 @@ type Props = {
   toolbar?: ToolbarItem[]
   sizeLimit?: number
   minHeight?: number
+  dontSanitize?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -49,7 +51,8 @@ const props = withDefaults(defineProps<Props>(), {
     '|',
     'preview'
   ],
-  minHeight: 300
+  minHeight: 300,
+  dontSanitize: false
 })
 const emit = defineEmits<{
   (event: 'input', data: string)
@@ -142,7 +145,17 @@ onMounted(() => {
     placeholder: props.placeholder,
     status,
     spellChecker: false,
-    toolbar
+    toolbar,
+    renderingConfig: {
+      singleLineBreaks: false,
+      codeSyntaxHighlighting: true,
+      sanitizerFunction: (renderedHTML) => {
+        if (props.dontSanitize) {
+          return renderedHTML
+        }
+        return DOMPurify.sanitize(renderedHTML)
+      }
+    }
   })
   editor.value.value(props.value)
 
