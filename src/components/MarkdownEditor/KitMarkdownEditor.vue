@@ -31,10 +31,12 @@ type Props = {
   sizeLimit?: number
   minHeight?: number
   dontSanitize?: boolean
+  autoFocus?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   value: '',
+  autoFocus: false,
   readonly: false,
   placeholder: '',
   toolbar: () => [
@@ -188,7 +190,9 @@ async function updateEditor() {
     cm.codemirror.on('change', onChange)
     cm.codemirror.on('focus', onFocus)
     cm.codemirror.on('blur', onBlur)
-    cm.codemirror.focus()
+    if (props.autoFocus) {
+      cm.codemirror.focus()
+    }
   } else {
     await nextTick()
     if (!cm.isPreviewActive()) {
