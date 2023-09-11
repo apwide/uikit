@@ -203,7 +203,12 @@ async function updateEditor() {
   cm.codemirror.setOption('readOnly', props.readonly)
 }
 
-watch(props, () => updateEditor())
+watch(props, () => {
+  if (editor.value?.value() !== props.value) {
+    editor.value.value(props.value)
+  }
+  updateEditor()
+})
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside, { capture: true })
