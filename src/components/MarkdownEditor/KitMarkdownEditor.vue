@@ -149,7 +149,7 @@ onMounted(() => {
     spellChecker: false,
     toolbar,
     renderingConfig: {
-      singleLineBreaks: false,
+      singleLineBreaks: true,
       codeSyntaxHighlighting: true,
       sanitizerFunction: (renderedHTML) => {
         if (props.dontSanitize) {
