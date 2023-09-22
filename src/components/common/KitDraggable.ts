@@ -87,11 +87,18 @@ export default Vue.extend({
       return Array.from(parent.querySelectorAll(`.${this.draggableClass}`))
     },
     async setupDrag() {
+      if (!this.enabled) {
+        return
+      }
       if (!this.list.length) {
-        throw new Error('KitDraggable only works with a list of items')
+        // eslint-disable-next-line no-console
+        console.error('KitDraggable only works with a list of items')
+        return
       }
       if (!this.draggableClass || !this.draggableClass.length) {
-        throw new Error('KitDraggable only works with a class to find draggable items')
+        // eslint-disable-next-line no-console
+        console.error('KitDraggable only works with a class to find draggable items')
+        return
       }
 
       let draggableItems = []
