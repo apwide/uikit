@@ -1,5 +1,5 @@
 <template>
-  <div ref="target" :disabled="isDisabled" class="select">
+  <div ref="targetRef" :disabled="isDisabled" class="select">
     <TextField
       :is-focused="focused"
       :is-invalid="isInvalid"
@@ -8,7 +8,7 @@
       class="select-wrapper"
       tabindex="-1"
       @click="click">
-      <div ref="list" :gap="multi && !!selected.length" class="flex-wrapper" @dragover.prevent>
+      <div ref="listRef" :gap="multi && hasSelection" class="flex-wrapper" @dragover.prevent>
         <template v-if="multi">
           <Tag
             v-for="(tag, i) in selected"
@@ -27,8 +27,8 @@
           </Tag>
         </template>
         <input
-          ref="input"
-          :disabled="isDisabled"
+          ref="inputRef"
+          :disabled="false"
           :style="{ width: currentWidth }"
           :value="search"
           class="search"
@@ -42,9 +42,9 @@
           @keyup.esc="onEsc"
           @keydown.delete="removeOption" />
       </div>
-      <div v-if="!selected.length" class="text">
+      <div v-if="hasSelection" class="text">
         <slot
-          v-if="!search && selected.value && $scopedSlots['selected'] && !multi"
+          v-if="!search && hasSelection && $scopedSlots['selected'] && !multi"
           :selected="selected.value"
           name="selected" />
         <span v-else :placeholder="!search && !selected.label">
@@ -55,17 +55,17 @@
         :createable="createable"
         :is-clearable="showClearIcon"
         :is-fetching="isFetching"
-        :is-selected="isAnyOptionSelected"
+        :is-selected="hasSelection"
         @clear="onClear">
         <slot name="icon" />
       </Icons>
     </TextField>
     <Popper
       v-if="shouldOpenMenu"
-      ref="menu"
+      ref="menuRef"
       :boundaries-element="boundariesElement"
       :offset="[0, 0]"
-      :target-element="$refs.target"
+      :target-element="targetRef"
       placement="bottom-start">
       <SelectMenu
         :append-to-body="appendToBody"
@@ -83,530 +83,501 @@
         @mouseover="onMouseOverSuggestion"
         @update-popper-position="updatePopperPosition"
         @option-selected="onOptionSelected">
-        <slot slot="option" slot-scope="{ option, isCurrent }" :is-current="isCurrent" :option="option" name="option" />
+        <template #option="{ option, isCurrent }">
+          <slot :is-current="isCurrent" :option="option" name="option" />
+        </template>
         <slot name="custom-action" />
       </SelectMenu>
     </Popper>
   </div>
 </template>
 
-<script>
-import TextField from '../Form/TextField'
-import Popper from '../Popper/Popper'
-import SelectMenu from './SelectMenu'
-import Tag from './Tag'
-import Icons from './Icons'
+<script setup lang="ts">
+import { computed, nextTick, ref, unref, watch } from 'vue'
+import TextField from '../Form/TextField.vue'
+import Popper from '../Popper/Popper.vue'
+import SelectMenu from './SelectMenu.vue'
+import Tag from './Tag.vue'
+import Icons from './Icons.vue'
 
 const INPUT_WIDTH = '5px'
 
-export default {
-  name: 'KitSelect',
-  components: {
-    TextField,
-    Popper,
-    SelectMenu,
-    Tag,
-    Icons
-  },
-  props: {
-    value: {
-      type: [String, Number, Object, Array],
-      default: ''
-    },
-    options: {
-      type: Array,
-      default: () => []
-    },
-    placeholder: {
-      type: String,
-      default: 'Type to search...'
-    },
-    searchPromptText: {
-      type: String,
-      default: 'Type to search...'
-    },
-    multi: {
-      type: Boolean,
-      default: false
-    },
-    filterPredicate: {
-      type: Function,
-      default: (label = '', input = '') => label.toString().toLowerCase().includes(input.toLowerCase().trim())
-    },
-    normalizer: {
-      type: Function,
-      default: (value) => ({
-        id: value,
-        label: value,
-        value,
-        disabled: false
-      })
-    },
-    isLoading: {
-      type: Boolean,
-      default: false
-    },
-    isFetching: {
-      type: Boolean,
-      default: false
-    },
-    isFocused: {
-      type: Boolean,
-      default: false
-    },
-    isInvalid: {
-      type: Boolean,
-      default: false
-    },
-    async: {
-      type: Boolean,
-      default: false
-    },
-    boundariesElement: {
-      type: String,
-      default: 'viewport'
-    },
-    noOptionsMessage: {
-      type: String,
-      default: 'No options'
-    },
-    createable: {
-      type: Boolean,
-      default: false
-    },
-    isClearable: {
-      type: Boolean,
-      default: true
-    },
-    isValidOption: {
-      type: Function,
-      default: () => true
-    },
-    min: {
-      type: Number,
-      default: 0
-    },
-    max: {
-      type: Number,
-      default: Infinity
-    },
-    appendToBody: {
-      type: Boolean,
-      default: false
-    },
-    select: {
-      type: Boolean,
-      default: true
-    },
-    isDisabled: {
-      type: Boolean,
-      default: false
-    },
-    fixedSelectWidth: {
-      type: String
-    },
-    openOnFocus: {
-      type: Boolean,
-      default: false
-    },
-    keepOpenOnSelect: {
-      type: Boolean,
-      default: false
-    },
-    keepFilterOnSelect: {
-      type: Boolean,
-      default: false
-    },
-    confirm: {
-      type: Boolean,
-      default: true
-    },
-    dropdownWidth: {
-      type: Number,
-      default: undefined
-    },
-    selectFirstEntry: {
-      type: Boolean,
-      default: false
-    },
-    allowTabToSelect: {
-      type: Boolean,
-      default: false
+type Option = {
+  id: number | string
+  label: string
+  value: any
+  disabled?: boolean
+}
+
+type Props = {
+  value?: string | number | object | string[] | number[] | object[]
+  options?: string[] | number[] | object[]
+  placeholder?: string
+  searchPromptText?: string
+  multi?: boolean
+  filterPredicate?: (label: string, input: string) => boolean
+  normalizer?: (value: any) => Option
+  isLoading?: boolean
+  isFetching?: boolean
+  isFocused?: boolean
+  isInvalid?: boolean
+  async?: boolean
+  boundariesElement?: string
+  noOptionsMessage?: string
+  createable?: boolean
+  isClearable?: boolean
+  isValidOption?: (option: any) => boolean
+  min?: number
+  max?: number
+  appendToBody?: boolean
+  select?: boolean
+  isDisabled?: boolean
+  fixedSelectWidth?: string
+  openOnFocus?: boolean
+  keepOpenOnSelect?: boolean
+  keepFilterOnSelect?: boolean
+  confirm?: boolean
+  dropdownWidth?: number
+  selectFirstEntry?: boolean
+  allowTabToSelect?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  value: '',
+  options: () => [],
+  placeholder: 'Type to search...',
+  searchPromptText: 'Type to search...',
+  multi: false,
+  filterPredicate: (label = '', input = '') => label.toString().toLowerCase().includes(input.toLowerCase().trim()),
+  normalizer: (value) => ({
+    id: value,
+    label: value,
+    value,
+    disabled: false
+  }),
+  isLoading: false,
+  isFetching: false,
+  isFocused: false,
+  isInvalid: false,
+  async: false,
+  boundariesElement: 'viewport',
+  noOptionsMessage: 'No options',
+  createable: false,
+  isClearable: true,
+  isValidOption: () => true,
+  min: 0,
+  max: Infinity,
+  appendToBody: false,
+  select: true,
+  isDisabled: false,
+  openOnFocus: false,
+  keepOpenOnSelect: false,
+  keepFilterOnSelect: false,
+  confirm: true,
+  selectFirstEntry: false,
+  allowTabToSelect: false
+})
+const emit = defineEmits<{
+  (event: 'input', value: string | number | object | string[] | number[] | object[])
+  (event: 'search-change', value: string)
+  (event: 'confirm', e: KeyboardEvent)
+  (event: 'open')
+  (event: 'close')
+  (event: 'cancel')
+  (event: 'error')
+  (event: 'blur', e: FocusEvent)
+  (event: 'focus', e: FocusEvent)
+}>()
+
+const isOpen = ref(false)
+const search = ref('')
+const focused = ref(false)
+const currentSuggestionIndex = ref<number>()
+const currentWidth = ref(INPUT_WIDTH)
+const isDirty = ref(false)
+const selectWidth = ref(props.fixedSelectWidth || 'auto')
+const draggedElement = ref()
+const prevIndex = ref<number>()
+const dragging = ref(false)
+
+const inputRef = ref<HTMLInputElement>()
+const targetRef = ref<HTMLDivElement>()
+const menuRef = ref()
+const listRef = ref()
+
+const selected = computed(() => {
+  if (props.multi) {
+    if (Array.isArray(props.value)) {
+      return props.value.map((e) => props.normalizer(e))
+    } else {
+      return props.value ? [props.normalizer(props.value)] : []
     }
-  },
-  data() {
-    return {
-      isOpen: false,
-      search: '',
-      focused: false,
-      currentSuggestionIndex: undefined,
-      currentWidth: INPUT_WIDTH,
-      isDirty: false,
-      selectWidth: this.fixedSelectWidth || 'auto',
-      draggedElement: undefined,
-      prevIndex: undefined,
-      nextIndex: undefined
-    }
-  },
-  computed: {
-    selected() {
-      return this.multi ? this.value.map((e) => this.normalizer(e)) : this.normalizer(this.value)
-    },
-
-    normalizedOptions() {
-      return this.options.map((e) => this.normalizer(e))
-    },
-
-    input() {
-      return this.search ? '' : this.selected.label || this.placeholder
-    },
-
-    nonSelectedSuggestions() {
-      return this.multi
-        ? this.normalizedOptions.filter((option) => !this.selected.find((selected) => option.id === selected.id))
-        : this.normalizedOptions
-    },
-
-    suggestions() {
-      if (this.search && !this.async) {
-        return this.nonSelectedSuggestions.filter((option) => this.filterPredicate(option.label, this.search))
-      }
-      return this.nonSelectedSuggestions
-    },
-
-    hasSuggestions() {
-      return this.suggestions && this.suggestions.length > 0
-    },
-
-    isAnyOptionSelected() {
-      return (this.multi && !!this.selected.filter((o) => !o.disabled).length) || !!this.selected.value
-    },
-
-    disabled() {
-      return this.multi && this.selected.filter((o) => o.disabled).map((o) => o.value)
-    },
-
-    shouldBackspaceRemoveOption() {
-      return !this.isClearable || (this.multi && this.selected.length === 0)
-    },
-
-    canRemoveLastTag() {
-      return !this.search && this.selected.length > this.min
-    },
-
-    canClearSelectedOption() {
-      return !this.search && !this.multi && this.selected
-    },
-
-    canCreateTag() {
-      return this.createable && this.search && this.selected.length < this.max
-    },
-
-    shouldOpenMenu() {
-      return (
-        this.isOpen && !this.isDirty && !this.createable && (this.max === Infinity || this.selected.length < this.max)
-      )
-    },
-
-    nonClearableOptions() {
-      if (this.multi) {
-        const min = this.selected.slice(0, this.min).map((o) => o.value)
-        return Array.from(new Set([...this.disabled, ...min]))
-      }
+  } else {
+    if (Array.isArray(props.value)) {
       return undefined
-    },
-
-    showClearIcon() {
-      if (this.multi) {
-        return this.selected.length > this.min
-      }
-      return this.isClearable
-    }
-  },
-  watch: {
-    isFocused: {
-      handler(isFocused) {
-        if (isFocused) {
-          this.$nextTick(() => {
-            if (this.$refs.input) {
-              this.$refs.input.focus()
-            }
-          })
-        }
-      },
-      immediate: true
-    },
-
-    search() {
-      if (!this.search) this.currentWidth = INPUT_WIDTH
-      if (this.async && this.search) this.isDirty = true
-      this.$emit('search-change', this.search)
-    },
-
-    isOpen(open) {
-      if (!open) {
-        this.currentSuggestionIndex = undefined
-        this.$emit('close')
-      } else {
-        const { width } = this.dropdownWidth || this.$refs.target.getBoundingClientRect()
-        this.selectWidth = this.fixedSelectWidth || `${width}px`
-        this.$emit('open')
-
-        if (this.selectFirstEntry && this.hasSuggestions) {
-          // default to enable selection of first entry
-          this.currentSuggestionIndex = 0
-        }
-      }
-    },
-
-    isFetching(isFetching) {
-      if (!isFetching) {
-        this.isDirty = false
-      }
-    },
-
-    isLoading(next, prev) {
-      if (!next && prev && this.$refs.input) {
-        this.$refs.input.blur()
-      }
-    },
-
-    suggestions() {
-      if (this.selectFirstEntry) {
-        if (this.hasSuggestions) {
-          // default to enable selection of first entry
-          this.currentSuggestionIndex = 0
-        } else {
-          this.currentSuggestionIndex = undefined
-        }
-      }
-      this.$nextTick(() => this.updatePopperPosition())
-    }
-  },
-  methods: {
-    onFocus(e) {
-      if (this.isLoading) return
-      this.focused = true
-      if (this.openOnFocus && this.$refs.target && !this.$refs.target.contains(e.relatedTarget)) {
-        this.isOpen = true
-      }
-      this.$emit('focus', e)
-    },
-
-    onBlur(e) {
-      if (this.$refs.target && !this.$refs.target.contains(e.relatedTarget)) {
-        if (this.canCreateTag) {
-          this.createTag()
-        }
-        this.search = ''
-        this.closeOptions()
-        this.$emit('blur', e)
-      }
-    },
-
-    click() {
-      this.isOpen = !this.isOpen
-      this.$refs.input.focus()
-    },
-
-    onEsc() {
-      this.isOpen = false
-      this.$emit('cancel')
-    },
-
-    closeOptions() {
-      this.isOpen = false
-      this.focused = false
-    },
-
-    onClear() {
-      this.search = ''
-      this.$emit('input', this.nonClearableOptions)
-      this.isOpen = false
-      this.$nextTick(() => this.$refs.input.focus())
-    },
-
-    onOptionSelected(option) {
-      if (!this.keepFilterOnSelect) {
-        this.search = ''
-      }
-      this.isOpen = this.keepOpenOnSelect || false
-      this.focused = true
-      const selected = this.multi ? [...this.selected.map((e) => e.value), option.value] : option.value
-      this.$emit('input', selected)
-      if (!this.confirm && this.$refs.input) {
-        this.$nextTick(() => this.$refs.input.blur())
-      }
-    },
-
-    onInput({ target }) {
-      this.search = target.value
-      this.isOpen = true
-      this.resize()
-      this.updatePopperPosition()
-    },
-
-    onRemove(id) {
-      if (!this.selected.length) return
-      const selected = this.selected
-        .filter((option) => option.id !== id || option.disabled)
-        .map((option) => option.value)
-      this.updatePopperPosition()
-      this.$emit('input', selected)
-      this.$nextTick(() => this.updatePopperPosition())
-    },
-
-    removeOption() {
-      if (this.shouldBackspaceRemoveOption) return
-      if (this.canRemoveLastTag) {
-        const { id } = this.selected[this.selected.length - 1]
-        this.onRemove(id)
-      } else if (this.canClearSelectedOption) {
-        this.$emit('input', undefined)
-      }
-    },
-
-    onNextSuggestion() {
-      if (!this.isOpen) this.isOpen = true
-      if (!this.hasSuggestions) {
-        this.currentSuggestionIndex = undefined
-        return
-      }
-      if (this.currentSuggestionIndex === undefined) {
-        this.currentSuggestionIndex = 0
-      } else {
-        this.currentSuggestionIndex += 1
-        if (this.currentSuggestionIndex > this.suggestions.length - 1) {
-          this.currentSuggestionIndex = 0
-        }
-      }
-    },
-
-    onPreviousSuggestion() {
-      if (!this.isOpen) this.isOpen = true
-      if (!this.hasSuggestions) {
-        this.currentSuggestionIndex = undefined
-        return
-      }
-      if (this.currentSuggestionIndex === undefined) {
-        this.currentSuggestionIndex = this.suggestions.length - 1
-      } else {
-        this.currentSuggestionIndex -= 1
-        if (this.currentSuggestionIndex < 0) {
-          this.currentSuggestionIndex = this.suggestions.length - 1
-        }
-      }
-    },
-
-    onTab(e) {
-      if (this.allowTabToSelect && this.isOpen) {
-        if (!this.currentSuggestionIndex || this.suggestions.length <= this.currentSuggestionIndex) {
-          if (this.suggestions.length === 1 || this.selectFirstEntry) {
-            this.currentSuggestionIndex = 0
-          }
-        }
-
-        if (typeof this.currentSuggestionIndex !== 'undefined' && this.currentSuggestionIndex < this.suggestions.length) {
-          const option = this.suggestions[this.currentSuggestionIndex]
-          const selected = this.multi ? [...this.selected.map((e) => e.value), option.value] : option.value
-          // `this.confirm` is bypassed
-          this.$emit('input', selected)
-          e.preventDefault()
-
-          if (!this.keepFilterOnSelect) {
-            this.search = ''
-          }
-        } else {
-          e.preventDefault()
-        }
-      }
-    },
-
-    onMouseOverSuggestion(id) {
-      this.currentSuggestionIndex = id
-    },
-
-    onSuggestionSelected(e) {
-      // if current index is undefined, means we don't want to select any value, just submit
-      if (this.currentSuggestionIndex === undefined && !this.canCreateTag) {
-        this.$emit('confirm', e)
-        return
-      }
-      if (this.canCreateTag) {
-        if (!this.isValidOption(this.search)) {
-          this.$emit('error')
-          return
-        }
-        this.createTag()
-      }
-      e.preventDefault()
-
-      if (!this.hasSuggestions && this.isOpen) {
-        return
-      }
-
-      const option = this.suggestions[this.currentSuggestionIndex]
-      this.currentSuggestionIndex = undefined
-      this.$nextTick(() => {
-        this.$refs.input.focus()
-        this.onOptionSelected(option)
-      })
-    },
-
-    resize() {
-      this.$nextTick(() => {
-        if (this.$refs.input) {
-          this.currentWidth = `${this.$refs.input.scrollWidth}px`
-        }
-      })
-    },
-
-    updatePopperPosition() {
-      if (this.$refs.menu) {
-        this.$refs.menu.update()
-      }
-    },
-
-    createTag() {
-      const selected = this.multi ? [...this.selected.map((o) => o.value), this.search] : this.search
-      this.search = ''
-      this.$emit('input', selected)
-    },
-
-    handleDrag(e) {
-      if (!this.draggedElement) {
-        return
-      }
-      const x = e.clientX
-      const y = e.clientY
-      this.draggedElement.classList.add('ghost')
-      const el = document.elementFromPoint(x, y)
-      let swapItem = el === null ? this.draggedElement : el.closest('[draggable="true"]')
-      if (swapItem) {
-        swapItem = swapItem !== this.draggedElement.nextSibling ? swapItem : swapItem.nextSibling
-        this.$refs.list.insertBefore(this.draggedElement, swapItem)
-      }
-    },
-    onDragEnd() {
-      this.dragging = false
-      const nextIndex = Array.from(this.$refs.list.children).indexOf(this.draggedElement)
-      this.draggedElement.classList.remove('ghost')
-      const list = [...this.selected]
-      const [item] = list.splice(this.prevIndex, 1)
-      list.splice(nextIndex, 0, item)
-      this.$emit(
-        'input',
-        list.map((e) => e.value)
-      )
-      this.$refs.input.focus()
-    },
-    onDragStart(e, index) {
-      this.dragging = true
-      this.isOpen = false
-      this.draggedElement = e.target
-      this.prevIndex = index
+    } else {
+      return props.normalizer(props.value)
     }
   }
+})
+const hasSelection = computed(() =>
+  Array.isArray(selected.value) ? selected.value.length > 0 : Boolean(selected.value)
+)
+const normalizedOptions = computed(() => props.options.map((e) => props.normalizer(e)))
+// Only used in the template when selected.length === 1
+const input = computed(() => {
+  if (!Array.isArray(selected.value)) {
+    return search.value ? '' : selected.value.label
+  }
+  return ''
+})
+const nonSelectedSuggestions = computed(() =>
+  Array.isArray(selected.value)
+    ? normalizedOptions.value.filter((o) => !(selected.value as Option[]).find((selected) => o.id === selected.id))
+    : normalizedOptions.value
+)
+const suggestions = computed(() => {
+  if (search.value && !props.async) {
+    return nonSelectedSuggestions.value.filter((option) => props.filterPredicate(option.label, search.value))
+  }
+  return nonSelectedSuggestions.value
+})
+const hasSuggestions = computed(() => suggestions.value && suggestions.value.length > 0)
+const disabled = computed(() => props.multi && selected.value.filter((o) => o.disabled).map((o) => o.value))
+const shouldBackspaceRemoveOption = computed(() => !props.isClearable || (props.multi && selected.value.length === 0))
+const canRemoveLastTag = computed(() => !search.value && selected.value.length > props.min)
+const canClearSelectedOption = computed(() => !search.value && !props.multi && selected.value)
+const canCreateTag = computed(() => props.createable && search.value && selected.value.length < props.max)
+const shouldOpenMenu = computed(() => {
+  if (!isOpen.value || isDirty.value || props.createable) {
+    return false
+  }
+  return props.max === Infinity || (selected.value as Option[]).length < props.max
+})
+
+const nonClearableOptions = computed(() => {
+  if (props.multi) {
+    const min = (selected.value as Option[]).slice(0, props.min).map((o) => o.value)
+    return Array.from(new Set([...disabled.value, ...min]))
+  }
+  return undefined
+})
+
+const showClearIcon = computed(() => {
+  if (props.multi) {
+    return ((selected.value as Option[]) || []).length > props.min
+  }
+  return props.isClearable
+})
+
+watch(
+  props,
+  async (current, previous) => {
+    if (!previous?.isFocused && current.isFocused) {
+      await nextTick()
+      if (inputRef.value) {
+        inputRef.value.focus()
+        await nextTick()
+      }
+    }
+    if (!current.isFetching) {
+      isDirty.value = false
+    }
+    if (!current.isLoading && previous?.isLoading && inputRef.value) {
+      inputRef.value.focus()
+    }
+  },
+  { immediate: true }
+)
+
+watch(search, (search) => {
+  if (!search) {
+    currentWidth.value = INPUT_WIDTH
+  }
+  if (props.async && search) {
+    isDirty.value = true
+  }
+  emit('search-change', search)
+})
+
+watch(
+  isOpen,
+  (isOpen, oldIsOpen) => {
+    if (!isOpen) {
+      if (oldIsOpen) {
+        currentSuggestionIndex.value = undefined
+        emit('close')
+      }
+    } else {
+      let width = props.dropdownWidth
+      if (!width) {
+        width = targetRef.value.getBoundingClientRect().width
+      }
+      selectWidth.value = props.fixedSelectWidth || `${width}px`
+      emit('open')
+
+      if (props.selectFirstEntry && hasSuggestions.value) {
+        // default to enable selection of first entry
+        currentSuggestionIndex.value = 0
+      }
+    }
+  }
+  // { immediate: true }
+)
+
+watch(suggestions, async () => {
+  if (props.selectFirstEntry) {
+    if (hasSuggestions.value) {
+      // default to enable selection of first entry
+      currentSuggestionIndex.value = 0
+    } else {
+      currentSuggestionIndex.value = undefined
+    }
+  }
+  await nextTick()
+  updatePopperPosition()
+})
+
+function onFocus(e: FocusEvent) {
+  if (props.isLoading) {
+    return
+  }
+  focused.value = true
+  if (props.openOnFocus && targetRef.value && !targetRef.value?.contains(e.relatedTarget)) {
+    isOpen.value = true
+  }
+  emit('focus', e)
+}
+
+function onBlur(e: FocusEvent) {
+  if (!targetRef.value?.contains(e.relatedTarget)) {
+    if (canCreateTag.value) {
+      createTag()
+    }
+    search.value = ''
+    closeOptions()
+    emit('blur', e)
+  }
+}
+
+function click() {
+  isOpen.value = !isOpen.value
+  inputRef.value?.focus()
+}
+
+function onEsc() {
+  isOpen.value = false
+  emit('cancel')
+}
+
+function closeOptions() {
+  isOpen.value = false
+  focused.value = false
+}
+
+async function onClear() {
+  search.value = ''
+  emit('input', nonClearableOptions.value)
+  isOpen.value = false
+  await nextTick()
+  inputRef.value?.focus()
+}
+
+async function onOptionSelected(option) {
+  if (!props.keepFilterOnSelect) {
+    search.value = ''
+  }
+  isOpen.value = props.keepOpenOnSelect || false
+  focused.value = true
+
+  const selectedValue = props.multi ? [...selected.value.map((e) => e.value), option.value] : option.value
+  emit('input', selectedValue)
+  if (!props.confirm && inputRef) {
+    await nextTick()
+    inputRef.value?.blur()
+  }
+}
+
+function onInput({ target }) {
+  search.value = target.value
+  isOpen.value = true
+  resize()
+  updatePopperPosition()
+}
+
+async function onRemove(id) {
+  const selections = unref(selected) as Option[]
+  if (!selections.length) {
+    return
+  }
+  const selectedValue = selections.filter((option) => option.id !== id || option.disabled).map((option) => option.value)
+  updatePopperPosition()
+  emit('input', selectedValue)
+  await nextTick()
+  updatePopperPosition()
+}
+
+function removeOption() {
+  const selections = unref(selected) as Option[]
+  if (shouldBackspaceRemoveOption.value) {
+    return
+  }
+  if (canRemoveLastTag.value) {
+    const { id } = selections[selections.length - 1]
+    onRemove(id)
+  } else if (canClearSelectedOption.value) {
+    emit('input', undefined)
+  }
+}
+
+function onNextSuggestion() {
+  if (!isOpen.value) {
+    isOpen.value = true
+  }
+  if (!hasSuggestions.value) {
+    currentSuggestionIndex.value = undefined
+    return
+  }
+  if (currentSuggestionIndex.value === undefined) {
+    currentSuggestionIndex.value = 0
+  } else {
+    currentSuggestionIndex.value += 1
+    if (currentSuggestionIndex.value > suggestions.value.length - 1) {
+      currentSuggestionIndex.value = 0
+    }
+  }
+}
+
+function onPreviousSuggestion() {
+  if (!isOpen.value) {
+    isOpen.value = true
+  }
+  if (!hasSuggestions.value) {
+    currentSuggestionIndex.value = undefined
+    return
+  }
+  if (currentSuggestionIndex.value === undefined) {
+    currentSuggestionIndex.value = suggestions.value.length - 1
+  } else {
+    currentSuggestionIndex.value -= 1
+    if (currentSuggestionIndex.value < 0) {
+      currentSuggestionIndex.value = suggestions.value.length - 1
+    }
+  }
+}
+
+function onTab(e) {
+  const selection = unref(selected) as Option[]
+  if (props.allowTabToSelect && isOpen.value) {
+    if (!currentSuggestionIndex.value || suggestions.value.length <= currentSuggestionIndex.value) {
+      if (suggestions.value.length === 1 || props.selectFirstEntry) {
+        currentSuggestionIndex.value = 0
+      }
+    }
+
+    if (
+      typeof currentSuggestionIndex.value !== 'undefined' &&
+      currentSuggestionIndex.value < suggestions.value.length
+    ) {
+      const option = suggestions.value[currentSuggestionIndex.value]
+      const selectedValue = props.multi ? [...selection.map((e) => e.value), option.value] : option.value
+      // `this.confirm` is bypassed
+      emit('input', selectedValue)
+      e.preventDefault()
+
+      if (!props.keepFilterOnSelect) {
+        search.value = ''
+      }
+    } else {
+      e.preventDefault()
+    }
+  }
+}
+
+function onMouseOverSuggestion(id) {
+  currentSuggestionIndex.value = id
+}
+
+async function onSuggestionSelected(e: KeyboardEvent) {
+  // if current index is undefined, means we don't want to select any value, just submit
+  if (currentSuggestionIndex.value === undefined && !canCreateTag.value) {
+    emit('confirm', e)
+    return
+  }
+  if (canCreateTag.value) {
+    if (!props.isValidOption(search.value)) {
+      emit('error')
+      return
+    }
+    createTag()
+  }
+  e.preventDefault()
+
+  if (!hasSuggestions.value && isOpen.value) {
+    return
+  }
+
+  const option = suggestions.value[currentSuggestionIndex.value]
+  currentSuggestionIndex.value = undefined
+  await nextTick()
+  inputRef.value.focus()
+  await onOptionSelected(option)
+}
+
+async function resize() {
+  await nextTick()
+  if (inputRef.value) {
+    currentWidth.value = `${inputRef.value.scrollWidth}px`
+  }
+}
+
+function updatePopperPosition() {
+  if (menuRef.value) {
+    menuRef.value.update()
+  }
+}
+
+function createTag() {
+  const selections = unref(selected) as Option[]
+  const selectedValue = props.multi ? [...selections.map((o) => o.value), search.value] : search.value
+  search.value = ''
+  emit('input', selectedValue)
+}
+
+function handleDrag(e: DragEvent) {
+  if (!draggedElement.value) {
+    return
+  }
+  const x = e.clientX
+  const y = e.clientY
+  draggedElement.value.classList.add('ghost')
+  const el = document.elementFromPoint(x, y)
+  let swapItem = el === null ? draggedElement.value : el.closest('[draggable="true"]')
+  if (swapItem) {
+    swapItem = swapItem !== draggedElement.value.nextSibling ? swapItem : swapItem.nextSibling
+    listRef.value.insertBefore(draggedElement.value, swapItem)
+  }
+}
+
+function onDragEnd() {
+  const selections = unref(selected) as Option[]
+  dragging.value = false
+  const nextIndex = Array.from(listRef.value.children).indexOf(draggedElement.value)
+  draggedElement.value.classList.remove('ghost')
+  const list = [...selections]
+  const [item] = list.splice(prevIndex.value, 1)
+  list.splice(nextIndex, 0, item)
+  emit(
+    'input',
+    list.map((e) => e.value)
+  )
+  inputRef.value.focus()
+}
+function onDragStart(e, index) {
+  dragging.value = true
+  isOpen.value = false
+  draggedElement.value = e.target
+  prevIndex.value = index
 }
 </script>
 <style scoped>

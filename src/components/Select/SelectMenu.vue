@@ -1,6 +1,6 @@
 <template>
-  <div ref="menu" class="select-menu" tabindex="-1" @mousedown.prevent>
-    <div class="select-menu-inner">
+  <div ref="menu" class="kit-select-menu" tabindex="-1" @mousedown.prevent>
+    <div class="kit-select-menu-inner">
       <SelectOption
         v-for="(item, index) in options"
         :key="`${item.id}-${index}`"
@@ -11,9 +11,11 @@
         data-cy="select-option"
         @mouseover="onMouseOver"
         @option-selected="onOptionSelected">
-        <slot slot="option" slot-scope="{ option, isCurrent }" name="option" :is-current="isCurrent" :option="option" />
+        <template #option="{ option, isCurrent }">
+          <slot name="option" :is-current="isCurrent" :option="option" />
+        </template>
       </SelectOption>
-      <div v-if="!hasSuggestions" data-cy="no-options" class="no-options">
+      <div v-if="!hasSuggestions" data-cy="no-options" class="kit-no-options">
         {{ !containsQuery && async ? placeholder : noOptionsMessage }}
       </div>
     </div>
@@ -100,7 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.select-menu {
+.kit-select-menu {
   background-color: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
   margin-bottom: 8px;
@@ -112,7 +114,7 @@ export default {
   z-index: 1000;
 }
 
-.select-menu-inner {
+.kit-select-menu-inner {
   max-height: 300px;
   overflow-y: auto;
   padding-bottom: 8px;
@@ -120,7 +122,7 @@ export default {
   box-sizing: border-box;
 }
 
-.no-options {
+.kit-no-options {
   padding: 6px 12px;
   text-align: center;
 }
