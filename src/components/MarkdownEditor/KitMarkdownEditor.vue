@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref, unref, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, ref, unref, watch, watchEffect } from 'vue'
 import * as DOMPurify from 'dompurify'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
@@ -56,11 +56,13 @@ const props = withDefaults(defineProps<Props>(), {
   minHeight: 300,
   dontSanitize: false
 })
+
 const emit = defineEmits<{
   (event: 'input', data: string)
   (event: 'blur', e: Event)
   (event: 'focus', e: Event)
 }>()
+
 const me = ref<HTMLDivElement>()
 const container = ref<HTMLDivElement>()
 const editor = ref<EasyMDE>()
@@ -203,12 +205,16 @@ async function updateEditor() {
   cm.codemirror.setOption('readOnly', props.readonly)
 }
 
-watch(props, () => {
-  if (editor.value?.value() !== props.value) {
-    editor.value.value(props.value)
+watch(
+  () => props.value,
+  () => {
+    if (editor.value?.value().trim() !== props.value.trim()) {
+      editor.value.value(props.value)
+    }
   }
-  updateEditor()
-})
+)
+
+watchEffect(updateEditor)
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside, { capture: true })
