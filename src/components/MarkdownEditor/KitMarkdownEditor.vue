@@ -163,7 +163,7 @@ onMounted(() => {
   })
   editor.value.value(props.value)
 
-  updateEditor()
+  updateEditor(true)
 })
 
 function onFocus() {
@@ -176,7 +176,7 @@ function onBlur() {
   emit('focus', new FocusEvent('blur'))
 }
 
-async function updateEditor() {
+async function updateEditor(firstTime = false) {
   const cm = unref(editor)
   if (!cm || !cm.codemirror) {
     return
@@ -192,8 +192,9 @@ async function updateEditor() {
     cm.codemirror.on('change', onChange)
     cm.codemirror.on('focus', onFocus)
     cm.codemirror.on('blur', onBlur)
-    if (props.autoFocus) {
+    if (props.autoFocus && firstTime) {
       cm.codemirror.focus()
+      cm.codemirror.setCursor(cm.codemirror.lineCount(), 0)
     }
   } else {
     await nextTick()

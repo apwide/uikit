@@ -12,6 +12,7 @@
       @save-requested="onSaveRequested">
       <template #editor="editProps">
         <KitMarkdownEditor
+          auto-focus
           :placeholder="placeholder"
           :value="editProps.value"
           :size-limit="sizeLimit"
