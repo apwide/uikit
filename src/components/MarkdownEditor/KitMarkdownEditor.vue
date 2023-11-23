@@ -215,7 +215,7 @@ watch(
   }
 )
 
-watchEffect(updateEditor)
+watchEffect(() => updateEditor())
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside, { capture: true })
