@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ContentLoader from './ContentLoader'
+import ContentLoader from './ContentLoader.vue'
 
 export default {
   name: 'KitFolderPathLoader',

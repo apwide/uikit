@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import QuestionIcon from '../Icon/QuestionIcon'
-import IssueStatusRenderer from './IssueStatusRenderer'
-import IssuePriorityRenderer from './IssuePriorityRenderer'
-import IssueTypeRenderer from './IssueTypeRenderer'
-import User from './UserRenderer'
+import QuestionIcon from '../Icon/QuestionIcon.ts'
+import IssueStatusRenderer from './IssueStatusRenderer.vue'
+import IssuePriorityRenderer from './IssuePriorityRenderer.vue'
+import IssueTypeRenderer from './IssueTypeRenderer.vue'
+import User from './UserRenderer.vue'
 
 export default {
   name: 'KitIssueRenderer',

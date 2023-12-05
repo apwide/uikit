@@ -9,7 +9,7 @@ import { nextTick, onMounted, onUnmounted, ref, unref, watch, watchEffect } from
 import * as DOMPurify from 'dompurify'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
-import { hasHeadings } from '@components/MarkdownEditor/utils'
+import { hasHeadings } from './utils'
 
 export type ToolbarItem =
   | 'heading'

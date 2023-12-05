@@ -1,7 +1,14 @@
 <template>
   <div class="kit-avatar__outer" :style="`zIndex: ${zIndex}`">
     <slot name="avatar-header" />
-    <component :is="tag" :href="link" target="_blank" class="kit-avatar__wrapper" :square="`${square}`" :size="size" :style="style">
+    <component
+      :is="tag"
+      :href="link"
+      target="_blank"
+      class="kit-avatar__wrapper"
+      :square="`${square}`"
+      :size="size"
+      :style="style">
       <img v-if="avatar && !error" draggable="false" :src="avatar" alt="avatar" @error="error = true" />
       <svg v-else viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <g>
@@ -22,7 +29,7 @@
 </template>
 
 <script>
-import { Online, Busy, Offline, Focus, Approved, Declined } from './Icons'
+import { Online, Busy, Offline, Focus, Approved, Declined } from './Icons/index.ts'
 
 export default {
   name: 'KitAvatar',

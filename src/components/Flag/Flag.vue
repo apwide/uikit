@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import ChevronDownIcon from '../Icon/ChevronDownIcon'
-import CheckCircleIcon from '../Icon/CheckCircleIcon'
-import InfoIcon from '../Icon/InfoIcon'
-import WarningIcon from '../Icon/WarningIcon'
-import ErrorIcon from '../Icon/ErrorIcon'
-import EditorCloseIcon from '../Icon/EditorCloseIcon'
+import ChevronDownIcon from '../Icon/ChevronDownIcon.ts'
+import CheckCircleIcon from '../Icon/CheckCircleIcon.ts'
+import InfoIcon from '../Icon/InfoIcon.ts'
+import WarningIcon from '../Icon/WarningIcon.ts'
+import ErrorIcon from '../Icon/ErrorIcon.vue'
+import EditorCloseIcon from '../Icon/EditorCloseIcon.ts'
 
 export default {
   name: 'KitFlag',

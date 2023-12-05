@@ -91,11 +91,11 @@
 </template>
 
 <script>
-import TextField from '../Form/TextField'
-import Popper from '../Popper/Popper'
-import SelectMenu from './SelectMenu'
-import Tag from './Tag'
-import Icons from './Icons'
+import TextField from '../Form/TextField.vue'
+import Popper from '../Popper/Popper.vue'
+import SelectMenu from './SelectMenu.vue'
+import Tag from './Tag.vue'
+import Icons from './Icons.vue'
 
 const INPUT_WIDTH = '5px'
 
@@ -506,7 +506,10 @@ export default {
           }
         }
 
-        if (typeof this.currentSuggestionIndex !== 'undefined' && this.currentSuggestionIndex < this.suggestions.length) {
+        if (
+          typeof this.currentSuggestionIndex !== 'undefined' &&
+          this.currentSuggestionIndex < this.suggestions.length
+        ) {
           const option = this.suggestions[this.currentSuggestionIndex]
           const selected = this.multi ? [...this.selected.map((e) => e.value), option.value] : option.value
           // `this.confirm` is bypassed

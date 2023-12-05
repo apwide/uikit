@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import CrossIcon from '../Icon/CrossIcon'
-import PromisedContentLoader from '../common/PromisedContentLoader'
-import UserEditableRenderer from './UserEditableRenderer'
-import UserRenderer from './UserRenderer'
+import CrossIcon from '../Icon/CrossIcon.ts'
+import PromisedContentLoader from '../common/PromisedContentLoader.vue'
+import UserEditableRenderer from './UserEditableRenderer.vue'
+import UserRenderer from './UserRenderer.vue'
 
 export default {
   name: 'KitUserRendererEnriched',

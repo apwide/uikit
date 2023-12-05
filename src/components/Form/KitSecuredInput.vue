@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import KitIconButton from '../Button/KitIconButton'
-import KitIcon from '../Icon/KitIcon'
-import TextField from './TextField'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import TextField from './TextField.vue'
 
 export default {
   name: 'KitSecuredInput',

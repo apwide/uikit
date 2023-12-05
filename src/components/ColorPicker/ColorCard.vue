@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import EditorDoneIcon from '../Icon/EditorDoneIcon'
+import EditorDoneIcon from '../Icon/EditorDoneIcon.ts'
 
 export default {
   name: 'KitColorCard',

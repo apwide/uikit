@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import InlineEdit from '../Form/InlineEdit'
-import StringLineRenderer from './StringLineRenderer'
+import InlineEdit from '../Form/InlineEdit.vue'
+import StringLineRenderer from './StringLineRenderer.vue'
 
 export default {
   name: 'KitStringLineEditableRenderer',

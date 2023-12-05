@@ -30,8 +30,8 @@
 
 <script>
 import { Promised } from 'vue-promised'
-import ContentLoader from '../ContentLoader/ContentLoader'
-import { isPromise } from '../../utils/utils'
+import ContentLoader from '../ContentLoader/ContentLoader.vue'
+import { isPromise } from '@/utils/utils.ts'
 
 export default {
   name: 'KitPromisedContentLoader',

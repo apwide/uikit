@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import EditorDoneIcon from '../Icon/EditorDoneIcon'
-import EditorCloseIcon from '../Icon/EditorCloseIcon'
+import EditorDoneIcon from '../Icon/EditorDoneIcon.ts'
+import EditorCloseIcon from '../Icon/EditorCloseIcon.ts'
 
 export default {
   name: 'KitToggle',

@@ -36,9 +36,9 @@
 </template>
 
 <script>
-import TextArea from '../Form/TextArea'
-import InlineEdit from '../Form/InlineEdit'
-import MultiLineRenderer from './MultiLineRenderer'
+import TextArea from '../Form/TextArea.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import MultiLineRenderer from './MultiLineRenderer.vue'
 
 export default {
   name: 'KitMultiLineEditableRenderer',

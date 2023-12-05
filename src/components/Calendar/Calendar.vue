@@ -41,11 +41,11 @@ import {
   setMonth
 } from 'date-fns'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
-import { chunk } from '../../utils/utils'
-import CalendarHeader from './CalendarHeader'
-import Weeks from './Weeks'
-import Months from './Months'
-import Years from './Years'
+import { chunk } from '@/utils/utils.ts'
+import CalendarHeader from './CalendarHeader.vue'
+import Weeks from './Weeks.vue'
+import Months from './Months.vue'
+import Years from './Years.vue'
 
 const MONTHS = [
   'January',

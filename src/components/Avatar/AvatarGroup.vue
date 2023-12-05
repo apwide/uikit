@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import Tooltip from '../Tooltip/Tooltip'
-import Dropdown from '../Dropdown/Dropdown'
-import DropdownItem from '../Dropdown/DropdownItem'
-import Avatar from './Avatar'
+import Tooltip from '../Tooltip/Tooltip.vue'
+import Dropdown from '../Dropdown/Dropdown.vue'
+import DropdownItem from '../Dropdown/DropdownItem.vue'
+import Avatar from './Avatar.vue'
 
 export default {
   name: 'KitAvatarGroup',

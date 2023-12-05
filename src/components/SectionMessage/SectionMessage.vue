@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import InfoIcon from '../Icon/InfoIcon'
-import WarningIcon from '../Icon/WarningIcon'
-import ErrorIcon from '../Icon/ErrorIcon'
-import CheckCircleIcon from '../Icon/CheckCircleIcon'
-import QuestionCircleIcon from '../Icon/QuestionCircleIcon'
+import InfoIcon from '../Icon/InfoIcon.ts'
+import WarningIcon from '../Icon/WarningIcon.ts'
+import ErrorIcon from '../Icon/ErrorIcon.vue'
+import CheckCircleIcon from '../Icon/CheckCircleIcon.ts'
+import QuestionCircleIcon from '../Icon/QuestionCircleIcon.ts'
 
 export default {
   components: {

@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import { chunk } from '../../utils/utils'
-import Button from '../Button/Button'
+import Button from '../Button/Button.vue'
+import { chunk } from '@/utils/utils.ts'
 
 const HALF_DECADE = 5
 

@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import ChevronDownIcon from '../Icon/ChevronDownIcon'
-import ChevronUpIcon from '../Icon/ChevronUpIcon'
+import ChevronDownIcon from '../Icon/ChevronDownIcon.ts'
+import ChevronUpIcon from '../Icon/ChevronUpIcon.ts'
 
 export default {
   components: {

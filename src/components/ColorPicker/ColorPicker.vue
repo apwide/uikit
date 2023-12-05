@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import Popup from '../common/Popup'
-import ColorCard from './ColorCard'
+import Popup from '../common/Popup.vue'
+import ColorCard from './ColorCard.vue'
 
 const DefaultColors = ['#000', '#0052CC', '#172B4D', '#FF5630', '#FFAB00', '#36B37E', '#00B8D9', '#6554C0']
 export default {

@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import Button from '../Button/Button'
-import ChevronDownIcon from '../Icon/ChevronDownIcon'
-import Popup from '../common/Popup'
+import Button from '../Button/Button.vue'
+import ChevronDownIcon from '../Icon/ChevronDownIcon.ts'
+import Popup from '../common/Popup.vue'
 
 export default {
   name: 'KitDropdown',

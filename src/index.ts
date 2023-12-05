@@ -1,5 +1,7 @@
 import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import KitDraggable from '@components/common/KitDraggable'
+import { KitTabButton, KitTabHeaders, KitTabPanel, KitTabProvider, KitTabHeader, KitTabPanels } from '@components/Tabs'
+import KitSetToClipboard from '@components/CopyToClipboard/setToClipboard'
 import Button from './components/Button/Button.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
@@ -32,20 +34,11 @@ import Flag from './components/Flag/Flag.vue'
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItem from './components/Breadcrumbs/BreadcrumbItem.vue'
 import CopyToClipboard from './components/CopyToClipboard/CopyToClipboard.vue'
-import {
-  KitTabButton,
-  KitTabHeaders,
-  KitTabPanel,
-  KitTabProvider,
-  KitTabHeader,
-  KitTabPanels
-} from './components/Tabs/index'
 import tooltip from './directives/tooltip'
 import KitBigModal from './components/Modal/KitBigModal.vue'
 import KitButtonGroup from './components/Button/KitButtonGroup.vue'
 import KitIconButton from './components/Button/KitIconButton.vue'
 import KitIcon from './components/Icon/KitIcon.vue'
-import KitSetToClipboard from './components/CopyToClipboard/SetToClipboard'
 import KitInlineEdit from './components/Form/InlineEdit.vue'
 import KitSecuredInput from './components/Form/KitSecuredInput.vue'
 import KitCard from './components/Card/KitCard.vue'
@@ -106,5 +99,5 @@ export {
   KitMarkdownEditor
 }
 export * from './components/layout/index'
-export * from './components/Menu/index'
+export * from '@components/Menu'
 export * from './components/field-renderers/index'

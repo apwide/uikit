@@ -86,12 +86,12 @@ import {
   subWeeks,
   subYears
 } from 'date-fns'
-import TextField from '../Form/TextField'
-import Popup from '../common/Popup'
-import DropdownItem from '../Dropdown/DropdownItem'
-import DropdownGroup from '../Dropdown/DropdownGroup'
-import KitIcon from '../Icon/KitIcon'
-import Calendar from './Calendar'
+import TextField from '../Form/TextField.vue'
+import Popup from '../common/Popup.vue'
+import DropdownItem from '../Dropdown/DropdownItem.vue'
+import DropdownGroup from '../Dropdown/DropdownGroup.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import Calendar from './Calendar.vue'
 
 const MILISECONDS_IN_SECOND = 1000
 

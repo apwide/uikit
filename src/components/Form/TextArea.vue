@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import TextField from './TextField'
+import TextField from './TextField.vue'
 
 const ENTER = 13
 export default {

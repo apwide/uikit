@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import CheckboxIndeterminateIcon from '../Icon/CheckboxIndeterminateIcon'
-import CheckboxIcon from '../Icon/CheckboxIcon'
+import CheckboxIndeterminateIcon from '../Icon/CheckboxIndeterminateIcon.ts'
+import CheckboxIcon from '../Icon/CheckboxIcon.ts'
 
 export default {
   name: 'KitCheckbox',

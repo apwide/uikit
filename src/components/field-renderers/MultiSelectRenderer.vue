@@ -18,8 +18,8 @@
 
 <script>
 import pDebounce from 'p-debounce'
-import Popper from '../Popper/Popper'
-import Button from '../Button/Button'
+import Popper from '../Popper/Popper.vue'
+import Button from '../Button/Button.vue'
 
 export default {
   name: 'KitMultiSelectRenderer',

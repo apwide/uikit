@@ -9,7 +9,7 @@
 
 <script>
 import WarningIcon from '../Icon/WarningIcon'
-import ErrorIcon from '../Icon/ErrorIcon'
+import ErrorIcon from '../Icon/ErrorIcon.vue'
 
 export default {
   name: 'KitHeader',

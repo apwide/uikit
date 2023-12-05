@@ -61,12 +61,12 @@
 </template>
 
 <script>
-import Spinner from '../Spinner/Spinner'
-import KitIcon from '../Icon/KitIcon'
-import KitButton from '../Button/Button'
-import KitDraggable from '../common/KitDraggable'
-import TableRow from './TableRow'
-import TableHeaderCell from './TableHeaderCell'
+import Spinner from '../Spinner/Spinner.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import KitButton from '../Button/Button.vue'
+import KitDraggable from '../common/KitDraggable.ts'
+import TableRow from './TableRow.vue'
+import TableHeaderCell from './TableHeaderCell.vue'
 
 export default {
   components: {

@@ -8,6 +8,8 @@ tests/
 docs/
 babel.config.js
 rollup.config.js
+postcss.config.js
+webpack.config.cjs
 build/
 cypress/
 *.json

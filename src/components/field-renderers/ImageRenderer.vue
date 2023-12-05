@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Button from '../Button/Button'
-import SearchIcon from '../Icon/SearchIcon'
+import Button from '../Button/Button.vue'
+import SearchIcon from '../Icon/SearchIcon.ts'
 
 export default {
   name: 'KitImageRenderer',

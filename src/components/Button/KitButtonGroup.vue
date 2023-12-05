@@ -3,21 +3,15 @@
     <slot />
   </div>
 </template>
-<script>
-import Vue from 'vue'
-
-export default Vue.extend({
-  name: 'KitButtonGroup',
-  props: {
-    spacing: {
-      type: String,
-      default: 'normal',
-      validator(value) {
-        return ['normal', 'wide', 'narrow'].includes(value)
-      }
-    }
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    spacing?: 'normal' | 'wide' | 'narrow'
+  }>(),
+  {
+    spacing: 'normal'
   }
-})
+)
 </script>
 <style scoped>
 .kit-button-group {

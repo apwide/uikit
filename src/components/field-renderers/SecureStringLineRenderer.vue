@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import KitIconButton from '../Button/KitIconButton'
-import KitButtonGroup from '../Button/KitButtonGroup'
-import KitIcon from '../Icon/KitIcon'
-import CopyToClipboard from '../CopyToClipboard/CopyToClipboard'
-import StringLineRenderer from './StringLineRenderer'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitButtonGroup from '../Button/KitButtonGroup.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import CopyToClipboard from '../CopyToClipboard/CopyToClipboard.vue'
+import StringLineRenderer from './StringLineRenderer.vue'
 
 export default {
   name: 'KitSecureStringLineRenderer',

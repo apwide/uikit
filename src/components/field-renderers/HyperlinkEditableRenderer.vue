@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import InlineEdit from '../Form/InlineEdit'
-import HyperlinkRenderer from './HyperlinkRenderer'
+import InlineEdit from '../Form/InlineEdit.vue'
+import HyperlinkRenderer from './HyperlinkRenderer.vue'
 
 export default {
   name: 'KitHyperlinkEditableRenderer',

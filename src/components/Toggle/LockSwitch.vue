@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import LockFilledIcon from '../Icon/LockFilledIcon'
-import UnlockFilledIcon from '../Icon/UnlockFilledIcon'
+import LockFilledIcon from '../Icon/LockFilledIcon.ts'
+import UnlockFilledIcon from '../Icon/UnlockFilledIcon.ts'
 
 export default {
   name: 'KitLockSwitch',

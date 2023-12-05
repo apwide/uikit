@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import Spinner from '../Spinner/Spinner'
-import Caret from '../Icon/HipchatChevronDownIcon'
-import Clear from '../Icon/EditorErrorIcon'
+import Spinner from '../Spinner/Spinner.vue'
+import Caret from '../Icon/HipchatChevronDownIcon.ts'
+import Clear from '../Icon/EditorErrorIcon.ts'
 
 export default {
   name: 'KitIcons',

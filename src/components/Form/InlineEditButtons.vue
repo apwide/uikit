@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import EditorDoneIcon from '../Icon/EditorDoneIcon'
-import EditorCloseIcon from '../Icon/EditorCloseIcon'
-import Button from '../Button/Button'
+import EditorDoneIcon from '../Icon/EditorDoneIcon.ts'
+import EditorCloseIcon from '../Icon/EditorCloseIcon.ts'
+import Button from '../Button/Button.vue'
 
 export default {
   name: 'KitInlineEditButtons',

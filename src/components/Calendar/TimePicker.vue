@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import TextField from '../Form/TextField'
-import Popup from '../common/Popup'
-import TimePickerMenu from './TimePickerMenu'
+import TextField from '../Form/TextField.vue'
+import Popup from '../common/Popup.vue'
+import TimePickerMenu from './TimePickerMenu.vue'
 
 export default {
   name: 'KitTimePicker',

@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import CopyToClipboard from '../CopyToClipboard/CopyToClipboard'
-import KitIcon from '../Icon/KitIcon'
-import BreadcrumbItem from './BreadcrumbItem'
+import CopyToClipboard from '../CopyToClipboard/CopyToClipboard.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import BreadcrumbItem from './BreadcrumbItem.vue'
 
 export default {
   name: 'KitBreadcrumbs',

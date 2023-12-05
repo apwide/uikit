@@ -23,11 +23,11 @@
 </template>
 <script>
 import Vue from 'vue'
-import CrossIcon from '../Icon/CrossIcon'
-import KitIconButton from '../Button/KitIconButton'
-import KitButtonGroup from '../Button/KitButtonGroup'
-import Header from './Header'
-import Modal from './Modal'
+import CrossIcon from '../Icon/CrossIcon.ts'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitButtonGroup from '../Button/KitButtonGroup.vue'
+import Header from './Header.vue'
+import Modal from './Modal.vue'
 
 export default Vue.extend({
   name: 'KitModal',

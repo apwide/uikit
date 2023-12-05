@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import SelectOption from './SelectOption'
+import SelectOption from './SelectOption.vue'
 
 export default {
   name: 'KitSelectMenu',

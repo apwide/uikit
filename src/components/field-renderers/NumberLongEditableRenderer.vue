@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import InlineEdit from '../Form/InlineEdit'
-import NumberLongRenderer from './NumberLongRenderer'
+import InlineEdit from '../Form/InlineEdit.vue'
+import NumberLongRenderer from './NumberLongRenderer.vue'
 
 export default {
   name: 'KitNumberLongEditableRenderer',

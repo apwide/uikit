@@ -70,11 +70,11 @@
 </template>
 
 <script>
-import TextField from '../../Form/TextField'
-import Popper from '../../Popper/Popper'
-import Icons from '../Icons'
-import { EventBus } from '../../event-bus'
-import SelectMenu from './SelectMenu'
+import TextField from '../../Form/TextField.vue'
+import Popper from '../../Popper/Popper.vue'
+import Icons from '../Icons.vue'
+import { EventBus } from '../../event-bus.ts'
+import SelectMenu from './SelectMenu.vue'
 
 const INPUT_WIDTH = '5px'
 

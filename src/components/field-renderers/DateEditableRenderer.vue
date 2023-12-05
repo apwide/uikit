@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import DatePicker from '../Calendar/DatePicker'
-import InlineEdit from '../Form/InlineEdit'
-import DateRenderer from './DateRenderer'
+import DatePicker from '../Calendar/DatePicker.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import DateRenderer from './DateRenderer.vue'
 
 export default {
   name: 'KitDateEditableRenderer',

@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import { EventBus } from '../event-bus'
-import Node from './Node'
+import { EventBus } from '../event-bus.ts'
+import Node from './Node.vue'
 
 export default {
   name: 'KitTree',

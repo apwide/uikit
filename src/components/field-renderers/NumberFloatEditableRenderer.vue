@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import InlineEdit from '../Form/InlineEdit'
-import NumberFloatRenderer from './NumberFloatRenderer'
+import InlineEdit from '../Form/InlineEdit.vue'
+import NumberFloatRenderer from './NumberFloatRenderer.vue'
 
 export default {
   name: 'KitNumberFloatEditableRenderer',

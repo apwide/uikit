@@ -26,7 +26,7 @@
 
 <script>
 import Popper from 'popper.js'
-import CrossIcon from '../Icon/CrossIcon'
+import CrossIcon from '../Icon/CrossIcon.ts'
 
 export default {
   name: 'KitSpotlightHint',

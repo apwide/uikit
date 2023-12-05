@@ -74,7 +74,7 @@ export default {
 
       this.popper = createPopper(this.targetElement, defaultSlot.elm, {
         placement: this.placement,
-        positionFixed: this.positionFixed,
+        // positionFixed: this.positionFixed,
         modifiers: [
           {
             name: 'offset',

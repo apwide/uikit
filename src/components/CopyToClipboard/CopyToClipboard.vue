@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import Button from '../Button/Button'
-import KitIcon from '../Icon/KitIcon'
-import Tooltip from '../Tooltip/Tooltip'
-import SetToClipboard from './SetToClipboard'
+import Button from '../Button/Button.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import Tooltip from '../Tooltip/Tooltip.vue'
+import setToClipboard from './setToClipboard.ts'
 
 export default {
   name: 'KitCopyToClipboard',
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     onClick() {
-      SetToClipboard(this.text)
+      setToClipboard(this.text)
       this.copied = true
       this.timeout = setTimeout(() => {
         this.copied = false

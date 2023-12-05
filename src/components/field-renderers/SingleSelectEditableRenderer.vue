@@ -62,9 +62,9 @@
 </template>
 
 <script>
-import Select from '../Select/Select'
-import InlineEdit from '../Form/InlineEdit'
-import StringLineRenderer from './StringLineRenderer'
+import Select from '../Select/Select.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import StringLineRenderer from './StringLineRenderer.vue'
 
 export default {
   name: 'KitSingleSelectEditableRenderer',

@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import ChevronRightIcon from '../Icon/ChevronRightIcon'
-import Label from './Label'
+import ChevronRightIcon from '../Icon/ChevronRightIcon.ts'
+import Label from './Label.vue'
 
 export default {
   name: 'KitNode',

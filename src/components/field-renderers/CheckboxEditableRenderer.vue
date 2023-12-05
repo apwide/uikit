@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import Checkbox from '../Checkbox/Checkbox'
-import InlineEdit from '../Form/InlineEdit'
-import CheckboxRenderer from './CheckboxRenderer'
+import Checkbox from '../Checkbox/Checkbox.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import CheckboxRenderer from './CheckboxRenderer.vue'
 
 export default {
   name: 'KitCheckboxEditableRenderer',

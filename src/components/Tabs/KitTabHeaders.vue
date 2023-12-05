@@ -15,7 +15,7 @@
 
 <script>
 import Vue from 'vue'
-import KitDraggable from '../common/KitDraggable'
+import KitDraggable from '../common/KitDraggable.ts'
 
 export default Vue.extend({
   name: 'KitTabHeaders',

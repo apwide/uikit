@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import KitIcon from '../Icon/KitIcon'
-import KitIconButton from '../Button/KitIconButton'
+import KitIcon from '../Icon/KitIcon.vue'
+import KitIconButton from '../Button/KitIconButton.vue'
 
 const DRAG_THRESHOLD = 5
 

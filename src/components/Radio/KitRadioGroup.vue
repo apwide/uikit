@@ -11,7 +11,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import KitRadio from './KitRadio'
+import KitRadio from './KitRadio.vue'
 
 export default Vue.extend({
   components: { KitRadio },

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import EditorCloseIcon from '../Icon/EditorCloseIcon'
+import EditorCloseIcon from '../Icon/EditorCloseIcon.ts'
 
 export default {
   name: 'KitTag',
