@@ -17,16 +17,8 @@
         :style="{ zIndex: count - i }"
         :last="i === count - 1">
         <Tooltip :key="user.key" class="tooltip" :append-to-body="true" :label="user.displayName">
-          <Avatar
-            :key="user.key"
-            :tag="user.link ? 'a' : 'span'"
-            class="avatar"
-            :size="size"
-            :link="user.link"
-            :status="user.status"
-            :outline="borderColor"
-            :avatar="user.avatar"
-            :presence="user.presence" />
+          KitAvatar :key="user.key" :tag="user.link ? 'a' : 'span'" class="avatar" :size="size" :link="user.link"
+          :status="user.status" :outline="borderColor" :avatar="user.avatar" :presence="user.presence" />
         </Tooltip>
       </div>
       <Dropdown
@@ -51,7 +43,7 @@
         </div>
         <DropdownItem v-for="collapsedUser in collapsed" :key="collapsedUser.key" :non-link="!collapsedUser.link">
           <a v-if="collapsedUser.link" class="list-item" :href="collapsedUser.link" target="_blank">
-            <Avatar
+            <KitAvatar
               tag="a"
               :link="collapsedUser.link"
               class="user-list-avatar"
@@ -63,7 +55,7 @@
             <span class="user-name">{{ collapsedUser.displayName }}</span>
           </a>
           <div v-else class="list-item">
-            <Avatar
+            <KitAvatar
               tag="span"
               :link="collapsedUser.link"
               class="user-list-avatar"
@@ -84,12 +76,12 @@
 import Tooltip from '../Tooltip/Tooltip.vue'
 import Dropdown from '../Dropdown/Dropdown.vue'
 import DropdownItem from '../Dropdown/DropdownItem.vue'
-import Avatar from './Avatar.vue'
+import KitAvatar from './KitAvatar.vue'
 
 export default {
   name: 'KitAvatarGroup',
   components: {
-    Avatar,
+    KitAvatar,
     Dropdown,
     DropdownItem,
     Tooltip

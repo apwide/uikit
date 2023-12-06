@@ -30,7 +30,7 @@
 
 <script>
 import Vue from 'vue'
-import KitButton from '../Button/Button.vue'
+import KitButton from '@components/KitButton/KitButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 
 export default Vue.extend({

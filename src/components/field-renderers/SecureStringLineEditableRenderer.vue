@@ -51,9 +51,9 @@
 </template>
 
 <script>
+import KitIconButton from '@components/KitButton/KitIconButton.vue'
 import InlineEdit from '../Form/InlineEdit.vue'
 import TextField from '../Form/TextField.vue'
-import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import SecureStringLineRenderer from './SecureStringLineRenderer.vue'
 

@@ -17,10 +17,7 @@
 
     <h3>Draggable</h3>
     <KitTabProvider v-model="active">
-      <KitTabHeaders
-        reorderable
-        :reorderable-ids-list="tabs"
-        @reorder="onReorder">
+      <KitTabHeaders reorderable :reorderable-ids-list="tabs" @reorder="onReorder">
         <KitTabHeader reorderable v-for="i in tabs" :id="i" :key="i" :disabled="i === 4">
           <span>Tab {{ i }}</span>
         </KitTabHeader>
@@ -95,7 +92,7 @@ import KitTabHeaders from '../../src/components/Tabs/KitTabHeaders'
 import KitTabHeader from '../../src/components/Tabs/KitTabHeader'
 import KitTabPanel from '../../src/components/Tabs/KitTabPanel'
 import KitTabButton from '../../src/components/Tabs/KitTabButton'
-import KitIconButton from '../../src/components/Button/KitIconButton'
+import KitIconButton from '../../src/components/KitButton/KitIconButton'
 import KitIcon from '../../src/components/Icon/KitIcon'
 import KitActionMenu from '../../src/components/Menu/KitActionMenu'
 import KitMenuItem from '../../src/components/Menu/KitMenuItem'

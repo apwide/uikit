@@ -33,7 +33,7 @@
 </style>
 <script>
 import Vue from 'vue'
-import Button from './Button'
+import Button from './KitButton.vue'
 
 export default Vue.extend({
   name: 'KitIconButton',

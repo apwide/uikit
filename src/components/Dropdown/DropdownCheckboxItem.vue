@@ -15,8 +15,8 @@
 </template>
 
 <script>
+import Button from '@components/KitButton/KitButton.vue'
 import Checkbox from '../Checkbox/Checkbox.vue'
-import Button from '../Button/Button.vue'
 
 export default {
   components: { Checkbox, Button },

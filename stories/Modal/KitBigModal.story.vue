@@ -32,7 +32,7 @@ import faker from 'faker'
 import ApwideModal from '../../src/components/Modal/KitBigModal'
 import CopyIcon from '../../src/components/Icon/CopyIcon'
 import LockIcon from '../../src/components/Icon/LockIcon'
-import KitIconButton from '../../src/components/Button/KitIconButton'
+import KitIconButton from '../../src/components/KitButton/KitIconButton'
 import Button from '@/components/Button/Button'
 
 const paragraphs = Array.from({ length: 30 }).map(() => faker.lorem.paragraph())

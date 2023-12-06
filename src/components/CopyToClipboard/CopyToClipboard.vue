@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Button from '../Button/Button.vue'
+import Button from '@components/KitButton/KitButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import Tooltip from '../Tooltip/Tooltip.vue'
 import setToClipboard from './setToClipboard.ts'

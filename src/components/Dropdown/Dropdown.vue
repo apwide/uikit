@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Button from '../Button/Button.vue'
+import Button from '@components/KitButton/KitButton.vue'
 import ChevronDownIcon from '../Icon/ChevronDownIcon.ts'
 import Popup from '../common/Popup.vue'
 

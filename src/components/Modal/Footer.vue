@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Button from '../Button/Button.vue'
+import Button from '@components/KitButton/KitButton.vue'
 
 export default {
   name: 'KitFooter',

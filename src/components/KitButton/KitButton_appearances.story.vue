@@ -9,30 +9,30 @@
     <div class="wrapper">
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" :appearance="appearance">
+          <KitButton :is-loading="isLoading" :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" :is-disabled="true" :appearance="appearance">
+          <KitButton :is-loading="isLoading" :is-disabled="true" :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" :is-selected="true" :appearance="appearance">
+          <KitButton :is-loading="isLoading" :is-selected="true" :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" round :appearance="appearance">
+          <KitButton :is-loading="isLoading" round :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
     </div>
@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import Button from '@/components/Button/Button'
+import KitButton from './KitButton.vue'
 
 export default {
-  name: 'ButtonAppearance',
-  components: { Button },
+  name: 'KitButtonAppearance',
+  components: { KitButton },
   data() {
     return {
       appearances: ['default', 'primary', 'link', 'subtle', 'subtle-link', 'warning', 'danger', 'help'],

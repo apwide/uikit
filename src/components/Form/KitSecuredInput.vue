@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import KitIconButton from '../Button/KitIconButton.vue'
+import KitIconButton from '@components/KitButton/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import TextField from './TextField.vue'
 

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Button from '../Button/Button.vue'
+import Button from '@components/KitButton/KitButton.vue'
 import { chunk } from '@/utils/utils.ts'
 
 const HALF_DECADE = 5

@@ -23,9 +23,9 @@
 </template>
 <script>
 import Vue from 'vue'
+import KitIconButton from '@components/KitButton/KitIconButton.vue'
+import KitButtonGroup from '@components/KitButton/KitButtonGroup.vue'
 import CrossIcon from '../Icon/CrossIcon.ts'
-import KitIconButton from '../Button/KitIconButton.vue'
-import KitButtonGroup from '../Button/KitButtonGroup.vue'
 import Header from './Header.vue'
 import Modal from './Modal.vue'
 

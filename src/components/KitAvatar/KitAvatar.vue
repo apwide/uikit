@@ -42,6 +42,9 @@ export default {
     Declined
   },
   props: {
+    /**
+     * fogojdfojg
+     */
     size: {
       type: String,
       default: 'medium'

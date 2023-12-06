@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import KitIconButton from '../Button/KitIconButton.vue'
-import KitButtonGroup from '../Button/KitButtonGroup.vue'
+import KitIconButton from '@components/KitButton/KitIconButton.vue'
+import KitButtonGroup from '@components/KitButton/KitButtonGroup.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import CopyToClipboard from '../CopyToClipboard/CopyToClipboard.vue'
 import StringLineRenderer from './StringLineRenderer.vue'

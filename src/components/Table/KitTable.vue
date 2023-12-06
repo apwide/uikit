@@ -61,9 +61,9 @@
 </template>
 
 <script>
+import KitButton from '@components/KitButton/KitButton.vue'
 import Spinner from '../Spinner/Spinner.vue'
 import KitIcon from '../Icon/KitIcon.vue'
-import KitButton from '../Button/Button.vue'
 import KitDraggable from '../common/KitDraggable.ts'
 import TableRow from './TableRow.vue'
 import TableHeaderCell from './TableHeaderCell.vue'

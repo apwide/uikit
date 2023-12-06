@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Popper from 'popper.js'
+import { createPopper } from '@popperjs/core'
 import CrossIcon from '../Icon/CrossIcon.ts'
 
 export default {
@@ -69,7 +69,7 @@ export default {
   methods: {
     initPopper() {
       if (!this.$refs.message) return
-      this.popper = new Popper(this.targetElement, this.$refs.message, {
+      this.popper = createPopper(this.targetElement, this.$refs.message, {
         placement: this.placement,
         modifiers: {
           offset: { offset: this.offset },
@@ -97,7 +97,7 @@ export default {
   z-index: 9999999;
   color: rgb(255, 255, 255);
   max-width: 330px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0 4px 8px -2px, rgba(9, 30, 66, 0.31) 0 0 1px;
   opacity: 1;
   background: rgb(101, 84, 192);
   overflow: auto;

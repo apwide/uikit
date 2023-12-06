@@ -91,9 +91,9 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch, watchEffect } from 'vue'
 import GeneralError from '@components/Form/GeneralError'
+import KitIconButton from '@components/KitButton/KitIconButton.vue'
 import Popper from '../Popper/Popper.vue'
 import KitIcon from '../Icon/KitIcon.vue'
-import KitIconButton from '../Button/KitIconButton.vue'
 import SectionMessage from '../SectionMessage/SectionMessage.vue'
 import TextField from './TextField.vue'
 import InlineEditButtons from './InlineEditButtons.vue'

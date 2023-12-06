@@ -18,7 +18,7 @@
 
 <script>
 import { addMonths, addYears, subMonths, subYears } from 'date-fns'
-import KitIconButton from '../Button/KitIconButton.vue'
+import KitIconButton from '@components/KitButton/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 
 const DECADE = 10

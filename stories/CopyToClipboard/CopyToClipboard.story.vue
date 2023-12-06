@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Button from '../../src/components/Button/Button'
+import Button from '../../src/components/KitButton/KitButton.vue'
 import CopyToClipboard from '../../src/components/CopyToClipboard/CopyToClipboard'
 import EditorLinkIcon from '../../src/components/Icon/EditorLinkIcon'
 

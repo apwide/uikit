@@ -27,6 +27,9 @@ export default {
     prop: 'checked',
     event: 'input'
   },
+  setup(props) {
+    return {}
+  },
   props: {
     disabled: {
       type: Boolean,

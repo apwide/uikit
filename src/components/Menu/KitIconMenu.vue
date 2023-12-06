@@ -24,8 +24,8 @@
 
 <script>
 import Vue from 'vue'
+import KitIconButton from '@components/KitButton/KitIconButton.vue'
 import Dropdown from '../Dropdown/Dropdown.vue'
-import KitIconButton from '../Button/KitIconButton.vue'
 
 export default Vue.extend({
   components: { KitIconButton, Dropdown },

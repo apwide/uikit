@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import MarkdownEditor from '../../src/components/MarkdownEditor/KitMarkdownEditor.vue'
-import Button from '../../src/components/Button/Button.vue'
+import Button from '../../src/components/KitButton/KitButton.vue'
 
 const text = ref(`# Description
 
