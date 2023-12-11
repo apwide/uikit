@@ -240,8 +240,12 @@ export default Vue.extend({
       const indexInItems = items.indexOf(target)
 
       const indexInSiblings = siblings.indexOf(target)
+
+      const draggedElement = items[this.draggedElementIndex] as HTMLElement
+      draggedElement.style.opacity = '0.5'
       if (indexInItems === this.draggedElementIndex) {
         try {
+          target.style.opacity = '1'
           parent.removeChild(this.ghostElement)
         } catch (e) {
           // ignore
