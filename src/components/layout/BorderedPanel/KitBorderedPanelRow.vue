@@ -41,7 +41,7 @@ export default Vue.extend({
 <style scoped>
 .kit-bordered-panel-row {
   margin-top: 0;
-  margin-bottom: 16px;
+  padding-bottom: 16px;
   display: flex;
   align-items: first baseline;
 }
