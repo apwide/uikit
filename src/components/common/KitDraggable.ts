@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent, getCurrentInstance, nextTick, onMounted, onUnmounted, PropType, ref, watch } from 'vue'
 import { closest } from '@/utils/dom'
 
 function droptargetOnDragOver(event) {
@@ -6,27 +6,58 @@ function droptargetOnDragOver(event) {
   event.preventDefault()
 }
 
-function ghostFactory(item: HTMLElement) {
-  const tag = item.tagName.toLowerCase()
-  const box = item.getBoundingClientRect()
-  const ghostClass = 'kit-draggable__ghost-element'
+export default defineComponent({
+  props: {
+    enabled: {
+      type: Boolean,
+      default: false
+    },
+    list: {
+      type: Array as PropType<unknown[]>,
+      default: () => []
+    },
+    handleSelector: String,
+    draggableClass: String
+  },
+  emits: {
+    reorder(payload: unknown[]) {
+      return payload.length > 0
+    }
+  },
+  setup(props, { slots, emit }) {
+    const instance = getCurrentInstance()
 
-  const ghost = document.createElement(tag)
-  const styledElement = document.createElement('div')
+    const ghostElement = ref<HTMLElement>()
+    // needed for Chrome
+    const draggedElementIndex = ref<number>()
+    const timerToRemoveGhost = ref()
 
-  if (tag === 'tr') {
-    const td = document.createElement('td')
-    // this does not take into account whether an existing td has a colspan
-    td.colSpan = item.childNodes.length
-    ghost.appendChild(td)
-    td.appendChild(styledElement)
-  } else {
-    ghost.appendChild(styledElement)
-  }
-  ghost.classList.add(`${ghostClass}-container`)
-  styledElement.classList.add(ghostClass)
+    function itemList(): HTMLElement[] {
+      const parent = instance.proxy.$parent.$el
+      return Array.from(parent.querySelectorAll(`.${props.draggableClass}`)) as HTMLElement[]
+    }
 
-  const style = `
+    function ghostFactory(item: HTMLElement) {
+      const tag = item.tagName.toLowerCase()
+      const box = item.getBoundingClientRect()
+      const ghostClass = 'kit-draggable__ghost-element'
+
+      const ghost = document.createElement(tag)
+      const styledElement = document.createElement('div')
+
+      if (tag === 'tr') {
+        const td = document.createElement('td')
+        // this does not take into account whether an existing td has a colspan
+        td.colSpan = item.childNodes.length
+        ghost.appendChild(td)
+        td.appendChild(styledElement)
+      } else {
+        ghost.appendChild(styledElement)
+      }
+      ghost.classList.add(`${ghostClass}-container`)
+      styledElement.classList.add(ghostClass)
+
+      const style = `
     min-width: 20px;
     min-height: ${box.height * 0.95}px;
     border-style: dashed;
@@ -36,66 +67,188 @@ function ghostFactory(item: HTMLElement) {
     content: ' ';
     `
 
-  styledElement.setAttribute('style', style)
+      styledElement.setAttribute('style', style)
 
-  ghost.addEventListener('dragenter', (event) => event.preventDefault())
-  ghost.addEventListener('dragover', droptargetOnDragOver)
+      ghost.addEventListener('dragenter', (event) => event.preventDefault())
+      ghost.addEventListener('dragover', cancelGhostRemoval)
+      ghost.addEventListener('dragover', droptargetOnDragOver)
 
-  return ghost
-}
+      return ghost
+    }
 
-export default Vue.extend({
-  name: 'KitDraggable',
-  props: {
-    enabled: {
-      type: Boolean,
-      default: false
-    },
-    list: {
-      type: Array,
-      default: () => []
-    },
-    draggableClass: {
-      type: String
-    },
-    handleSelector: {
-      type: String,
-      default: ''
+    function teardown() {
+      const draggableItems = itemList()
+
+      try {
+        draggableItems[draggedElementIndex.value].style.opacity = '1'
+      } catch (e) {
+        // we don't care
+      }
+
+      for (const draggableItem of draggableItems) {
+        draggableItem.draggable = false
+        draggableItem.removeEventListener('dragstart', onDragStart)
+        draggableItem.removeEventListener('dragenter', onDragEnter)
+        draggableItem.removeEventListener('dragover', droptargetOnDragOver)
+        draggableItem.removeEventListener('dragover', cancelGhostRemoval)
+        draggableItem.removeEventListener('dragleave', planRemoveToRemoveGhost)
+        draggableItem.removeEventListener('dragend', onDragEnd)
+      }
     }
-  },
-  mounted() {
-    if (this.enabled && this.list.length) {
-      setTimeout(() => {
-        this.setupDrag()
-      }, 500)
-    }
-  },
-  beforeDestroy() {
-    this.removeMouseDown()
-  },
-  data() {
-    return {
-      ghostElement: null,
-      timerToRemoveGhost: null,
-      // needed for Chrome
-      draggedElementIndex: null
-    }
-  },
-  methods: {
-    itemList() {
-      const parent = this.$parent.$el
-      return Array.from(parent.querySelectorAll(`.${this.draggableClass}`))
-    },
-    async setupDrag() {
-      if (!this.enabled) {
+
+    // happens on dragged element
+    function onDragStart(event: DragEvent) {
+      const items = itemList()
+      if (!items.includes(event.target as HTMLElement)) {
         return
       }
-      if (!this.list.length) {
+
+      // Remove text that has been selected on screen
+      try {
+        const selection = window.getSelection()
+        selection.removeAllRanges()
+      } catch (e) {
+        // We probably don't care
+      }
+
+      const draggedItem = event.target as HTMLElement
+      const element = ghostFactory(draggedItem)
+
+      draggedItem.style.opacity = '0.5'
+
+      event.dataTransfer.dropEffect = 'move'
+      draggedElementIndex.value = items.indexOf(draggedItem)
+
+      element.removeEventListener('dragenter', cancelGhostRemoval)
+      element.removeEventListener('dragover', cancelGhostRemoval)
+      element.removeEventListener('dragleave', planRemoveToRemoveGhost)
+      element.removeEventListener('drop', onDrop)
+      element.addEventListener('dragenter', cancelGhostRemoval)
+      element.addEventListener('dragover', cancelGhostRemoval)
+      element.addEventListener('dragleave', planRemoveToRemoveGhost)
+      element.addEventListener('drop', onDrop)
+
+      ghostElement.value = element
+    }
+
+    function onDragEnter(event: DragEvent) {
+      const target = closest(event.target as HTMLElement, props.draggableClass)
+      const parent = target.parentElement
+      const items = itemList()
+
+      if (!target || !items.includes(target)) {
+        try {
+          parent.removeChild(ghostElement.value)
+        } catch (e) {
+          // ignore
+        }
+        return
+      }
+      event.preventDefault()
+      cancelGhostRemoval()
+
+      const siblings = Array.from(parent.childNodes)
+      const indexInItems = items.indexOf(target)
+
+      const indexInSiblings = siblings.indexOf(target)
+
+      const draggedElement = items[draggedElementIndex.value] as HTMLElement
+      draggedElement.style.opacity = '0.5'
+      if (indexInItems === draggedElementIndex.value) {
+        try {
+          target.style.opacity = '1'
+          parent.removeChild(ghostElement.value)
+        } catch (e) {
+          // ignore
+        }
+      } else if (indexInItems < draggedElementIndex.value) {
+        // add before element
+        parent.insertBefore(ghostElement.value, target)
+      } else {
+        // add after element
+        if (indexInSiblings === siblings.length - 1) {
+          parent.append(ghostElement.value)
+        } else {
+          parent.insertBefore(ghostElement.value, siblings[indexInSiblings + 1])
+        }
+      }
+
+      if (siblings.indexOf(target) !== draggedElementIndex.value) {
+        target.addEventListener('drop', onDrop)
+      }
+    }
+
+    function onDragEnd() {
+      teardown()
+    }
+
+    function onDrop(event: DragEvent) {
+      if (typeof draggedElementIndex.value !== 'number' || !ghostElement.value) {
+        return
+      }
+
+      event.preventDefault()
+      const draggableItems = itemList()
+      // visually do the thing
+      const parent = ghostElement.value.parentNode
+      draggableItems[draggedElementIndex.value].style.opacity = '1'
+
+      ghostElement.value.parentNode.replaceChild(draggableItems[draggedElementIndex.value], ghostElement.value)
+
+      const newOrder = Array.from(parent.childNodes)
+        .map((node) => {
+          const index = draggableItems.indexOf(node as HTMLElement)
+          return props.list[index]
+        })
+        // as the parent might contain also none draggable items.
+        .filter((item) => typeof item !== 'undefined')
+
+      teardown()
+
+      emit('reorder', newOrder)
+    }
+
+    function planRemoveToRemoveGhost() {
+      timerToRemoveGhost.value = setTimeout(() => {
+        try {
+          ghostElement.value.parentNode.removeChild(ghostElement.value)
+        } catch (e) {
+          // ignore
+        }
+      }, 250)
+    }
+
+    function cancelGhostRemoval() {
+      clearTimeout(timerToRemoveGhost.value)
+    }
+
+    // Start the drag-n-drop
+    function onMouseDown() {
+      for (const draggableItem of itemList()) {
+        draggableItem.draggable = true
+        // Event triggered when an element starts to be dragged by the user
+        draggableItem.addEventListener('dragstart', onDragStart)
+        // Event triggered when an element enters a valid drop target
+        draggableItem.addEventListener('dragenter', onDragEnter)
+        draggableItem.addEventListener('dragover', cancelGhostRemoval)
+        // Needed to become a drop target
+        draggableItem.addEventListener('dragover', droptargetOnDragOver)
+        // Needed to be able to "cancel" drag-n-drop by dragging away from any target
+        draggableItem.addEventListener('dragleave', planRemoveToRemoveGhost)
+        draggableItem.addEventListener('dragend', onDragEnd)
+      }
+    }
+
+    async function setupDrag() {
+      if (!props.enabled) {
+        return
+      }
+      if (!props.list.length) {
         // eslint-disable-next-line no-console
         console.error('KitDraggable only works with a list of items')
         return
       }
-      if (!this.draggableClass || !this.draggableClass.length) {
+      if (!props.draggableClass || !props.draggableClass.length) {
         // eslint-disable-next-line no-console
         console.error('KitDraggable only works with a class to find draggable items')
         return
@@ -111,220 +264,67 @@ export default Vue.extend({
         if (now - start > waitTime) {
           // let's abandon
           throw new Error(
-            `KitDraggable: draggableItems count should be the same as the list length ${draggableItems.length} vs ${this.list.length}`
+            `KitDraggable: draggableItems count should be the same as the list length ${draggableItems.length} vs ${props.list.length}`
           )
         }
-        await this.$nextTick()
-        draggableItems = this.itemList()
+        await nextTick()
+        draggableItems = itemList()
         hasItems = draggableItems.length > 0
-        hasTheRightAmountOfItems = draggableItems.length === this.list.length
+        hasTheRightAmountOfItems = draggableItems.length === props.list.length
       }
 
       for (const draggableItem of draggableItems) {
         let handle = draggableItem
-        if (this.handleSelector) {
-          handle = draggableItem.querySelector(this.handleSelector)
+        if (props.handleSelector) {
+          handle = draggableItem.querySelector(props.handleSelector)
           if (!handle) {
-            throw new Error(`No handle found (${this.handleSelector})`)
+            throw new Error(`No handle found (${props.handleSelector})`)
           }
         }
 
-        handle.addEventListener('mousedown', this.onMouseDown)
+        handle.addEventListener('mousedown', onMouseDown)
       }
-    },
-    teardown() {
-      const draggableItems = this.itemList()
+    }
 
-      try {
-        draggableItems[this.draggedElementIndex].style.opacity = '1'
-      } catch (e) {
-        // we don't care
-      }
-
-      for (const draggableItem of draggableItems) {
-        draggableItem.draggable = false
-        draggableItem.removeEventListener('dragstart', this.onDragStart)
-        draggableItem.removeEventListener('dragenter', this.onDragEnter)
-        draggableItem.removeEventListener('dragover', droptargetOnDragOver)
-        draggableItem.removeEventListener('dragover', this.cancelGhostRemoval)
-        draggableItem.removeEventListener('dragleave', this.planRemoveToRemoveGhost)
-        draggableItem.removeEventListener('dragend', this.onDragEnd)
-      }
-    },
-    // Start the drag-n-drop
-    onMouseDown() {
-      for (const draggableItem of this.itemList()) {
-        draggableItem.draggable = true
-        // Event triggered when an element starts to be dragged by the user
-        draggableItem.addEventListener('dragstart', this.onDragStart)
-        // Event triggered when an element enters a valid drop target
-        draggableItem.addEventListener('dragenter', this.onDragEnter)
-        draggableItem.addEventListener('dragover', this.cancelGhostRemoval)
-        // Needed to become a drop target
-        draggableItem.addEventListener('dragover', droptargetOnDragOver)
-        // Needed to be able to "cancel" drag-n-drop by dragging away from any target
-        draggableItem.addEventListener('dragleave', this.planRemoveToRemoveGhost)
-        draggableItem.addEventListener('dragend', this.onDragEnd)
-      }
-    },
-    removeMouseDown() {
-      if (!this.enabled) {
+    function removeMouseDown() {
+      if (!props.enabled) {
         return
       }
-      this.itemList().forEach((item) => {
+      itemList().forEach((item) => {
         let handle = item
-        if (this.handleSelector) {
-          handle = item.querySelector(this.handleSelector)
+        if (props.handleSelector) {
+          handle = item.querySelector(props.handleSelector)
           if (!handle) {
-            throw new Error(`No handle found (${this.handleSelector})`)
+            throw new Error(`No handle found (${props.handleSelector})`)
           }
         }
 
-        handle.removeEventListener('mousedown', this.onMouseDown)
+        handle.removeEventListener('mousedown', onMouseDown)
       })
-    },
-    preventDefault(event: DragEvent) {
-      event.preventDefault()
-    },
-    // happens on dragged element
-    onDragStart(event: DragEvent) {
-      const items = this.itemList()
-      if (!items.includes(event.target)) {
-        return
-      }
-
-      // Remove text that has been selected on screen
-      try {
-        const selection = window.getSelection()
-        selection.removeAllRanges()
-      } catch (e) {
-        // We probably don't care
-      }
-
-      const draggedItem = event.target as HTMLElement
-      const ghostElement = ghostFactory(draggedItem)
-
-      draggedItem.style.opacity = '0.5'
-
-      event.dataTransfer.dropEffect = 'move'
-      this.draggedElementIndex = items.indexOf(draggedItem)
-
-      ghostElement.removeEventListener('dragenter', this.cancelGhostRemoval)
-      ghostElement.removeEventListener('dragover', this.cancelGhostRemoval)
-      ghostElement.removeEventListener('dragleave', this.planRemoveToRemoveGhost)
-      ghostElement.removeEventListener('drop', this.onDrop)
-      ghostElement.addEventListener('dragenter', this.cancelGhostRemoval)
-      ghostElement.addEventListener('dragover', this.cancelGhostRemoval)
-      ghostElement.addEventListener('dragleave', this.planRemoveToRemoveGhost)
-      ghostElement.addEventListener('drop', this.onDrop)
-
-      this.ghostElement = ghostElement
-    },
-    onDragEnter(event: DragEvent) {
-      const target = closest(event.target as HTMLElement, this.draggableClass)
-      const parent = target.parentElement
-      const items = this.itemList()
-
-      if (!target || !items.includes(target)) {
-        try {
-          parent.removeChild(this.ghostElement)
-        } catch (e) {
-          // ignore
-        }
-        return
-      }
-      event.preventDefault()
-      this.cancelGhostRemoval()
-
-      const siblings = Array.from(parent.childNodes)
-      const indexInItems = items.indexOf(target)
-
-      const indexInSiblings = siblings.indexOf(target)
-
-      const draggedElement = items[this.draggedElementIndex] as HTMLElement
-      draggedElement.style.opacity = '0.5'
-      if (indexInItems === this.draggedElementIndex) {
-        try {
-          target.style.opacity = '1'
-          parent.removeChild(this.ghostElement)
-        } catch (e) {
-          // ignore
-        }
-      } else if (indexInItems < this.draggedElementIndex) {
-        // add before element
-        parent.insertBefore(this.ghostElement, target)
-      } else {
-        // add after element
-        if (indexInSiblings === siblings.length - 1) {
-          parent.append(this.ghostElement)
-        } else {
-          parent.insertBefore(this.ghostElement, siblings[indexInSiblings + 1])
-        }
-      }
-
-      if (siblings.indexOf(target) !== this.draggedElementIndex) {
-        target.addEventListener('drop', this.onDrop)
-      }
-    },
-    onDragEnd() {
-      this.teardown()
-    },
-    onDrop(event: DragEvent) {
-      event.preventDefault()
-      const draggableItems = this.itemList()
-      // visually do the thing
-      const parent = this.ghostElement.parentNode
-      draggableItems[this.draggedElementIndex].style.opacity = '1'
-
-      this.ghostElement.parentNode.replaceChild(draggableItems[this.draggedElementIndex], this.ghostElement)
-
-      const newOrder = Array.from(parent.childNodes)
-        .map((node) => {
-          const index = draggableItems.indexOf(node)
-          return this.list[index]
-        })
-        // as the parent might contain also none draggable items.
-        .filter((item) => typeof item !== 'undefined')
-
-      event.preventDefault()
-
-      this.teardown()
-
-      this.$emit('reorder', newOrder)
-    },
-    planRemoveToRemoveGhost() {
-      this.timerToRemoveGhost = setTimeout(() => {
-        try {
-          this.ghostElement.parentNode.removeChild(this.ghostElement)
-        } catch (e) {
-          // ignore
-        }
-      }, 250)
-    },
-    cancelGhostRemoval() {
-      clearTimeout(this.timerToRemoveGhost)
     }
-  },
-  watch: {
-    list() {
-      this.teardown()
-      if (this.enabled && this.list.length) {
-        this.setupDrag()
+
+    onMounted(() => {
+      if (props.enabled && props.list.length) {
+        setTimeout(() => {
+          setupDrag()
+        }, 500)
       }
-    },
-    enabled() {
-      this.teardown()
-      if (this.enabled && this.list.length) {
-        this.setupDrag()
+    })
+
+    onUnmounted(() => {
+      removeMouseDown()
+    })
+
+    function restart() {
+      teardown()
+      if (props.enabled && props.list.length) {
+        setupDrag()
       }
     }
-  },
-  render() {
-    if (this.$slots.default.length > 1) {
-      throw new Error(
-        `KitDraggable: There should be only one item inside the KitDraggable component, currently there are ${this.$slots.default.length}.`
-      )
-    }
-    return this.$slots.default[0]
+
+    watch(() => props.list, restart)
+    watch(() => props.enabled, restart)
+
+    return () => slots.default()
   }
 })

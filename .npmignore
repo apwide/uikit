@@ -11,3 +11,5 @@ rollup.config.js
 build/
 cypress/
 *.json
+postcss.config.js
+modules
