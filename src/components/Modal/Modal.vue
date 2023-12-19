@@ -1,168 +1,151 @@
 <template>
-  <transition appear name="kit-modal-transition">
-    <Blanket ref="blanket" :z-index="zIndex" class="kit-dialog" @click.native="clicked">
-      <PositionerAbsolute :width="currentWidth">
-        <form
-          ref="form"
-          :no-padding="noPadding"
-          class="kit-modal kit-modal-container"
-          novalidate
-          @submit.prevent="onSubmit">
-          <slot>
-            <header v-if="!noHeader">
-              <slot name="header">
-                <Header :appearance="appearance" :heading="heading" />
-              </slot>
-            </header>
-            <div class="kit-content">
-              <slot name="content" />
-            </div>
-            <footer v-if="!noFooter">
-              <slot name="footer">
-                <slot name="progress" />
-                <Footer
-                  :actions="actions"
-                  :appearance="appearance"
-                  :auto-focus="autoFocus"
-                  :pending="pending"
-                  :should-allow-submit="shouldAllowSubmit"
-                  @cancel="onCancel" />
-              </slot>
-            </footer>
-          </slot>
-        </form>
-      </PositionerAbsolute>
-    </Blanket>
-  </transition>
+  <div ref="me" class="kit-big-modal">
+    <Transition appear name="kit-modal-transition">
+      <KitBlanket ref="blanket" :z-index="zIndex" class="kit-dialog">
+        <KitPositionerAbsolute :width="currentWidth">
+          <form
+            ref="form"
+            :no-padding="noPadding"
+            class="kit-modal kit-modal-container"
+            novalidate
+            @submit.prevent="onSubmit">
+            <slot>
+              <header v-if="!noHeader">
+                <slot name="header">
+                  <KitHeader :appearance="appearance" :heading="heading" />
+                </slot>
+              </header>
+              <div class="kit-content">
+                <slot name="content" />
+              </div>
+              <footer v-if="!noFooter">
+                <slot name="footer">
+                  <slot name="progress" />
+                  <KitFooter
+                    :actions="actions"
+                    :appearance="appearance"
+                    :auto-focus="autoFocus"
+                    :pending="pending"
+                    :should-allow-submit="shouldAllowSubmit"
+                    @cancel="onCancel" />
+                </slot>
+              </footer>
+            </slot>
+          </form>
+        </KitPositionerAbsolute>
+      </KitBlanket>
+    </Transition>
+  </div>
 </template>
 
-<script>
-import Blanket from './Blanket'
-import PositionerAbsolute from './PositionerAbsolute'
-import Header from './Header'
-import Footer from './Footer'
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue'
+import KitPositionerAbsolute from '@components/Modal/PositionerAbsolute.vue'
+import KitFooter from '@components/Modal/Footer.vue'
+import KitHeader from '@components/Modal/Header.vue'
+import KitBlanket from '@components/Modal/Blanket.vue'
+export type Props = {
+  heading?: string
+  appearance?: string
+  autoFocus?: boolean
+  actions?: string[]
+  pending?: boolean
+  shouldAllowSubmit?: boolean
+  width?: string
+  zIndex?: number
+  closeOnEsc?: boolean
+  closeOnOutsideClick?: boolean
+  noFooter?: boolean
+  noHeader?: boolean
+  noPadding?: boolean
+}
 
 const ESC = 27
-export default {
-  name: 'KitModal',
-  components: {
-    Blanket,
-    PositionerAbsolute,
-    Header,
-    Footer
-  },
-  props: {
-    heading: {
-      type: String,
-      default: ''
-    },
-    appearance: {
-      type: String,
-      default: undefined
-    },
-    autoFocus: {
-      type: Boolean,
-      default: false
-    },
-    actions: {
-      type: Array,
-      default: () => ['Continue', 'Cancel']
-    },
-    pending: {
-      type: Boolean,
-      default: false
-    },
-    shouldAllowSubmit: {
-      type: Boolean,
-      default: true
-    },
-    width: {
-      type: String,
-      default: '600px'
-    },
-    zIndex: {
-      type: Number,
-      default: 999
-    },
-    closeOnEsc: {
-      type: Boolean,
-      default: true
-    },
-    closeOnOutsideClick: {
-      type: Boolean,
-      default: false
-    },
-    noFooter: {
-      type: Boolean,
-      default: false
-    },
-    noHeader: {
-      type: Boolean,
-      default: false
-    },
-    noPadding: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      mounted: false
-    }
-  },
-  computed: {
-    currentWidth() {
-      return String(this.width)
-    }
-  },
-  mounted() {
-    document.body.appendChild(this.$el)
-  },
-  beforeMount() {
-    document.body.classList.add('kit-modal-is-open')
-    document.addEventListener('keyup', this.onEsc)
-  },
-  destroyed() {
-    // make sure that there is no modal on the current page before removing the scroll lock class
-    const modals = document.querySelectorAll('.kit-modal')
-    if (!modals.length) {
-      document.body.classList.remove('kit-modal-is-open')
-    }
-  },
-  beforeDestroy() {
-    document.removeEventListener('keyup', this.onEsc)
-    try {
-      document.body.removeChild(this.$el)
-    } catch (error) {
-      if (error.name === 'NotFoundError') {
-        // already removed https://developer.mozilla.org/fr/docs/Web/API/Node/removeChild
-        return
-      }
-      throw error
-    }
-  },
-  methods: {
-    onEsc(e) {
-      if (e.keyCode === ESC && this.closeOnEsc && !this.pending) {
-        this.$emit('cancel')
-      }
-    },
-    onCancel() {
-      this.$emit('cancel')
-    },
-    onSubmit() {
-      this.$emit('submit')
-    },
-    clicked(event) {
-      if (this.closeOnOutsideClick && this.isClickedOutside(event)) {
-        this.onCancel()
-      }
-    },
-    isClickedOutside(event) {
-      return event.target === this.$refs.blanket.$el
-    }
+
+const props = withDefaults(defineProps<Props>(), {
+  heading: '',
+  autoFocus: false,
+  actions: () => ['Continue', 'Cancel'],
+  pending: false,
+  shouldAllowSubmit: true,
+  width: '600px',
+  zIndex: 999,
+  closeOnEsc: true,
+  closeOnOutsideClick: false,
+  noFooter: false,
+  noHeader: false,
+  noPadding: false
+})
+
+const emit = defineEmits<{
+  (event: 'cancel')
+  (event: 'submit')
+}>()
+
+const me = ref()
+const blanket = ref()
+const currentWidth = computed(() => props.width)
+
+function onEsc(e) {
+  if (e.keyCode === ESC && props.closeOnEsc && !props.pending) {
+    emit('cancel')
   }
 }
+
+function onCancel() {
+  emit('cancel')
+}
+
+function onSubmit() {
+  emit('submit')
+}
+
+let lastMousedownWasOnBlanket = false
+
+function onMousedown(event: PointerEvent) {
+  lastMousedownWasOnBlanket = event.target === blanket.value?.$el
+}
+
+function onMouseup() {
+  if (lastMousedownWasOnBlanket) {
+    emit('cancel')
+  }
+}
+
+onMounted(() => {
+  document.body.appendChild(me.value)
+  document.body.classList.add('kit-modal-is-open')
+  document.addEventListener('keyup', onEsc)
+  /*
+   We cannot rely on click as Firefox puts the mousedown element as target
+   and Chrome puts the mouseup element as target
+   */
+  blanket.value.$el.addEventListener('mousedown', onMousedown)
+  blanket.value.$el.addEventListener('mouseup', onMouseup)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keyup', onEsc)
+  try {
+    document.body.removeChild(me.value)
+    blanket.value.$el.removeEventListener('mousedown', onMousedown)
+    blanket.value.$el.removeEventListener('mouseup', onMouseup)
+  } catch (error) {
+    if (error.name === 'NotFoundError') {
+      // already removed https://developer.mozilla.org/fr/docs/Web/API/Node/removeChild
+      return
+    }
+    throw error
+  }
+})
+
+onUnmounted(() => {
+  // make sure that there is no modal on the current page before removing the scroll lock class
+  const modals = document.querySelectorAll('.kit-modal')
+  if (!modals.length) {
+    document.body.classList.remove('kit-modal-is-open')
+  }
+})
 </script>
 
 <style scoped>

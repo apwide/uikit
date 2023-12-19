@@ -1,12 +1,24 @@
 <template>
-  <Modal class="kit-modal" no-footer v-bind="$attrs" :width="width" v-on="$listeners" no-padding>
+  <KitModal
+    class="kit-modal"
+    no-footer
+    :appearance="appearance"
+    :auto-focus="autoFocus"
+    :actions="actions"
+    :pending="pending"
+    :z-index="zIndex"
+    :close-on-esc="closeOnEsc"
+    :close-on-outside-click="closeOnOutsideClick"
+    :width="modalWidth"
+    v-on="$listeners"
+    no-padding>
     <template #header>
       <div class="kit-modal__header-pre-title">
         <slot name="breadcrumb" class="" />
         <KitButtonGroup spacing="normal">
           <slot name="actions" />
-          <KitIconButton class="kit-modal__close" title="close" @click="$emit('cancel')">
-            <CrossIcon />
+          <KitIconButton class="kit-modal__close" title="close" @click="emit('cancel')">
+            <KitIcon type="times" style="font-size: 1.2rem" />
           </KitIconButton>
         </KitButtonGroup>
       </div>
@@ -19,54 +31,55 @@
     <div slot="content" class="kit-modal__content">
       <slot />
     </div>
-  </Modal>
+  </KitModal>
 </template>
-<script>
-import Vue from 'vue'
-import CrossIcon from '../Icon/CrossIcon'
-import KitIconButton from '../Button/KitIconButton'
-import KitButtonGroup from '../Button/KitButtonGroup'
-import Header from './Header'
-import Modal from './Modal'
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import KitButtonGroup from '../Button/KitButtonGroup.vue'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import KitModal from './Modal.vue'
+import Header from './Header.vue'
 
-export default Vue.extend({
-  name: 'KitModal',
-  components: {
-    KitButtonGroup,
-    KitIconButton,
-    Header,
-    CrossIcon,
-    Modal
-  },
-  props: {
-    heading: {
-      type: String,
-      default: '',
-      required: false
-    }
-  },
-  data() {
-    return {
-      width: ''
-    }
-  },
-  mounted() {
-    this.resize()
-    window.addEventListener('resize', this.resize)
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.resize)
-  },
-  methods: {
-    resize() {
-      const { width } = document.body.getBoundingClientRect()
-      if (width > 1200) {
-        this.width = '80%'
-      } else {
-        this.width = '900px'
-      }
-    }
+type Props = {
+  heading?: string
+  // copied from Modal as defineProps does not allow to use imported types
+  appearance?: string
+  autoFocus?: boolean
+  actions?: string[]
+  pending?: boolean
+  zIndex?: number
+  closeOnEsc?: boolean
+  closeOnOutsideClick?: boolean
+  noFooter?: boolean
+  noHeader?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  heading: ''
+})
+
+const emit = defineEmits<{
+  (event: 'close')
+}>()
+
+const modalWidth = ref('')
+
+function resize() {
+  const { width } = document.body.getBoundingClientRect()
+  if (width > 1200) {
+    modalWidth.value = '80%'
+  } else {
+    modalWidth.value = '900px'
   }
+}
+
+onMounted(() => {
+  resize()
+  window.addEventListener('resize', resize)
+})
+onBeforeUnmount(() => {
+  window.addEventListener('resize', resize)
 })
 </script>
 <style scoped>
