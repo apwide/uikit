@@ -10,6 +10,7 @@
     :close-on-esc="closeOnEsc"
     :close-on-outside-click="closeOnOutsideClick"
     :width="modalWidth"
+    v-bind="$attrs"
     v-on="$listeners"
     no-padding>
     <template #header>

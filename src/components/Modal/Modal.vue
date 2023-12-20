@@ -103,7 +103,9 @@ function onSubmit() {
 let lastMousedownWasOnBlanket = false
 
 function onMousedown(event: PointerEvent) {
-  lastMousedownWasOnBlanket = event.target === blanket.value?.$el
+  if (props.closeOnOutsideClick) {
+    lastMousedownWasOnBlanket = event.target === blanket.value?.$el
+  }
 }
 
 function onMouseup() {
