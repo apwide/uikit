@@ -17,7 +17,7 @@
         <a :href="`mailto:${value}`">{{ value }}</a>
       </template>
       <template #action="{ row, cellElement }">
-        <Dropdown
+        <KitDropdown
           label="Actions"
           :boundaries-element="$refs.table && $refs.table.$el"
           @open="dropdownOpen(cellElement)"
@@ -25,7 +25,7 @@
           <DropdownItem>Move {{ row.id }}</DropdownItem>
           <DropdownItem>Edit {{ row.id }}</DropdownItem>
           <DropdownItem>Delete {{ row.id }}</DropdownItem>
-        </Dropdown>
+        </KitDropdown>
       </template>
     </Table>
   </div>
@@ -34,12 +34,12 @@
 <script>
 import faker from 'faker'
 import Table from '@/components/Table/KitTable'
-import Dropdown from '@/components/Dropdown/Dropdown'
+import KitDropdown from '@/components/Dropdown/KitDropdown'
 import DropdownItem from '@/components/Dropdown/DropdownItem'
 
 export default {
   name: 'TableStory',
-  components: { Table, Dropdown, DropdownItem },
+  components: { Table, KitDropdown, DropdownItem },
   data() {
     return {
       columns: [

@@ -1,5 +1,6 @@
 import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import KitDraggable from '@components/common/KitDraggable'
+import KitDropdown from '@components/Dropdown/KitDropdown.vue'
 import Button from './components/Button/Button.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
@@ -13,7 +14,6 @@ import DateRangePicker from './components/Calendar/DateRangePicker.vue'
 import TimePicker from './components/Calendar/TimePicker.vue'
 import Select from './components/Select/Select.vue'
 import Lozenge from './components/Lozenge/Lozenge.vue'
-import Dropdown from './components/Dropdown/Dropdown.vue'
 import DropdownGroup from './components/Dropdown/DropdownGroup.vue'
 import DropdownItem from './components/Dropdown/DropdownItem.vue'
 import DropdownCheckboxItem from './components/Dropdown/DropdownCheckboxItem.vue'
@@ -58,7 +58,7 @@ export {
   KitRadioGroup,
   KitCollapsible,
   Button as KitButton,
-  Dropdown as KitDropdown,
+  KitDropdown,
   DropdownItem as KitDropdownItem,
   DropdownGroup as KitDropdownGroup,
   DropdownCheckboxItem as KitDropdownCheckboxItem,

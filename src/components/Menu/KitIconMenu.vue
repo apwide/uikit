@@ -1,8 +1,10 @@
 <template>
-  <Dropdown
+  <KitDropdown
     v-if="$scopedSlots.default && $scopedSlots.icon"
     class="kit-icon-menu"
     placement="bottom-end"
+    :close-on-click="closeOnClick"
+    :close-on-outside-click="closeOnClickOutside"
     :is-disabled="isDisabled"
     @close="isLocalOpen = false"
     @open="isLocalOpen = true">
@@ -19,43 +21,34 @@
       </KitIconButton>
     </template>
     <slot :isOpen="isLocalOpen" />
-  </Dropdown>
+  </KitDropdown>
 </template>
 
-<script>
-import Vue from 'vue'
-import Dropdown from '../Dropdown/Dropdown.vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
+import KitDropdown from '../Dropdown/KitDropdown.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 
-export default Vue.extend({
-  components: { KitIconButton, Dropdown },
-  props: {
-    title: {
-      type: String,
-      default: 'Select your action'
-    },
-    spacing: {
-      type: String
-    },
-    appearance: {
-      type: String,
-      default: 'subtle'
-    },
-    iconSize: {
-      type: String,
-      default: '1em'
-    },
-    isDisabled: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      isLocalOpen: false
-    }
-  }
+type Props = {
+  title?: string
+  spacing?: string
+  appearance?: string
+  iconSize?: string
+  isDisabled?: boolean
+  closeOnClick?: boolean
+  closeOnClickOutside?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  title: 'Select your action',
+  appearance: 'subtle',
+  iconSize: '1em',
+  isDisabled: false,
+  closeOnClick: true,
+  closeOnClickOutside: true
 })
+
+const isLocalOpen = ref(false)
 </script>
 <style scoped>
 .kit-icon-menu {

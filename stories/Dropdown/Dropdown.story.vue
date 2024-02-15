@@ -2,23 +2,23 @@
   <div>
     <h3>Simple dropdown</h3>
     <p>
-      <Dropdown data-cy="simple-dropdown" label="Drop down menu">
+      <KitDropdown data-cy="simple-dropdown" label="Drop down menu">
         <DropdownItem data-cy="simple-dropdown-item"> First item </DropdownItem>
         <DropdownItem>Second item</DropdownItem>
         <DropdownItem disabled> Lorem ipsum dolor sit amet consectetur adipisicing elit </DropdownItem>
-      </Dropdown>
+      </KitDropdown>
     </p>
     <h3>Full width mode</h3>
     <p style="width: 500px">
-      <Dropdown data-cy="full-width-dropdown" label="Drop down menu" full-width-trigger>
+      <KitDropdown data-cy="full-width-dropdown" label="Drop down menu" full-width-trigger>
         <DropdownItem data-cy="full-wdith-dropdown-item"> First item </DropdownItem>
         <DropdownItem>Second item</DropdownItem>
         <DropdownItem>Lorem ipsum dolor sit amet consectetur adipisicing elit</DropdownItem>
-      </Dropdown>
+      </KitDropdown>
     </p>
     <h3>Grouped items</h3>
     <p>
-      <Dropdown label="Drop down menu">
+      <KitDropdown label="Drop down menu">
         <DropdownGroup label="Europe">
           <DropdownItem>Poland</DropdownItem>
           <DropdownItem>Germany</DropdownItem>
@@ -41,33 +41,35 @@
           <DropdownItem>Japan</DropdownItem>
           <DropdownItem>India</DropdownItem>
         </DropdownGroup>
-      </Dropdown>
+      </KitDropdown>
     </p>
     <h3>Custom trigger</h3>
     <p>
-      <Dropdown label="Drop down menu">
-        <div slot="trigger" slot-scope="{ toggle, isOpen }" class="custom-trigger">
-          <span v-if="isOpen" @click="toggle">💥</span>
-          <span v-else @click="toggle">🎁</span>
-        </div>
+      <KitDropdown label="Drop down menu">
+        <template #trigger="{ toggle, isOpen }">
+          <div class="custom-trigger">
+            <span v-if="isOpen" @click="toggle">💥</span>
+            <span v-else @click="toggle">🎁</span>
+          </div>
+        </template>
         <DropdownItem>First item</DropdownItem>
         <DropdownItem>Second item</DropdownItem>
         <DropdownItem>Lorem ipsum dolor sit amet consectetur adipisicing elit</DropdownItem>
-      </Dropdown>
+      </KitDropdown>
     </p>
     <h3>Dropdown with checkboxes (selected: {{ selected }})</h3>
     <p>
-      <Dropdown label="With checkboxes" :close-on-click="false">
+      <KitDropdown label="With checkboxes" :close-on-click="false">
         <DropdownCheckboxItem v-model="selected" value="first"> First item </DropdownCheckboxItem>
         <DropdownCheckboxItem v-model="selected" value="second"> Second item </DropdownCheckboxItem>
         <DropdownCheckboxItem v-model="selected" value="third">
           Lorem ipsum dolor sit amet consectetur adipisicing elit
         </DropdownCheckboxItem>
-      </Dropdown>
+      </KitDropdown>
     </p>
     <h3>Mixed (value: {{ mixedValue }})</h3>
     <p>
-      <Dropdown label="Mixed values" :close-on-click="false">
+      <KitDropdown label="Mixed values" :close-on-click="false">
         <DropdownGroup label="Europe">
           <DropdownItem>Poland</DropdownItem>
           <DropdownItem>Germany</DropdownItem>
@@ -79,11 +81,11 @@
           <DropdownCheckboxItem v-model="mixedValue"> Some checkbox </DropdownCheckboxItem>
           <DropdownItem>United States of America</DropdownItem>
         </DropdownGroup>
-      </Dropdown>
+      </KitDropdown>
     </p>
     <h3>Scrolled items</h3>
     <p>
-      <Dropdown label="Drop down menu">
+      <KitDropdown label="Drop down menu">
         <DropdownGroup label="Europe">
           <DropdownItem>Poland</DropdownItem>
           <DropdownItem>Germany</DropdownItem>
@@ -132,38 +134,23 @@
           <DropdownItem>Japan</DropdownItem>
           <DropdownItem>India</DropdownItem>
         </DropdownGroup>
-      </Dropdown>
+      </KitDropdown>
     </p>
   </div>
 </template>
 
-<script>
-import Dropdown from '@/components/Dropdown/Dropdown'
-import DropdownItem from '@/components/Dropdown/DropdownItem'
-import DropdownGroup from '@/components/Dropdown/DropdownGroup'
-import DropdownCheckboxItem from '@/components/Dropdown/DropdownCheckboxItem'
-import KitDropdownSeparator from '@/components/Dropdown/KitDropdownSeparator'
+<script setup lang="ts">
+import { ref } from 'vue'
+import KitDropdown from '@/components/Dropdown/KitDropdown.vue'
+import DropdownItem from '@/components/Dropdown/DropdownItem.vue'
+import DropdownGroup from '@/components/Dropdown/DropdownGroup.vue'
+import DropdownCheckboxItem from '@/components/Dropdown/DropdownCheckboxItem.vue'
+import KitDropdownSeparator from '@/components/Dropdown/KitDropdownSeparator.vue'
 import KitIconButton from '@/components/Button/KitIconButton.vue'
 import KitIcon from '@/components/Icon/KitIcon.vue'
 
-export default {
-  name: 'DropdownStory',
-  components: {
-    Dropdown,
-    DropdownItem,
-    DropdownGroup,
-    DropdownCheckboxItem,
-    KitDropdownSeparator,
-    KitIconButton,
-    KitIcon
-  },
-  data() {
-    return {
-      selected: ['second'],
-      mixedValue: false
-    }
-  }
-}
+const selected = ref(['second'])
+const mixedValue = ref(false)
 </script>
 
 <style scoped>
