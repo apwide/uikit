@@ -1,20 +1,26 @@
 <template>
   <div class="wrapper">
     <FieldGroup data-cy="field-group" label="Custom Select">
-      <Select
+      <KitSelect
         v-model="value"
         data-cy="input-component"
         append-to-body
         placeholder="Quick add..."
         :select="false"
         class="select-ww"
-        :options="options">
-        <SearchIcon slot="icon" size="small" />
-        <Button slot="custom-action" appearance="subtle" class="create">
-          <KitIcon type="plus" slot="icon-before" size="xsmall" />
-          Create Issue
-        </Button>
-      </Select>
+        :options="cities">
+        <template #icon>
+          <SearchIcon size="small" />
+        </template>
+        <template #custom-action>
+          <Button appearance="subtle" class="create">
+            <template #icon-before>
+              <KitIcon type="plus" size="xsmall" />
+            </template>
+            Create Issue
+          </Button>
+        </template>
+      </KitSelect>
     </FieldGroup>
     <table>
       <thead>
@@ -31,30 +37,16 @@
   </div>
 </template>
 
-<script>
-import FieldGroup from '../../src/components/Form/FieldGroup'
+<script setup lang="ts">
+import { ref } from 'vue'
+import KitSelect from '@components/Select/KitSelect.vue'
+import FieldGroup from '../../src/components/Form/FieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
-import KitIcon from '../../src/components/Icon/KitIcon'
-import Select from '@/components/Select/Select'
-import Button from '@/components/Button/Button'
+import KitIcon from '../../src/components/Icon/KitIcon.vue'
+import Button from '@/components/Button/Button.vue'
 import SearchIcon from '@/components/Icon/SearchIcon'
 
-export default {
-  components: {
-    KitIcon,
-    FieldGroup,
-    Select,
-    SearchIcon,
-    Button
-  },
-  data() {
-    return {
-      options: cities,
-      value: undefined,
-      isLoading: false
-    }
-  }
-}
+const value = ref()
 </script>
 <style scoped>
 .wrapper {

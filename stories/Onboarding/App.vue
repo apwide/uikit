@@ -20,7 +20,7 @@
     </FieldGroup>
     <FieldGroup label="Type" required>
       <Spotlight :step="4">
-        <Select v-model="type" :options="options" :selected="selected" />
+        <KitSelect v-model="type" :options="options" :selected="selected" />
         <div slot="message">Curabitur fermentum quam turpis, eget condimentum quam consequat ac.</div>
       </Spotlight>
     </FieldGroup>
@@ -28,44 +28,25 @@
   </div>
 </template>
 
-<script>
-import SpotlightOverlay from '@/components/Spotlight/SpotlightOverlay'
-import Spotlight from '@/components/Spotlight/Spotlight'
-import Button from '@/components/Button/Button'
-import FieldGroup from '@/components/Form/FieldGroup'
-import Input from '@/components/Form/Input'
-import Select from '@/components/Select/Select'
+<script setup lang="ts">
+import { inject, ref } from 'vue'
+import KitSelect from '@components/Select/KitSelect.vue'
+import SpotlightOverlay from '@/components/Spotlight/SpotlightOverlay.vue'
+import Spotlight from '@/components/Spotlight/Spotlight.vue'
+import Button from '@/components/Button/Button.vue'
+import FieldGroup from '@/components/Form/FieldGroup.vue'
+import Input from '@/components/Form/Input.vue'
 
-export default {
-  name: 'App',
-  components: {
-    Spotlight,
-    SpotlightOverlay,
-    Button,
-    FieldGroup,
-    Input,
-    Select
-  },
-  inject: {
-    $spotlight: {
-      from: '$spotlight',
-      default: undefined
-    }
-  },
-  data() {
-    return {
-      title: '',
-      folder: '',
-      selected: undefined,
-      type: undefined,
-      options: ['foo', 'bar', 'baz']
-    }
-  },
-  methods: {
-    onClick() {
-      this.$spotlight.showSpotlight(1)
-    }
-  }
+const title = ref('')
+const folder = ref('')
+const selected = ref()
+const type = ref()
+const options = ref(['foo', 'bar', 'baz'])
+
+const $spotlight = inject('$spotlight', () => undefined)
+
+function onClick() {
+  ;($spotlight as any).showSpotlight(1)
 }
 </script>
 

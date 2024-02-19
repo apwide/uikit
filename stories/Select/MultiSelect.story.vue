@@ -1,43 +1,21 @@
 <template>
   <div class="wrapper">
     <FieldGroup class="multiselect" label="MultiSelect">
-      <Select v-model="basic" multi :options="options" placeholder="Select city..." data-cy="multiselect-simple" />
+      <KitSelect v-model="basic" multi :options="cities" placeholder="Select city..." data-cy="multiselect-simple" />
     </FieldGroup>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
+import { ref } from 'vue'
 import { many } from '../api-mocks/helpers'
-import FieldGroup from '../../src/components/Form/FieldGroup'
-import Select from '@/components/Select/Select'
+import FieldGroup from '../../src/components/Form/FieldGroup.vue'
+import KitSelect from '@/components/Select/KitSelect.vue'
 
 const cities = many(faker.address.city)({}, 10)
-const [city] = cities
 
-export default {
-  components: {
-    FieldGroup,
-    Select
-  },
-  data() {
-    return {
-      options: cities,
-      basic: []
-    }
-  },
-  methods: {
-    normalizer(value) {
-      const disabled = value === city
-      return {
-        id: value,
-        label: value,
-        value,
-        disabled
-      }
-    }
-  }
-}
+const basic = ref([])
 </script>
 <style scoped>
 .wrapper {

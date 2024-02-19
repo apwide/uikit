@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Select from '../Select/Select'
+import Select from '../Select/KitSelect.vue'
 import InlineEdit from '../Form/InlineEdit'
 import StringLineRenderer from './StringLineRenderer'
 

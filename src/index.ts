@@ -1,6 +1,7 @@
 import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import KitDraggable from '@components/common/KitDraggable'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
+import KitSelect from '@components/Select/KitSelect.vue'
 import Button from './components/Button/Button.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
@@ -12,7 +13,6 @@ import Modal from './components/Modal/Modal.vue'
 import DatePicker from './components/Calendar/DatePicker.vue'
 import DateRangePicker from './components/Calendar/DateRangePicker.vue'
 import TimePicker from './components/Calendar/TimePicker.vue'
-import Select from './components/Select/Select.vue'
 import Lozenge from './components/Lozenge/Lozenge.vue'
 import DropdownGroup from './components/Dropdown/DropdownGroup.vue'
 import DropdownItem from './components/Dropdown/DropdownItem.vue'
@@ -72,7 +72,7 @@ export {
   Toggle as KitToggle,
   DatePicker as KitDatePicker,
   TimePicker as KitTimePicker,
-  Select as KitSelect,
+  KitSelect,
   SectionMessage as KitSectionMessage,
   Avatar as KitAvatar,
   Badge as KitBadge,

@@ -68,7 +68,7 @@ const emit = defineEmits<{
 }>()
 const open = ref(false)
 const lastOpen = ref(0)
-const DEFAULT_OPEN_TRIGGER_THRESHOLD = 500
+const DEFAULT_OPEN_TRIGGER_THRESHOLD = 200
 const menu = ref()
 const dropdownContainer = ref<HTMLDivElement>()
 

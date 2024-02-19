@@ -5,26 +5,30 @@
     :confirm="confirm"
     :placement="placement"
     @save-requested="onSaveRequested">
-    <Select
-      slot="editor"
-      slot-scope="props"
-      :value="props.value"
-      :options="options"
-      :normalizer="normalizer"
-      :open-on-focus="true"
-      :is-invalid="props.isInvalid"
-      :is-focused="props.isFocused"
-      :is-loading="props.isLoading"
-      :placeholder="placeholder"
-      :append-to-body="appendToBody"
-      @input="props.input"
-      @blur="props.blur"
-      @confirm="props.confirm"
-      @focus="props.focus"
-      @cancel="props.cancel">
-      <slot slot="selected" slot-scope="{ selected }" name="selected" :selected="selected" />
-      <slot slot="option" slot-scope="{ option }" name="option" :option="option" />
-    </Select>
+    <template #editor="props">
+      <KitSelect
+        :value="props.value"
+        :options="options"
+        :normalizer="normalizer"
+        :open-on-focus="true"
+        :is-invalid="props.isInvalid"
+        :is-focused="props.isFocused"
+        :is-loading="props.isLoading"
+        :placeholder="placeholder"
+        :append-to-body="appendToBody"
+        @input="props.input"
+        @blur="props.blur"
+        @confirm="props.confirm"
+        @focus="props.focus"
+        @cancel="props.cancel">
+        <template #selected="{ selected }">
+          <slot name="selected" :selected="selected" />
+        </template>
+        <template #option="{ option }">
+          <slot name="option" :option="option" />
+        </template>
+      </KitSelect>
+    </template>
     <slot />
   </InlineEdit>
   <div v-else class="slot">
@@ -32,62 +36,46 @@
   </div>
 </template>
 
-<script>
-import Select from '../Select/Select'
-import InlineEdit from '../Form/InlineEdit'
+<script setup lang="ts" generic="T">
+import { Value } from '@components/Select/types'
+import { computed } from 'vue'
+import KitSelect from '../Select/KitSelect.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
 
-export default {
-  name: 'KitCustomSingleSelectEditableRenderer',
-  components: { Select, InlineEdit },
-  props: {
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    },
-    value: {
-      type: [String, Object],
-      default: ''
-    },
-    allowedValues: {
-      type: Array,
-      default: () => []
-    },
-    placeholder: {
-      type: String,
-      default: ''
-    },
-    appendToBody: {
-      type: Boolean,
-      default: false
-    },
-    normalizer: {
-      type: Function,
-      default: (value) => ({
-        id: value,
-        label: value,
-        value,
-        disabled: false
-      })
-    },
-    confirm: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data() {
-    return {
-      options: this.allowedValues
-    }
-  },
-  methods: {
-    onSaveRequested(option, callback) {
-      const value = option || ''
-      this.$emit('save-requested', value, callback)
-    }
-  }
+type Props = {
+  editable?: boolean
+  placement?: string
+  value?: string | T
+  allowedValues?: string[]
+  placeholder?: string
+  appendToBody?: boolean
+  normalizer?: (value: T) => Value<T>
+  confirm?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right',
+  value: '',
+  allowedValues: () => [],
+  placeholder: '',
+  appendToBody: false,
+  normalizer: (value) => ({
+    id: value,
+    label: value,
+    value,
+    disabled: false
+  }),
+  confirm: true
+})
+
+const emit = defineEmits<{
+  (event: 'save-requested', value: Value<string>, callback: () => void)
+}>()
+
+const options = computed(() => props.allowedValues)
+function onSaveRequested(option, callback) {
+  const value = option || ''
+  emit('save-requested', value, callback)
 }
 </script>

@@ -44,9 +44,9 @@
 
 <script>
 import pDebounce from 'p-debounce'
-import Select from '../Select/Select'
-import InlineEdit from '../Form/InlineEdit'
-import UserRenderer from './UserRenderer'
+import Select from '../Select/KitSelect.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import UserRenderer from './UserRenderer.vue'
 
 export default {
   name: 'KitUserEditableRenderer',

@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
     <FieldGroup class="createable" label="Createable">
-      <Select v-model="value" data-cy="simple" createable multi placeholder="Type something and press enter..." />
+      <KitSelect v-model="value" data-cy="simple" createable multi placeholder="Type something and press enter..." />
     </FieldGroup>
     <FieldGroup class="createable" label="Limited number of tags">
-      <Select v-model="value" data-cy="limited" :max="3" createable multi placeholder="Maximum 3 elements.." />
+      <KitSelect v-model="value" data-cy="limited" :max="3" createable multi placeholder="Maximum 3 elements.." />
     </FieldGroup>
     <FieldGroup class="createable" label="Minimum number of elements, plus validation">
-      <Select
+      <KitSelect
         v-model="minmax"
         data-cy="validated"
         multi
@@ -15,7 +15,7 @@
         :is-valid-option="validateTimer"
         :min="1"
         :max="3"
-        placeholder="Select city..." />
+        placeholder="KitSelect city..." />
     </FieldGroup>
     <table>
       <thead>
@@ -32,26 +32,16 @@
   </div>
 </template>
 
-<script>
-import FieldGroup from '../../src/components/Form/FieldGroup'
-import Select from '@/components/Select/Select'
+<script setup lang="ts">
+import { ref } from 'vue'
+import KitSelect from '@components/Select/KitSelect.vue'
+import FieldGroup from '../../src/components/Form/FieldGroup.vue'
 
-export default {
-  components: {
-    FieldGroup,
-    Select
-  },
-  data() {
-    return {
-      value: [],
-      minmax: ['10']
-    }
-  },
-  methods: {
-    validateTimer(value) {
-      return /^\d+$/.test(value)
-    }
-  }
+const value = ref([])
+const minmax = ref([10])
+
+function validateTimer(value) {
+  return /^\d+$/.test(value)
 }
 </script>
 <style scoped>

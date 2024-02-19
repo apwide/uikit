@@ -10,49 +10,37 @@
           <Input v-model="type" />
         </FieldGroup>
         <FieldGroup label="Type" required>
-          <Select v-model="type" :options="options" :selected="selected" />
+          <KitSelect v-model="type" :options="options" :selected="selected" />
         </FieldGroup>
       </div>
     </Modal>
   </div>
 </template>
 
-<script>
-import Modal from '@/components/Modal/Modal'
-import Select from '@/components/Select/Select'
-import Input from '@/components/Form/Input'
-import FieldGroup from '@/components/Form/FieldGroup'
-import Button from '@/components/Button/Button'
+<script setup lang="ts">
+import { ref } from 'vue'
+import Modal from '@/components/Modal/Modal.vue'
+import KitSelect from '@/components/Select/KitSelect.vue'
+import Input from '@/components/Form/Input.vue'
+import FieldGroup from '@/components/Form/FieldGroup.vue'
+import Button from '@/components/Button/Button.vue'
 
-export default {
-  name: 'ModalFromStory',
-  components: {
-    Modal,
-    Button,
-    Input,
-    FieldGroup,
-    Select
-  },
-  data() {
-    return {
-      title: '',
-      type: '',
-      selected: undefined,
-      options: ['foo', 'bar', 'baz'],
-      show: false
-    }
-  },
-  methods: {
-    onSubmit() {
-      console.log(JSON.stringify({ title: this.title, type: this.type }))
-      this.onCancel()
-    },
-    showDialog() {
-      this.show = true
-    },
-    onCancel() {
-      this.show = false
-    }
-  }
+const title = ref('')
+const type = ref('')
+const selected = ref()
+const options = ref(['foo', 'bar', 'baz'])
+const show = ref(false)
+
+function onCancel() {
+  show.value = false
+}
+
+function onSubmit() {
+  console.log(JSON.stringify({ title: title.value, type: type.value }))
+  onCancel()
+}
+
+function showDialog() {
+  show.value = true
 }
 </script>

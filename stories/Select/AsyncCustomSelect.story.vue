@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <FieldGroup class="async-select" label="Async Select">
-      <Select
+    <FieldGroup class="async-select" label="Async KitSelect">
+      <KitSelect
         v-model="value"
         :options="options"
         :is-fetching="isFetching"
@@ -9,15 +9,19 @@
         :async="true"
         placeholder="Type to search..."
         @search-change="onGetSuggestions">
-        <div slot="option" slot-scope="{ option }" class="label">
-          <img height="24" :src="option.avatar" alt="" />
-          <span>{{ option.name }}</span>
-        </div>
-        <div slot="selected" slot-scope="{ selected }" class="label">
-          <img class="avatar" height="24" :src="selected.avatar" alt="" />
-          <span>{{ selected.name }}</span>
-        </div>
-      </Select>
+        <template #option="{ option }">
+          <div class="label">
+            <img height="24" :src="option.avatar" alt="" />
+            <span>{{ option.name }}</span>
+          </div>
+        </template>
+        <template #selected="{ selected }">
+          <div class="label">
+            <img class="avatar" height="24" :src="selected.avatar" alt="" />
+            <span>{{ selected.name }}</span>
+          </div>
+        </template>
+      </KitSelect>
     </FieldGroup>
     <table>
       <thead>
@@ -34,11 +38,12 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import pDebounce from 'p-debounce'
+import { ref } from 'vue'
+import KitSelect from '@components/Select/KitSelect.vue'
 import { createPersonsList } from '../api-mocks/people'
-import FieldGroup from '../../src/components/Form/FieldGroup'
-import Select from '@/components/Select/Select'
+import FieldGroup from '../../src/components/Form/FieldGroup.vue'
 
 const list = createPersonsList({}, 50)
 const getUsers = (query) =>
@@ -50,33 +55,22 @@ const getUsers = (query) =>
   })
 const debouncedUsers = pDebounce(getUsers, 100)
 
-export default {
-  components: {
-    FieldGroup,
-    Select
-  },
-  data() {
-    return {
-      options: [],
-      value: undefined,
-      isFetching: false
-    }
-  },
-  methods: {
-    normalizer(value) {
-      return {
-        id: value.key,
-        label: value.name,
-        value
-      }
-    },
-    async onGetSuggestions(query) {
-      this.isFetching = true
-      const results = await debouncedUsers(query)
-      this.isFetching = false
-      this.options = results
-    }
+const value = ref()
+const options = ref()
+const isFetching = ref(false)
+
+function normalizer(value) {
+  return {
+    id: value.key,
+    label: value.name,
+    value
   }
+}
+async function onGetSuggestions(query) {
+  isFetching.value = true
+  const results = await debouncedUsers(query)
+  isFetching.value = false
+  options.value = results
 }
 </script>
 <style scoped>

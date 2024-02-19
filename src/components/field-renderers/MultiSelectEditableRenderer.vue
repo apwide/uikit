@@ -1,14 +1,14 @@
 <template>
   <InlineEdit
-      v-if="editable"
-      :value="value"
-      :confirm="confirm"
-      :placement="placement"
-      :force-is-editing="forceIsEditing"
-      :hide-confirm-buttons="!confirm"
-      @start-editing="$emit('start-editing')"
-      @stop-editing="$emit('stop-editing')"
-      @save-requested="onSaveRequested">
+    v-if="editable"
+    :value="value"
+    :confirm="confirm"
+    :placement="placement"
+    :force-is-editing="forceIsEditing"
+    :hide-confirm-buttons="!confirm"
+    @start-editing="$emit('start-editing')"
+    @stop-editing="$emit('stop-editing')"
+    @save-requested="onSaveRequested">
     <Select
       slot="editor"
       slot-scope="props"
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import Select from '../Select/Select'
+import Select from '../Select/KitSelect.vue'
 import InlineEdit from '../Form/InlineEdit'
 import MultiSelectRenderer from './MultiSelectRenderer'
 

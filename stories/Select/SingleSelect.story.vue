@@ -1,12 +1,7 @@
 <template>
   <div class="wrapper">
     <FieldGroup data-cy="field-group" label="Single Select">
-      <Select
-        v-model="value"
-        data-cy="input-component"
-        append-to-body
-        :options="options"
-        placeholder="Select city..." />
+      <Select v-model="value" data-cy="input-component" append-to-body :options="cities" placeholder="Select city..." />
     </FieldGroup>
     <table>
       <thead>
@@ -23,24 +18,13 @@
   </div>
 </template>
 
-<script>
-import FieldGroup from '../../src/components/Form/FieldGroup'
+<script setup lang="ts">
+import { ref } from 'vue'
+import FieldGroup from '../../src/components/Form/FieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
-import Select from '@/components/Select/Select'
+import Select from '@/components/Select/KitSelect.vue'
 
-export default {
-  components: {
-    FieldGroup,
-    Select
-  },
-  data() {
-    return {
-      options: cities,
-      value: undefined,
-      isLoading: false
-    }
-  }
-}
+const value = ref()
 </script>
 <style scoped>
 .wrapper {

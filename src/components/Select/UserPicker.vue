@@ -26,7 +26,7 @@
 <script>
 import pDebounce from 'p-debounce'
 import UserRenderer from '../field-renderers/UserRenderer'
-import Select from './Select'
+import Select from './KitSelect.vue'
 
 export default {
   name: 'KitUserPicker',

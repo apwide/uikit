@@ -38,7 +38,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import AwesomeIcon from '../../src/components/Icon/KitIcon'
 import KitCopyToClipboard from '../../src/components/CopyToClipboard/CopyToClipboard'
-import KitSelect from '../../src/components/Select/Select'
+import KitSelect from '../../src/components/Select/KitSelect.vue'
 
 export default {
   name: 'FontAwesomeIcons.story',
