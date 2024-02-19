@@ -67,10 +67,18 @@ const emit = defineEmits<{
   (event: 'open')
 }>()
 const open = ref(false)
+const lastOpen = ref(0)
+const DEFAULT_OPEN_TRIGGER_THRESHOLD = 500
 const menu = ref()
 const dropdownContainer = ref<HTMLDivElement>()
 
 const slots = useSlots()
+
+watch(open, (newValue) => {
+  if (newValue) {
+    lastOpen.value = Date.now()
+  }
+})
 
 function onKeyDown(event) {
   if (event.keyCode === 27 && props.closeOnEsc) {
@@ -79,10 +87,19 @@ function onKeyDown(event) {
 }
 
 function onOutsideClick(event: MouseEvent) {
-  if (props.closeOnOutsideClick) {
-    if (!dropdownContainer.value?.contains(event.target as Node)) {
-      open.value = false
-    }
+  /**
+   * When props.closeOnOutsideClick is true, we allow some time after
+   * the opening before checking if the dropdown should be closed.
+   * This avoid some strange cases where the trigger is removed from the
+   * DOM on opening and thus is not contained by dropdownContainer,
+   * triggering a false close of the dropdown
+   */
+  if (
+    props.closeOnOutsideClick &&
+    Date.now() > lastOpen.value + DEFAULT_OPEN_TRIGGER_THRESHOLD &&
+    !dropdownContainer.value?.contains(event.target as Node)
+  ) {
+    open.value = false
   }
 }
 
