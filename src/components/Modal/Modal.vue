@@ -84,6 +84,7 @@ const emit = defineEmits<{
 
 const me = ref()
 const blanket = ref()
+const lastInitTime = ref(0)
 const currentWidth = computed(() => props.width)
 
 function onEsc(e) {
@@ -103,7 +104,7 @@ function onSubmit() {
 let lastMousedownWasOnBlanket = false
 
 function onMousedown(event: PointerEvent) {
-  if (props.closeOnOutsideClick) {
+  if (props.closeOnOutsideClick && Date.now() > lastInitTime.value + 500) {
     lastMousedownWasOnBlanket = event.target === blanket.value?.$el
   }
 }
@@ -118,6 +119,7 @@ onMounted(() => {
   document.body.appendChild(me.value)
   document.body.classList.add('kit-modal-is-open')
   document.addEventListener('keyup', onEsc)
+  lastInitTime.value = Date.now()
   /*
    We cannot rely on click as Firefox puts the mousedown element as target
    and Chrome puts the mouseup element as target
