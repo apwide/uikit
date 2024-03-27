@@ -13,6 +13,12 @@
       :busy="busy"
       @table-bottom-reached="loadMoreData"
       @sorted="onSorted">
+      <template #header-email>
+        <span style="display: flex; align-items: center; gap: 5px">
+          <KitIcon type="envelope" />
+          <span> email </span>
+        </span>
+      </template>
       <template #email="{ value }">
         <a :href="`mailto:${value}`">{{ value }}</a>
       </template>
@@ -31,119 +37,119 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
+import { ref } from 'vue'
+import KitIcon from '@components/Icon/KitIcon.vue'
 import Table from '@/components/Table/KitTable'
 import KitDropdown from '@/components/Dropdown/KitDropdown'
 import DropdownItem from '@/components/Dropdown/DropdownItem'
 
-export default {
-  name: 'TableStory',
-  components: { Table, KitDropdown, DropdownItem },
-  data() {
-    return {
-      columns: [
-        {
-          id: 'id',
-          name: 'ID',
-          width: 70,
-          sortable: true
-        },
-        {
-          id: 'account',
-          name: 'Acc',
-          width: 120,
-          sortable: true
-        },
-        {
-          id: 'name',
-          name: 'Name',
-          sortable: true
-        },
-        {
-          id: 'job',
-          name: 'Job',
-          minWidth: 250,
-          sortable: true
-        },
-        {
-          id: 'address',
-          name: 'Address',
-          minWidth: 250,
-          sortable: true
-        },
-        {
-          id: 'email',
-          name: 'Email',
-          minWidth: 250
-        },
-        {
-          id: 'action',
-          width: 130
-        }
-      ],
-      data: Array.from({ length: 10 }).map((_, index) => ({
-        id: index,
-        account: faker.finance.account(),
-        name: faker.name.firstName(),
-        address: faker.address.country(),
-        email: faker.internet.email(),
-        job: faker.name.jobTitle()
-      })),
-      infiniteScroll: true,
-      sortedBy: 'id',
-      sortedDesc: false,
-      lastId: 10,
-      busy: false
-    }
+const columns = [
+  {
+    id: 'id',
+    name: 'ID',
+    width: 70,
+    sortable: true
   },
-  methods: {
-    dropdownOpen(cellElement) {
-      if (cellElement) {
-        cellElement.setAttribute('with-dropdown', '')
-      }
-    },
-    dropdownClose(cellElement) {
-      if (cellElement) {
-        cellElement.removeAttribute('with-dropdown')
-      }
-    },
-    loadMoreData(callback) {
-      setTimeout(() => {
-        if (this.lastId > 30) {
-          this.infiniteScroll = false
-        } else {
-          this.data = [
-            ...this.data,
-            ...Array.from({ length: 10 }).map((_, index) => ({
-              id: this.lastId + index,
-              account: faker.finance.account(),
-              name: faker.name.firstName(),
-              address: faker.address.country(),
-              email: faker.internet.email(),
-              job: faker.name.jobTitle()
-            }))
-          ]
-          this.lastId += 10
-        }
-        callback()
-      }, 1000)
-    },
-    onSorted({ id, desc }) {
-      this.busy = true
-      this.sortedBy = id
-      this.sortedDesc = desc
-      setTimeout(() => {
-        this.data = [...this.data].sort((a, b) => {
-          if (a[id] === b[id]) {
-            return 0
-          }
-          const result = a[id] > b[id] ? 1 : -1
-          return desc ? result * -1 : result
-        })
-        this.busy = false
-      }, 1000)
+  {
+    id: 'account',
+    name: 'Acc',
+    width: 120,
+    sortable: true
+  },
+  {
+    id: 'name',
+    name: 'Name',
+    sortable: true
+  },
+  {
+    id: 'job',
+    name: 'Job',
+    minWidth: 250,
+    sortable: true
+  },
+  {
+    id: 'address',
+    name: 'Address',
+    minWidth: 250,
+    sortable: true
+  },
+  {
+    id: 'email',
+    name: 'Email',
+    minWidth: 250
+  },
+  {
+    id: 'action',
+    width: 130
+  }
+]
+
+const data = ref(
+  Array.from({ length: 10 }).map((_, index) => ({
+    id: index,
+    account: faker.finance.account(),
+    name: faker.name.firstName(),
+    address: faker.address.country(),
+    email: faker.internet.email(),
+    job: faker.name.jobTitle()
+  }))
+)
+
+const lastId = ref(10)
+const infiniteScroll = ref(false)
+const busy = ref(false)
+const sortedBy = ref('id')
+const sortedDesc = ref(false)
+
+function loadMoreData(callback) {
+  setTimeout(() => {
+    if (lastId.value > 30) {
+      infiniteScroll.value = false
+    } else {
+      data.value = [
+        ...data.value,
+        ...Array.from({ length: 10 }).map((_, index) => ({
+          id: lastId.value + index,
+          account: faker.finance.account(),
+          name: faker.name.firstName(),
+          address: faker.address.country(),
+          email: faker.internet.email(),
+          job: faker.name.jobTitle()
+        }))
+      ]
+      lastId.value += 10
     }
+    callback()
+  }, 1000)
+}
+
+function onSorted({ id, desc }) {
+  busy.value = true
+  sortedBy.value = id
+  sortedDesc.value = desc
+  setTimeout(() => {
+    data.value = [...data.value].sort((a, b) => {
+      if (a[id] === b[id]) {
+        return 0
+      }
+      const result = a[id] > b[id] ? 1 : -1
+      return desc ? result * -1 : result
+    })
+    busy.value = false
+  }, 1000)
+}
+
+function dropdownOpen(cellElement) {
+  if (cellElement) {
+    cellElement.setAttribute('with-dropdown', '')
+  }
+}
+
+function dropdownClose(cellElement) {
+  if (cellElement) {
+    cellElement.removeAttribute('with-dropdown')
   }
 }
 </script>

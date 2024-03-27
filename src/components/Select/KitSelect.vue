@@ -306,7 +306,7 @@ async function onClear() {
   inputRef.value?.focus()
 }
 
-async function onOptionSelected(option: Value) {
+async function onOptionSelected(option: Value<unknown>) {
   if (!props.keepFilterOnSelect) {
     search.value = ''
   }

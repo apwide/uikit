@@ -1,7 +1,8 @@
 <template>
   <th :sortable="column.sortable" :style="style" class="kit-table-header-cell" @click="onClick">
     <span class="kit-table-header-cell__label-wrapper">
-      <span>
+      <slot v-if="slots.header" name="header" :column="column" />
+      <span v-else>
         {{ column.name }}
       </span>
       <template v-if="column.sortable">
@@ -12,52 +13,33 @@
   </th>
 </template>
 
-<script>
+<script setup lang="ts">
+import { Column } from '@components/Table/types'
+import { computed, useSlots } from 'vue'
 import ChevronDownIcon from '../Icon/ChevronDownIcon'
 import ChevronUpIcon from '../Icon/ChevronUpIcon'
 
-export default {
-  components: {
-    ChevronDownIcon,
-    ChevronUpIcon
-  },
-  props: {
-    column: {
-      type: Object,
-      required: true
-    },
-    stickyHeader: {
-      type: Boolean,
-      default: false
-    },
-    stickyLeft: {
-      type: Boolean,
-      default: false
-    },
-    stickyRight: {
-      type: Boolean,
-      default: false
-    },
-    sorted: {
-      type: Boolean,
-      default: false
-    },
-    sortedDesc: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    style() {
-      return { width: this.column.width ? `${this.column.width}px` : 'auto' }
-    }
-  },
-  methods: {
-    onClick() {
-      if (this.column.sortable) {
-        this.$emit('sorted')
-      }
-    }
+type Props = {
+  column: Column
+  stickyHeader?: boolean
+  stickyLeft?: boolean
+  stickyRight?: boolean
+  sorted?: boolean
+  sortedDesc?: boolean
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<{
+  (event: 'sorted')
+}>()
+const slots = useSlots()
+const style = computed(() => ({
+  width: props.column.width ? `${props.column.width}px` : 'auto'
+}))
+
+function onClick() {
+  if (props.column.sortable) {
+    emit('sorted')
   }
 }
 </script>

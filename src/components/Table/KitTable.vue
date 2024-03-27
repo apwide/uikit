@@ -11,7 +11,11 @@
             :sorted="sortedBy === column.id"
             :sorted-desc="sortedDesc"
             :sticky-header="stickyHeader"
-            @sorted="onSorted(column)" />
+            @sorted="onSorted(column)">
+            <template #header v-if="slots[`header-${column.id}`]">
+              <slot :name="`header-${column.id}`" :column="column" />
+            </template>
+          </TableHeaderCell>
         </tr>
       </thead>
       <KitDraggable
@@ -19,7 +23,7 @@
         :list="data"
         draggable-class="kit-table-draggable"
         handle-selector=".kit-table__grab-handle"
-        @reorder="$emit('rows-reordered', $event)">
+        @reorder="emit('rows-reordered', $event)">
         <tbody>
           <TableRow
             class="kit-table-draggable"
@@ -41,7 +45,7 @@
       </KitDraggable>
       <tfoot v-show="infiniteScroll && !showLoadMore">
         <tr>
-          <td ref="infinite-scroll-loader" :colspan="columns.length" class="kit-infinite-scroll-loader">
+          <td ref="scrollLoaderRef" :colspan="columns.length" class="kit-infinite-scroll-loader">
             <Spinner size="small" />
           </td>
         </tr>
@@ -49,7 +53,7 @@
       <tfoot v-if="showLoadMore && !infiniteScroll">
         <tr>
           <td :colspan="columns.length">
-            <KitButton appearance="subtle" style="width: 100%" @click="$emit('load-more')"> Load more</KitButton>
+            <KitButton appearance="subtle" style="width: 100%" @click="emit('load-more')"> Load more</KitButton>
           </td>
         </tr>
       </tfoot>
@@ -60,7 +64,9 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts" generic="T extends BasicRow">
+import { BasicRow, Column } from '@components/Table/types'
+import { computed, onMounted, ref, useSlots } from 'vue'
 import Spinner from '../Spinner/Spinner'
 import KitIcon from '../Icon/KitIcon'
 import KitButton from '../Button/Button'
@@ -68,123 +74,76 @@ import KitDraggable from '../common/KitDraggable'
 import TableRow from './TableRow'
 import TableHeaderCell from './TableHeaderCell'
 
-export default {
-  components: {
-    KitDraggable,
-    KitIcon,
-    TableHeaderCell,
-    TableRow,
-    Spinner,
-    KitButton
-  },
-  props: {
-    columns: {
-      type: Array,
-      required: true
-    },
-    data: {
-      type: Array,
-      default: () => []
-    },
-    stickyHeader: {
-      type: Boolean,
-      default: false
-    },
-    defaultColumnMinWidth: {
-      type: [String, Number],
-      default: 150
-    },
-    infiniteScroll: {
-      type: Boolean,
-      default: false
-    },
-    showLoadMore: {
-      type: Boolean,
-      default: false
-    },
-    busy: {
-      type: Boolean,
-      default: false
-    },
-    sortedBy: {
-      type: String,
-      default: undefined
-    },
-    sortedDesc: {
-      type: Boolean,
-      default: false
-    },
-    dragRows: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      observer: undefined,
-      tableWidth: 0,
-      activeRowId: undefined,
-      positionIndex: {}
-    }
-  },
-  computed: {
-    actualColumns() {
-      if (this.dragRows) {
-        return [
-          {
-            id: 'kitDragHandle',
-            width: 30
-          },
-          ...this.columns
-        ]
-      }
-      return this.columns
-    },
-    dragEnabled() {
-      return this.dragRows && !this.busy && this.data.length > 0
-    }
-  },
-  mounted() {
-    this.createObserver()
-  },
-  beforeDestroy() {
-    if (this.observer) {
-      this.observer.disconnect()
-    }
-  },
-  methods: {
-    onRowClick(row, event) {
-      this.$emit('row-click', {
-        row,
-        event
-      })
-    },
-    createObserver() {
-      if (this.observer) {
-        this.observer.unobserve(this.$refs['infinite-scroll-loader'])
-      }
-      this.observer = new IntersectionObserver((entries) => {
-        // TODO: investigate why we got some case of twice the same element in the
-        // entries. Seems to be related to the change of size of the observed element
-        if (entries.some(({ isIntersecting }) => isIntersecting)) {
-          this.tableBottomReached()
-        }
-      })
-      this.observer.observe(this.$refs['infinite-scroll-loader'])
-    },
-    tableBottomReached() {
-      this.$emit('table-bottom-reached', () => {
-        this.createObserver()
-      })
-    },
-    onSorted(column) {
-      this.$emit('sorted', {
-        id: column.id,
-        desc: this.sortedBy === column.id ? !this.sortedDesc : false
-      })
-    }
-  }
+type Props = {
+  columns: Column[]
+  data: T[]
+  stickyHeader?: boolean
+  defaultColumnMinWidth?: string | number
+  infiniteScroll?: boolean
+  showLoadMore?: boolean
+  busy?: boolean
+  sortedBy?: string
+  sortedDesc?: boolean
+  dragRows?: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  data: () => [],
+  defaultColumnMinWidth: 150
+})
+const emit = defineEmits<{
+  (event: 'row-click', payload: { row: T; event: MouseEvent })
+  (event: 'table-bottom-reached', cb: () => void)
+  (event: 'sorted', payload: { id: number | string; desc: boolean })
+  (event: 'load-more')
+  (event: 'rows-reordered', rows: T[])
+}>()
+const slots = useSlots()
+
+const observer = ref()
+
+const scrollLoaderRef = ref<HTMLTableCellElement>()
+
+const actualColumns = computed<Column[]>(() =>
+  props.dragRows ? [{ id: 'kitDragHandle', width: 30 }, ...props.columns] : props.columns
+)
+
+const dragEnabled = computed(() => props.dragRows && !props.busy && props.data.length > 0)
+
+function onRowClick(row: T, event: MouseEvent) {
+  emit('row-click', { row, event })
+}
+
+function createObserver() {
+  if (observer.value) {
+    observer.value.unobserve(scrollLoaderRef.value)
+  }
+  observer.value = new IntersectionObserver((entries) => {
+    // TODO: investigate why we got some case of twice the same element in the
+    // entries. Seems to be related to the change of size of the observed element
+    if (entries.some(({ isIntersecting }) => isIntersecting)) {
+      tableBottomReached()
+    }
+  })
+  observer.value.observe(scrollLoaderRef.value)
+}
+
+function tableBottomReached() {
+  emit('table-bottom-reached', () => {
+    createObserver()
+  })
+}
+
+function onSorted(column) {
+  emit('sorted', {
+    id: column.id,
+    desc: props.sortedBy === column.id ? !props.sortedDesc : false
+  })
+}
+
+onMounted(() => {
+  createObserver()
+})
 </script>
 
 <style scoped>
