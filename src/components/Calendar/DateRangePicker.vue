@@ -89,7 +89,7 @@ import {
 import TextField from '../Form/TextField'
 import Popup from '../common/Popup'
 import DropdownItem from '../Dropdown/DropdownItem'
-import DropdownGroup from '../Dropdown/DropdownGroup'
+import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'
 import KitIcon from '../Icon/KitIcon'
 import Calendar from './Calendar'
 

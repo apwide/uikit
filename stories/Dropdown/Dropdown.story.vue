@@ -86,54 +86,54 @@
     <h3>Scrolled items</h3>
     <p>
       <KitDropdown label="Drop down menu">
-        <DropdownGroup label="Europe">
+        <KitDropdownGroup label="Europe">
           <DropdownItem>Poland</DropdownItem>
           <DropdownItem>Germany</DropdownItem>
           <DropdownItem>France</DropdownItem>
           <DropdownItem>United Kingdom</DropdownItem>
           <DropdownItem>Spain</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="North America">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="North America">
           <DropdownItem>Canada</DropdownItem>
           <DropdownItem>United States of America</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="Asia">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="Asia">
           <DropdownItem>China</DropdownItem>
           <DropdownItem>Japan</DropdownItem>
           <DropdownItem>India</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="Europe">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="Europe">
           <DropdownItem>Poland</DropdownItem>
           <DropdownItem>Germany</DropdownItem>
           <DropdownItem>France</DropdownItem>
           <DropdownItem>United Kingdom</DropdownItem>
           <DropdownItem>Spain</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="North America">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="North America">
           <DropdownItem>Canada</DropdownItem>
           <DropdownItem>United States of America</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="Asia">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="Asia">
           <DropdownItem>China</DropdownItem>
           <DropdownItem>Japan</DropdownItem>
           <DropdownItem>India</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="Europe">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="Europe">
           <DropdownItem>Poland</DropdownItem>
           <DropdownItem>Germany</DropdownItem>
           <DropdownItem>France</DropdownItem>
           <DropdownItem>United Kingdom</DropdownItem>
           <DropdownItem>Spain</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="North America">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="North America">
           <DropdownItem>Canada</DropdownItem>
           <DropdownItem>United States of America</DropdownItem>
-        </DropdownGroup>
-        <DropdownGroup label="Asia">
+        </KitDropdownGroup>
+        <KitDropdownGroup label="Asia">
           <DropdownItem>China</DropdownItem>
           <DropdownItem>Japan</DropdownItem>
           <DropdownItem>India</DropdownItem>
-        </DropdownGroup>
+        </KitDropdownGroup>
       </KitDropdown>
     </p>
   </div>
@@ -141,9 +141,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import KitDropdownGroup from '@components/Dropdown/KitDropdownGroup.vue'
 import KitDropdown from '@/components/Dropdown/KitDropdown.vue'
 import DropdownItem from '@/components/Dropdown/DropdownItem.vue'
-import DropdownGroup from '@/components/Dropdown/DropdownGroup.vue'
 import DropdownCheckboxItem from '@/components/Dropdown/DropdownCheckboxItem.vue'
 import KitDropdownSeparator from '@/components/Dropdown/KitDropdownSeparator.vue'
 import KitIconButton from '@/components/Button/KitIconButton.vue'
