@@ -23,7 +23,7 @@
           @blur="onBlur(editProps.blur, $event)" />
       </template>
       <template #default>
-        <KitMarkdownEditor :value="value" readonly />
+        <KitMarkdownEditor @click.native="contentClicked" :value="value" readonly />
       </template>
     </KitInlineEdit>
     <KitMarkdownEditor v-else :value="value" readonly />
@@ -54,6 +54,13 @@ const props = withDefaults(defineProps<Props>(), {
 const isEditing = ref(false)
 const currentValue = ref(props.value)
 const hasOkDisabled = ref(false)
+
+function contentClicked(evt: MouseEvent) {
+  // link click should not trigger editing
+  if (evt.target instanceof HTMLAnchorElement) {
+    evt.stopPropagation()
+  }
+}
 
 const emit = defineEmits<{
   (event: 'save-requested', value: string, callback: (error?: Error) => void)
