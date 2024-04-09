@@ -1,6 +1,6 @@
 {
   "name": "@apwide/uikit",
-  "version": "4.21.4",
+  "version": "4.22.1",
   "description": "Apwide ui components",
   "main": "dist/uikit.js",
   "publishConfig": {
