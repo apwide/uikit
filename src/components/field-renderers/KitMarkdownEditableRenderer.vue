@@ -23,10 +23,16 @@
           @blur="onBlur(editProps.blur, $event)" />
       </template>
       <template #default>
-        <KitMarkdownEditor @click.native="contentClicked" :value="value" readonly />
+        <slot>
+          <KitMarkdownEditor :value="value" readonly @click.native="contentClicked" />
+        </slot>
       </template>
     </KitInlineEdit>
-    <KitMarkdownEditor v-else :value="value" readonly />
+    <template v-else>
+      <slot>
+        <KitMarkdownEditor :value="value" readonly />
+      </slot>
+    </template>
   </div>
 </template>
 
@@ -51,11 +57,12 @@ const props = withDefaults(defineProps<Props>(), {
   forceIsEditing: false,
   allowBlurToSave: false
 })
+
 const isEditing = ref(false)
 const currentValue = ref(props.value)
 const hasOkDisabled = ref(false)
 
-function contentClicked(evt: MouseEvent) {
+function contentClicked(evt: Event) {
   // link click should not trigger editing
   if (evt.target instanceof HTMLAnchorElement) {
     evt.stopPropagation()
@@ -68,26 +75,31 @@ const emit = defineEmits<{
   (event: 'stop-editing')
 }>()
 const hasPendingChanges = ref(false)
+
 function onInput(originalOnInput: (data: string) => void, value: string) {
   originalOnInput(value)
   currentValue.value = value
   hasOkDisabled.value = Boolean(props.sizeLimit) && currentValue.value.length > props.sizeLimit
   hasPendingChanges.value = value !== props.value
 }
+
 function onBlur(originalOnBlur: (event: FocusEvent) => void, event: FocusEvent) {
   if (props.allowBlurToSave && !(props.sizeLimit && props.sizeLimit < currentValue.value.length)) {
     originalOnBlur(event)
   }
 }
+
 async function onStartEditing() {
   await nextTick()
   isEditing.value = true
   emit('start-editing')
 }
+
 function onStopEditing() {
   isEditing.value = false
   emit('stop-editing')
 }
+
 function onSaveRequested(value: string, callback) {
   if (props.sizeLimit && value.trim().length > props.sizeLimit) {
     callback(new Error(`Too many characters, field is limited to ${props.sizeLimit}`))

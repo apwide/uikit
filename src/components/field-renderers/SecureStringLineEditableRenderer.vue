@@ -14,15 +14,13 @@
     @save-requested="onSaveRequested">
     <template #editor="props">
       <TextField
-        :compact="props.compact"
         :is-disabled="props.isLoading"
         :is-focused="props.isFocused"
-        :is-invalid="!!props.error"
         :is-loading="props.isLoading"
         style="width: 100%"
         @click.stop>
         <input
-          ref="input"
+          ref="inputRef"
           v-model="props.value"
           :disabled="props.isLoading"
           :type="type"
@@ -39,9 +37,11 @@
         </KitIconButton>
       </TextField>
     </template>
-    <slot>
-      <SecureStringLineRenderer :html-value="htmlValue" :value="value" />
-    </slot>
+    <template #default>
+      <slot>
+        <SecureStringLineRenderer :html-value="htmlValue" :value="value" />
+      </slot>
+    </template>
   </InlineEdit>
   <div v-else>
     <slot>
@@ -50,101 +50,75 @@
   </div>
 </template>
 
-<script>
-import InlineEdit from '../Form/InlineEdit'
-import TextField from '../Form/TextField'
-import KitIconButton from '../Button/KitIconButton'
-import KitIcon from '../Icon/KitIcon'
-import SecureStringLineRenderer from './SecureStringLineRenderer'
+<script setup lang="ts">
+import { computed, nextTick, ref } from 'vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import TextField from '../Form/TextField.vue'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import SecureStringLineRenderer from './SecureStringLineRenderer.vue'
 
-export default {
-  name: 'KitSecureSingleLineEditableRenderer',
-  components: {
-    KitIcon,
-    KitIconButton,
-    SecureStringLineRenderer,
-    TextField,
-    InlineEdit
-  },
-  props: {
-    value: {
-      type: String,
-      default: undefined
-    },
-    htmlValue: {
-      type: String,
-      default: undefined
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    },
-    confirm: {
-      type: Boolean,
-      default: true
-    },
-    icon: {
-      type: Boolean,
-      default: true
-    },
-    align: {
-      type: String,
-      default: undefined
-    },
-    pattern: {
-      type: String,
-      default: ''
-    },
-    forceIsEditing: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      obfuscated: true,
-      isEditing: false,
-      justClickedOnTypeSwitch: false
-    }
-  },
-  computed: {
-    type() {
-      return this.obfuscated ? 'password' : 'text'
-    },
-    title() {
-      return this.obfuscated ? 'Reveal' : 'Hide'
-    }
-  },
-  methods: {
-    onStartEditing() {
-      this.isEditing = true
-      this.$nextTick(() => {
-        if (this.$refs.input) {
-          this.$refs.input.focus()
-        }
-      })
-      this.$emit('start-editing')
-    },
-    onStopEditing() {
-      this.isEditing = false
-      this.$emit('stop-editing')
-    },
-    onBlur(originalBlur, data) {
-      originalBlur(data)
-    },
-    onSaveRequested(...args) {
-      this.$emit('save-requested', ...args)
-    },
-    toggleFieldType() {
-      this.obfuscated = !this.obfuscated
-      if (this.$refs.input) {
-        this.$refs.input.focus()
-      }
-    }
+type Props = {
+  value?: string
+  htmlValue?: string
+  editable?: boolean
+  placement?: string
+  confirm?: boolean
+  icon?: boolean
+  align?: string
+  pattern?: string
+  forceIsEditing?: boolean
+  emptyPlaceholder?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right',
+  confirm: true,
+  icon: true,
+  pattern: '',
+  forceIsEditing: false
+})
+
+const emit = defineEmits<{
+  (event: 'start-editing')
+  (event: 'stop-editing')
+  (event: 'save-requested', value: string, callback: any)
+}>()
+
+const obfuscated = ref(true)
+const isEditing = ref(false)
+const inputRef = ref<HTMLInputElement>()
+
+const type = computed(() => (obfuscated.value ? 'password' : 'text'))
+const title = computed(() => (obfuscated.value ? 'Reveal' : 'Hide'))
+
+async function onStartEditing() {
+  isEditing.value = true
+  await nextTick()
+  if (inputRef.value) {
+    inputRef.value.focus()
+  }
+  emit('start-editing')
+}
+
+function onStopEditing() {
+  isEditing.value = false
+  emit('stop-editing')
+}
+
+function onBlur(originalBlur, data) {
+  originalBlur(data)
+}
+
+function onSaveRequested(...args) {
+  emit('save-requested', ...args)
+}
+
+function toggleFieldType() {
+  obfuscated.value = !obfuscated.value
+  if (inputRef.value) {
+    inputRef.value.focus()
   }
 }
 </script>
