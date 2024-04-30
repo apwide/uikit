@@ -1,26 +1,34 @@
 name: Test Bump and Release Main
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - 'main'
-    paths:
-      - '**.js'
-      - '**.ts'
-      - '**.vue'
+      branches:
+        - 'main'
+      paths:
+        - '**.js'
+        - '**.ts'
+        - '**.vue'
 
 jobs:
   tests:
-    name: Run the tests
+    name: Ensure tests and builds are OK
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
           cache: 'npm'
       - run: npm ci
       - run: npm run lint
       - run: npm test
+      - run: npm run build
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+      - run: npm run build-storybook
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+
   bump-and-publish:
     needs: [tests]
     name: 'Automated Version Bump'
@@ -28,8 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Bump
+        if: success()
         uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -37,18 +46,24 @@ jobs:
           major-wording: 'BREAKING'
           default: 'minor'
           commit-message: 'chore: version bump to {{version}}'
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         with:
-          node-version: 16
+          node-version: 18
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install
         run: npm ci
-      - name: Publish on NPM
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Build doc
         run: npm run build-storybook
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - name: Deploy doc to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v3
