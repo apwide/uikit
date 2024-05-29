@@ -1,42 +1,87 @@
 <template>
   <div>
-    <Button ref="button" @click="onClick"> Click me! </Button>
-    <CustomHint v-if="show" title="Lorem ipsum dolor" :target-element="$refs.button.$el" @close="onClose">
-      <div class="hint">
-        <span
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta metus nec quam molestie aliquet. Etiam
-          viverra eu felis nec porttitor. Integer et rhoncus orci.Maecenas euismod arcu vel risus cursus interdum.
-          Mauris sapien lorem, varius a massa in, ultrices tincidunt mi.</span
-        >
-      </div>
-    </CustomHint>
+    <KitButton @click="showSpolight = true">Start</KitButton>
+    <KitDropdown label="Drop down menu" ref="menuRef">
+      <KitDropdownItem data-cy="simple-dropdown-item"> First item </KitDropdownItem>
+      <KitDropdownItem>Second item</KitDropdownItem>
+      <KitDropdownItem disabled> Lorem ipsum dolor sit amet consectetur adipisicing elit </KitDropdownItem>
+    </KitDropdown>
+    <KitSpotlight v-if="showSpolight" :steps="steps" @close="showSpolight = false" />
   </div>
 </template>
 
-<script>
-import Button from '@/components/Button/Button'
-import CustomHint from '@/components/Spotlight/CustomHint'
+<script setup lang="ts">
+import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
+import { Component, ref } from 'vue'
+import KitDropdown from '@components/Dropdown/KitDropdown.vue'
+import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
+import KitDropdownItem from '@components/Dropdown/DropdownItem.vue'
+import KitButton from '@/components/Button/Button.vue'
 
-export default {
-  name: 'HintStory',
-  components: { Button, CustomHint },
-  data() {
-    return {
-      show: false
-    }
-  },
-  beforeDestroy() {
-    this.show = false
-  },
-  methods: {
-    onClick() {
-      this.show = true
+const showSpolight = ref(false)
+const menuRef = ref<Component>()
+
+const steps: KitSpotlightStep[] = [
+  {
+    elements() {
+      return [menuRef.value.$el]
     },
-    onClose() {
-      this.show = false
-    }
+    title: 'Step 1',
+    p: ['Click on next and the dropdown will open.', 'The spotlight will shift to contain the opened dropdown.']
+  },
+  {
+    before() {
+      return new Promise((resolve) => {
+        console.log('printed before step 2')
+        menuRef.value.$el.querySelector('button').click()
+        let count = 0
+        const interval = setInterval(() => {
+          if (count > 50) {
+            console.log('Something is broken')
+            clearInterval(interval)
+          } else if (document.querySelector('.kit-popup')) {
+            clearInterval(interval)
+            resolve()
+          }
+          count += 1
+        }, 100)
+      })
+    },
+    elements() {
+      return [menuRef.value.$el, document.querySelector('.kit-popup')]
+    },
+    cleanup() {
+      return new Promise((resolve) => {
+        if (document.querySelector('.kit-popup')) {
+          menuRef.value.$el.querySelector('button').click()
+        }
+        let count = 0
+        const interval = setInterval(() => {
+          if (count > 50) {
+            console.log('Something is broken')
+            clearInterval(interval)
+          } else if (!document.querySelector('.kit-popup')) {
+            clearInterval(interval)
+            resolve()
+          }
+          count += 1
+        }, 100)
+      })
+    },
+    title: 'Step 2',
+    p: [
+      'Each step enables to run action before (before) and after (cleanup)',
+      'All action done in before should be undone in cleanup to allow smooth transition between steps.'
+    ]
+  },
+  {
+    elements() {
+      return [menuRef.value.$el]
+    },
+    title: 'Step 3',
+    p: ['Thanks for watching!']
   }
-}
+]
 </script>
 
 <style scoped>

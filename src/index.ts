@@ -3,6 +3,8 @@ import KitDraggable from '@components/common/KitDraggable'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import DropdownGroup from '@components/Dropdown/KitDropdownGroup.vue'
+import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
+import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
 import Button from './components/Button/Button.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
@@ -103,7 +105,9 @@ export {
   KitTable,
   tooltip,
   KitDraggable,
-  KitMarkdownEditor
+  KitMarkdownEditor,
+  KitSpotlight,
+  KitSpotlightStep
 }
 export * from './components/layout/index'
 export * from './components/Menu/index'
