@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeMount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeMount, ref, watch } from 'vue'
 import KitButton from '../Button/Button.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 
@@ -51,7 +51,7 @@ const storedCollapsed = ref<boolean | null>(null)
 const isCollapsed = computed(() => (storedCollapsed.value !== null ? storedCollapsed.value : props.collapsed))
 const timeout = ref()
 
-function calculateMaxHeight(isCollapsed) {
+function calculateMaxHeight(isCollapsed: boolean) {
   if (contentRef.value) {
     return isCollapsed ? '0px' : `${contentRef.value.scrollHeight}px`
   }
@@ -107,8 +107,10 @@ function writeToSession() {
 onBeforeMount(() => {
   storedCollapsed.value = readFromSession()
 })
-onMounted(() => {
-  maxHeight.value = calculateMaxHeight(isCollapsed.value)
+watch(isCollapsed, () => {
+  if (!isCollapsed.value) {
+    maxHeight.value = calculateMaxHeight(isCollapsed.value)
+  }
 })
 </script>
 <style scoped>
