@@ -1,12 +1,13 @@
 <template>
   <div>
-    <FieldGroup>
-      <Button @click="toggle"> Toggle </Button>
-    </FieldGroup>
-    <FieldGroup>
-      <Checkbox v-model="enterTransition" /> Enter transition <Checkbox v-model="leaveTransition" /> Leave transition
-    </FieldGroup>
-    <TransitionExpand :enter-transition="enterTransition" :leave-transition="leaveTransition">
+    <KitFieldGroup>
+      <KitButton @click="toggle"> Toggle </KitButton>
+    </KitFieldGroup>
+    <KitFieldGroup>
+      <KitCheckbox v-model="enterTransition"> Enter transition </KitCheckbox>
+      <KitCheckbox v-model="leaveTransition"> Leave transition </KitCheckbox>
+    </KitFieldGroup>
+    <KitTransitionExpand :enter-transition="enterTransition" :leave-transition="leaveTransition">
       <div v-if="expanded" class="content">
         Magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
         gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
@@ -14,42 +15,28 @@
         voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
         sanctus est Lorem ipsum dolor sit amet.
       </div>
-    </TransitionExpand>
+    </KitTransitionExpand>
   </div>
 </template>
 
-<script>
-import TransitionExpand from '@/components/common/TransitionExpand'
-import Button from '@/components/Button/Button'
-import Checkbox from '@/components/Checkbox/Checkbox'
-import FieldGroup from '@/components/Form/FieldGroup'
+<script setup lang="ts">
+import { ref } from 'vue'
+import KitTransitionExpand from '@/components/common/KitTransitionExpand.vue'
+import KitButton from '@/components/Button/Button.vue'
+import KitCheckbox from '@/components/Checkbox/KitCheckbox.vue'
+import KitFieldGroup from '@/components/Form/FieldGroup.vue'
 
-export default {
-  name: 'TransitionExpandStory',
-  components: {
-    TransitionExpand,
-    Checkbox,
-    Button,
-    FieldGroup
-  },
-  data() {
-    return {
-      expanded: false,
-      enterTransition: true,
-      leaveTransition: true
-    }
-  },
-  methods: {
-    toggle() {
-      this.expanded = !this.expanded
-    }
-  }
+const expanded = ref(false)
+const enterTransition = ref(true)
+const leaveTransition = ref(true)
+
+function toggle() {
+  expanded.value = !expanded.value
 }
 </script>
 
 <style scoped>
 .content {
-  /* padding: 20px; */
   background: lightblue;
   overflow: hidden;
 }

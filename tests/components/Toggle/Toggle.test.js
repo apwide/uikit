@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Toggle from '@/components/Toggle/Toggle'
+import Toggle from '@/components/Toggle/KitToggle'
 
 describe('Toggle', () => {
   it('renders correct content for a button', async () => {

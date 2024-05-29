@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <Table
-      ref="table"
+    <KitTable
+      ref="tableRef"
       :columns="columns"
       :data="data"
       :sticky-header="true"
@@ -23,17 +23,13 @@
         <a :href="`mailto:${value}`">{{ value }}</a>
       </template>
       <template #action="{ row, cellElement }">
-        <KitDropdown
-          label="Actions"
-          :boundaries-element="$refs.table && $refs.table.$el"
-          @open="dropdownOpen(cellElement)"
-          @close="dropdownClose(cellElement)">
+        <KitDropdown label="Actions" @open="dropdownOpen(cellElement)" @close="dropdownClose(cellElement)">
           <DropdownItem>Move {{ row.id }}</DropdownItem>
           <DropdownItem>Edit {{ row.id }}</DropdownItem>
           <DropdownItem>Delete {{ row.id }}</DropdownItem>
         </KitDropdown>
       </template>
-    </Table>
+    </KitTable>
   </div>
 </template>
 
@@ -41,9 +37,9 @@
 import faker from 'faker'
 import { ref } from 'vue'
 import KitIcon from '@components/Icon/KitIcon.vue'
-import Table from '@/components/Table/KitTable'
-import KitDropdown from '@/components/Dropdown/KitDropdown'
-import DropdownItem from '@/components/Dropdown/DropdownItem'
+import KitTable from '@/components/Table/KitTable.vue'
+import KitDropdown from '@/components/Dropdown/KitDropdown.vue'
+import DropdownItem from '@/components/Dropdown/DropdownItem.vue'
 
 const columns = [
   {
@@ -102,6 +98,8 @@ const infiniteScroll = ref(false)
 const busy = ref(false)
 const sortedBy = ref('id')
 const sortedDesc = ref(false)
+
+const tableRef = ref()
 
 function loadMoreData(callback) {
   setTimeout(() => {

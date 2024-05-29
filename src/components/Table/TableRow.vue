@@ -1,55 +1,47 @@
 <template>
-  <tr class="kit-table-row" @click="onClick">
+  <tr
+    class="kit-table-row"
+    @click="emit('click', $event)"
+    @dblclick="emit('dblclick', $event)"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave">
     <TableRowCell v-for="column in columns" :key="column.id" :value="row[column.id]">
-      <slot slot-scope="props" :name="column.id" :row="row" :is-active-row="isActiveRow" v-bind="props">
-        <span class="table-row-cell__value">
-          {{ row[column.id] }}
-        </span>
-      </slot>
+      <template #default="p">
+        <slot :name="column.id" :row="row" :is-active-row="isActiveRow" v-bind="p">
+          <span class="table-row-cell__value">
+            {{ row[column.id] }}
+          </span>
+        </slot>
+      </template>
     </TableRowCell>
   </tr>
 </template>
 
-<script>
-import TableRowCell from './TableRowCell'
+<script setup lang="ts" generic="T extends BasicRow">
+import { ref } from 'vue'
+import { BasicRow, Column } from '@components/Table/types'
+import TableRowCell from './TableRowCell.vue'
 
-export default {
-  components: { TableRowCell },
-  props: {
-    columns: {
-      type: Array,
-      required: true
-    },
-    row: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-  data() {
-    return {
-      isActiveRow: false
-    }
-  },
-  mounted() {
-    this.$el.addEventListener('mouseenter', this.onMouseEnter)
-    this.$el.addEventListener('mouseleave', this.onMouseLeave)
-  },
-  beforeDestroy() {
-    this.$el.removeEventListener('mouseenter', this.onMouseEnter)
-    this.$el.removeEventListener('mouseleave', this.onMouseLeave)
-  },
-  methods: {
-    onMouseEnter() {
-      this.isActiveRow = true
-    },
-    onMouseLeave() {
-      this.isActiveRow = false
-    },
+type Props = {
+  columns: Column[]
+  row: T
+}
 
-    onClick(event) {
-      this.$emit('click', event)
-    }
-  }
+defineProps<Props>()
+
+const emit = defineEmits<{
+  (event: 'click', payload: PointerEvent)
+  (event: 'dblclick', payload: PointerEvent)
+}>()
+
+const isActiveRow = ref(false)
+
+function handleMouseEnter() {
+  isActiveRow.value = true
+}
+
+function handleMouseLeave() {
+  isActiveRow.value = false
 }
 </script>
 

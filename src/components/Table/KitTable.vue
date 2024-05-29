@@ -67,12 +67,12 @@
 <script setup lang="ts" generic="T extends BasicRow">
 import { BasicRow, Column } from '@components/Table/types'
 import { computed, onMounted, ref, useSlots } from 'vue'
-import Spinner from '../Spinner/Spinner'
-import KitIcon from '../Icon/KitIcon'
-import KitButton from '../Button/Button'
+import Spinner from '../Spinner/Spinner.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import KitButton from '../Button/Button.vue'
 import KitDraggable from '../common/KitDraggable'
-import TableRow from './TableRow'
-import TableHeaderCell from './TableHeaderCell'
+import TableRow from './TableRow.vue'
+import TableHeaderCell from './TableHeaderCell.vue'
 
 type Props = {
   columns: Column[]
@@ -93,6 +93,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const emit = defineEmits<{
   (event: 'row-click', payload: { row: T; event: MouseEvent })
+  (event: 'row-dblclick', payload: { row: T; event: MouseEvent })
   (event: 'table-bottom-reached', cb: () => void)
   (event: 'sorted', payload: { id: number | string; desc: boolean })
   (event: 'load-more')

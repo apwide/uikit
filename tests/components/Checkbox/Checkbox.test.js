@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Checkbox from '@/components/Checkbox/Checkbox'
+import Checkbox from '@/components/Checkbox/KitCheckbox.vue'
 
 describe('Checkbox', () => {
   it('emits correct value on click', async () => {

@@ -7,21 +7,21 @@
     :style="{ 'padding-left': `${indent}px` }"
     :indent-left="$slots['chevron']">
     <slot name="chevron" />
-    <Checkbox v-model="checked" :value="node.id" class="label">
+    <KitCheckbox v-model="checked" :value="node.id" class="label">
       <slot>{{ node.label }}</slot>
-    </Checkbox>
+    </KitCheckbox>
   </div>
 </template>
 
 <script>
-import Checkbox from '../Checkbox/Checkbox'
+import KitCheckbox from '../Checkbox/KitCheckbox.vue'
 import { EventBus } from '../event-bus'
 
 const LIST_NESTING_MARGIN = '24'
 
 export default {
   name: 'KitLabel',
-  components: { Checkbox },
+  components: { KitCheckbox },
   props: {
     value: {
       type: Boolean,

@@ -8,8 +8,8 @@ import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
 import TextArea from './components/Form/TextArea.vue'
 import FieldGroup from './components/Form/FieldGroup.vue'
-import Checkbox from './components/Checkbox/Checkbox.vue'
-import Toggle from './components/Toggle/Toggle.vue'
+import KitCheckbox from './components/Checkbox/KitCheckbox.vue'
+import KitToggle from './components/Toggle/KitToggle.vue'
 import Modal from './components/Modal/Modal.vue'
 import DatePicker from './components/Calendar/DatePicker.vue'
 import DateRangePicker from './components/Calendar/DateRangePicker.vue'
@@ -68,8 +68,8 @@ export {
   FieldGroup as KitFieldGroup,
   TextArea as KitTextArea,
   Input as KitInput,
-  Checkbox as KitCheckbox,
-  Toggle as KitToggle,
+  KitCheckbox,
+  KitToggle,
   DatePicker as KitDatePicker,
   TimePicker as KitTimePicker,
   KitSelect,

@@ -20,7 +20,7 @@
     </slot>
     <div
       v-if="!isCollapsed"
-      ref="content"
+      ref="contentRef"
       :style="{ maxHeight: maxHeight, overflow: overflow }"
       class="kit-collapsible-content">
       <slot />
@@ -28,105 +28,87 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
-import KitButton from '../Button/Button'
-import KitIcon from '../Icon/KitIcon'
+<script setup lang="ts">
+import { computed, nextTick, onBeforeMount, onMounted, ref } from 'vue'
+import KitButton from '../Button/Button.vue'
+import KitIcon from '../Icon/KitIcon.vue'
 
-export default Vue.extend({
-  components: {
-    KitButton,
-    KitIcon
-  },
-  props: {
-    label: {
-      type: String,
-      default: '',
-      required: true
-    },
-    collapsed: {
-      type: Boolean,
-      default: true
-    },
-    storeState: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      maxHeight: '',
-      overflow: 'hidden',
-      storedCollapsed: this.collapsed,
-      timeout: null
-    }
-  },
-  computed: {
-    key() {
-      return `KitCollapsible ${this.label}`.replaceAll(/[\W]/g, '_')
-    },
-    isCollapsed() {
-      if (this.storedCollapsed !== null) {
-        return this.storedCollapsed
-      }
-      return this.collapsed
-    }
-  },
-  created() {
-    this.storedCollapsed = this.readFromSession()
-    this.maxHeight = this.calculateMaxHeight(this.isCollapsed)
-  },
-  methods: {
-    readFromSession() {
-      if (!this.storeState) {
-        return null
-      }
-      try {
-        const storedValues = sessionStorage.getItem(this.key)
-        if (storedValues) {
-          return storedValues === 'collapsed'
-        }
-        return null
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn('uikit::KitCollapsible', e)
-        return null
-      }
-    },
-    writeToSession() {
-      if (!this.storeState) {
-        return
-      }
-      try {
-        sessionStorage.setItem(this.key, this.isCollapsed ? 'collapsed' : 'expanded')
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn('uikit::KitCollapsible', e)
-      }
-    },
-    async toggle() {
-      clearTimeout(this.timeout)
-      this.storedCollapsed = !this.isCollapsed
-      this.overflow = this.storedCollapsed ? 'initial' : 'hidden'
-      await this.$nextTick()
-      this.writeToSession()
-      this.timeout = setTimeout(() => {
-        if (!this.isCollapsed) {
-          this.overflow = 'initial'
-          this.maxHeight = 'fit-content'
-        }
-      }, 50 + 400)
-      setTimeout(() => {
-        this.maxHeight = this.calculateMaxHeight(this.isCollapsed)
-      }, 50)
-    },
-    calculateMaxHeight(isCollapsed) {
-      if (this.$refs.content) {
-        return isCollapsed ? '0px' : `${this.$refs.content.scrollHeight}px`
-      }
-      return isCollapsed ? '0px' : 'fit-content'
-    }
+type Props = {
+  label: string
+  collapsed: boolean
+  storeState?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  collapsed: true
+})
+
+const key = computed(() => `KitCollapsible ${props.label}`.replaceAll(/[\W]/g, '_'))
+const maxHeight = ref('')
+const overflow = ref('')
+const contentRef = ref<HTMLDivElement>()
+const storedCollapsed = ref<boolean | null>(null)
+const isCollapsed = computed(() => (storedCollapsed.value !== null ? storedCollapsed.value : props.collapsed))
+const timeout = ref()
+
+function calculateMaxHeight(isCollapsed) {
+  if (contentRef.value) {
+    return isCollapsed ? '0px' : `${contentRef.value.scrollHeight}px`
   }
+  return isCollapsed ? '0px' : 'fit-content'
+}
+
+async function toggle() {
+  clearTimeout(timeout.value)
+  storedCollapsed.value = !isCollapsed.value
+  overflow.value = storedCollapsed.value ? 'initial' : 'hidden'
+  await nextTick()
+  writeToSession()
+  timeout.value = setTimeout(() => {
+    if (!isCollapsed.value) {
+      overflow.value = 'initial'
+      maxHeight.value = 'fit-content'
+    }
+  }, 50 + 400)
+  setTimeout(() => {
+    maxHeight.value = calculateMaxHeight(isCollapsed.value)
+  }, 50)
+}
+
+function readFromSession() {
+  if (!props.storeState) {
+    return null
+  }
+  try {
+    const storedValues = sessionStorage.getItem(key.value)
+    if (storedValues) {
+      return storedValues === 'collapsed'
+    }
+    return null
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('uikit::KitCollapsible', e)
+    return null
+  }
+}
+
+function writeToSession() {
+  if (!props.storeState) {
+    return
+  }
+  try {
+    sessionStorage.setItem(key.value, isCollapsed.value ? 'collapsed' : 'expanded')
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('uikit::KitCollapsible', e)
+  }
+}
+
+onBeforeMount(() => {
+  storedCollapsed.value = readFromSession()
+})
+onMounted(() => {
+  maxHeight.value = calculateMaxHeight(isCollapsed.value)
 })
 </script>
 <style scoped>

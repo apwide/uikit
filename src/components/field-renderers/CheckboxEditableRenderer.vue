@@ -6,20 +6,20 @@
     class="checkbox-edit"
     :placement="placement"
     @save-requested="onSaveRequested">
-    <Checkbox
-      slot="editor"
-      slot-scope="props"
-      size="large"
-      class="checkbox"
-      :checked="props.value"
-      :is-focused="props.isFocused"
-      :is-invalid="props.isInvalid"
-      :disabled="props.isLoading"
-      @input="props.input"
-      @focus="props.focus"
-      @blur="props.blur"
-      @confirm="props.confirm"
-      @keyup.esc="props.cancel" />
+    <template #editor="props">
+      <KitCheckbox
+        size="large"
+        class="checkbox"
+        :checked="props.value"
+        :is-focused="props.isFocused"
+        :is-invalid="props.isInvalid"
+        :disabled="props.isLoading"
+        @input="props.input"
+        @focus="props.focus"
+        @blur="props.blur"
+        @confirm="props.confirm"
+        @keyup.esc="props.cancel" />
+    </template>
     <slot>
       <CheckboxRenderer :value="value" />
     </slot>
@@ -27,33 +27,29 @@
   <CheckboxRenderer v-else :value="value" />
 </template>
 
-<script>
-import Checkbox from '../Checkbox/Checkbox'
-import InlineEdit from '../Form/InlineEdit'
-import CheckboxRenderer from './CheckboxRenderer'
+<script setup lang="ts">
+import KitCheckbox from '../Checkbox/KitCheckbox.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import CheckboxRenderer from './CheckboxRenderer.vue'
 
-export default {
-  name: 'KitCheckboxEditableRenderer',
-  components: { CheckboxRenderer, InlineEdit, Checkbox },
-  props: {
-    value: {
-      type: Boolean,
-      default: false
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    }
-  },
-  methods: {
-    onSaveRequested(value, callback) {
-      this.$emit('save-requested', value, callback)
-    }
-  }
+type Props = {
+  value?: boolean
+  editable?: boolean
+  placement: 'right'
+}
+
+withDefaults(defineProps<Props>(), {
+  value: false,
+  editable: true,
+  placement: 'right'
+})
+
+const emit = defineEmits<{
+  (event: 'save-requested', value: boolean, callback: () => boolean)
+}>()
+
+function onSaveRequested(value, callback) {
+  emit('save-requested', value, callback)
 }
 </script>
 <style scoped>

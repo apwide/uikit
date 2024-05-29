@@ -1,29 +1,29 @@
 <template>
   <div>
     <div class="buttons-group">
-      <Button v-tooltip.top="{ label: `I'm at the top` }"> Top </Button>
-      <Button v-tooltip.right="{ label: `I'm at the right` }"> Right </Button>
-      <Button v-tooltip.bottom="{ label: `I'm at the bottom` }"> Bottom </Button>
-      <Button v-tooltip.left="{ label: `I'm at the left` }"> Left </Button>
+      <KitButton v-tooltip.top="{ label: `I'm at the top` }"> Top </KitButton>
+      <KitButton v-tooltip.right="{ label: `I'm at the right` }"> Right </KitButton>
+      <KitButton v-tooltip.bottom="{ label: `I'm at the bottom` }"> Bottom </KitButton>
+      <KitButton v-tooltip.left="{ label: `I'm at the left` }"> Left </KitButton>
     </div>
     <div class="buttons-group">
-      <Button v-tooltip.right="{ label: 'Bigger offset here', offset: '0,20' }"> Custom offset </Button>
+      <KitButton v-tooltip.right="{ label: 'Bigger offset here', offset: '0,20' }"> Custom offset </KitButton>
     </div>
     <div class="buttons-group">
-      <Button v-tooltip.right="{ label: `Instant tooltip`, withDelay: false }"> Without delay </Button>
+      <KitButton v-tooltip.right="{ label: `Instant tooltip`, withDelay: false }"> Without delay </KitButton>
     </div>
     <div class="buttons-group">
-      <Button v-tooltip.top="{ label: currentTime }"> Dynamic label </Button>
+      <KitButton v-tooltip.top="{ label: currentTime }"> Dynamic label </KitButton>
     </div>
     <div class="buttons-group">
-      <Toggle v-model="enabled" />
-      <Button v-tooltip.top="{ label: `I'm enabled now!`, disabled: !enabled }">
+      <KitToggle v-model="enabled" />
+      <KitButton v-tooltip.top="{ label: `I'm enabled now!`, disabled: !enabled }">
         Disable using 'disabled' prop: disabled={{ !enabled }}
-      </Button>
+      </KitButton>
     </div>
     <div class="buttons-group">
-      <Toggle v-model="withLabel" />
-      <Button v-tooltip.top="label"> Disable using empty label: label="{{ label }}" </Button>
+      <KitToggle v-model="withLabel" />
+      <KitButton v-tooltip.top="label"> Disable using empty label: label="{{ label }}" </KitButton>
     </div>
     <div class="buttons-group">
       <div v-tooltip="`I'm on a div`">Tooltip on plain div</div>
@@ -31,37 +31,27 @@
   </div>
 </template>
 
-<script>
-import tooltip from '@/directives/tooltip'
-import Toggle from '@/components/Toggle/Toggle'
-import Button from '@/components/Button/Button'
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import KitToggle from '@/components/Toggle/KitToggle.vue'
+import KitButton from '@/components/Button/Button.vue'
 
-export default {
-  name: 'TooltipStory',
-  components: { Button, Toggle },
-  directives: { tooltip },
-  data() {
-    return {
-      currentTime: new Date().toUTCString(),
-      interval: undefined,
-      enabled: true,
-      withLabel: true
-    }
-  },
-  computed: {
-    label() {
-      return this.withLabel ? "I'm enabled now!" : undefined
-    }
-  },
-  mounted() {
-    this.interval = setInterval(() => {
-      this.currentTime = new Date().toUTCString()
-    }, 1000)
-  },
-  beforeDestroy() {
-    clearInterval(this.interval)
-  }
-}
+const currentTime = ref(new Date().toUTCString())
+const interval = ref()
+const enabled = ref(true)
+const withLabel = ref(true)
+
+const label = computed(() => (withLabel.value ? "I'm enabled now!" : undefined))
+
+onMounted(() => {
+  interval.value = setInterval(() => {
+    currentTime.value = new Date().toUTCString()
+  }, 1000)
+})
+
+onUnmounted(() => {
+  clearInterval(interval.value)
+})
 </script>
 
 <style scoped>

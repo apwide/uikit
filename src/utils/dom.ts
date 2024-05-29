@@ -10,3 +10,11 @@ export function closest(node: HTMLElement, classToFind: string): HTMLElement | n
   }
   return closest(node.parentElement, classToFind)
 }
+
+const uniqueIdBase = Math.floor(Math.random() * 1_000_000_000)
+let uniqueBaseCounter = 0
+
+export function uniqueId() {
+  uniqueBaseCounter += 1
+  return `kit-id-${uniqueIdBase + uniqueBaseCounter}`
+}

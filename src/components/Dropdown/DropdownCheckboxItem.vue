@@ -1,25 +1,29 @@
 <template>
-  <Checkbox class="dropdown-checkbox-item" :checked="checked" :value="value" @input="onInput">
+  <KitCheckbox class="dropdown-checkbox-item" :checked="checked" :value="value" @input="onInput">
     <span class="label-text">
       <slot />
     </span>
-    <Button
+    <KitButton
       v-if="isMulti && showOnlyButton"
       class="only-button"
       appearance="subtle"
       spacing="none"
       @click="onOnlyClicked">
       only
-    </Button>
-  </Checkbox>
+    </KitButton>
+  </KitCheckbox>
 </template>
 
 <script>
-import Checkbox from '../Checkbox/Checkbox'
-import Button from '../Button/Button'
+/**
+ * Cannot be moved to vue 2 setup as requires defineModel.
+ * It declares v-model to be bound to checked prop.
+ */
+import KitCheckbox from '../Checkbox/KitCheckbox.vue'
+import KitButton from '../Button/Button.vue'
 
 export default {
-  components: { Checkbox, Button },
+  components: { KitCheckbox, KitButton },
   model: {
     prop: 'checked',
     event: 'input'

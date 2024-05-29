@@ -1,5 +1,5 @@
 <template>
-  <label ref="checkbox" class="checkbox-wrapper" :for="id" tabindex="-1" :disabled="disabled">
+  <label ref="checkbox" class="kit-checkbox__wrapper" :for="id" tabindex="-1" :disabled="disabled">
     <input
       :id="id"
       ref="input"
@@ -10,13 +10,17 @@
       :disabled="disabled"
       @focus="onFocus"
       @blur="onBlur" />
-    <CheckboxIcon v-if="!indeterminate" class="icon" />
-    <CheckboxIndeterminateIcon v-else class="indeterminate" />
-    <span v-if="$slots['default']" class="input-label"><slot /></span>
+    <CheckboxIcon v-if="!indeterminate" class="kit-checkbox__icon" />
+    <CheckboxIndeterminateIcon v-else class="kit-checkbox__indeterminate" />
+    <span v-if="$slots['default']" class="kit-checkbox__input-label"><slot /></span>
   </label>
 </template>
 
 <script>
+/**
+ * Cannot be moved to vue 2 setup as requires defineModel.
+ * It declares v-model to be bound to checked prop.
+ */
 import CheckboxIndeterminateIcon from '../Icon/CheckboxIndeterminateIcon'
 import CheckboxIcon from '../Icon/CheckboxIcon'
 
@@ -105,61 +109,61 @@ input[type='checkbox'] {
   cursor: pointer;
 }
 
-.checkbox-wrapper {
+.kit-checkbox__wrapper {
   display: inline-flex;
   position: relative;
   cursor: pointer;
   outline: none;
 }
 
-.input-label {
+.kit-checkbox__input-label {
   padding: 2px 4px;
   display: flex;
   flex-grow: 1;
   min-width: 0;
 }
 
-input:checked + .icon >>> rect {
+input:checked + .kit-checkbox__icon >>> rect {
   color: #0052cc;
   stroke: #0052cc;
 }
 
-input + .icon >>> rect {
+input + .kit-checkbox__icon >>> rect {
   color: #fafbfc;
   stroke: #dfe1e6;
 }
 
-label:hover input:not(:checked):not(:disabled) + .icon >>> rect {
+label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> rect {
   fill: #ebecf0;
 }
 
-label:hover input:not(:checked):not(:disabled) + .icon >>> path {
+label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> path {
   fill: #ebecf0;
 }
 
-label:hover input:checked:not(:disabled) + .icon >>> rect {
+label:hover input:checked:not(:disabled) + .kit-checkbox__icon >>> rect {
   color: #0065ff;
   stroke: #0065ff;
 }
 
-input + .icon >>> path {
+input + .kit-checkbox__icon >>> path {
   fill: #fafbfc;
 }
 
-input:not([is-invalid]):focus + .icon >>> rect {
+input:not([is-invalid]):focus + .kit-checkbox__icon >>> rect {
   stroke: #4c9aff;
 }
 
-input[is-invalid] + .icon >>> rect {
+input[is-invalid] + .kit-checkbox__icon >>> rect {
   stroke: #ff5630;
 }
 
-input:checked[disabled] + .icon >>> rect {
+input:checked[disabled] + .kit-checkbox__icon >>> rect {
   stroke: #f4f5f7;
   color: #f4f5f7;
 }
 
-input:checked[disabled] + .icon >>> path {
+input:checked[disabled] + .kit-checkbox__icon >>> path {
   fill: #a5adba;
 }
 
@@ -169,7 +173,7 @@ label[disabled] input {
   color: rgb(151, 160, 175);
 }
 
-:not(.indeterminate) >>> rect {
+:not(.kit-checkbox__indeterminate) >>> rect {
   transition: 0.2s ease-in-out;
   stroke-width: 2px;
 }

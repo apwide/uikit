@@ -1,49 +1,41 @@
 <template>
   <div>
-    <Button @click="showDialog"> Show Dialog </Button>
-    <Modal
+    <KitButton @click="showDialog"> Show Dialog </KitButton>
+    <KitModal
       v-if="show"
       heading="Modal Basic"
       auto-focus
       :should-allow-submit="shouldAllowSubmit"
       @submit="onSubmit"
       @cancel="onCancel">
-      <p slot="content">
-        <Checkbox v-model="shouldAllowSubmit"> By checking agree and continue </Checkbox>
-      </p>
-    </Modal>
+      <template #content>
+        <p>{{ paragraph }}</p>
+        <KitCheckbox v-model="shouldAllowSubmit"> By checking agree and continue </KitCheckbox>
+      </template>
+    </KitModal>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
-import Modal from '@/components/Modal/Modal'
-import Button from '@/components/Button/Button'
-import Checkbox from '@/components/Checkbox/Checkbox'
+import { ref } from 'vue'
+import KitModal from '@/components/Modal/Modal.vue'
+import KitButton from '@/components/Button/Button.vue'
+import KitCheckbox from '@/components/Checkbox/KitCheckbox.vue'
 
 const paragraph = faker.lorem.paragraph()
 
-export default {
-  name: 'ModalPreventSubmitStory',
-  components: { Modal, Button, Checkbox },
-  data() {
-    return {
-      show: false,
-      shouldAllowSubmit: false,
-      paragraph
-    }
-  },
-  methods: {
-    onSubmit() {
-      console.log('submit!')
-      this.onCancel()
-    },
-    showDialog() {
-      this.show = true
-    },
-    onCancel() {
-      this.show = false
-    }
-  }
+const show = ref(false)
+const shouldAllowSubmit = ref(false)
+
+function onSubmit() {
+  console.log('submit!')
+  onCancel()
+}
+function showDialog() {
+  show.value = true
+}
+function onCancel() {
+  show.value = false
 }
 </script>
