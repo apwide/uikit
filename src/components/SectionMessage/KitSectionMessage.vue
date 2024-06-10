@@ -1,7 +1,7 @@
 <template>
   <section class="kit-section-message" :appearance="appearance">
-    <div class="kit-section-message__icon">
-      <component :is="`${appearance}-icon`" />
+    <div v-if="!hideIcon && Icon" class="kit-section-message__icon">
+      <Icon />
     </div>
     <div class="kit-section-message__content-wrapper">
       <h1 v-if="title" class="kit-section-message__title">
@@ -17,33 +17,42 @@
   </section>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
 import InfoIcon from '../Icon/InfoIcon'
 import WarningIcon from '../Icon/WarningIcon'
 import ErrorIcon from '../Icon/ErrorIcon'
 import CheckCircleIcon from '../Icon/CheckCircleIcon'
 import QuestionCircleIcon from '../Icon/QuestionCircleIcon'
 
-export default {
-  components: {
-    InfoIcon,
-    WarningIcon,
-    ErrorIcon,
-    'confirmation-icon': CheckCircleIcon,
-    'change-icon': QuestionCircleIcon
-  },
-  props: {
-    title: {
-      type: String,
-      default: undefined
-    },
-    appearance: {
-      type: String,
-      default: 'info',
-      validator: (value) => ['info', 'warning', 'error', 'confirmation', 'change'].includes(value)
-    }
-  }
+type SectionMessageAppearance = 'info' | 'warning' | 'error' | 'confirmation' | 'change' | 'setup'
+
+type Props = {
+  title: string
+  hideIcon?: boolean
+  appearance: SectionMessageAppearance
 }
+const props = withDefaults(defineProps<Props>(), {
+  appearance: 'info'
+})
+
+const Icon = computed(() => {
+  switch (props.appearance) {
+    case 'confirmation':
+      return CheckCircleIcon
+    case 'change':
+      return QuestionCircleIcon
+    case 'error':
+      return ErrorIcon
+    case 'warning':
+      return WarningIcon
+    case 'info':
+      return InfoIcon
+    case 'setup':
+      return InfoIcon
+  }
+  return undefined
+})
 </script>
 
 <style scoped>
@@ -58,6 +67,10 @@ export default {
   width: 40px;
   flex: 0 0 auto;
   color: rgb(7, 71, 166);
+}
+
+.kit-section-message[appearance='setup'] {
+  background-color: rgb(234, 230, 255);
 }
 
 .kit-section-message[appearance='warning'] {

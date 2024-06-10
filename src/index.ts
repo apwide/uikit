@@ -5,6 +5,7 @@ import KitSelect from '@components/Select/KitSelect.vue'
 import DropdownGroup from '@components/Dropdown/KitDropdownGroup.vue'
 import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
 import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
+import KitSectionMessage from '@components/SectionMessage/KitSectionMessage.vue'
 import Button from './components/Button/Button.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
@@ -22,7 +23,6 @@ import DropdownCheckboxItem from './components/Dropdown/DropdownCheckboxItem.vue
 import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue'
 import Menu from './components/Menu/Menu.vue'
 import InlineDialog from './components/InlineDialog/InlineDialog.vue'
-import SectionMessage from './components/SectionMessage/SectionMessage.vue'
 import KitTable from './components/Table/KitTable.vue'
 import Progress from './components/Progress/progress'
 import Avatar from './components/Avatar/Avatar.vue'
@@ -75,7 +75,7 @@ export {
   DatePicker as KitDatePicker,
   TimePicker as KitTimePicker,
   KitSelect,
-  SectionMessage as KitSectionMessage,
+  KitSectionMessage,
   Avatar as KitAvatar,
   Badge as KitBadge,
   ProgressBar as KitProgressBar,
