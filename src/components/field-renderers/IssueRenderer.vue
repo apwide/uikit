@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import QuestionIcon from '../Icon/QuestionIcon'
+import QuestionIcon from '../Icon/aui/QuestionIcon'
 import IssueStatusRenderer from './IssueStatusRenderer'
 import IssuePriorityRenderer from './IssuePriorityRenderer'
 import IssueTypeRenderer from './IssueTypeRenderer'

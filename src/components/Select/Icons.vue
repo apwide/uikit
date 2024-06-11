@@ -15,8 +15,8 @@
 
 <script>
 import Spinner from '../Spinner/Spinner'
-import Caret from '../Icon/HipchatChevronDownIcon'
-import Clear from '../Icon/EditorErrorIcon'
+import Caret from '../Icon/aui/HipchatChevronDownIcon'
+import Clear from '../Icon/aui/EditorErrorIcon'
 
 export default {
   name: 'KitIcons',

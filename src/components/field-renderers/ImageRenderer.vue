@@ -15,7 +15,7 @@
 
 <script>
 import KitButton from '../Button/KitButton.vue'
-import SearchIcon from '../Icon/SearchIcon'
+import SearchIcon from '../Icon/aui/SearchIcon'
 
 export default {
   name: 'KitImageRenderer',

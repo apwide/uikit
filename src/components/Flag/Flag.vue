@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import ChevronDownIcon from '../Icon/ChevronDownIcon'
-import CheckCircleIcon from '../Icon/CheckCircleIcon'
-import InfoIcon from '../Icon/InfoIcon'
-import WarningIcon from '../Icon/WarningIcon'
-import ErrorIcon from '../Icon/ErrorIcon'
-import EditorCloseIcon from '../Icon/EditorCloseIcon'
+import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
+import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
+import InfoIcon from '../Icon/aui/InfoIcon'
+import WarningIcon from '../Icon/aui/WarningIcon'
+import ErrorIcon from '../Icon/aui/ErrorIcon'
+import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
 
 export default {
   name: 'KitFlag',

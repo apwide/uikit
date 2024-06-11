@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import LockFilledIcon from '../Icon/LockFilledIcon'
-import UnlockFilledIcon from '../Icon/UnlockFilledIcon'
+import LockFilledIcon from '../Icon/aui/LockFilledIcon'
+import UnlockFilledIcon from '../Icon/aui/UnlockFilledIcon'
 
 export default {
   name: 'KitLockSwitch',
