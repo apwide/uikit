@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import ChevronRightIcon from '../Icon/ChevronRightIcon'
+import ChevronRightIcon from '../Icon/aui/ChevronRightIcon'
 import Label from './Label'
 
 export default {

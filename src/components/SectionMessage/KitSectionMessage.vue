@@ -19,18 +19,19 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import InfoIcon from '../Icon/InfoIcon'
-import WarningIcon from '../Icon/WarningIcon'
-import ErrorIcon from '../Icon/ErrorIcon'
-import CheckCircleIcon from '../Icon/CheckCircleIcon'
-import QuestionCircleIcon from '../Icon/QuestionCircleIcon'
+import MagicStick from '@components/Icon/MagicStick.vue'
+import InfoIcon from '../Icon/aui/InfoIcon'
+import WarningIcon from '../Icon/aui/WarningIcon'
+import ErrorIcon from '../Icon/aui/ErrorIcon'
+import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
+import QuestionCircleIcon from '../Icon/aui/QuestionCircleIcon'
 
 type SectionMessageAppearance = 'info' | 'warning' | 'error' | 'confirmation' | 'change' | 'setup'
 
 type Props = {
-  title: string
+  title?: string
   hideIcon?: boolean
-  appearance: SectionMessageAppearance
+  appearance?: SectionMessageAppearance
 }
 const props = withDefaults(defineProps<Props>(), {
   appearance: 'info'
@@ -49,7 +50,7 @@ const Icon = computed(() => {
     case 'info':
       return InfoIcon
     case 'setup':
-      return InfoIcon
+      return MagicStick
   }
   return undefined
 })
@@ -71,6 +72,14 @@ const Icon = computed(() => {
 
 .kit-section-message[appearance='setup'] {
   background-color: rgb(234, 230, 255);
+}
+
+.kit-section-message[appearance='setup'] .kit-section-message__icon {
+  color: rgb(101, 84, 192);
+}
+
+.kit-section-message[appearance='setup'] .kit-section-message__actions >>> button[appearance='primary'] {
+  background-color: rgb(101, 84, 192);
 }
 
 .kit-section-message[appearance='warning'] {

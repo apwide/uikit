@@ -41,10 +41,10 @@
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import KitButton from '@components/Button/KitButton.vue'
+import SearchIcon from '@components/Icon/aui/SearchIcon'
 import FieldGroup from '../../src/components/Form/FieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
 import KitIcon from '../../src/components/Icon/KitIcon.vue'
-import SearchIcon from '@/components/Icon/SearchIcon'
 
 const value = ref()
 </script>

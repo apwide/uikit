@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { Column } from '@components/Table/types'
 import { computed, useSlots } from 'vue'
-import ChevronDownIcon from '../Icon/ChevronDownIcon'
-import ChevronUpIcon from '../Icon/ChevronUpIcon'
+import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
+import ChevronUpIcon from '../Icon/aui/ChevronUpIcon'
 
 type Props = {
   column: Column

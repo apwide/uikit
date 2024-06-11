@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import CrossIcon from '../Icon/CrossIcon'
+import CrossIcon from '../Icon/aui/CrossIcon'
 import PromisedContentLoader from '../common/PromisedContentLoader'
 import UserEditableRenderer from './UserEditableRenderer'
 import UserRenderer from './UserRenderer'

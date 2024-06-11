@@ -13,5 +13,5 @@
 <script setup lang="ts">
 import KitButton from '@components/Button/KitButton.vue'
 import CopyToClipboard from '../../src/components/CopyToClipboard/CopyToClipboard.vue'
-import EditorLinkIcon from '../../src/components/Icon/EditorLinkIcon'
+import EditorLinkIcon from '../../src/components/Icon/aui/EditorLinkIcon'
 </script>

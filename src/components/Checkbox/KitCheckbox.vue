@@ -21,8 +21,8 @@
  * Cannot be moved to vue 2 setup as requires defineModel.
  * It declares v-model to be bound to checked prop.
  */
-import CheckboxIndeterminateIcon from '../Icon/CheckboxIndeterminateIcon'
-import CheckboxIcon from '../Icon/CheckboxIcon'
+import CheckboxIndeterminateIcon from '../Icon/aui/CheckboxIndeterminateIcon'
+import CheckboxIcon from '../Icon/aui/CheckboxIcon'
 
 export default {
   name: 'KitCheckbox',

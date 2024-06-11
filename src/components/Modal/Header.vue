@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import WarningIcon from '../Icon/WarningIcon'
-import ErrorIcon from '../Icon/ErrorIcon'
+import WarningIcon from '../Icon/aui/WarningIcon'
+import ErrorIcon from '../Icon/aui/ErrorIcon'
 
 export default {
   name: 'KitHeader',

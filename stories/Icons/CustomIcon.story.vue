@@ -1,15 +1,15 @@
 <template>
-  <IconWrapper size="small">
+  <KitIconWrapper size="small">
     <Trash />
-  </IconWrapper>
+  </KitIconWrapper>
 </template>
 
 <script>
+import KitIconWrapper from '@components/Icon/IconWrapper.vue'
 import Trash from '../assets/svgs/trash.svg'
-import IconWrapper from '@/components/Icon/IconWrapper'
 
 export default {
   name: 'CustomIconStory',
-  components: { IconWrapper, Trash }
+  components: { KitIconWrapper, Trash }
 }
 </script>

@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import EditorDoneIcon from '../Icon/EditorDoneIcon'
-import EditorCloseIcon from '../Icon/EditorCloseIcon'
+import EditorDoneIcon from '../Icon/aui/EditorDoneIcon'
+import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
 import KitButton from '../Button/KitButton.vue'
 
 export default {

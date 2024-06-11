@@ -45,7 +45,7 @@
 import Input from '@/components/Form/Input'
 import FieldGroup from '@/components/Form/FieldGroup'
 import InlineDialog from '@/components/InlineDialog/InlineDialog'
-import EditorInfoIcon from '@/components/Icon/EditorInfoIcon'
+import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon'
 
 export default {
   name: 'InputStory',

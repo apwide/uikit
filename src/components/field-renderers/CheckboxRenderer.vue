@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Checked from '../Icon/EditorDoneIcon'
+import Checked from '../Icon/aui/EditorDoneIcon'
 
 export default {
   name: 'KitCheckboxRenderer',
