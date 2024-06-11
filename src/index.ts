@@ -6,7 +6,7 @@ import DropdownGroup from '@components/Dropdown/KitDropdownGroup.vue'
 import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
 import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
 import KitSectionMessage from '@components/SectionMessage/KitSectionMessage.vue'
-import Button from './components/Button/Button.vue'
+import KitButton from '@components/Button/KitButton.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
 import TextArea from './components/Form/TextArea.vue'
@@ -59,7 +59,7 @@ export {
   KitIcon,
   KitRadioGroup,
   KitCollapsible,
-  Button as KitButton,
+  KitButton,
   KitDropdown,
   DropdownItem as KitDropdownItem,
   DropdownGroup as KitDropdownGroup,

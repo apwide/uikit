@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeMount, ref, watch } from 'vue'
-import KitButton from '../Button/Button.vue'
+import KitButton from '../Button/KitButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 
 type Props = {

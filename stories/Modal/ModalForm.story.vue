@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button @click="showDialog"> Show Dialog </Button>
+    <KitButton @click="showDialog"> Show Dialog </KitButton>
     <Modal v-if="show" heading="Form Demo" @submit="onSubmit" @cancel="onCancel">
       <div slot="content">
         <FieldGroup label="Title" required>
@@ -19,11 +19,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import KitButton from '@components/Button/KitButton.vue'
 import Modal from '@/components/Modal/Modal.vue'
 import KitSelect from '@/components/Select/KitSelect.vue'
 import Input from '@/components/Form/Input.vue'
 import FieldGroup from '@/components/Form/FieldGroup.vue'
-import Button from '@/components/Button/Button.vue'
 
 const title = ref('')
 const type = ref('')

@@ -9,54 +9,57 @@
     <div class="wrapper">
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" :appearance="appearance">
+          <KitButton :is-loading="isLoading" :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" :is-disabled="true" :appearance="appearance">
+          <KitButton :is-loading="isLoading" :is-disabled="true" :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" :is-selected="true" :appearance="appearance">
+          <KitButton :is-loading="isLoading" :is-selected="true" :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
       <div class="buttons">
         <div v-for="appearance in appearances" :key="appearance">
-          <Button :is-loading="isLoading" round :appearance="appearance">
+          <KitButton :is-loading="isLoading" round :appearance="appearance">
             {{ capitalize(appearance) }}
-          </Button>
+          </KitButton>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import Button from '@/components/Button/Button'
+<script setup lang="ts">
+import KitButton from '@components/Button/KitButton.vue'
+import { ref } from 'vue'
+import { KitButtonAppearance } from '@components/Button/KitButton.types'
 
-export default {
-  name: 'ButtonAppearance',
-  components: { Button },
-  data() {
-    return {
-      appearances: ['default', 'primary', 'link', 'subtle', 'subtle-link', 'warning', 'danger', 'help'],
-      isLoading: false,
-      isSelected: false
-    }
-  },
-  methods: {
-    capitalize(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-  }
+const appearances = [
+  'default',
+  'primary',
+  'link',
+  'subtle',
+  'subtle-link',
+  'warning',
+  'danger',
+  'help'
+] as KitButtonAppearance[]
+
+const isLoading = ref(false)
+const isSelected = ref(false)
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 </script>
 

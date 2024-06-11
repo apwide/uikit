@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import faker from 'faker'
+import KitButton from '@components/Button/KitButton.vue'
 import KitTable from '@/components/Table/KitTable.vue'
-import KitButton from '@/components/Button/Button.vue'
 
 const columns = [
   {

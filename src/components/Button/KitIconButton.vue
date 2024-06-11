@@ -1,5 +1,5 @@
 <template>
-  <Button
+  <KitButton
     appearance="subtle"
     :spacing="spacing"
     class="kit-icon-button"
@@ -10,7 +10,7 @@
       <slot />
       <span class="kit-screen-reader">{{ title }}</span>
     </template>
-  </Button>
+  </KitButton>
 </template>
 
 <style scoped>
@@ -31,22 +31,16 @@
   width: 1px;
 }
 </style>
-<script>
-import Vue from 'vue'
-import Button from './Button'
+<script setup lang="ts">
+import { KitButtonSpacing } from '@components/Button/KitButton.types'
+import KitButton from './KitButton.vue'
 
-export default Vue.extend({
-  name: 'KitIconButton',
-  components: { Button },
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    spacing: {
-      type: String,
-      default: 'default'
-    }
-  }
+type Props = {
+  title: string
+  spacing?: KitButtonSpacing
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  spacing: 'default'
 })
 </script>

@@ -1,34 +1,28 @@
 <template>
   <div>
-    <Button appearance="primary" @click="start"> Start </Button>
-    <Button @click="finish"> Finish </Button>
+    <KitButton appearance="primary" @click="start"> Start </KitButton>
+    <KitButton @click="finish"> Finish </KitButton>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import KitButton from '@components/Button/KitButton.vue'
+import { onMounted, ref } from 'vue'
 import Progress from '@/components/Progress/progress'
-import Button from '@/components/Button/Button'
 
-export default {
-  name: 'ProgressStory',
-  components: { Button },
-  data() {
-    return {
-      progress: undefined
-    }
-  },
-  mounted() {
-    this.progress = new Progress()
-  },
-  methods: {
-    start() {
-      this.progress.start()
-    },
-    finish() {
-      this.progress.finish()
-    }
-  }
+const progress = ref<Progress>()
+
+function start() {
+  progress.value.start()
 }
+
+function finish() {
+  progress.value.finish()
+}
+
+onMounted(() => {
+  progress.value = new Progress()
+})
 </script>
 
 <style scoped></style>

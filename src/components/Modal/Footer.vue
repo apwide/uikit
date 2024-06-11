@@ -1,25 +1,25 @@
 <template>
   <div class="kit-modal-footer">
-    <Button
+    <KitButton
       :auto-focus="autoFocus"
       type="submit"
       :is-disabled="pending || !shouldAllowSubmit"
       :is-loading="pending"
       :appearance="appearance">
       {{ submit }}
-    </Button>
-    <Button v-if="cancel" appearance="subtle" :is-disabled="pending" @click="onCancel">
+    </KitButton>
+    <KitButton v-if="cancel" appearance="subtle" :is-disabled="pending" @click="onCancel">
       {{ cancel }}
-    </Button>
+    </KitButton>
   </div>
 </template>
 
 <script>
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 
 export default {
   name: 'KitFooter',
-  components: { Button },
+  components: { KitButton },
   props: {
     appearance: {
       type: String,

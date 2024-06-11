@@ -20,7 +20,7 @@
  * It declares v-model to be bound to checked prop.
  */
 import KitCheckbox from '../Checkbox/KitCheckbox.vue'
-import KitButton from '../Button/Button.vue'
+import KitButton from '../Button/KitButton.vue'
 
 export default {
   components: { KitCheckbox, KitButton },

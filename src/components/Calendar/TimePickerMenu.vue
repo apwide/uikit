@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import KitButton from '../Button/Button.vue'
+import KitButton from '../Button/KitButton.vue'
 
 function padStart(value, length, char) {
   while (`${value}`.length < length) {

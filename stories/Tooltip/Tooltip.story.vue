@@ -6,24 +6,16 @@
       append-to-body
       :placement="placement"
       label="Hello World!">
-      <Button>Hover over me!</Button>
+      <KitButton>Hover over me!</KitButton>
     </Tooltip>
   </div>
 </template>
 
-<script>
-import Tooltip from '@/components/Tooltip/Tooltip'
-import Button from '@/components/Button/Button'
+<script setup lang="ts">
+import KitButton from '@components/Button/KitButton.vue'
+import Tooltip from '@/components/Tooltip/Tooltip.vue'
 
-export default {
-  name: 'TooltipStory',
-  components: { Tooltip, Button },
-  data() {
-    return {
-      placements: ['top', 'right', 'bottom', 'left']
-    }
-  }
-}
+const placements = ['top', 'right', 'bottom', 'left']
 </script>
 <style scoped>
 .buttons-group {

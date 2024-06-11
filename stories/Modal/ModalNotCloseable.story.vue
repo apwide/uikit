@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button data-cy="show-modal" @click="showDialog"> Show Dialog </Button>
+    <KitButton data-cy="show-modal" @click="showDialog"> Show Dialog </KitButton>
     <Modal
       v-if="show"
       heading="Modal Basic"
@@ -16,33 +16,23 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
-import Modal from '@/components/Modal/Modal'
-import Button from '@/components/Button/Button'
+import KitButton from '@components/Button/KitButton.vue'
+import { ref } from 'vue'
+import Modal from '@/components/Modal/Modal.vue'
 
 const paragraph = faker.lorem.paragraph()
+const show = ref(false)
 
-export default {
-  name: 'ModalBasicStory',
-  components: { Modal, Button },
-  data() {
-    return {
-      show: false,
-      paragraph
-    }
-  },
-  methods: {
-    onSubmit() {
-      console.log('submit!')
-      this.onCancel()
-    },
-    showDialog() {
-      this.show = true
-    },
-    onCancel() {
-      this.show = false
-    }
-  }
+function onSubmit() {
+  console.log('submit!')
+  onCancel()
+}
+function showDialog() {
+  show.value = true
+}
+function onCancel() {
+  show.value = false
 }
 </script>

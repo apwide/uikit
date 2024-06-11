@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button @click="showDialog"> Show Dialog </Button>
+    <KitButton @click="showDialog"> Show Dialog </KitButton>
     <Modal
       v-if="show"
       heading="Modal Warning"
@@ -15,34 +15,24 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
+import KitButton from '@components/Button/KitButton.vue'
+import { ref } from 'vue'
 import Modal from '@/components/Modal/Modal'
-import Button from '@/components/Button/Button'
 
 const paragraph = faker.lorem.paragraph()
+const appearance = 'warning'
+const show = ref(false)
 
-export default {
-  name: 'ModalWarningStory',
-  components: { Modal, Button },
-  data() {
-    return {
-      show: false,
-      appearance: 'warning',
-      paragraph
-    }
-  },
-  methods: {
-    onSubmit() {
-      console.log('submit!')
-      this.onCancel()
-    },
-    showDialog() {
-      this.show = true
-    },
-    onCancel() {
-      this.show = false
-    }
-  }
+function onSubmit() {
+  console.log('submit!')
+  onCancel()
+}
+function showDialog() {
+  show.value = true
+}
+function onCancel() {
+  show.value = false
 }
 </script>

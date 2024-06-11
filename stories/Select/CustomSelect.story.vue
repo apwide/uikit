@@ -13,12 +13,12 @@
           <SearchIcon size="small" />
         </template>
         <template #custom-action>
-          <Button appearance="subtle" class="create">
+          <KitButton appearance="subtle" class="create">
             <template #icon-before>
               <KitIcon type="plus" size="xsmall" />
             </template>
             Create Issue
-          </Button>
+          </KitButton>
         </template>
       </KitSelect>
     </FieldGroup>
@@ -40,10 +40,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
+import KitButton from '@components/Button/KitButton.vue'
 import FieldGroup from '../../src/components/Form/FieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
 import KitIcon from '../../src/components/Icon/KitIcon.vue'
-import Button from '@/components/Button/Button.vue'
 import SearchIcon from '@/components/Icon/SearchIcon'
 
 const value = ref()

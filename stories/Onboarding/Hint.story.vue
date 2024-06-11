@@ -16,7 +16,7 @@ import { Component, ref } from 'vue'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
 import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
 import KitDropdownItem from '@components/Dropdown/DropdownItem.vue'
-import KitButton from '@/components/Button/Button.vue'
+import KitButton from '@components/Button/KitButton.vue'
 
 const showSpolight = ref(false)
 const menuRef = ref<Component>()

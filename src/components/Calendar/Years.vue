@@ -3,9 +3,9 @@
     <tbody>
       <tr v-for="(half_decade, i) in decade" :key="i">
         <td v-for="year in half_decade" :key="year">
-          <Button appearance="subtle" class="kit-calendar-year" @click="onYearSelected(year)">
+          <KitButton appearance="subtle" class="kit-calendar-year" @click="onYearSelected(year)">
             {{ year }}
-          </Button>
+          </KitButton>
         </td>
       </tr>
     </tbody>
@@ -14,13 +14,13 @@
 
 <script>
 import { chunk } from '../../utils/utils'
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 
 const HALF_DECADE = 5
 
 export default {
   name: 'KitYears',
-  components: { Button },
+  components: { KitButton },
   props: {
     yearsOfDecade: {
       type: Array,

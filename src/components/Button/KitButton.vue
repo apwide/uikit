@@ -20,11 +20,12 @@
 
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue'
+import { KitButtonAppearance, KitButtonSpacing } from '@components/Button/KitButton.types'
 import Spinner from '../Spinner/Spinner.vue'
 
 type Props = {
-  appearance?: string
-  spacing?: string
+  appearance?: KitButtonAppearance
+  spacing?: KitButtonSpacing
   isSelected?: boolean
   isDisabled?: boolean
   autoFocus?: boolean
@@ -65,6 +66,7 @@ onMounted(async () => {
 button {
   font-size: 14px;
   align-items: baseline;
+  background: none;
   border-radius: 3px;
   border-width: 0;
   box-sizing: border-box;
@@ -160,16 +162,15 @@ button:focus {
 
 /*default*/
 button[appearance='default'] {
-  background: #f6f7f8;
+  background-color: #f6f7f8;
   color: #505f79;
 }
 
 button[appearance='default']:not([disabled]):not([selected]):hover {
-  background: #efeff2;
+  background-color: #efeff2;
 }
 
 button[appearance='default']:not([disabled]):not([selected]):active {
-  /*background: #d2e6ff;*/
   background-color: rgba(179, 212, 255, 0.6);
   color: #0052cc;
 }
@@ -180,17 +181,17 @@ button[appearance='default']:active >>> svg {
 
 /*primary*/
 button[appearance='primary'] {
-  background: #0052cc;
+  background-color: #0052cc;
   color: #ffffff;
   font-weight: 600;
 }
 
 button[appearance='primary']:not([disabled]):not([selected]):hover {
-  background: #0065ff;
+  background-color: #0065ff;
 }
 
 button[appearance='primary']:not([disabled]):not([selected]):active {
-  background: #0747a6;
+  background-color: #0747a6;
 }
 
 button[appearance='primary'][loading] >>> .spinner {
@@ -224,7 +225,7 @@ button[appearance='subtle']:not([disabled]):not([selected]):hover {
 }
 
 button[appearance='subtle']:not([disabled]):not([selected]):active {
-  background: rgba(179, 212, 255, 0.6);
+  background-color: rgba(179, 212, 255, 0.6);
   color: #0052cc;
 }
 
@@ -246,7 +247,7 @@ button[appearance='subtle-link']:not([disabled]):not([selected]):active {
 
 /*warning*/
 button[appearance='warning'] {
-  background: #ffab00;
+  background-color: #ffab00;
   color: #172b4d;
 }
 
@@ -254,13 +255,13 @@ button:focus[appearance='warning'] {
   box-shadow: #ff8b00 0 0 0 2px;
 }
 button[appearance='warning']:not([disabled]):not([selected]):hover {
-  background: #ffc400;
+  background-color: #ffc400;
 }
 
 button[appearance='warning']:not([disabled]):not([selected]):active,
 button[appearance='warning'][selected],
 button[appearance='warning'][selected]:hover {
-  background: #ff991f;
+  background-color: #ff991f;
   color: #172b4d;
 }
 
@@ -272,7 +273,7 @@ button[appearance='warning'][selected]:hover >>> svg {
 
 /*danger*/
 button[appearance='danger'] {
-  background: #de350b;
+  background-color: #de350b;
   color: #ffffff;
 }
 
@@ -281,13 +282,13 @@ button:focus[appearance='danger'] {
 }
 
 button[appearance='danger']:not([disabled]):not([selected]):hover {
-  background: #ff5630;
+  background-color: #ff5630;
 }
 
 button[appearance='danger']:not([disabled]):not([selected]):active,
 button[appearance='danger'][selected],
 button[appearance='danger'][selected]:hover {
-  background: #bf2600;
+  background-color: #bf2600;
 }
 
 button[appearance='danger'][loading] >>> .spinner {
@@ -296,7 +297,7 @@ button[appearance='danger'][loading] >>> .spinner {
 
 /*help*/
 button[appearance='help'] {
-  background: #413394;
+  background-color: #413394;
   color: #ffffff;
 }
 
@@ -305,13 +306,13 @@ button:focus[appearance='help'] {
 }
 
 button[appearance='help']:not([disabled]):not([selected]):hover {
-  background: #6252bf;
+  background-color: #6252bf;
 }
 
 button[appearance='help']:not([disabled]):not([selected]):active,
 button[appearance='help'][selected],
 button[appearance='help'][selected]:hover {
-  background: #352a8dff;
+  background-color: #352a8dff;
 }
 
 button[appearance='help'][loading] >>> .spinner {
@@ -321,7 +322,7 @@ button[appearance='help'][loading] >>> .spinner {
 button[selected],
 button[selected]:hover,
 button[selected]:active {
-  background: #253858;
+  background-color: #253858;
   color: rgb(244, 245, 247);
   text-decoration: none;
 }
@@ -347,7 +348,7 @@ button[loading][disabled] >>> .spinner {
 }
 
 button[disabled]:not([appearance='subtle-link']):not([appearance='link']):not([appearance='subtle']) {
-  background: rgb(245 246 248);
+  background-color: rgb(245 246 248);
 }
 
 button::-moz-focus-inner,

@@ -1,18 +1,13 @@
 <template>
   <div class="buttons">
-    <Button>Default</Button>
-    <Button spacing="compact">Compact</Button>
-    <Button spacing="none">None</Button>
+    <KitButton>Default</KitButton>
+    <KitButton spacing="compact">Compact</KitButton>
+    <KitButton spacing="none">None</KitButton>
   </div>
 </template>
 
-<script>
-import Button from '@/components/Button/Button'
-
-export default {
-  name: 'ButtonSpacing',
-  components: { Button }
-}
+<script setup lang="ts">
+import KitButton from '@components/Button/KitButton.vue'
 </script>
 
 <style scoped></style>

@@ -1,6 +1,6 @@
 <template>
   <div class="kit-buttons-wrapper">
-    <Button
+    <KitButton
       class="kit-box-shadow-wrapper kit-buttons-wrapper__ok"
       data-cy="submit-button"
       spacing="none"
@@ -10,8 +10,8 @@
       <template #icon-before>
         <EditorDoneIcon size="small" />
       </template>
-    </Button>
-    <Button
+    </KitButton>
+    <KitButton
       class="kit-box-shadow-wrapper kit-buttons-wrapper__cancel"
       data-cy="cancel-button"
       spacing="none"
@@ -21,20 +21,20 @@
       <template #icon-before>
         <EditorCloseIcon size="small" />
       </template>
-    </Button>
+    </KitButton>
   </div>
 </template>
 
 <script>
 import EditorDoneIcon from '../Icon/EditorDoneIcon'
 import EditorCloseIcon from '../Icon/EditorCloseIcon'
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 
 export default {
   name: 'KitInlineEditButtons',
   components: {
     EditorDoneIcon,
-    Button,
+    KitButton,
     EditorCloseIcon
   },
   methods: {

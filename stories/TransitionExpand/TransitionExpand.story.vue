@@ -21,8 +21,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import KitButton from '@components/Button/KitButton.vue'
 import KitTransitionExpand from '@/components/common/KitTransitionExpand.vue'
-import KitButton from '@/components/Button/Button.vue'
 import KitCheckbox from '@/components/Checkbox/KitCheckbox.vue'
 import KitFieldGroup from '@/components/Form/FieldGroup.vue'
 

@@ -1,12 +1,12 @@
 <template>
   <div ref="dropdownContainer" :full-width="fullWidth" class="dropdown-container">
     <slot v-if="slots.trigger" :is-disabled="isDisabled" :is-open="open" :toggle="onTriggerClick" name="trigger" />
-    <Button v-else :appearance="appearance" :is-disabled="isDisabled" :is-selected="open" @click="onTriggerClick">
+    <KitButton v-else :appearance="appearance" :is-disabled="isDisabled" :is-selected="open" @click="onTriggerClick">
       {{ label }}
       <template #icon-after>
         <ChevronDownIcon />
       </template>
-    </Button>
+    </KitButton>
 
     <Popup
       ref="menu"
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref, useSlots, watch } from 'vue'
-import Button from '../Button/Button.vue'
+import KitButton from '../Button/KitButton.vue'
 import ChevronDownIcon from '../Icon/ChevronDownIcon'
 import Popup from '../common/Popup.vue'
 

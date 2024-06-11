@@ -1,6 +1,6 @@
 <template>
   <td class="kit-calendar-day" :highlighted="isHighlighted" :range-start="isRangeStart" :range-end="isRangeEnd">
-    <Button
+    <KitButton
       appearance="subtle"
       class="kit-calendar-day__date"
       :today="day.isToday"
@@ -9,16 +9,16 @@
       :is-selected="day.isSelected"
       @click.stop="onDateSelected">
       {{ date }}
-    </Button>
+    </KitButton>
   </td>
 </template>
 
 <script>
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 
 export default {
   name: 'KitDay',
-  components: { Button },
+  components: { KitButton },
   props: {
     day: {
       type: Object,

@@ -4,9 +4,9 @@
     <div v-else class="placeholder" :style="{ width: `${placeholderSize}px`, height: `${placeholderSize}px` }" />
     <div v-if="showActions && (url || $slots.actions)" class="actions">
       <a v-if="url && zoomable" :href="url" target="_blank">
-        <Button class="action-button" appearance="subtle">
+        <KitButton class="action-button" appearance="subtle">
           <SearchIcon />
-        </Button>
+        </KitButton>
       </a>
       <slot name="actions" />
     </div>
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 import SearchIcon from '../Icon/SearchIcon'
 
 export default {
   name: 'KitImageRenderer',
-  components: { Button, SearchIcon },
+  components: { KitButton, SearchIcon },
   props: {
     url: {
       type: String,

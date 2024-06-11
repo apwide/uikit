@@ -3,9 +3,9 @@
     <span v-for="(value, i) in visibleValues" :key="i" ref="tag" class="tag" :title="value">
       {{ value }}
     </span>
-    <Button v-if="hiddenValues.length > 0" ref="target" spacing="none" :is-selected="isOpen" @click="toggleDropdown">
+    <KitButton v-if="hiddenValues.length > 0" ref="target" spacing="none" :is-selected="isOpen" @click="toggleDropdown">
       +{{ hiddenValues.length }}
-    </Button>
+    </KitButton>
     <Popper v-if="isOpen" ref="popper" :target-element="$refs.target.$el" offset="0,5" placement="bottom-end">
       <div ref="dropdown" class="dropdown-list">
         <div v-for="(value, i) in hiddenValues" :key="i" class="item" :title="value">
@@ -19,11 +19,11 @@
 <script>
 import pDebounce from 'p-debounce'
 import Popper from '../Popper/Popper'
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 
 export default {
   name: 'KitMultiSelectRenderer',
-  components: { Popper, Button },
+  components: { Popper, KitButton },
   props: {
     selectedValues: {
       type: Array,

@@ -15,8 +15,8 @@
           <Input v-model="value" />
         </FieldGroup>
         <div class="buttons">
-          <Button>Skip</Button>
-          <Button appearance="primary"> Send </Button>
+          <KitButton>Skip</KitButton>
+          <KitButton appearance="primary"> Send </KitButton>
         </div>
       </div>
     </Flag>
@@ -31,31 +31,19 @@
   </div>
 </template>
 
-<script>
-import Flag from '@/components/Flag/Flag'
-import Input from '@/components/Form/Input'
-import Button from '@/components/Button/Button'
-import FieldGroup from '@/components/Form/FieldGroup'
+<script setup lang="ts">
+import KitButton from '@components/Button/KitButton.vue'
+import { ref } from 'vue'
+import Flag from '@/components/Flag/Flag.vue'
+import Input from '@/components/Form/Input.vue'
+import FieldGroup from '@/components/Form/FieldGroup.vue'
 
-export default {
-  name: 'NotificationStory',
-  components: {
-    Flag,
-    Input,
-    FieldGroup,
-    Button
-  },
-  data() {
-    return {
-      title: 'Welcome to the jungle',
-      description: 'We got fun and games. We got everything you want honey, we know the names.',
-      actions: [{ content: 'Show me', href: 'http://google.com' }, { content: 'No thanks' }],
-      appearances: ['error', 'info', 'success', 'warning'],
-      value: '',
-      show: true
-    }
-  }
-}
+const title = ref('Welcome to the jungle')
+const description = ref('We got fun and games. We got everything you want honey, we know the names.')
+const actions = [{ content: 'Show me', href: 'http://google.com' }, { content: 'No thanks' }]
+const appearances = ['error', 'info', 'success', 'warning']
+const value = ref('')
+const show = ref(true)
 </script>
 
 <style scoped>

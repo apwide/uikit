@@ -2,21 +2,16 @@
   <div style="display: flex; align-items: center; gap: 20px">
     <CopyToClipboard text="text" />
     <CopyToClipboard text="text" spacing="none" placement="right">
-      <Button appearance="subtle">
+      <KitButton appearance="subtle">
         <EditorLinkIcon />
-      </Button>
+      </KitButton>
     </CopyToClipboard>
     <CopyToClipboard text="text" placement="right"> Copy </CopyToClipboard>
   </div>
 </template>
 
-<script>
-import Button from '../../src/components/Button/Button'
-import CopyToClipboard from '../../src/components/CopyToClipboard/CopyToClipboard'
+<script setup lang="ts">
+import KitButton from '@components/Button/KitButton.vue'
+import CopyToClipboard from '../../src/components/CopyToClipboard/CopyToClipboard.vue'
 import EditorLinkIcon from '../../src/components/Icon/EditorLinkIcon'
-
-export default {
-  name: 'CopyToClipboardStory',
-  components: { Button, CopyToClipboard, EditorLinkIcon }
-}
 </script>

@@ -1,0 +1,10 @@
+export type KitButtonSpacing = 'default' | 'compact' | 'none'
+export type KitButtonAppearance =
+  | 'default'
+  | 'primary'
+  | 'link'
+  | 'subtle'
+  | 'subtle-link'
+  | 'warning'
+  | 'danger'
+  | 'help'

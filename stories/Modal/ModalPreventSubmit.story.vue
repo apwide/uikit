@@ -19,8 +19,8 @@
 <script setup lang="ts">
 import faker from 'faker'
 import { ref } from 'vue'
+import KitButton from '@components/Button/KitButton.vue'
 import KitModal from '@/components/Modal/Modal.vue'
-import KitButton from '@/components/Button/Button.vue'
 import KitCheckbox from '@/components/Checkbox/KitCheckbox.vue'
 
 const paragraph = faker.lorem.paragraph()

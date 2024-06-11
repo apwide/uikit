@@ -2,7 +2,7 @@
   <div>
     <h2>Editable</h2>
     <MarkdownEditor v-model="text" style="margin-bottom: 10px" />
-    <Button appearance="primary" @click="save">Save</Button>
+    <KitButton appearance="primary" @click="save">Save</KitButton>
     <hr />
     <h2>Editable with limited width</h2>
     <div style="width: 300px">
@@ -16,7 +16,7 @@
 
     <h2>Little content</h2>
     <MarkdownEditor readonly value="This is a test" />
-    <Button appearance="primary" @click="save">Save</Button>
+    <KitButton appearance="primary" @click="save">Save</KitButton>
     <hr />
 
     <h2>Different toolbar</h2>
@@ -39,8 +39,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import KitButton from '@components/Button/KitButton.vue'
 import MarkdownEditor from '../../src/components/MarkdownEditor/KitMarkdownEditor.vue'
-import Button from '../../src/components/Button/Button.vue'
 
 const text = ref(`# Description
 

@@ -1,44 +1,34 @@
 <template>
   <div>
-    <Button @click="showDialog"> Show Dialog </Button>
+    <KitButton @click="showDialog"> Show Dialog </KitButton>
     <Modal v-if="show" heading="Modal Basic" auto-focus width="400px" @submit="onSubmit" @cancel="onCancel">
       <p slot="content">
         {{ paragraph }}
       </p>
       <div slot="footer" class="footer">
-        <Button appearance="primary" @click="onCancel"> Go it! </Button>
+        <KitButton appearance="primary" @click="onCancel"> Go it! </KitButton>
       </div>
     </Modal>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
-import Modal from '@/components/Modal/Modal'
-import Button from '@/components/Button/Button'
+import KitButton from '@components/Button/KitButton.vue'
+import { ref } from 'vue'
+import Modal from '@/components/Modal/Modal.vue'
 
 const paragraph = faker.lorem.paragraph()
+const show = ref(false)
 
-export default {
-  name: 'ModalCustomStory',
-  components: { Modal, Button },
-  data() {
-    return {
-      show: false,
-      paragraph
-    }
-  },
-  methods: {
-    onSubmit() {
-      console.log('submit!')
-      this.onCancel()
-    },
-    showDialog() {
-      this.show = true
-    },
-    onCancel() {
-      this.show = false
-    }
-  }
+function onSubmit() {
+  console.log('submit!')
+  onCancel()
+}
+function showDialog() {
+  show.value = true
+}
+function onCancel() {
+  show.value = false
 }
 </script>

@@ -33,8 +33,8 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import KitButton from '@components/Button/KitButton.vue'
 import KitToggle from '@/components/Toggle/KitToggle.vue'
-import KitButton from '@/components/Button/Button.vue'
 
 const currentTime = ref(new Date().toUTCString())
 const interval = ref()

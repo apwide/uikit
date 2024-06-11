@@ -2,24 +2,24 @@
   <Tooltip :label="tooltip" :placement="placement" :spacing="spacing" :disabled="hasTitle">
     <div class="content" :title="displayedTitle" @click.stop.prevent="onClick">
       <slot :copied="copied">
-        <Button :appearance="appearance">
+        <KitButton :appearance="appearance">
           <KitIcon v-if="!copied" :type="iconType" :size="iconSize" :icon-style="iconStyle" />
           <KitIcon v-else type="check" />
-        </Button>
+        </KitButton>
       </slot>
     </div>
   </Tooltip>
 </template>
 
 <script>
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 import KitIcon from '../Icon/KitIcon'
 import Tooltip from '../Tooltip/Tooltip'
 import SetToClipboard from './SetToClipboard'
 
 export default {
   name: 'KitCopyToClipboard',
-  components: { Tooltip, Button, KitIcon },
+  components: { Tooltip, KitButton, KitIcon },
   props: {
     appearance: {
       type: String,

@@ -24,11 +24,11 @@
     </p>
     <h2>Button with an icon</h2>
     <p>
-      <Button
+      <KitButton
         >Pick Date
         <KitIcon type="calendar-alt" icon-style="regular" slot="icon-after" />
-      </Button>
-      <Button>Pick Date <KitIcon type="calendar-alt" icon-style="regular" slot="icon-before" /> </Button>
+      </KitButton>
+      <KitButton>Pick Date <KitIcon type="calendar-alt" icon-style="regular" slot="icon-before" /> </KitButton>
     </p>
 
     <h2>KitButtonGroup</h2>
@@ -86,21 +86,11 @@
   </div>
 </template>
 
-<script>
-import KitIconButton from '../../src/components/Button/KitIconButton'
-import KitButtonGroup from '../../src/components/Button/KitButtonGroup'
-import KitIcon from '../../src/components/Icon/KitIcon'
-import Button from '../../src/components/Button/Button'
-
-export default {
-  name: 'ButtonWithIcons',
-  components: {
-    KitIcon,
-    KitButtonGroup,
-    KitIconButton,
-    Button
-  }
-}
+<script setup lang="ts">
+import KitButton from '@components/Button/KitButton.vue'
+import KitIconButton from '../../src/components/Button/KitIconButton.vue'
+import KitButtonGroup from '../../src/components/Button/KitButtonGroup.vue'
+import KitIcon from '../../src/components/Icon/KitIcon.vue'
 </script>
 
 <style scoped></style>

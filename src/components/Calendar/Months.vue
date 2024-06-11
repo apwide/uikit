@@ -3,9 +3,9 @@
     <tbody>
       <tr v-for="(quarter, i) in monthsOfYear" :key="i">
         <td v-for="month in quarter" :key="month">
-          <Button appearance="subtle" data-cy="month" class="kit-calendar-month" @click="onMonthSelected(month)">
+          <KitButton appearance="subtle" data-cy="month" class="kit-calendar-month" @click="onMonthSelected(month)">
             {{ month }}
-          </Button>
+          </KitButton>
         </td>
       </tr>
     </tbody>
@@ -14,7 +14,7 @@
 
 <script>
 import { chunk } from '../../utils/utils'
-import Button from '../Button/Button'
+import KitButton from '../Button/KitButton.vue'
 
 const MONTHS = [
   'January',
@@ -34,7 +34,7 @@ const MONTHS_PER_ROW = 3
 
 export default {
   name: 'KitMonths',
-  components: { Button },
+  components: { KitButton },
   computed: {
     monthsOfYear() {
       return chunk(MONTHS, MONTHS_PER_ROW)
