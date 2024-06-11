@@ -29,7 +29,7 @@ import QuestionCircleIcon from '../Icon/aui/QuestionCircleIcon'
 type SectionMessageAppearance = 'info' | 'warning' | 'error' | 'confirmation' | 'change' | 'setup'
 
 type Props = {
-  title: string
+  title?: string
   hideIcon?: boolean
   appearance?: SectionMessageAppearance
 }
