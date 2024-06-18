@@ -14,11 +14,29 @@
       :toolbar="['bold', 'italic']"
       style="margin-bottom: 100px"
       @save-requested="onSaveRequested" />
+
+    <h5>In a table</h5>
+
+    <KitTable
+      style="margin-bottom: 30px; width: 200px"
+      :columns="[
+        { id: 'id', label: 'ID' },
+        { id: 'value', label: 'Value' }
+      ]"
+      :data="[
+        { id: '1', value: 'asdasdfasd' },
+        { id: '2', value: 'asdfasdf' }
+      ]">
+      <template #value="{ value }">
+        <KitMarkdownEditableRenderer :value="value" :size-limit="50" @save-requested="onSaveRequested" />
+      </template>
+    </KitTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import KitTable from '@components/Table/KitTable.vue'
 import KitMarkdownEditableRenderer from '../../../src/components/field-renderers/KitMarkdownEditableRenderer.vue'
 
 const text = ref(`# Description
