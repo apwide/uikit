@@ -16,37 +16,36 @@
   </div>
 </template>
 
-<script>
-import KitIcon from '../Icon/KitIcon'
-import KitIconButton from '../Button/KitIconButton'
+<script setup lang="ts">
+import { ref } from 'vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import KitIconButton from '../Button/KitIconButton.vue'
 
 const DRAG_THRESHOLD = 5
 
-export default {
-  name: 'KitInlineEditViewContent',
-  components: { KitIconButton, KitIcon },
-  data() {
-    return {
-      startX: 0,
-      startY: 0
-    }
-  },
-  methods: {
-    onMouseDown(e) {
-      this.startX = e.clientX
-      this.startY = e.clientY
-    },
-    onEnter() {
-      this.$emit('edit-requested')
-    },
-    onClick(e) {
-      if (this.mouseHasMoved(e)) return
-      this.$emit('edit-requested')
-    },
-    mouseHasMoved({ clientX, clientY }) {
-      return Math.abs(this.startX - clientX) >= DRAG_THRESHOLD || Math.abs(this.startY - clientY) >= DRAG_THRESHOLD
-    }
-  }
+const emit = defineEmits<{
+  (event: 'edit-requested')
+}>()
+
+const startX = ref(0)
+const startY = ref(0)
+
+function onMouseDown(e) {
+  startX.value = e.clientX
+  startY.value = e.clientY
+}
+
+function onEnter() {
+  emit('edit-requested')
+}
+
+function onClick(e) {
+  if (mouseHasMoved(e)) return
+  emit('edit-requested')
+}
+
+function mouseHasMoved({ clientX, clientY }) {
+  return Math.abs(startX.value - clientX) >= DRAG_THRESHOLD || Math.abs(startY.value - clientY) >= DRAG_THRESHOLD
 }
 </script>
 

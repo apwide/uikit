@@ -60,13 +60,17 @@
       </InlineEditViewContent>
     </div>
     <Popper
-      v-if="container && isEditing && !isLoading && !hideConfirmButtons"
+      v-if="elementToAlignButtonsTo && isEditing && !isLoading && !hideConfirmButtons"
       ref="buttons"
       :offset="offset"
-      :target-element="container">
+      :target-element="elementToAlignButtonsTo">
       <InlineEditButtons @blur="onBlur" @cancel="cancelInlineEdit" @confirm="confirmEditedValue" />
     </Popper>
-    <InlineErrorMessage v-if="isValidationError" :error="error" :placement="placement" :target-element="container" />
+    <InlineErrorMessage
+      v-if="isValidationError"
+      :error="error"
+      :placement="placement"
+      :target-element="elementToAlignButtonsTo" />
     <Popper
       v-if="isGeneralError && generalErrorTrigger && showGeneralError"
       :target-element="generalErrorTrigger.$el"
@@ -114,6 +118,7 @@ type Props = {
   compact?: boolean
   offset?: [number, number]
   confirm?: boolean
+  elementToPositionConfirmButtonsTo?: HTMLElement
   hideConfirmButtons?: boolean
   icon?: boolean
   align?: string
@@ -161,6 +166,8 @@ const emit = defineEmits<{
   (event: 'save-requested', value: any, callback: (e: Error) => void)
 }>()
 
+const elementToAlignButtonsTo = computed(() => props.elementToPositionConfirmButtonsTo || container.value)
+
 const isValidationError = computed(() => {
   if (!error.value) {
     return false
@@ -172,7 +179,7 @@ const isValidationError = computed(() => {
 })
 const isGeneralError = computed(() => error.value && (error.value as GeneralError).generalError)
 
-watchEffect(() => {
+watch(isEditing, () => {
   if (isEditing.value) {
     emit('start-editing')
   } else {
@@ -195,9 +202,11 @@ async function editingRequested() {
     input.value.focus()
   }
 }
+
 function onInput(value) {
   editingValue.value = value
 }
+
 async function onBlur(event) {
   const focusWithinComponent = wrapperContainer.value.contains(event.relatedTarget)
   if (!focusWithinComponent && !props.confirm) {
@@ -211,13 +220,16 @@ async function onBlur(event) {
   }
   isFocused.value = false
 }
+
 function onFocus() {
   isFocused.value = true
 }
+
 function onKeyUp(e) {
   if (e.keyCode === ENTER) confirmEditedValue()
   if (e.keyCode === ESC) cancelInlineEdit()
 }
+
 async function onEditRequested() {
   isEditing.value = true
   isFocused.value = true
@@ -227,6 +239,7 @@ async function onEditRequested() {
     input.value.focus()
   }
 }
+
 function saveInlineEdit(err) {
   isDirty.value = false
   if (err) {
@@ -237,10 +250,12 @@ function saveInlineEdit(err) {
   isEditing.value = false
   editingValue.value = props.value
 }
+
 function cancelInlineEdit() {
   isEditing.value = false
   editingValue.value = props.value
 }
+
 async function onValidateError(err) {
   isLoading.value = false
   isFocused.value = false
@@ -251,6 +266,7 @@ async function onValidateError(err) {
     input.value.focus()
   }
 }
+
 function confirmEditedValue() {
   // in the case of forceEditing, value might not change
   if (!props.forceIsEditing && props.value === editingValue.value) {
@@ -267,6 +283,7 @@ function confirmEditedValue() {
     }
   }
 }
+
 function beforeTextFieldMount() {
   if (valueView.value) {
     const { width, height } = valueView.value.$el.getBoundingClientRect()
@@ -274,12 +291,14 @@ function beforeTextFieldMount() {
     contentHeight.value = height
   }
 }
+
 function validate(e) {
   if (!props.pattern) return
   if (![TAB, BACKSPACE].includes(e.keyCode) && !isValidId(e.key)) {
     e.preventDefault()
   }
 }
+
 function isValidId(key) {
   const pattern = new RegExp(props.pattern)
   return pattern.test(key)

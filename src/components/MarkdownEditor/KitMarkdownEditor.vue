@@ -32,6 +32,7 @@ type Props = {
   minHeight?: number
   dontSanitize?: boolean
   autoFocus?: boolean
+  blurOnControlEnter?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -61,6 +62,7 @@ const emit = defineEmits<{
   (event: 'input', data: string)
   (event: 'blur', e: Event)
   (event: 'focus', e: Event)
+  (event: 'ctrl-enter')
 }>()
 
 const me = ref<HTMLDivElement>()
@@ -175,6 +177,12 @@ function onChange() {
 function onBlur() {
   emit('focus', new FocusEvent('blur'))
 }
+function onKeyUp(a, event: KeyboardEvent) {
+  if (event.ctrlKey && event.code === 'Enter') {
+    emit('ctrl-enter')
+    onBlur()
+  }
+}
 
 async function updateEditor(firstTime = false) {
   const cm = unref(editor)
@@ -192,9 +200,12 @@ async function updateEditor(firstTime = false) {
     cm.codemirror.on('change', onChange)
     cm.codemirror.on('focus', onFocus)
     cm.codemirror.on('blur', onBlur)
+    cm.codemirror.on('keyup', onKeyUp)
     if (props.autoFocus && firstTime) {
-      cm.codemirror.focus()
-      cm.codemirror.setCursor(cm.codemirror.lineCount(), 0)
+      setTimeout(() => {
+        cm.codemirror.focus()
+        cm.codemirror.setCursor(cm.codemirror.lineCount(), 0)
+      }, 250)
     }
   } else {
     await nextTick()
@@ -271,6 +282,7 @@ onUnmounted(() => {
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  padding: 5px;
 }
 
 .kit-markdown-editor[data-has-status-bar='true'] >>> .editor-statusbar {
