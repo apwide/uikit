@@ -49,7 +49,7 @@
 <script setup lang="ts">
 import KitMarkdownEditor, { ToolbarItem } from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import KitInlineEdit from '@components/Form/InlineEdit.vue'
-import { nextTick, onUnmounted, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import KitButtonGroup from '@components/Button/KitButtonGroup.vue'
 import { convertNumbersToPx, findTableParent, setStyles } from '@/utils/dom'
 
@@ -247,7 +247,7 @@ function onSaveRequested(value: string, callback) {
   emit('save-requested', value, callback)
 }
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   if (markdownEditorRef.value) {
     document.body.removeChild(markdownEditorRef.value)
   }
