@@ -203,8 +203,12 @@ async function editingRequested() {
   }
 }
 
-function onInput(value) {
+function onInput(value: string) {
   editingValue.value = value
+
+  if (buttons.value) {
+    buttons.value.update()
+  }
 }
 
 async function onBlur(event) {
