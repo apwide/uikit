@@ -108,22 +108,29 @@ function onCtrlEnter(confirm) {
   confirm()
 }
 
+const previousWidthDataKey = 'kitPreviousWidth'
+const openMarkdownCountDataKey = 'kitOpenMarkdownCount'
+
 function updateTable() {
   const table = findTableParent(containerRef.value)
   if (table) {
-    // let's fix the table column widths
-    const headerCell = table.querySelectorAll('thead th')
-    if (!headerCell || !headerCell.length) {
-      return
-    }
-
-    headerCell.forEach((cell: HTMLTableCellElement) => {
-      const box = cell.getBoundingClientRect()
-      if (cell.style.width) {
-        cell.dataset.kitpreviouswidth = cell.style.width
+    const count = Number(table.dataset[openMarkdownCountDataKey] || 0)
+    if (count === 0) {
+      // let's fix the table column widths
+      const headerCell = table.querySelectorAll('thead th')
+      if (!headerCell || !headerCell.length) {
+        return
       }
-      cell.style.width = `${box.width}px`
-    })
+
+      headerCell.forEach((cell: HTMLTableCellElement) => {
+        const box = cell.getBoundingClientRect()
+        if (cell.style.width) {
+          cell.dataset[previousWidthDataKey] = cell.style.width
+        }
+        cell.style.width = `${box.width}px`
+      })
+    }
+    table.dataset[openMarkdownCountDataKey] = String(count + 1)
   }
 }
 
@@ -131,18 +138,28 @@ function cleanupTable() {
   const table = findTableParent(containerRef.value)
 
   if (table) {
-    const headerCell = table.querySelectorAll('thead th')
-    if (!headerCell || !headerCell.length) {
-      return
-    }
+    const count = Number(table.dataset[openMarkdownCountDataKey] || 1)
 
-    headerCell.forEach((cell: HTMLTableCellElement) => {
-      if (cell.dataset.kitpreviouswidth) {
-        cell.style.width = cell.dataset.kitpreviouswidth
-      } else {
-        cell.style.width = undefined
+    if (count <= 1) {
+      const headerCell = table.querySelectorAll('thead th')
+      if (!headerCell || !headerCell.length) {
+        return
       }
-    })
+
+      headerCell.forEach((cell: HTMLTableCellElement) => {
+        if (cell.dataset[previousWidthDataKey]) {
+          cell.style.width = cell.dataset[previousWidthDataKey]
+          delete cell.dataset[previousWidthDataKey]
+        } else {
+          cell.style.width = undefined
+        }
+      })
+    }
+    if (count === 1) {
+      delete table.dataset[openMarkdownCountDataKey]
+    } else {
+      table.dataset[openMarkdownCountDataKey] = String(count - 1)
+    }
   }
 }
 
