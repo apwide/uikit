@@ -1,14 +1,14 @@
 <template>
-  <div ref="targetRef" :disabled="isDisabled" class="select">
+  <div ref="targetRef" :disabled="isDisabled" class="kit-select">
     <TextField
       :is-focused="focused"
       :is-invalid="isInvalid"
       :is-loading="isLoading"
       :select="select"
-      class="select-wrapper"
+      class="kit-select-wrapper"
       tabindex="-1"
       @click="click">
-      <div ref="listRef" :gap="multi && !!selected.length" class="flex-wrapper" @dragover.prevent>
+      <div ref="listRef" :gap="multi && !!selected.length" class="kit-select__flex-wrapper" @dragover.prevent>
         <template v-if="multi && Array.isArray(selected)">
           <Tag
             v-for="(tag, i) in selected"
@@ -31,7 +31,7 @@
           :disabled="isDisabled"
           :style="{ width: currentWidth }"
           :value="search"
-          class="search"
+          class="kit-select__search"
           @blur="onBlur"
           @focus="onFocus"
           @input="onInput"
@@ -42,7 +42,7 @@
           @keyup.esc="onEsc"
           @keydown.delete="removeOption" />
       </div>
-      <div v-if="!selected.length" class="text">
+      <div v-if="!selected.length" class="kit-select__text">
         <slot
           v-if="!search && selected.value && $scopedSlots['selected'] && !multi"
           :selected="selected.value"
@@ -67,7 +67,7 @@
       :offset="[0, 0]"
       :target-element="targetRef"
       placement="bottom-start">
-      <SelectMenu
+      <KitSelectMenu
         :append-to-body="appendToBody"
         :async="async"
         :contains-query="!!search"
@@ -87,7 +87,7 @@
           <slot :is-current="isCurrent" :option="option" name="option" />
         </template>
         <slot name="custom-action" />
-      </SelectMenu>
+      </KitSelectMenu>
     </Popper>
   </div>
 </template>
@@ -97,7 +97,7 @@ import { computed, nextTick, ref, unref, watch } from 'vue'
 import { Value } from '@components/Select/types'
 import TextField from '../Form/TextField.vue'
 import Popper from '../Popper/Popper.vue'
-import SelectMenu from './SelectMenu.vue'
+import KitSelectMenu from './KitSelectMenu.vue'
 import Tag from './Tag.vue'
 import Icons from './Icons.vue'
 
@@ -199,7 +199,7 @@ const selected = computed<Value<unknown> | Value<unknown>[]>(() =>
   props.multi ? (props.value as unknown[]).map((e) => props.normalizer(e)) : props.normalizer(props.value)
 )
 const normalizedOptions = computed(() => props.options.map((e) => props.normalizer(e)))
-const input = computed(() => (search.value ? '' : selected.value.label || props.placeholder))
+const input = computed(() => (search.value ? '' : selected.value?.label || props.placeholder))
 
 const nonSelectedSuggestions = computed(() =>
   props.multi
@@ -466,7 +466,7 @@ function handleDrag(e) {
   const x = e.clientX
   const y = e.clientY
   const dragged = unref(draggedElement)
-  dragged.classList.add('ghost')
+  dragged.classList.add('kit-select__ghost')
   const el = document.elementFromPoint(x, y)
   let swapItem = el === null ? dragged : el.closest('[draggable="true"]')
   if (swapItem) {
@@ -478,7 +478,7 @@ function handleDrag(e) {
 function onDragEnd() {
   dragging.value = false
   const nextIndex = Array.from(listRef.value.children).indexOf(draggedElement.value)
-  draggedElement.value.classList.remove('ghost')
+  draggedElement.value.classList.remove('kit-select__ghost')
   const list = [...selected.value]
   const [item] = list.splice(prevIndex.value, 1)
   list.splice(nextIndex, 0, item)
@@ -569,7 +569,7 @@ watch(suggestions, async () => {
 })
 </script>
 <style scoped>
-.text {
+.kit-select__text {
   cursor: text;
   position: absolute;
   left: 6px;
@@ -579,57 +579,57 @@ watch(suggestions, async () => {
   overflow: hidden;
 }
 
-.select .select-wrapper {
+.kit-select .kit-select-wrapper {
   flex-wrap: wrap;
   padding: 6px 45px 6px 6px;
   justify-content: normal;
   outline: none;
 }
 
-.select-wrapper input {
+.kit-select-wrapper input {
   padding: 0;
 }
 
-.flex-wrapper {
+.kit-select__flex-wrapper {
   display: inline-flex;
   max-width: 100%;
   flex-wrap: wrap;
 }
 
-.flex-wrapper[gap] {
+.kit-select__flex-wrapper[gap] {
   margin-top: -4px;
 }
 
-.text [placeholder] {
+.kit-select__text [placeholder] {
   color: rgb(122, 134, 154);
 }
 
-.search {
+.kit-select__search {
   width: 100%;
   position: relative;
   z-index: 3;
 }
 
-[gap] .search {
+[gap] .kit-select__search {
   margin-top: 4px;
 }
 
-.ghost {
+.kit-select__ghost {
   opacity: 0.4;
   background-color: #fff;
   pointer-events: none;
 }
 
-.select[disabled] {
+.kit-select[disabled] {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.select[disabled] .select-wrapper {
+.kit-select[disabled] .kit-select-wrapper {
   pointer-events: none;
 }
 
-.select ~ .select {
+.kit-select ~ .kit-select {
   margin-top: 20px;
 }
 </style>

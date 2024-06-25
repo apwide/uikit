@@ -31,7 +31,8 @@
             :key="row.id"
             :columns="actualColumns"
             :row="row"
-            @click="onRowClick(row, $event)">
+            @dblclick="emit('row-dblclick', { row, event: $event })"
+            @click="emit('row-click', { row, event: $event })">
             <template #kitDragHandle>
               <span class="kit-table__grab-handle">
                 <KitIcon type="grip-vertical" />
@@ -110,10 +111,6 @@ const actualColumns = computed<Column[]>(() =>
 )
 
 const dragEnabled = computed(() => props.dragRows && !props.busy && props.data.length > 0)
-
-function onRowClick(row: T, event: MouseEvent) {
-  emit('row-click', { row, event })
-}
 
 function createObserver() {
   if (observer.value) {
