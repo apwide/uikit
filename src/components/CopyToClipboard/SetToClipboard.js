@@ -9,15 +9,13 @@ export default async function SetToClipboard(text) {
   }
   try {
     // when not allowed in iframe
-    const input = document.createElement('input')
-    input.type = 'hidden'
-    input.setAttribute('readonly', '')
-    document.body.appendChild(input)
-    input.type = 'text'
-    input.value = text
-    input.select()
+    const textarea = document.createElement('textarea')
+    textarea.setAttribute('readonly', '')
+    document.body.appendChild(textarea)
+    textarea.value = text
+    textarea.select()
     document.execCommand('copy')
-    document.body.removeChild(input)
+    document.body.removeChild(textarea)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn('uikit::SetToClipboard', error)
