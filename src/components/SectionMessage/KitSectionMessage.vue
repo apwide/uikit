@@ -78,7 +78,9 @@ const Icon = computed(() => {
   color: rgb(101, 84, 192);
 }
 
-.kit-section-message[appearance='setup'] .kit-section-message__actions >>> button[appearance='primary'] {
+.kit-section-message[appearance='setup']
+  .kit-section-message__actions
+  >>> button[appearance='primary']:not([disabled='disabled']) {
   background-color: rgb(101, 84, 192);
 }
 
