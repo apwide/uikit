@@ -7,12 +7,12 @@
       placement="top"
       :force-is-editing="forceIsEditing"
       :value="value"
+      keep-readonly-view-on-edit
       :element-to-position-confirm-buttons-to="markdownEditorRef"
       @start-editing="onStartEditing"
       @stop-editing="onStopEditing"
       @save-requested="onSaveRequested">
       <template #editor="editProps">
-        <div class="kit-markdown-editable-renderer__placeholder" ref="placeholderRef">&nbsp;</div>
         <div class="kit-markdown-editable-renderer__editor-container" ref="markdownEditorRef">
           <div class="kit-markdown-editable-renderer__editor">
             <KitMarkdownEditor
@@ -27,15 +27,14 @@
               @focus="editProps.focus"
               @blur="onBlur(editProps.blur, $event)" />
           </div>
-          <div class="kit-markdown-editable-renderer__editor-buttons">
-            <KitButtonGroup> </KitButtonGroup>
-          </div>
         </div>
       </template>
       <template #default>
-        <slot>
-          <KitMarkdownEditor :value="value" readonly @click.native="contentClicked" />
-        </slot>
+        <span ref="placeholderRef">
+          <slot>
+            <KitMarkdownEditor :value="value" readonly @click.native="contentClicked" />
+          </slot>
+        </span>
       </template>
     </KitInlineEdit>
     <template v-else>
@@ -50,7 +49,6 @@
 import KitMarkdownEditor, { ToolbarItem } from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import KitInlineEdit from '@components/Form/InlineEdit.vue'
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
-import KitButtonGroup from '@components/Button/KitButtonGroup.vue'
 import { convertNumbersToPx, findTableParent, setStyles } from '@/utils/dom'
 
 type Props = {
@@ -164,7 +162,7 @@ function cleanupTable() {
 }
 
 let observerHeight = 0
-const observer = new ResizeObserver((entries) => {
+const resizeObserver = new ResizeObserver((entries) => {
   const height = entries[0].contentRect.height
   if (height !== observerHeight) {
     observerHeight = height
@@ -172,34 +170,63 @@ const observer = new ResizeObserver((entries) => {
   }
 })
 
+const triggerIsVisible = ref(true)
+const intersectionObserver = new IntersectionObserver(
+  (entries) => {
+    triggerIsVisible.value = entries[0].isIntersecting
+  },
+  {
+    root: null,
+    threshold: [0, 1],
+    rootMargin: `0px`
+  }
+)
+
 async function positionEditor() {
   if (!markdownEditorRef.value) {
     await nextTick()
     positionEditor()
   } else {
-    document.body.appendChild(markdownEditorRef.value)
+    if (markdownEditorRef.value.parentElement !== document.body) {
+      document.body.appendChild(markdownEditorRef.value)
+    }
+
+    if (!triggerIsVisible.value) {
+      setStyles(markdownEditorRef.value, { display: 'none' })
+    }
 
     const box = placeholderRef.value.getBoundingClientRect()
     const bodyBox = document.body.getBoundingClientRect()
     const toolbar = markdownEditorRef.value.querySelector('.editor-toolbar') as HTMLDivElement
 
-    let editorContainerStyles: Partial<CSSStyleDeclaration> = {}
+    let editorContainerStyles: Partial<CSSStyleDeclaration> = {
+      display: 'block'
+    }
 
     if (toolbar) {
       toolbar.style.backgroundColor = 'white'
 
       const isInTable = Boolean(findTableParent(containerRef.value))
 
-      const moveUp = toolbar.getBoundingClientRect().height + (isInTable ? 1 : 2)
-      const moveLeft = 2
+      let moveUp = toolbar.getBoundingClientRect().height
+
+      if (isInTable) {
+        moveUp += 8
+      } else {
+        moveUp += 10
+      }
+      if (props.value.trim().length === 0) {
+        moveUp += 10
+      }
+
+      const moveLeft = 10
 
       editorContainerStyles = {
         ...editorContainerStyles,
         ...convertNumbersToPx({
-          // transform: `translate(${moveLeft}px, -${moveUp}px)`,
           top: box.top - bodyBox.top - moveUp,
           left: box.left - bodyBox.left - moveLeft,
-          width: width + 20
+          width
         })
       }
 
@@ -215,36 +242,56 @@ async function positionEditor() {
 
 function cleanUp() {
   cleanupTable()
-  document.body.removeChild(markdownEditorRef.value)
+  markdownEditorRef.value?.remove()
 }
 
-let height = 0
 let width = 0
+
+let debounce = null
+function debouncePositionEditor() {
+  clearTimeout(debounce)
+  debounce = setTimeout(positionEditor, 100)
+}
 
 watch(isEditing, (editing) => {
   if (editing) {
-    setStyles(placeholderRef.value, convertNumbersToPx({ height: height - 4, width }))
-    observer.observe(markdownEditorRef.value)
+    resizeObserver.observe(markdownEditorRef.value)
+    intersectionObserver.observe(placeholderRef.value)
     // We observe just the time the UI stabilizes (toolbar get final dimensions)
     setTimeout(() => {
-      observer.disconnect()
+      resizeObserver.disconnect()
     }, 300)
     positionEditor()
+
+    window.addEventListener('wheel', debouncePositionEditor)
   } else {
-    observer.disconnect()
+    resizeObserver.disconnect()
+    intersectionObserver.disconnect()
+    window.removeEventListener('wheel', debouncePositionEditor)
   }
 })
+
+watch(
+  () => props.forceIsEditing,
+  async (forceIsEditing) => {
+    if (forceIsEditing) {
+      setTimeout(() => {
+        onStartEditing()
+        isEditing.value = true
+      }, 100)
+    }
+  },
+  { immediate: true }
+)
 
 async function onStartEditing() {
   // This should run ASAP to fix the dimension of the columns
   updateTable()
 
   const box = containerRef.value.getBoundingClientRect()
-  height = box.height
   width = box.width
   await nextTick()
   isEditing.value = true
-
   emit('start-editing')
 }
 
@@ -266,14 +313,15 @@ function onSaveRequested(value: string, callback) {
 
 onBeforeUnmount(() => {
   if (markdownEditorRef.value) {
-    document.body.removeChild(markdownEditorRef.value)
+    markdownEditorRef.value.remove()
   }
-  observer.disconnect()
+  resizeObserver.disconnect()
 })
 </script>
 
 <style scoped>
 .kit-markdown-editable-renderer {
+  position: relative;
   padding: 10px 0;
 }
 .kit-markdown-editable-renderer[data-disabled-ok='true'] >>> .kit-buttons-wrapper__ok {
@@ -285,6 +333,7 @@ onBeforeUnmount(() => {
   z-index: 1000;
   box-sizing: border-box;
   margin-bottom: 30px;
+  min-width: 200px;
 }
 .kit-markdown-editable-renderer__editor {
   background-color: white;

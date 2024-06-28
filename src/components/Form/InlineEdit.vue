@@ -1,6 +1,15 @@
 <template>
   <div ref="wrapperContainer" :editing="isEditing" class="kit-inline-edit__wrapper">
     <div ref="container" :compact="compact" :is-invalid="!!error" class="kit-inline-edit">
+      <InlineEditViewContent
+        v-if="!isEditing || keepReadonlyViewOnEdit"
+        ref="valueView"
+        :align="align"
+        :compact="compact"
+        :icon="icon"
+        @edit-requested="onEditRequested">
+        <slot />
+      </InlineEditViewContent>
       <div v-if="isEditing" style="display: flex" :class="{ 'kit-inline-edit--has-general-error': isGeneralError }">
         <slot
           :blur="onBlur"
@@ -49,15 +58,6 @@
           </KitIconButton>
         </div>
       </div>
-      <InlineEditViewContent
-        v-else
-        ref="valueView"
-        :align="align"
-        :compact="compact"
-        :icon="icon"
-        @edit-requested="onEditRequested">
-        <slot />
-      </InlineEditViewContent>
     </div>
     <Popper
       v-if="elementToAlignButtonsTo && isEditing && !isLoading && !hideConfirmButtons"
@@ -126,6 +126,7 @@ type Props = {
   placement?: string
   forceIsEditing?: boolean
   buttonsPlacement?: string
+  keepReadonlyViewOnEdit?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {

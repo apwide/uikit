@@ -31,12 +31,28 @@
         <KitMarkdownEditableRenderer :value="value" :size-limit="50" @save-requested="onSaveRequested" />
       </template>
     </KitTable>
+
+    <h5>In KitBorderedPanels</h5>
+
+    <KitBorderedPanel>
+      <KitBorderedPanelRow label="First row">
+        <KitMarkdownEditableRenderer :value="smallText" />
+      </KitBorderedPanelRow>
+      <KitBorderedPanelRow label="Second row">
+        <KitMarkdownEditableRenderer :value="smallText" />
+      </KitBorderedPanelRow>
+      <KitBorderedPanelRow label="Third row">
+        <KitMarkdownEditableRenderer force-is-editing> &lt;empty&gt; </KitMarkdownEditableRenderer>
+      </KitBorderedPanelRow>
+    </KitBorderedPanel>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KitTable from '@components/Table/KitTable.vue'
+import KitBorderedPanel from '@components/layout/BorderedPanel/KitBorderedPanel.vue'
+import KitBorderedPanelRow from '@components/layout/BorderedPanel/KitBorderedPanelRow.vue'
 import KitMarkdownEditableRenderer from '../../../src/components/field-renderers/KitMarkdownEditableRenderer.vue'
 
 const text = ref(`# Description
@@ -55,6 +71,8 @@ Email [Bob](mailto:bob@rotozor-corp.com) to get a test account.
 
 [Report issues here](https://support.rotozor-corp.com/demo)
 `)
+
+const smallText = ref('This is a small text')
 
 function onSaveRequested(content, callback) {
   text.value = content
