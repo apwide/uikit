@@ -2,7 +2,7 @@
   <div class="kit-markdown-editable-renderer" ref="containerRef" :data-disabled-ok="hasOkDisabled">
     <KitInlineEdit
       v-if="editable"
-      :confirm="!allowBlurToSave"
+      :blur-to-save="blurToSave"
       type="text"
       placement="top"
       :force-is-editing="forceIsEditing"
@@ -59,13 +59,11 @@ type Props = {
   minHeight?: number
   editable?: boolean
   forceIsEditing?: boolean
-  allowBlurToSave?: boolean
+  blurToSave?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   value: '',
-  editable: true,
-  forceIsEditing: false,
-  allowBlurToSave: false
+  editable: true
 })
 
 const isEditing = ref(false)
@@ -97,7 +95,7 @@ function onInput(originalOnInput: (data: string) => void, value: string) {
 }
 
 function onBlur(originalOnBlur: (event: FocusEvent) => void, event: FocusEvent) {
-  if (props.allowBlurToSave && !(props.sizeLimit && props.sizeLimit < currentValue.value.length)) {
+  if (props.blurToSave && !(props.sizeLimit && props.sizeLimit < currentValue.value.length)) {
     originalOnBlur(event)
   }
 }

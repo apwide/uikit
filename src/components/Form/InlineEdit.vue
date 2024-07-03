@@ -118,6 +118,7 @@ type Props = {
   compact?: boolean
   offset?: [number, number]
   confirm?: boolean
+  blurToSave?: boolean
   elementToPositionConfirmButtonsTo?: HTMLElement
   hideConfirmButtons?: boolean
   icon?: boolean
@@ -136,10 +137,11 @@ const props = withDefaults(defineProps<Props>(), {
   compact: false,
   offset: () => [0, 5],
   confirm: true,
+  blurToSave: false,
   hideConfirmButtons: false,
   icon: true,
   pattern: '',
-  placement: 'right',
+  placement: 'top',
   forceIsEditing: false,
   buttonsPlacement: 'bottom-end'
 })
@@ -214,7 +216,7 @@ function onInput(value: string) {
 
 async function onBlur(event) {
   const focusWithinComponent = wrapperContainer.value.contains(event.relatedTarget)
-  if (!focusWithinComponent && !props.confirm) {
+  if (!focusWithinComponent && (!props.confirm || props.blurToSave)) {
     confirmEditedValue()
   }
 

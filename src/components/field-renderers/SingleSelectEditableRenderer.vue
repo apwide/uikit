@@ -6,50 +6,51 @@
     :icon="icon"
     :placement="placement"
     :force-is-editing="forceIsEditing"
+    :blur-to-save="blurToSave"
     :hide-confirm-buttons="!confirm"
-    @start-editing="$emit('start-editing')"
-    @stop-editing="$emit('stop-editing')"
+    @start-editing="emit('start-editing')"
+    @stop-editing="emit('stop-editing')"
     @save-requested="onSaveRequested">
-    <Select
-      slot="editor"
-      slot-scope="props"
-      :value="props.value"
-      :options="allowedValues"
-      :open-on-focus="true"
-      :is-invalid="props.isInvalid"
-      :is-focused="props.isFocused"
-      :is-loading="props.isLoading"
-      :placeholder="placeholder"
-      :noOptionsMessage="noOptionsMessage"
-      :append-to-body="appendToBody"
-      :normalizer="normalizer"
-      :is-clearable="isClearable"
-      :filter-predicate="filterPredicate"
-      style="flex: 1"
-      :fixed-select-width="fixedSelectWidth"
-      :confirm="confirm"
-      @input="
-        props.input($event)
-        $emit('input', $event)
-      "
-      @search-change="$emit('search-change', $event)"
-      @blur="
-        props.blur($event)
-        $emit('blur', $event)
-      "
-      @confirm="props.confirm"
-      @focus="props.focus"
-      @cancel="props.cancel">
-      <template v-if="$scopedSlots.selected" #selected="{ selected }">
-        <slot name="selected" :selected="selected" />
-      </template>
-      <template #option="{ option, isCurrent }">
-        <slot name="option" :option="option" :isCurrent="isCurrent" />
-      </template>
-      <template #custom-action>
-        <slot name="custom-action" />
-      </template>
-    </Select>
+    <template #editor="props">
+      <KitSelect
+        :value="props.value"
+        :options="allowedValues"
+        :open-on-focus="true"
+        :is-invalid="props.isInvalid"
+        :is-focused="props.isFocused"
+        :is-loading="props.isLoading"
+        :placeholder="placeholder"
+        :noOptionsMessage="noOptionsMessage"
+        :append-to-body="appendToBody"
+        :normalizer="normalizer"
+        :is-clearable="isClearable"
+        :filter-predicate="filterPredicate"
+        style="flex: 1"
+        :fixed-select-width="fixedSelectWidth"
+        :confirm="confirm"
+        @input="
+          props.input($event)
+          emit('input', $event)
+        "
+        @search-change="emit('search-change', $event)"
+        @blur="
+          props.blur($event)
+          emit('blur', $event)
+        "
+        @confirm="props.confirm"
+        @focus="props.focus"
+        @cancel="props.cancel">
+        <template v-if="$scopedSlots.selected" #selected="{ selected }">
+          <slot name="selected" :selected="selected" />
+        </template>
+        <template #option="{ option, isCurrent }">
+          <slot name="option" :option="option" :isCurrent="isCurrent" />
+        </template>
+        <template #custom-action>
+          <slot name="custom-action" />
+        </template>
+      </KitSelect>
+    </template>
     <slot>
       <StringLineRenderer :value="normalizedValueLabel" />
     </slot>
@@ -61,92 +62,69 @@
   </div>
 </template>
 
-<script>
-import Select from '../Select/KitSelect.vue'
-import InlineEdit from '../Form/InlineEdit'
-import StringLineRenderer from './StringLineRenderer'
+<script lang="ts" setup>
+import { ConfirmationCallback, FilterPredicate, Normalizer } from '@components/Select/types'
+import { computed } from 'vue'
+import KitSelect from '../Select/KitSelect.vue'
+import InlineEdit from '../Form/InlineEdit.vue'
+import StringLineRenderer from './StringLineRenderer.vue'
 
-export default {
-  name: 'KitSingleSelectEditableRenderer',
-  components: {
-    Select,
-    StringLineRenderer,
-    InlineEdit
-  },
-  props: {
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    },
-    value: {
-      type: [String, Object],
-      default: ''
-    },
-    allowedValues: {
-      type: Array,
-      default: () => []
-    },
-    placeholder: {
-      type: String,
-      default: ''
-    },
-    noOptionsMessage: {
-      type: String,
-      default: 'No options'
-    },
-    appendToBody: {
-      type: Boolean,
-      default: false
-    },
-    confirm: {
-      type: Boolean,
-      default: true
-    },
-    normalizer: {
-      type: Function,
-      default: (value) => ({
-        id: value,
-        value,
-        label: value,
-        disabled: false
-      })
-    },
-    icon: {
-      type: Boolean,
-      default: true
-    },
-    isClearable: {
-      type: Boolean
-    },
-    forceIsEditing: {
-      type: Boolean,
-      default: false
-    },
-    filterPredicate: {
-      type: Function
-    },
-    fixedSelectWidth: {
-      type: String
-    }
-  },
-  computed: {
-    normalizedValueLabel() {
-      if (typeof this.value === 'object') {
-        return this.normalizer(this.value).label
-      }
+type Props = {
+  editable?: boolean
+  placement?: string
+  value?: string | object
+  allowedValues: string[] | object[]
+  placeholder?: string
+  noOptionsMessage?: string
+  appendToBody?: boolean
+  confirm?: boolean
+  blurToSave?: boolean
+  normalizer?: Normalizer<unknown>
+  icon?: boolean
+  isClearable?: boolean
+  forceIsEditing?: boolean
+  filterPredicate?: FilterPredicate
+  fixedSelectWidth?: string
+}
 
-      return this.value
-    }
-  },
-  methods: {
-    onSaveRequested(option, callback) {
-      const value = option || ''
-      this.$emit('save-requested', value, callback)
-    }
+const props = withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right',
+  value: '',
+  allowedValues: () => [],
+  placeholder: '',
+  noOptionsMessage: 'No options',
+  appendToBody: false,
+  confirm: true,
+  normalizer: () => (value) => ({
+    id: value,
+    value,
+    label: value,
+    disabled: false
+  }),
+  icon: true,
+  forceIsEditing: false
+})
+
+const emit = defineEmits<{
+  (event: 'save-requested', value: string | T, callback: ConfirmationCallback<string | T>)
+  (event: 'start-editing')
+  (event: 'stop-editing')
+  (event: 'input', value: string | T | string[] | T[])
+  (event: 'search-change', searchTerm: string)
+  (event: 'blur', e: FocusEvent)
+}>()
+
+const normalizedValueLabel = computed(() => {
+  if (typeof props.value === 'object') {
+    return props.normalizer(props.value).label
   }
+
+  return props.value
+})
+
+function onSaveRequested(option, callback) {
+  const value = option || ''
+  emit('save-requested', value, callback)
 }
 </script>

@@ -3,14 +3,15 @@
     v-if="editable"
     :value="value"
     :confirm="confirm"
+    :blur-to-save="blurToSave"
     :icon="icon"
     :align="align"
     :pattern="pattern"
     :type="type"
     :placement="placement"
     :force-is-editing="forceIsEditing"
-    @start-editing="$emit('start-editing')"
-    @stop-editing="$emit('stop-editing')"
+    @start-editing="emit('start-editing')"
+    @stop-editing="emit('stop-editing')"
     @save-requested="onSaveRequested">
     <slot>
       <StringLineRenderer :value="value" />
@@ -23,55 +24,41 @@
   </div>
 </template>
 
-<script>
-import InlineEdit from '../Form/InlineEdit'
-import StringLineRenderer from './StringLineRenderer'
+<script setup lang="ts" generic="T">
+import { ConfirmationCallback } from '@components/Select/types'
+import InlineEdit from '../Form/InlineEdit.vue'
+import StringLineRenderer from './StringLineRenderer.vue'
 
-export default {
-  name: 'KitStringLineEditableRenderer',
-  components: { StringLineRenderer, InlineEdit },
-  props: {
-    value: {
-      type: String,
-      default: undefined
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    },
-    confirm: {
-      type: Boolean,
-      default: true
-    },
-    icon: {
-      type: Boolean,
-      default: true
-    },
-    align: {
-      type: String,
-      default: undefined
-    },
-    pattern: {
-      type: String,
-      default: ''
-    },
-    type: {
-      type: String,
-      default: 'text'
-    },
-    forceIsEditing: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    onSaveRequested(...args) {
-      this.$emit('save-requested', ...args)
-    }
-  }
+type Props = {
+  value?: string
+  editable?: boolean
+  placement?: string
+  confirm?: boolean
+  blurToSave?: boolean
+  icon?: boolean
+  align?: string
+  pattern?: string
+  type?: string
+  forceIsEditing?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right',
+  confirm: true,
+  icon: true,
+  pattern: '',
+  type: 'text',
+  forceIsEditing: false
+})
+
+const emit = defineEmits<{
+  (event: 'save-requested', value: T, callback: ConfirmationCallback<T>)
+  (event: 'start-editing')
+  (event: 'stop-editing')
+}>()
+
+function onSaveRequested(value: T, callback: ConfirmationCallback<T>) {
+  emit('save-requested', value, callback)
 }
 </script>

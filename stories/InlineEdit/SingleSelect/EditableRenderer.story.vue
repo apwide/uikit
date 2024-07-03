@@ -17,7 +17,11 @@
     </p>
     <h5>No Confirm:</h5>
     <p>
-      <SingleSelectEditableRenderer :value="selectedValue" :allowed-values="allowedValues" @save-requested="onSave" :confirm="false" />
+      <SingleSelectEditableRenderer
+        :value="selectedValue"
+        :allowed-values="allowedValues"
+        @save-requested="onSave"
+        :confirm="false" />
     </p>
     <h5>Non-editable:</h5>
     <p>

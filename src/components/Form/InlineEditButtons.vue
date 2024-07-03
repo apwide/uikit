@@ -1,57 +1,52 @@
 <template>
   <div class="kit-buttons-wrapper">
-    <KitButton
+    <KitIconButton
       class="kit-box-shadow-wrapper kit-buttons-wrapper__ok"
       data-cy="submit-button"
       spacing="none"
       @blur="onBlur"
       @click="onConfirm"
+      title="Submit"
       @focus="onFocus">
-      <template #icon-before>
-        <EditorDoneIcon size="small" />
-      </template>
-    </KitButton>
-    <KitButton
+      <EditorDoneIcon size="small" />
+    </KitIconButton>
+    <KitIconButton
       class="kit-box-shadow-wrapper kit-buttons-wrapper__cancel"
       data-cy="cancel-button"
       spacing="none"
+      title="Cancel"
       @blur="onBlur"
       @mousedown="onCancel"
       @focus="onFocus">
-      <template #icon-before>
-        <EditorCloseIcon size="small" />
-      </template>
-    </KitButton>
+      <EditorCloseIcon size="small" />
+    </KitIconButton>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import KitIconButton from '@components/Button/KitIconButton.vue'
 import EditorDoneIcon from '../Icon/aui/EditorDoneIcon'
 import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
-import KitButton from '../Button/KitButton.vue'
 
-export default {
-  name: 'KitInlineEditButtons',
-  components: {
-    EditorDoneIcon,
-    KitButton,
-    EditorCloseIcon
-  },
-  methods: {
-    onConfirm() {
-      this.$emit('confirm')
-    },
-    /* cancel on mousedown to be triggered before blur of input component */
-    onCancel() {
-      this.$emit('cancel')
-    },
-    onFocus(event) {
-      this.$emit('focus', event)
-    },
-    onBlur(event) {
-      this.$emit('blur', event)
-    }
-  }
+const emit = defineEmits<{
+  (event: 'confirm')
+  (event: 'cancel')
+  (event: 'focus', e: FocusEvent)
+  (event: 'blur', e: FocusEvent)
+}>()
+
+function onConfirm() {
+  emit('confirm')
+}
+/* cancel on mousedown to be triggered before blur of input component */
+function onCancel() {
+  emit('cancel')
+}
+function onFocus(event) {
+  emit('focus', event)
+}
+function onBlur(event) {
+  emit('blur', event)
 }
 </script>
 

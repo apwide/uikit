@@ -11,91 +11,76 @@
     v-on="$listeners"
     @open="loadInitialOptions"
     @search-change="debouncedGetUsers">
-    <div slot="option" slot-scope="{ option }" class="label">
-      <UserRenderer tag="span" :user="option" />
-    </div>
-    <div slot="selected" slot-scope="{ selected }" class="label">
-      <UserRenderer tag="span" :user="selected" />
-    </div>
-    <div slot="tag" slot-scope="{ tag }" class="user-tag">
-      <UserRenderer appearance="micro" tag="span" :user="tag.value" />
-    </div>
+    <template #option="{ option }">
+      <div class="label">
+        <UserRenderer tag="span" :user="option" />
+      </div>
+    </template>
+    <template #selected="{ selected }">
+      <div class="label">
+        <UserRenderer tag="span" :user="selected" />
+      </div>
+    </template>
+    <template #tag="{ tag }">
+      <div class="user-tag">
+        <UserRenderer appearance="micro" tag="span" :user="tag.value" />
+      </div>
+    </template>
   </Select>
 </template>
 
-<script>
+<script setup lang="ts">
 import pDebounce from 'p-debounce'
-import UserRenderer from '../field-renderers/UserRenderer'
+import { computed, ref } from 'vue'
+import UserRenderer from '../field-renderers/UserRenderer.vue'
 import Select from './KitSelect.vue'
 
-export default {
-  name: 'KitUserPicker',
-  components: { UserRenderer, Select },
-  props: {
-    getUsers: {
-      type: Function,
-      required: true
-    },
-    value: {
-      type: [Object, Array],
-      default: undefined
-    },
-    multi: {
-      type: Boolean,
-      default: false
-    },
-    isFocused: {
-      type: Boolean,
-      default: false
-    },
-    mapper: {
-      type: Function,
-      default: (list) => list
-    },
-    placeholder: {
-      type: String,
-      default: 'Type to search...'
-    },
-    searchPromptText: {
-      type: String,
-      default: 'Type to search...'
-    },
-    initialOptions: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      users: [],
-      isFetching: false,
-      debouncedGetUsers: undefined
-    }
-  },
-  created() {
-    this.debouncedGetUsers = pDebounce(this.onSearchChange, 200)
-  },
-  methods: {
-    loadInitialOptions() {
-      this.users = this.initialOptions
-    },
+type User = { key: string; name: string; disabled: boolean }
+type GetUsers = (searchTerm: unknown) => Promise<{ data: User[] }>
+type Mapper = (input: User[]) => User[]
 
-    async onSearchChange(query) {
-      if (!query) return
-      this.isFetching = true
-      const { data: users } = await this.getUsers(query)
-      this.users = this.mapper(users)
-      this.isFetching = false
-    },
+type Props = {
+  getUsers: GetUsers
+  value?: string | User | User[]
+  multi?: boolean
+  isFocused?: boolean
 
-    normalizer(user) {
-      return {
-        id: user.key,
-        label: user.name,
-        value: user,
-        disabled: user.disabled
-      }
-    }
+  mapper?: Mapper
+  placeholder?: string
+  searchPromptText?: string
+  initialOptions?: User[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  value: '',
+  mapper: (list) => list,
+  placeholder: 'Type to search...',
+  searchPromptText: 'Type to search...',
+  initialOptions: () => []
+})
+
+const users = ref<User[]>([])
+const isFetching = ref(false)
+const debouncedGetUsers = computed(() => pDebounce(onSearchChange, 200))
+
+function loadInitialOptions() {
+  users.value = props.initialOptions
+}
+
+async function onSearchChange(query: string) {
+  if (!query) return
+  isFetching.value = true
+  const { data } = await props.getUsers(query)
+  users.value = props.mapper(data)
+  isFetching.value = false
+}
+
+function normalizer(user: User) {
+  return {
+    id: user.key,
+    label: user.name,
+    value: user,
+    disabled: user.disabled
   }
 }
 </script>

@@ -3,6 +3,7 @@
     v-if="editable"
     :align="align"
     :confirm="confirm"
+    :blur-to-save="blurToSave"
     :force-is-editing="forceIsEditing"
     :icon="icon"
     :pattern="pattern"
@@ -64,6 +65,7 @@ type Props = {
   editable?: boolean
   placement?: string
   confirm?: boolean
+  blurToSave?: boolean
   icon?: boolean
   align?: string
   pattern?: string
@@ -111,8 +113,8 @@ function onBlur(originalBlur, data) {
   originalBlur(data)
 }
 
-function onSaveRequested(...args) {
-  emit('save-requested', ...args)
+function onSaveRequested(value: string, callback: CallableFunction) {
+  emit('save-requested', value, callback)
 }
 
 function toggleFieldType() {

@@ -93,8 +93,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref, unref, watch } from 'vue'
-import { Value } from '@components/Select/types'
+import { computed, nextTick, onUnmounted, ref, unref, watch } from 'vue'
+import { FilterPredicate, Normalizer, Value } from '@components/Select/types'
 import TextField from '../Form/TextField.vue'
 import Popper from '../Popper/Popper.vue'
 import KitSelectMenu from './KitSelectMenu.vue'
@@ -109,8 +109,8 @@ type Props = {
   placeholder?: string
   searchPromptText?: string
   multi?: boolean
-  filterPredicate?: (label: string, input: string) => string
-  normalizer?: (value: unknown) => Value<unknown>
+  filterPredicate?: FilterPredicate
+  normalizer?: Normalizer<unknown>
   isLoading?: boolean
   isFetching?: boolean
   isFocused?: boolean
@@ -137,13 +137,15 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: '',
   options: () => [],
   placeholder: 'Type to search...',
   searchPromptText: 'Type to search...',
   multi: false,
-  filterPredicate: (label = '', input = '') => label.toString().toLowerCase().includes(input.toLowerCase().trim()),
-  normalizer: (value) => ({
+  filterPredicate:
+    () =>
+    (label = '', input = '') =>
+      label.toString().toLowerCase().includes(input.toLowerCase().trim()),
+  normalizer: () => (value) => ({
     id: value,
     label: value,
     value,
@@ -496,6 +498,12 @@ function onDragStart(e, index) {
   prevIndex.value = index
 }
 
+function onClickOutside(event: MouseEvent) {
+  onBlur(event as FocusEvent)
+}
+
+let updateInterval
+
 watch(
   () => props.isFocused,
   async (isFocused) => {
@@ -503,7 +511,14 @@ watch(
       await nextTick()
       if (inputRef.value) {
         inputRef.value.click()
+        setTimeout(() => {
+          document.body.addEventListener('click', onClickOutside)
+        }, 50)
+        updateInterval = setInterval(updatePopperPosition, 100)
       }
+    } else {
+      clearTimeout(updateInterval)
+      document.body.removeEventListener('click', onClickOutside)
     }
   },
   { immediate: true }
@@ -566,6 +581,10 @@ watch(suggestions, async () => {
   }
   await nextTick()
   updatePopperPosition()
+})
+
+onUnmounted(() => {
+  document.body.removeEventListener('click', onClickOutside)
 })
 </script>
 <style scoped>
