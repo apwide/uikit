@@ -1,7 +1,7 @@
 <template>
   <KitModal
     class="kit-modal"
-    no-footer
+    :no-footer="!slots['footer']"
     :appearance="appearance"
     :auto-focus="autoFocus"
     :actions="actions"
@@ -18,7 +18,13 @@
         <slot name="breadcrumb" class="" />
         <KitButtonGroup spacing="normal">
           <slot name="actions" />
-          <KitIconButton class="kit-modal__close" title="close" @click="emit('cancel')">
+          <KitIconButton
+            class="kit-modal__close"
+            title="close"
+            @click="
+              emit('cancel')
+              emit('close')
+            ">
             <KitIcon type="times" style="font-size: 1.2rem" />
           </KitIconButton>
         </KitButtonGroup>
@@ -32,10 +38,13 @@
     <div slot="content" class="kit-modal__content">
       <slot />
     </div>
+    <template #footer>
+      <slot name="footer"></slot>
+    </template>
   </KitModal>
 </template>
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, useSlots } from 'vue'
 import KitButtonGroup from '../Button/KitButtonGroup.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
@@ -61,9 +70,11 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
+  /* @deprecated */
+  (event: 'cancel')
   (event: 'close')
 }>()
-
+const slots = useSlots()
 const modalWidth = ref('')
 
 function resize() {
