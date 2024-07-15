@@ -6,8 +6,8 @@
     :close-on-click="closeOnClick"
     :close-on-outside-click="closeOnClickOutside"
     :is-disabled="isDisabled"
-    @close="isLocalOpen = false"
-    @open="isLocalOpen = true">
+    @close="handleClose"
+    @open="handleOpen">
     <template #trigger="{ toggle, isOpen, isDisabled }">
       <KitIconButton
         :is-selected="isOpen"
@@ -49,6 +49,21 @@ withDefaults(defineProps<Props>(), {
 })
 
 const isLocalOpen = ref(false)
+
+const emit = defineEmits<{
+  (event: 'open')
+  (event: 'close')
+}>()
+
+function handleOpen() {
+  isLocalOpen.value = true
+  emit('open')
+}
+
+function handleClose() {
+  isLocalOpen.value = false
+  emit('close')
+}
 </script>
 <style scoped>
 .kit-icon-menu {
