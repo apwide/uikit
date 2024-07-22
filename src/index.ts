@@ -7,6 +7,7 @@ import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
 import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
 import KitSectionMessage from '@components/SectionMessage/KitSectionMessage.vue'
 import KitButton from '@components/Button/KitButton.vue'
+import KitColorPicker from '@components/ColorPicker/KitColorPicker.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import Input from './components/Form/Input.vue'
 import TextArea from './components/Form/TextArea.vue'
@@ -27,7 +28,6 @@ import KitTable from './components/Table/KitTable.vue'
 import Progress from './components/Progress/progress'
 import Avatar from './components/Avatar/Avatar.vue'
 import Badge from './components/Badge/Badge.vue'
-import ColorPicker from './components/ColorPicker/ColorPicker.vue'
 import ProgressBar from './components/ProgressBar/ProgressBar.vue'
 import Tag from './components/Tag/Tag.vue'
 import Flag from './components/Flag/Flag.vue'
@@ -96,7 +96,6 @@ export {
   BreadcrumbItem as KitBreadcrumbItem,
   Breadcrumbs as KitBreadcrumbs,
   Flag as KitFlag,
-  ColorPicker as KitColorPicker,
   DateRangePicker as KitDateRangePicker,
   Progress as KitProgress,
   KitButtonGroup,
@@ -107,7 +106,8 @@ export {
   KitDraggable,
   KitMarkdownEditor,
   KitSpotlight,
-  KitSpotlightStep
+  KitSpotlightStep,
+  KitColorPicker
 }
 export * from './components/layout/index'
 export * from './components/Menu/index'
