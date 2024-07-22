@@ -3,30 +3,29 @@
     <KitIconButton
       class="kit-box-shadow-wrapper kit-buttons-wrapper__ok"
       data-cy="submit-button"
-      spacing="none"
+      spacing="compact"
       @blur="onBlur"
       @click="onConfirm"
       title="Submit"
       @focus="onFocus">
-      <EditorDoneIcon size="small" />
+      <KitIcon type="check" style="font-size: 10px" />
     </KitIconButton>
     <KitIconButton
       class="kit-box-shadow-wrapper kit-buttons-wrapper__cancel"
       data-cy="cancel-button"
-      spacing="none"
+      spacing="compact"
       title="Cancel"
       @blur="onBlur"
       @mousedown="onCancel"
       @focus="onFocus">
-      <EditorCloseIcon size="small" />
+      <KitIcon type="times" style="font-size: 10px" />
     </KitIconButton>
   </div>
 </template>
 
 <script setup lang="ts">
 import KitIconButton from '@components/Button/KitIconButton.vue'
-import EditorDoneIcon from '../Icon/aui/EditorDoneIcon'
-import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
+import KitIcon from '@components/Icon/KitIcon.vue'
 
 const emit = defineEmits<{
   (event: 'confirm')
@@ -53,8 +52,16 @@ function onBlur(event) {
 <style scoped>
 .kit-buttons-wrapper {
   display: flex;
+  gap: 4px;
   /* reduce interaction with items below the buttons */
   z-index: 1;
+}
+
+.kit-buttons-wrapper button {
+  background-color: white;
+}
+.kit-buttons-wrapper button:hover {
+  background-color: #efefef !important;
 }
 
 .kit-box-shadow-wrapper {
@@ -63,9 +70,5 @@ function onBlur(event) {
   box-sizing: border-box;
   z-index: 200;
   border-radius: 3px;
-}
-
-.kit-box-shadow-wrapper:last-child {
-  margin-left: 4px;
 }
 </style>
