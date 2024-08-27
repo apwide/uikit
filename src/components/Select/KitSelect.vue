@@ -1,5 +1,5 @@
 <template>
-  <div ref="targetRef" :disabled="isDisabled" class="kit-select">
+  <div ref="containerRef" :disabled="isDisabled" class="kit-select">
     <TextField
       :is-focused="focused"
       :is-invalid="isInvalid"
@@ -65,7 +65,7 @@
       ref="menuRef"
       :boundaries-element="boundariesElement"
       :offset="[0, 0]"
-      :target-element="targetRef"
+      :target-element="containerRef"
       placement="bottom-start">
       <KitSelectMenu
         :append-to-body="appendToBody"
@@ -253,7 +253,7 @@ const showClearIcon = computed(() => {
 })
 
 const inputRef = ref<HTMLInputElement>()
-const targetRef = ref<HTMLElement>()
+const containerRef = ref<HTMLElement>()
 const menuRef = ref<typeof Popper>()
 const listRef = ref<HTMLDivElement>()
 
@@ -262,7 +262,7 @@ function onFocus(e: FocusEvent) {
     return
   }
   focused.value = true
-  if (props.openOnFocus && targetRef.value && !targetRef.value.contains(e.relatedTarget as Node)) {
+  if (props.openOnFocus && containerRef.value && containerRef.value.contains(e.relatedTarget as Node)) {
     isOpen.value = true
   }
   emit('focus', e)
@@ -280,7 +280,7 @@ function closeOptions() {
 }
 
 function onBlur(e: FocusEvent) {
-  if (targetRef.value && !targetRef.value.contains(e.relatedTarget as Node)) {
+  if (containerRef.value && !containerRef.value.contains(e.relatedTarget as Node)) {
     if (canCreateTag.value) {
       createTag()
     }
@@ -498,27 +498,18 @@ function onDragStart(e, index) {
   prevIndex.value = index
 }
 
-function onClickOutside(event: MouseEvent) {
-  onBlur(event as FocusEvent)
-}
-
 let updateInterval
 
 watch(
   () => props.isFocused,
   async (isFocused) => {
+    clearTimeout(updateInterval)
     if (isFocused) {
       await nextTick()
       if (inputRef.value) {
         inputRef.value.click()
-        setTimeout(() => {
-          document.body.addEventListener('click', onClickOutside)
-        }, 50)
         updateInterval = setInterval(updatePopperPosition, 100)
       }
-    } else {
-      clearTimeout(updateInterval)
-      document.body.removeEventListener('click', onClickOutside)
     }
   },
   { immediate: true }
@@ -540,8 +531,8 @@ watch(isOpen, (open) => {
     emit('close')
   } else {
     let width = props.dropdownWidth
-    if (!width && targetRef.value) {
-      width = targetRef.value?.getBoundingClientRect().width
+    if (!width && containerRef.value) {
+      width = containerRef.value?.getBoundingClientRect().width
     }
     selectWidth.value = props.fixedSelectWidth || `${width}px`
     emit('open')
@@ -581,10 +572,6 @@ watch(suggestions, async () => {
   }
   await nextTick()
   updatePopperPosition()
-})
-
-onUnmounted(() => {
-  document.body.removeEventListener('click', onClickOutside)
 })
 </script>
 <style scoped>
