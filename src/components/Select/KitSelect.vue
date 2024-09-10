@@ -93,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onUnmounted, ref, unref, watch } from 'vue'
+import { computed, nextTick, ref, unref, watch } from 'vue'
 import { FilterPredicate, Normalizer, Value } from '@components/Select/types'
 import TextField from '../Form/TextField.vue'
 import Popper from '../Popper/Popper.vue'
