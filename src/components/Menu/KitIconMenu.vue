@@ -1,6 +1,6 @@
 <template>
   <KitDropdown
-    v-if="$scopedSlots.default && $scopedSlots.icon"
+    v-if="slots.default && slots.icon"
     class="kit-icon-menu"
     placement="bottom-end"
     :close-on-click="closeOnClick"
@@ -20,12 +20,14 @@
         <slot name="icon" :is-open="isOpen" />
       </KitIconButton>
     </template>
-    <slot :isOpen="isLocalOpen" />
+    <template #default="{ toggle }">
+      <slot v-if="isLocalOpen" :isOpen="isLocalOpen" :toggle="toggle" />
+    </template>
   </KitDropdown>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, useSlots } from 'vue'
 import KitDropdown from '../Dropdown/KitDropdown.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 
@@ -49,6 +51,7 @@ withDefaults(defineProps<Props>(), {
 })
 
 const isLocalOpen = ref(false)
+const slots = useSlots()
 
 const emit = defineEmits<{
   (event: 'open')

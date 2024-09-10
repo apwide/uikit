@@ -21,7 +21,7 @@
       @click.native="onMenuClick">
       <slot :toggle="onTriggerClick" name="dropdown-menu">
         <div class="dropdown-menu">
-          <slot />
+          <slot :toggle="onTriggerClick" />
         </div>
       </slot>
     </Popup>
