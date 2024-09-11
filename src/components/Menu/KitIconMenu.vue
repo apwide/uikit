@@ -2,7 +2,7 @@
   <KitDropdown
     v-if="slots.default && slots.icon"
     class="kit-icon-menu"
-    placement="bottom-end"
+    :placement="placement"
     :close-on-click="closeOnClick"
     :close-on-outside-click="closeOnClickOutside"
     :is-disabled="isDisabled"
@@ -35,6 +35,7 @@ type Props = {
   title?: string
   spacing?: string
   appearance?: string
+  placement?: string
   iconSize?: string
   isDisabled?: boolean
   closeOnClick?: boolean
@@ -44,6 +45,7 @@ type Props = {
 withDefaults(defineProps<Props>(), {
   title: 'Select your action',
   appearance: 'subtle',
+  placement: 'bottom-end',
   iconSize: '1em',
   isDisabled: false,
   closeOnClick: true,
