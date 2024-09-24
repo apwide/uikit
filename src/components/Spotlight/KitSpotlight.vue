@@ -1,6 +1,10 @@
 <template>
   <div ref="me" class="kit-spotlight">
-    <KitSpotlightMask v-if="elements.length" :elements="elements" :margin="margin">
+    <KitSpotlightMask
+      v-if="elements.length"
+      :elements="elements"
+      :margin="margin"
+      :text-width="steps[currentStep].textWidth">
       <KitSpotlightHintContainer :step="currentStep" :total="steps.length" @close="emit('close')" @go-to="goTo">
         <template v-if="stepSlotNames.includes(currentSlotName)">
           <slot :currentStep="currentStep + 1" :name="currentSlotName" />

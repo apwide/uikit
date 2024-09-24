@@ -6,6 +6,7 @@ export type KitSpotlightStep = {
   p?: string[]
   before?: () => Promise<void> | void
   cleanup?: () => Promise<void> | void
+  textWidth?: number
   margin?: number | [number, number]
 }
 
@@ -25,10 +26,10 @@ export function calculateRectangle(elements: Element[]): Rectangle {
       width = rect.width
       first = false
     } else {
-      x = Math.min(x, rect.x)
-      y = Math.min(y, rect.y)
-      width = Math.max(x + width, rect.x + rect.width) - x
-      height = Math.max(y + height, rect.y + rect.height) - y
+      x = Math.round(Math.min(x, rect.x))
+      y = Math.round(Math.min(y, rect.y))
+      width = Math.round(Math.max(x + width, rect.x + rect.width) - x)
+      height = Math.round(Math.max(y + height, rect.y + rect.height) - y)
     }
   }
   return { x, y, height, width }
