@@ -45,34 +45,44 @@ watch(
 )
 
 function spotlight(rect: Rectangle, margin: [number, number], borderWidth = 3) {
+  let offsetFromTop = 0
+  let height = rect.y - margin[0]
+
   top.value = {
     top: '0',
     left: '0',
-    height: `${rect.y - margin[0]}px`,
+    height: `${height}px`,
     right: '0'
   }
 
+  offsetFromTop += height
+  height = rect.height + 2 * margin[0]
+
+  const widthRight = window.innerWidth - rect.x - rect.width - margin[1]
+
   right.value = {
-    top: `${rect.y - margin[0]}px`,
+    top: `${offsetFromTop}px`,
     right: '0',
-    height: `${rect.height + 2 * margin[0]}px`,
-    width: `${window.innerWidth - rect.x - rect.width - margin[1]}px`
+    height: `${height}px`,
+    width: widthRight > 0 ? `${widthRight}px` : '0'
   }
+
+  const widthLeft = rect.x - margin[1]
 
   left.value = {
     top: `${rect.y - margin[0]}px`,
     left: '0',
     height: `${rect.height + 2 * margin[0]}px`,
-    width: `${rect.x - margin[1]}px`
+    width: widthLeft > 0 ? `${rect.x - margin[1]}px` : '0'
   }
 
-  const bottomHeight = window.innerHeight - rect.y - rect.height - margin[0]
+  offsetFromTop += height
 
   bottom.value = {
-    bottom: '0',
+    top: `${offsetFromTop}px`,
     left: '0',
     right: '0',
-    height: bottomHeight < 0 ? '0' : `${bottomHeight}px`
+    bottom: '0'
   }
 
   border.value = {
