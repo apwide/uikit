@@ -30,9 +30,9 @@
         </div>
       </template>
       <template #default>
-        <span ref="placeholderRef">
+        <span ref="placeholderRef" @click="contentClicked">
           <slot>
-            <KitMarkdownEditor :value="value" readonly @click.native="contentClicked" />
+            <KitMarkdownEditor :value="value" readonly />
           </slot>
         </span>
       </template>
@@ -73,10 +73,12 @@ const containerRef = ref<HTMLDivElement>()
 const markdownEditorRef = ref<HTMLDivElement>()
 const placeholderRef = ref<HTMLDivElement>()
 
-function contentClicked(evt: Event) {
+function contentClicked(event: Event) {
   // link click should not trigger editing
-  if (evt.target instanceof HTMLAnchorElement) {
-    evt.stopPropagation()
+  const target = event.target as HTMLElement
+
+  if (target.tagName.toUpperCase() === 'A') {
+    event.stopPropagation()
   }
 }
 
