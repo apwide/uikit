@@ -134,7 +134,7 @@ onMounted(() => {
   window.addEventListener('resize', redraw)
 })
 onUnmounted(() => {
-  document.addEventListener('click', onClick)
+  document.removeEventListener('click', onClick)
   window.removeEventListener('resize', redraw)
 })
 </script>
