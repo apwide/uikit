@@ -5,12 +5,13 @@
     :confirm="confirm"
     :placement="placement"
     :force-is-editing="forceIsEditing"
+    :blur-to-save="blurToSave"
     :hide-confirm-buttons="!confirm"
     @start-editing="emit('start-editing')"
     @stop-editing="emit('stop-editing')"
     @save-requested="onSaveRequested">
     <template #editor="props">
-      <Select
+      <KitSelect
           :value="props.value"
           :options="allowedValues"
           :open-on-focus="true"
@@ -30,14 +31,14 @@
           :confirm="confirm"
           :keep-open-on-select="keepOpenOnSelect"
           @input="
-        props.input($event)
-        emit('input', $event)
-      "
+            props.input($event)
+            emit('input', $event)
+          "
           @search-change="emit('search-change', $event)"
           @blur="
-        props.blur($event)
-        emit('blur', $event)
-      "
+            props.blur($event)
+            emit('blur', $event)
+          "
           @confirm="props.confirm"
           @focus="props.focus"
           @cancel="props.cancel">
@@ -53,7 +54,7 @@
         <template #icon>
           <slot name="icon" />
         </template>
-      </Select>
+      </KitSelect>
     </template>
     <slot>
       <MultiSelectRenderer :selected-values="selectedValueLabels" />
@@ -67,11 +68,11 @@
 </template>
 
 <script lang="ts" setup>
-import Select from '../Select/KitSelect.vue'
-import InlineEdit from '../Form/InlineEdit'
-import MultiSelectRenderer from './MultiSelectRenderer'
 import {ConfirmationCallback, Normalizer} from '@components/Select/types'
 import {computed} from 'vue'
+import KitSelect from '../Select/KitSelect.vue'
+import InlineEdit from '../Form/InlineEdit'
+import MultiSelectRenderer from './MultiSelectRenderer'
 
 type Props = {
   value?: Array
@@ -86,6 +87,7 @@ type Props = {
   forceIsEditing?: boolean
   appendToBody?: boolean
   confirm?: boolean
+  blurToSave?: boolean
   normalizer?: Normalizer<unknown>
   fixedSelectWidth?: string
   keepOpenOnSelect?: boolean
