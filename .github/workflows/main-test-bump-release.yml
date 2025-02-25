@@ -8,6 +8,7 @@ on:
         - '**.js'
         - '**.ts'
         - '**.vue'
+        - '**.json'
 
 jobs:
   tests:
