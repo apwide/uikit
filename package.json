@@ -56,7 +56,7 @@
     "css-loader": "5.2.7",
     "cypress": "4.12.1",
     "cypress-plugin-tab": "1.0.5",
-    "dompurify": "3.0.6",
+    "dompurify": "3.2.4",
     "eslint": "8.53.0",
     "eslint-config-prettier": "8.10.0",
     "eslint-config-standard": "17.1.0",
