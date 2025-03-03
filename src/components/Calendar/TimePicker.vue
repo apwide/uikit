@@ -1,5 +1,5 @@
 <template>
-  <div ref="time-picker" class="kit-time-picker" @click.stop>
+  <div ref="me" class="kit-time-picker" @click.stop>
     <TextField
       :is-focused="focused"
       :is-loading="isLoading"
@@ -21,144 +21,120 @@
         @focus="onFocus"
         @blur="onBlur" />
     </TextField>
-    <Popup :is-open="isOpen" :target-element="$refs['time-picker']" placement="bottom-start" data-cy="select-menu">
+    <Popup :is-open="isOpen" :target-element="me" placement="bottom-start" data-cy="select-menu">
       <TimePickerMenu :value="formattedTime" @time-selected="onTimeSelected" />
     </Popup>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue'
 import TextField from '../Form/TextField'
 import Popup from '../common/Popup'
 import TimePickerMenu from './TimePickerMenu'
 
-export default {
-  name: 'KitTimePicker',
-  components: {
-    TextField,
-    Popup,
-    TimePickerMenu
-  },
-  props: {
-    value: {
-      type: [String],
-      default: undefined
-    },
-    isLoading: {
-      type: Boolean,
-      default: false
-    },
-    isFocused: {
-      type: Boolean,
-      default: false
-    },
-    isInvalid: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    placeholder: {
-      type: String,
-      default: 'e.g. 11:00'
+type Props = {
+  value?: string
+  isLoading?: boolean
+  isFocused?: boolean
+  isInvalid?: boolean
+  disabled?: boolean
+  placeholder?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  isLoading: false,
+  isFocused: false,
+  isInvalid: false,
+  disabled: false,
+  placeholder: 'e.g. 11:00'
+})
+
+const emit = defineEmits<{
+  (event: 'confirm'),
+  (event: 'focus'),
+  (event: 'blur'),
+  (event: 'input', data?: string)
+}>()
+
+const focused = ref(false)
+const isOpen= ref(false)
+const me = ref<HTMLDivElement>()
+const input = ref<HTMLInputElement>()
+const instance = getCurrentInstance()
+
+const listeners = computed(() => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { focus, blur, input, ...listeners } = instance.proxy.$listeners
+  return listeners
+})
+
+const isValid = computed(() => props.value)
+const selectedTime = computed({
+  get() {
+    if (!isValid.value) {
+      return undefined
     }
+    return props.value
   },
-  data() {
-    return {
-      focused: false,
-      isOpen: false
-    }
-  },
-  computed: {
-    isValid() {
-      return this.value
-    },
-    selectedTime: {
-      get() {
-        if (!this.isValid) {
-          return undefined
-        }
-        return this.value
-      },
-      set(date) {
-        this.$emit('input', date)
-      }
-    },
-    formattedTime() {
-      if (!this.isValid) {
-        return ''
-      }
-      return this.value
-    },
-    listeners() {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { focus, blur, input, ...listeners } = this.$listeners
-      return listeners
-    }
-  },
-  watch: {
-    isFocused: {
-      handler(isFocused) {
-        if (isFocused) {
-          this.$nextTick(() => this.$refs.input.focus())
-        }
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    onInput(e) {
-      if (e.target.value.length === 0) {
-        this.selectedTime = undefined
-      } else {
-        this.selectedTime = e.target.value
-      }
-    },
-    onKeyDown() {
-      if (!this.isOpen) {
-        this.toggle()
-      }
-    },
-    toggle() {
-      this.isOpen = !this.isOpen
-    },
-    onEsc() {
-      this.isOpen = false
-    },
-    onTab(e) {
-      this.focused = false
-      this.isOpen = false
-      this.$nextTick(() => {
-        this.onInput(e)
-        this.$emit('confirm', e)
-      })
-    },
-    onEnter(e) {
-      this.onTab(e)
-    },
-    onFocus(e) {
-      if (!this.$refs['time-picker'].contains(e.relatedTarget)) {
-        this.focused = true
-        this.isOpen = true
-        this.$emit('focus', e)
-      }
-    },
-    onBlur(e) {
-      if (!this.$refs['time-picker'].contains(e.relatedTarget)) {
-        this.focused = false
-        this.isOpen = false
-        this.$emit('blur', e)
-      } else if (e.relatedTarget.getAttribute('tabindex') === '-1') {
-        this.$refs.input.focus()
-      }
-    },
-    onTimeSelected(time) {
-      this.isOpen = false
-      this.selectedTime = time
-      this.$refs.input.focus()
-    }
+  set(date) {
+    emit('input', date)
+  }
+})
+const formattedTime = computed(() => !isValid.value ? '' : props.value)
+
+function onInput(e: InputEvent) {
+  if (e.target.value.length === 0) {
+    selectedTime.value = undefined
+  } else {
+    selectedTime.value = e.target.value
   }
 }
+
+function onKeyDown() {
+  if (!isOpen.value) {
+    toggle()
+  }
+}
+
+function toggle() {
+  isOpen.value = !isOpen.value
+}
+
+function onEsc() {
+  isOpen.value = false
+}
+
+function onFocus(e: FocusEvent) {
+  if (!me.value.contains(e.relatedTarget)) {
+    focused.value = true
+    isOpen.value = true
+    emit('focus', e)
+  }
+}
+
+function onBlur(e) {
+  if (!me.value.contains(e.relatedTarget)) {
+    focused.value = false
+    isOpen.value = false
+    emit('blur', e)
+  } else if (e.relatedTarget.getAttribute('tabindex') === '-1') {
+    input.value.focus()
+  }
+}
+
+function onTimeSelected(time) {
+  isOpen.value = false
+  selectedTime.value = time
+  input.value.focus()
+}
+
+watch(() => props.isFocused, isFocused => {
+  if (isFocused) {
+    nextTick(() => input.value?.focus())
+  }
+}, {
+  immediate: true
+})
+
 </script>

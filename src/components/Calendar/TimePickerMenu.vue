@@ -15,8 +15,47 @@
     </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import KitButton from '../Button/KitButton.vue'
+
+type Props = {
+  value?: string
+}
+
+const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  (event: 'time-selected', data: string)
+}>()
+
+const selectedOption = ref<Element>()
+const highlightedOption = ref<Element>()
+const me = ref<HTMLDivElement>()
+
+watch(() => props.value, value => {
+  selectedOption.value = findOption(me.value.children, value)
+  highlightAndScrollTo(selectedOption.value)
+})
+
+const options = computed(() => {
+  const options = []
+  for (let i = 0; i < 24; i++) {
+    const hour = padStart(i, 2, 0)
+    options.push(`${hour}:00`, `${hour}:30`)
+  }
+  return options
+})
+
+onMounted(() => {
+  window.addEventListener('keydown', onKeyDown)
+  selectedOption.value = findOption(me.value.children, props.value)
+  setTimeout(() => highlightAndScrollTo(selectedOption.value), 30)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeyDown)
+})
 
 function padStart(value, length, char) {
   while (`${value}`.length < length) {
@@ -25,7 +64,7 @@ function padStart(value, length, char) {
   return value
 }
 
-function findOption(htmlCollection, optionText) {
+function findOption(htmlCollection: HTMLCollection, optionText?: string) {
   for (let i = 0; i < htmlCollection.length; i++) {
     if (htmlCollection.item(i).innerText === optionText) {
       return htmlCollection.item(i)
@@ -34,105 +73,69 @@ function findOption(htmlCollection, optionText) {
   return null
 }
 
-export default {
-  components: {
-    KitButton
-  },
-  props: {
-    value: {
-      type: String
-    }
-  },
-  data() {
-    return {
-      selectedOption: null,
-      highlightedOption: null
-    }
-  },
-  created() {
-    window.addEventListener('keydown', this.onKeyDown)
-  },
-  destroyed() {
-    window.removeEventListener('keydown', this.onKeyDown)
-  },
-  mounted() {
-    this.selectedOption = findOption(this.$refs.me.children, this.value)
-    setTimeout(() => this.highlightAndScrollTo(this.selectedOption), 30)
-  },
-  computed: {
-    options() {
-      const options = []
-      for (let i = 0; i < 24; i++) {
-        const hour = padStart(i, 2, 0)
-        options.push(`${hour}:00`, `${hour}:30`)
-      }
-      return options
-    }
-  },
-  watch: {
-    value: function () {
-      this.selectedOption = findOption(this.$refs.me.children, this.value)
-      this.highlightAndScrollTo(this.selectedOption)
-    }
-  },
-  methods: {
-    onKeyDown(e) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault()
-        e.stopPropagation()
-        this.moveDown()
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault()
-        e.stopPropagation()
-        this.moveUp()
-      } else if (e.key === 'Enter') {
-        e.preventDefault()
-        e.stopPropagation()
-        this.onTimeSelected(this.highlightedOption?.innerText)
-      }
-    },
-    isHighlighted(optionValue) {
-      return this.highlightedOption?.innerText === optionValue
-    },
-    mouseOver(e) {
-      if (e.target !== this.highlightedOption) {
-        this.highlight(e.target)
-      }
-    },
-    moveDown() {
-      if (!this.highlightedOption) {
-        this.highlightAndScrollTo(this.$refs.me.children[0])
-      } else {
-        const newIndex = Array.from(this.$refs.me.children).indexOf(this.highlightedOption) + 1
-        if (newIndex < this.$refs.me.children.length) {
-          this.highlightAndScrollTo(this.$refs.me.children[newIndex])
-        }
-      }
-    },
-    highlightAndScrollTo(element) {
-      this.highlight(element)
-      if (element) {
-        this.$refs.me.parentElement.scrollTop = element.offsetTop - element.getBoundingClientRect().height * 3
-      }
-    },
-    highlight(element) {
-      this.highlightedOption = element
-    },
-    moveUp() {
-      if (!this.highlightedOption) {
-        this.highlightAndScrollTo(this.$refs.me.children[this.$refs.me.children.length - 1])
-      } else {
-        const newIndex = Array.from(this.$refs.me.children).indexOf(this.highlightedOption) - 1
-        if (newIndex > -1) {
-          this.highlightAndScrollTo(this.$refs.me.children[newIndex])
-        }
-      }
-    },
-    onTimeSelected(value) {
-      this.$emit('time-selected', value)
+function onKeyDown(e: KeyboardEvent) {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault()
+    e.stopPropagation()
+    moveDown()
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault()
+    e.stopPropagation()
+    moveUp()
+  } else if (e.key === 'Enter') {
+    e.preventDefault()
+    e.stopPropagation()
+    onTimeSelected(highlightedOption.value?.innerText)
+  }
+}
+
+function isHighlighted(optionValue) {
+  return highlightedOption.value?.innerText === optionValue
+}
+
+function mouseOver(e: MouseEvent) {
+  if (e.target !== highlightedOption.value) {
+    highlight(e.target)
+  }
+}
+
+function moveDown() {
+  if (!highlightedOption.value) {
+    highlightAndScrollTo(me.value.children[0])
+  } else {
+    const newIndex = Array.from(me.value.children).indexOf(highlightedOption.value) + 1
+    if (newIndex < me.value.children.length) {
+      highlightAndScrollTo(me.value.children[newIndex])
     }
   }
 }
+
+function highlightAndScrollTo(element: Element) {
+  highlight(element)
+  if (element) {
+    me.value.parentElement.scrollTop = element.offsetTop - element.getBoundingClientRect().height * 3
+  }
+}
+
+function highlight(element: Element) {
+  highlightedOption.value = element
+}
+
+function moveUp() {
+  if (!highlightedOption.value) {
+    highlightAndScrollTo(me.value.children[me.value.children.length - 1])
+  } else {
+    const newIndex = Array.from(me.value.children).indexOf(highlightedOption.value) - 1
+    if (newIndex > -1) {
+      highlightAndScrollTo(me.value.children[newIndex])
+    }
+  }
+}
+
+function onTimeSelected(value) {
+  emit('time-selected', value)
+}
+
 </script>
 <style scoped>
 .kit-time-picker-menu {
