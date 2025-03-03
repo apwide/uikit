@@ -51,7 +51,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'confirm'),
   (event: 'focus'),
   (event: 'blur'),
   (event: 'input', data?: string)
@@ -62,6 +61,7 @@ const isOpen= ref(false)
 const me = ref<HTMLDivElement>()
 const input = ref<HTMLInputElement>()
 const instance = getCurrentInstance()
+const tempValue = ref()
 
 const listeners = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -83,11 +83,25 @@ const selectedTime = computed({
 })
 const formattedTime = computed(() => !isValid.value ? '' : props.value)
 
+watch (() => props.value, value => {
+  tempValue.value = value
+}, {
+  immediate: true
+})
+
+watch(() => props.isFocused, isFocused => {
+  if (isFocused) {
+    nextTick(() => input.value?.focus())
+  }
+}, {
+  immediate: true
+})
+
 function onInput(e: InputEvent) {
   if (e.target.value.length === 0) {
-    selectedTime.value = undefined
+    tempValue.value = undefined
   } else {
-    selectedTime.value = e.target.value
+    tempValue.value = e.target.value
   }
 }
 
@@ -103,6 +117,7 @@ function toggle() {
 
 function onEsc() {
   isOpen.value = false
+  tempValue.value = props.value
 }
 
 function onFocus(e: FocusEvent) {
@@ -117,6 +132,9 @@ function onBlur(e) {
   if (!me.value.contains(e.relatedTarget)) {
     focused.value = false
     isOpen.value = false
+    if (props.value !== tempValue.value) {
+      selectedTime.value = tempValue.value
+    }
     emit('blur', e)
   } else if (e.relatedTarget.getAttribute('tabindex') === '-1') {
     input.value.focus()
@@ -128,13 +146,5 @@ function onTimeSelected(time) {
   selectedTime.value = time
   input.value.focus()
 }
-
-watch(() => props.isFocused, isFocused => {
-  if (isFocused) {
-    nextTick(() => input.value?.focus())
-  }
-}, {
-  immediate: true
-})
 
 </script>
