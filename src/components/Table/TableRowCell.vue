@@ -25,7 +25,7 @@ defineProps<Props>()
 td {
   box-sizing: border-box;
   min-height: 40px;
-  color: rgb(23, 43, 77);
+  color: var(--kit-body-text);
   line-height: 24px;
   padding: 7px 16px;
 }

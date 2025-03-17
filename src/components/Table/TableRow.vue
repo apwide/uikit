@@ -47,6 +47,6 @@ function handleMouseLeave() {
 
 <style scoped>
 .kit-table-row:hover > .kit-table-row-cell {
-  background-color: #f4f5f7;
+  background-color: var(--kit-table-row-hover-color);
 }
 </style>

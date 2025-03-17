@@ -110,6 +110,34 @@ input[type='checkbox'] {
 }
 
 .kit-checkbox__wrapper {
+  --kit-checkbox-checked-color: #0052cc;
+  --kit-checkbox-checked-hover-color: #0065ff;
+  --kit-checkbox-checked-tick-color: #fafbfc;
+
+  --kit-checkbox-fill-color: #fafbfc;
+  --kit-checkbox-border-color: #dfe1e6;
+  --kit-checkbox-hover-color: #ebecf0;
+  --kit-checkbox-focus-color: #4c9aff;
+
+  --kit-checkbox-disabled-color: #f4f5f7;
+  --kit-checkbox-disabled-border-color: #BCD6F00A;
+}
+
+body.kit-dark .kit-checkbox__wrapper {
+  --kit-checkbox-checked-color: #579DFF;
+  --kit-checkbox-checked-hover-color: #85B8FF;
+  --kit-checkbox-checked-tick-color: #1D2125;
+
+  --kit-checkbox-fill-color: #22272B;
+  --kit-checkbox-border-color: #738496;
+  --kit-checkbox-hover-color: #282E33;
+  --kit-checkbox-focus-color: #85B8FF;
+
+  --kit-checkbox-disabled-color: #BFDBF847;
+  --kit-checkbox-disabled-border-color: #BCD6F00A;
+}
+
+.kit-checkbox__wrapper {
   display: inline-flex;
   position: relative;
   cursor: pointer;
@@ -124,43 +152,47 @@ input[type='checkbox'] {
 }
 
 input:checked + .kit-checkbox__icon >>> rect {
-  color: #0052cc;
-  stroke: #0052cc;
+  color: var(--kit-checkbox-checked-color);
+  stroke: var(--kit-checkbox-checked-color);
 }
 
 input + .kit-checkbox__icon >>> rect {
-  color: #fafbfc;
-  stroke: #dfe1e6;
+  color: var(--kit-checkbox-fill-color);
+  stroke: var(--kit-checkbox-border-color);
 }
 
 label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> rect {
-  fill: #ebecf0;
+  fill: var(--kit-checkbox-hover-color);
 }
 
 label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> path {
-  fill: #ebecf0;
+  fill: var(--kit-checkbox-hover-color);
 }
 
 label:hover input:checked:not(:disabled) + .kit-checkbox__icon >>> rect {
-  color: #0065ff;
-  stroke: #0065ff;
+  color: var(--kit-checkbox-checked-hover-color);
+  stroke: var(--kit-checkbox-checked-hover-color);
 }
 
 input + .kit-checkbox__icon >>> path {
-  fill: #fafbfc;
+  fill: var(--kit-checkbox-checked-tick-color);
 }
 
 input:not([is-invalid]):focus + .kit-checkbox__icon >>> rect {
-  stroke: #4c9aff;
+  stroke: var(--kit-checkbox-focus-color);
 }
 
 input[is-invalid] + .kit-checkbox__icon >>> rect {
   stroke: #ff5630;
 }
 
-input:checked[disabled] + .kit-checkbox__icon >>> rect {
-  stroke: #f4f5f7;
-  color: #f4f5f7;
+input[disabled] + .kit-checkbox__icon >>> rect {
+  stroke: var(--kit-checkbox-disabled-border-color);
+  color: var(--kit-checkbox-disabled-color);
+}
+
+input[disabled] + .kit-checkbox__icon >>> path {
+  fill: var(--kit-checkbox-disabled-border-color);
 }
 
 input:checked[disabled] + .kit-checkbox__icon >>> path {
@@ -170,7 +202,7 @@ input:checked[disabled] + .kit-checkbox__icon >>> path {
 label[disabled],
 label[disabled] input {
   cursor: not-allowed;
-  color: rgb(151, 160, 175);
+  color: #97a0af;
 }
 
 :not(.kit-checkbox__indeterminate) >>> rect {

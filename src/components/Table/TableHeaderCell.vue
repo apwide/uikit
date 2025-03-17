@@ -48,11 +48,13 @@ function onClick() {
 .kit-table-header-cell {
   --kit-table-header-border-color: #dfe1e6;
   --kit-table-header-bg-color: white;
+  --kit-table-header-text-color: var(--kit-body-text);
 }
 
 body.kit-dark .kit-table-header-cell {
   --kit-table-header-border-color: #A6C5E229;
   --kit-table-header-bg-color: #1d2125;
+  --kit-table-header-text-color: var(--kit-body-text);
 }
 
 th {
@@ -67,14 +69,14 @@ th {
   font-size: 12px;
   line-height: 1.67;
   letter-spacing: -0.1px;
-  color: rgb(94, 108, 132);
+  color: var(--kit-table-header-text);
   display: flex;
   border-bottom: 2px solid var(--kit-table-header-border-color);
   padding: 9px 16px 7px;
 }
 
 th[sortable]:hover {
-  background-color: rgb(244, 245, 247);
+  background-color: var(--kit-table-row-hover-color);
   cursor: pointer;
 }
 

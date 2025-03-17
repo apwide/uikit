@@ -150,18 +150,13 @@ onMounted(() => {
 
 <style scoped>
 .kit-table-wrapper {
+  --kit-table-bg-color: var(--kit-page-bg-color);
   --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
-
-  --kit-table-row-highlight-bg: #f4f5f7;
-
-
 }
 
 body.kit-dark .kit-table-wrapper {
+  --kit-table-bg-color: var(--kit-page-bg-color);
   --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
-
-  --kit-table-row-highlight-bg: #A1BDD914;
-  --kit-table-heading-text-color: var(--kit-body-text);
 }
 
 .kit-table-wrapper {

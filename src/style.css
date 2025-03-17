@@ -1,5 +1,17 @@
-:root {
-    --kit-table-bg-color: white;
-    --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
-    --kit-body-text: ;
+body {
+    --kit-body-text: #172b4d;
+    --kit-page-bg-color: #ffffff;
+
+    --kit-table-row-hover-color: #f4f5f7;
+    --kit-table-header-text: #5e6c84;
+
+}
+
+body.kit-dark {
+    /*--kit-body-text: #B6C2CF;*/
+    --kit-body-text: #9FADBC;
+    --kit-page-bg-color: #1d2125;
+
+    --kit-table-row-hover-color: #A1BDD914;
+    --kit-table-header-text: var(--kit-body-text);
 }

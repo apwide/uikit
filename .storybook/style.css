@@ -4,5 +4,18 @@ body,
     height: 100%;
 }
 
+body {
+    --apw-link-color: #0052cc;
 
+    background-color: white;
+}
 
+body.kit-dark {
+    --apw-link-color: #579DFF;
+
+    background-color: #1d2125;
+}
+
+a {
+    color: var(--apw-link-color);
+}
