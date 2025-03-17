@@ -45,8 +45,18 @@ function onClick() {
 </script>
 
 <style scoped>
+.kit-table-header-cell {
+  --kit-table-header-border-color: #dfe1e6;
+  --kit-table-header-bg-color: white;
+}
+
+body.kit-dark .kit-table-header-cell {
+  --kit-table-header-border-color: #A6C5E229;
+  --kit-table-header-bg-color: #1d2125;
+}
+
 th {
-  background-color: white;
+  background-color: var(--kit-table-header-bg-color);
   padding: 0;
 }
 
@@ -59,7 +69,7 @@ th {
   letter-spacing: -0.1px;
   color: rgb(94, 108, 132);
   display: flex;
-  border-bottom: 2px solid #dfe1e6;
+  border-bottom: 2px solid var(--kit-table-header-border-color);
   padding: 9px 16px 7px;
 }
 

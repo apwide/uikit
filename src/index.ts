@@ -54,6 +54,8 @@ import KitCard from './components/Card/KitCard.vue'
 import KitRadioGroup from './components/Radio/KitRadioGroup.vue'
 import KitCollapsible from './components/Collapsible/KitCollapsible.vue'
 
+import './style.css'
+
 export {
   KitCard,
   KitIcon,

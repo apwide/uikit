@@ -144,7 +144,26 @@ onMounted(() => {
 })
 </script>
 
+<style>
+
+</style>
+
 <style scoped>
+.kit-table-wrapper {
+  --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
+
+  --kit-table-row-highlight-bg: #f4f5f7;
+
+
+}
+
+body.kit-dark .kit-table-wrapper {
+  --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
+
+  --kit-table-row-highlight-bg: #A1BDD914;
+  --kit-table-heading-text-color: var(--kit-body-text);
+}
+
 .kit-table-wrapper {
   width: 100%;
   max-height: 100%;
@@ -161,7 +180,7 @@ table {
 table thead[sticky-header] tr {
   inset-block-start: 0;
   position: sticky;
-  background-color: white;
+  background-color: var(--kit-table-bg-color);
   /* required to stay above the eventual position: xxx in the content */
   z-index: 1;
 }
@@ -171,7 +190,7 @@ table tbody {
 }
 
 thead {
-  background-color: white;
+  background-color: var(--kit-table-bg-color);
   border: none;
 }
 
