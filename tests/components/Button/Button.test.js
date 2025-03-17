@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitButton from '@components/Button/KitButton.vue'
-import Spinner from '@/components/Spinner/Spinner'
+import KitSpinner from '@components/Spinner/KitSpinner.vue'
 
 describe('Button', () => {
   it('renders correct content for a button', () => {
@@ -11,7 +11,7 @@ describe('Button', () => {
 
   it('renders spinner if passed loading prop', () => {
     const component = shallowMount(KitButton, { propsData: { isLoading: true }, slots: { default: 'Click me!' } })
-    expect(component.findComponent(Spinner).exists()).toBe(true)
+    expect(component.findComponent(KitSpinner).exists()).toBe(true)
   })
 
   it('emits click event on button click', () => {

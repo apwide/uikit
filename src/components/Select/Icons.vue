@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import Spinner from '../Spinner/Spinner'
+import KitSpinner from '../Spinner/KitSpinner.vue'
 import Caret from '../Icon/aui/HipchatChevronDownIcon'
 import Clear from '../Icon/aui/EditorErrorIcon'
 
 export default {
   name: 'KitIcons',
-  components: { Spinner, Caret, Clear },
+  components: { Spinner: KitSpinner, Caret, Clear },
   props: {
     isFetching: {
       type: Boolean,

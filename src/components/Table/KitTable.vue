@@ -47,7 +47,7 @@
       <tfoot v-show="infiniteScroll && !showLoadMore">
         <tr>
           <td ref="scrollLoaderRef" :colspan="columns.length" class="kit-infinite-scroll-loader">
-            <Spinner size="small" />
+            <KitSpinner size="small" />
           </td>
         </tr>
       </tfoot>
@@ -60,7 +60,7 @@
       </tfoot>
     </table>
     <div :busy="busy" class="kit-busy-glass">
-      <Spinner />
+      <KitSpinner />
     </div>
   </div>
 </template>
@@ -68,7 +68,7 @@
 <script setup lang="ts" generic="T extends BasicRow">
 import { BasicRow, Column } from '@components/Table/types'
 import { computed, onMounted, ref, useSlots } from 'vue'
-import Spinner from '../Spinner/Spinner.vue'
+import KitSpinner from '../Spinner/KitSpinner.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitButton from '../Button/KitButton.vue'
 import KitDraggable from '../common/KitDraggable'

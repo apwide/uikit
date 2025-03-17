@@ -1,5 +1,5 @@
 <template>
-  <div class="spinner" :size="size">
+  <div class="kit-spinner" :size="size">
     <svg
       focusable="false"
       :size="dimensions.px"
@@ -11,98 +11,105 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitSpinner',
-  props: {
-    size: {
-      type: String,
-      default: 'medium'
-    }
-  },
-  computed: {
-    dimensions() {
-      switch (this.size) {
-        case 'icon':
-          return {
-            px: 14,
-            radius: 5
-          }
-        case 'small':
-          return {
-            px: 20,
-            radius: 9
-          }
-        case 'medium':
-          return {
-            px: 30,
-            radius: 13.5
-          }
-        case 'large':
-          return {
-            px: 50,
-            radius: 22.5
-          }
-        default:
-          return {
-            name: 'Kitmedium',
-            px: 30,
-            radius: 13.5
-          }
-      }
-    },
-    origin() {
-      return this.dimensions.px / 2
-    }
-  }
+<script setup lang="ts">
+
+import { computed } from 'vue'
+
+type Props = {
+  size?: 'icon' | 'small' | 'medium' | 'large'
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium'
+})
+
+const dimensions = computed(() => {
+  switch (props.size) {
+    case 'icon':
+      return {
+        px: 14,
+        radius: 5
+      }
+    case 'small':
+      return {
+        px: 20,
+        radius: 9
+      }
+    case 'medium':
+      return {
+        px: 30,
+        radius: 13.5
+      }
+    case 'large':
+      return {
+        px: 50,
+        radius: 22.5
+      }
+    default:
+      return {
+        px: 30,
+        radius: 13.5
+      }
+  }
+})
+
+const origin = computed(() => dimensions.value.px / 2)
+
 </script>
 
 <style scoped>
-.spinner {
+.kit-spinner {
+  --kit-spinner-color: #42526e;
+}
+
+body.kit-dark .kit-spinner {
+  --kit-spinner-color: var(--kit-body-text);
+}
+
+.kit-spinner {
   box-sizing: border-box;
   position: relative;
   width: 30px;
   height: 30px;
-  color: #42526e;
+  color: var(--kit-spinner-color);
   display: inline-block;
 }
 
-.spinner[size='small'] {
+.kit-spinner[size='small'] {
   width: 20px;
   height: 20px;
 }
 
-.spinner[size='large'] {
+.kit-spinner[size='large'] {
   width: 50px;
   height: 50px;
 }
 
-.spinner[size='icon'] {
+.kit-spinner[size='icon'] {
   width: 16px;
   height: 16px;
   vertical-align: text-top;
 }
 
-.spinner[size='small'] svg {
+.kit-spinner[size='small'] svg {
   stroke-dasharray: 56px;
   stroke-dashoffset: 45px;
   stroke-width: 2px;
 }
 
-.spinner[size='large'] svg {
+.kit-spinner[size='large'] svg {
   stroke-dasharray: 140px;
   stroke-dashoffset: 112.5px;
   stroke-width: 5px;
 }
 
-.spinner[size='icon'] svg {
+.kit-spinner[size='icon'] svg {
   top: 1px;
   left: 1px;
   stroke-width: 2px;
 }
 
-svg {
+.kit-spinner > svg {
   position: absolute;
   top: 0;
   right: 0;

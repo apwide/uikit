@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import Spinner from '@/components/Spinner/Spinner'
+import KitSpinner from '@components/Spinner/KitSpinner.vue'
 
 export default {
   name: 'SpinnerStory',
-  components: { Spinner }
+  components: { Spinner: KitSpinner }
 }
 </script>

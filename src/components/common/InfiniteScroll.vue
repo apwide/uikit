@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import Spinner from '../Spinner/Spinner'
+import KitSpinner from '../Spinner/KitSpinner.vue'
 
 export default {
   name: 'KitInfiniteScroll',
-  components: { Spinner },
+  components: { Spinner: KitSpinner },
   props: {
     tag: {
       type: String,

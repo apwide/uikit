@@ -13,7 +13,7 @@
       <slot v-if="!isLoading" name="icon-before" />
       <span v-if="$slots.default" ref="label" class="kit-button__label"><slot /></span>
       <slot v-if="!isLoading" name="icon-after" />
-      <Spinner v-if="isLoading" :size="spacing === 'default' ? 'small' : 'icon'" />
+      <KitSpinner v-if="isLoading" :size="spacing === 'default' ? 'small' : 'icon'" />
     </span>
   </button>
 </template>
@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue'
 import { KitButtonAppearance, KitButtonSpacing } from '@components/Button/KitButton.types'
-import Spinner from '../Spinner/Spinner.vue'
+import KitSpinner from '../Spinner/KitSpinner.vue'
 
 type Props = {
   appearance?: KitButtonAppearance
@@ -144,7 +144,7 @@ button[loading] span.kit-button__label {
   opacity: 0;
 }
 
-button[loading] >>> .spinner {
+button[loading] >>> .kit-spinner {
   display: flex;
   position: absolute;
   left: 50%;
@@ -152,7 +152,7 @@ button[loading] >>> .spinner {
   transform: translate(-50%, -50%);
 }
 
-button[loading][selected] >>> .spinner {
+button[loading][selected] >>> .kit-spinner {
   color: #fff;
 }
 
@@ -194,7 +194,7 @@ button[appearance='primary']:not([disabled]):not([selected]):active {
   background-color: #0747a6;
 }
 
-button[appearance='primary'][loading] >>> .spinner {
+button[appearance='primary'][loading] >>> .kit-spinner {
   color: #fff;
 }
 
@@ -291,7 +291,7 @@ button[appearance='danger'][selected]:hover {
   background-color: #bf2600;
 }
 
-button[appearance='danger'][loading] >>> .spinner {
+button[appearance='danger'][loading] >>> .kit-spinner {
   color: #fff;
 }
 
@@ -315,7 +315,7 @@ button[appearance='help'][selected]:hover {
   background-color: #352a8dff;
 }
 
-button[appearance='help'][loading] >>> .spinner {
+button[appearance='help'][loading] >>> .kit-spinner {
   color: #fff;
 }
 
@@ -343,7 +343,7 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-button[loading][disabled] >>> .spinner {
+button[loading][disabled] >>> .kit-spinner {
   color: #172b4d;
 }
 

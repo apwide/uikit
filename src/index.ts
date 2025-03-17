@@ -8,7 +8,7 @@ import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
 import KitSectionMessage from '@components/SectionMessage/KitSectionMessage.vue'
 import KitButton from '@components/Button/KitButton.vue'
 import KitColorPicker from '@components/ColorPicker/KitColorPicker.vue'
-import Spinner from './components/Spinner/Spinner.vue'
+import KitSpinner from '@components/Spinner/KitSpinner.vue'
 import Input from './components/Form/Input.vue'
 import TextArea from './components/Form/TextArea.vue'
 import FieldGroup from './components/Form/FieldGroup.vue'
@@ -68,7 +68,7 @@ export {
   DropdownCheckboxItem as KitDropdownCheckboxItem,
   KitDropdownSeparator,
   Lozenge as KitLozenge,
-  Spinner as KitSpinner,
+  KitSpinner,
   FieldGroup as KitFieldGroup,
   TextArea as KitTextArea,
   Input as KitInput,
