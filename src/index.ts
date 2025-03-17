@@ -29,7 +29,7 @@ import Progress from './components/Progress/progress'
 import KitAvatar from './components/Avatar/KitAvatar.vue'
 import KitBadge from '@components/Badge/KitBadge.vue'
 import ProgressBar from './components/ProgressBar/ProgressBar.vue'
-import Tag from './components/Tag/Tag.vue'
+import KitTag from '@components/Tag/KitTag.vue'
 import Flag from './components/Flag/Flag.vue'
 import KitBreadcrumbs from '@components/Breadcrumbs/KitBreadcrumbs.vue'
 import KitBreadcrumbItem from '@components/Breadcrumbs/KitBreadcrumbItem.vue'
@@ -81,7 +81,7 @@ export {
   KitAvatar,
   KitBadge,
   ProgressBar as KitProgressBar,
-  Tag as KitTag,
+  KitTag,
   Modal as KitModal,
   CopyToClipboard as KitCopyToClipboard,
   KitSetToClipboard,
