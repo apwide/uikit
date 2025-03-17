@@ -6,16 +6,167 @@ body,
 
 body {
     --apw-link-color: #0052cc;
-
-    background-color: white;
+    --apw-lesser-header-text: #6b778c;
+    --apw-body-text: #172b4d;
+    --apw-page-background: #ffffff;
 }
 
 body.kit-dark {
     --apw-link-color: #579DFF;
+    --apw-page-background: #1d2125;
+    --apw-body-text: #B6C2CF;
+}
 
-    background-color: #1d2125;
+body {
+    background-color: var(--apw-page-background);
 }
 
 a {
     color: var(--apw-link-color);
+}
+
+html,
+body {
+    height: 100%;
+    color: var(--apw-body-text);
+    background-color: var(--apw-page-background);
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.42857143;
+    text-align: left;
+    white-space: normal;
+    margin: 0;
+}
+
+html > * {
+    font-size: 14px;
+}
+
+body {
+    width: 100%;
+}
+
+blockquote:first-child,
+dl:first-child,
+ol:first-child,
+p:first-child,
+pre:first-child,
+ul:first-child {
+    margin-top: 0;
+}
+
+body,
+div,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+img,
+p,
+pre {
+    margin: 0;
+    padding: 0;
+}
+
+blockquote,
+dl,
+ol,
+p,
+pre,
+ul {
+    margin: 10px 0 0;
+}
+
+a {
+    color: var(--apw-link-color);
+}
+
+fieldset, img {
+    border: 0;
+}
+
+hr {
+    border: 0;
+    margin: 0;
+    height: 1px;
+    background-color: #eeeeee;
+}
+
+h1, h2 {
+    font-weight: 500;
+    margin: 30px 0 0;
+    text-transform: none;
+}
+
+h1 {
+    font-size: 24px;
+    letter-spacing: -.01em;
+    line-height: 1.25;
+}
+
+h2 {
+    font-size: 20px;
+    letter-spacing: -.008em;
+    line-height: 1.5;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -.006em;
+    line-height: 1.25;
+    text-transform: none;
+}
+
+h4, h5 {
+    font-weight: 600;
+    margin: 20px 0 0;
+    text-transform: none;
+}
+
+h4 {
+    font-size: 14px;
+    letter-spacing: -.003em;
+    line-height: 1.42857143;
+}
+
+h5, h6 {
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 1.66666667;
+}
+
+h6 {
+    color: var(--apw-lesser-header-text);
+    font-weight: 600;
+    margin: 20px 0 0;
+    text-transform: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--apw-body-text);
+}
+
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+    margin-top: 0;
 }
