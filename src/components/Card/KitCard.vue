@@ -3,16 +3,13 @@
     <slot />
   </div>
 </template>
-<script>
-export default {
-  name: 'KitCard',
-  props: {
-    elevation: {
-      type: [Number, String],
-      default: 1
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  elevation?: number | string
 }
+const props = withDefaults(defineProps<Props>(), {
+  elevation: 1
+})
 </script>
 <style scoped>
 .kit-card {

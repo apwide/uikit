@@ -10,13 +10,6 @@
     <KitCard :elevation="3"> Hello world </KitCard>
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import KitCard from '../../src/components/Card/KitCard.vue'
-
-export default {
-  name: 'KitCard.story',
-  components: {
-    KitCard
-  }
-}
 </script>
