@@ -89,7 +89,7 @@
 
 <script>
 import KitTooltip from '../../src/components/Tooltip/Tooltip'
-import KitBadge from '../../src/components/Badge/Badge'
+import KitKitBadge from '@components/Badge/KitBadge.vue'
 import KitTabProvider from '../../src/components/Tabs/KitTabProvider'
 import KitTabHeaders from '../../src/components/Tabs/KitTabHeaders'
 import KitTabHeader from '../../src/components/Tabs/KitTabHeader'
@@ -114,7 +114,7 @@ export default {
     KitTabHeaders,
     KitTabProvider,
     KitTabHeader,
-    KitBadge,
+    KitBadge: KitKitBadge,
     KitTooltip
   },
   data() {

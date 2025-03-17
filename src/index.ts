@@ -26,8 +26,8 @@ import Menu from './components/Menu/Menu.vue'
 import InlineDialog from './components/InlineDialog/InlineDialog.vue'
 import KitTable from './components/Table/KitTable.vue'
 import Progress from './components/Progress/progress'
-import Avatar from './components/Avatar/Avatar.vue'
-import Badge from './components/Badge/Badge.vue'
+import KitAvatar from './components/Avatar/KitAvatar.vue'
+import KitBadge from '@components/Badge/KitBadge.vue'
 import ProgressBar from './components/ProgressBar/ProgressBar.vue'
 import Tag from './components/Tag/Tag.vue'
 import Flag from './components/Flag/Flag.vue'
@@ -78,8 +78,8 @@ export {
   TimePicker as KitTimePicker,
   KitSelect,
   KitSectionMessage,
-  Avatar as KitAvatar,
-  Badge as KitBadge,
+  KitAvatar,
+  KitBadge,
   ProgressBar as KitProgressBar,
   Tag as KitTag,
   Modal as KitModal,

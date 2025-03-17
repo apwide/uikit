@@ -14,75 +14,56 @@
           </g>
         </g>
       </svg>
-      <component :is="status" v-if="status" class="kit-avatar__status" :size="size" />
-      <component :is="presence" v-if="presence" :size="size" class="kit-avatar__presence" primary-color="green" />
+      <slot name="status">
+        <Approved v-if="statusComponent === 'approved'" class="kit-avatar__status" :size="size"/>
+        <Declined v-if="statusComponent === 'declined'" class="kit-avatar__status" :size="size"/>
+      </slot>
+      <slot name="presence">
+        <Busy v-if="presenceComponent === 'busy'" class="kit-avatar__presence" primary-color="green" :size="size" />
+        <Online v-else-if="presenceComponent === 'online'" class="kit-avatar__presence" primary-color="green" :size="size" />
+        <Offline v-else-if="presenceComponent === 'offline'" class="kit-avatar__presence" primary-color="green" :size="size" />
+        <Focus v-else-if="presenceComponent === 'focus'" class="kit-avatar__presence" primary-color="green" :size="size" />
+      </slot>
       <slot name="avatar-footer" />
     </component>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { Online, Busy, Offline, Focus, Approved, Declined } from './Icons'
+import { computed, ref } from 'vue'
 
-export default {
-  name: 'KitAvatar',
-  components: {
-    Online,
-    Busy,
-    Offline,
-    Focus,
-    Approved,
-    Declined
-  },
-  props: {
-    size: {
-      type: String,
-      default: 'medium'
-    },
-    presence: {
-      type: String,
-      default: ''
-    },
-    avatar: {
-      type: String,
-      default: ''
-    },
-    zIndex: {
-      type: Number,
-      default: 0
-    },
-    tag: {
-      type: String,
-      default: 'div'
-    },
-    link: {
-      type: String,
-      default: '#'
-    },
-    outline: {
-      type: String,
-      default: '#fff'
-    },
-    status: {
-      type: String,
-      default: ''
-    },
-    square: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      error: false
-    }
-  },
-  computed: {
-    style() {
-      return { 'background-color': this.outline }
-    }
-  }
+type Props = {
+  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+  presence?: string
+  avatar?: string
+  zIndex?: number
+  tag?: string
+  link?: string
+  outline?: string
+  status?: string
+  square?: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium',
+  presence: '',
+  avatar: '',
+  zIndex: 0,
+  tag: 'div',
+  link: '#',
+  outline: '#fff',
+  status: '',
+  square: false
+})
+
+const error = ref(false)
+const style = computed(() => ({
+  'background-color': props.outline
+}))
+const statusComponent = computed(() => props.status.toLocaleLowerCase())
+const presenceComponent = computed(() => props.presence.toLocaleLowerCase())
+
 </script>
 
 <style scoped>

@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import Badge from '@/components/Badge/Badge'
+import KitBadge from '@components/Badge/KitBadge.vue'
 
 export default {
   name: 'BadgeStory',
-  components: { Badge },
+  components: { Badge: KitBadge },
   data() {
     return {
       appearances: ['added', 'default', 'important', 'primary', 'removed']
