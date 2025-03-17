@@ -31,8 +31,8 @@ import KitBadge from '@components/Badge/KitBadge.vue'
 import ProgressBar from './components/ProgressBar/ProgressBar.vue'
 import Tag from './components/Tag/Tag.vue'
 import Flag from './components/Flag/Flag.vue'
-import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs.vue'
-import BreadcrumbItem from './components/Breadcrumbs/BreadcrumbItem.vue'
+import KitBreadcrumbs from '@components/Breadcrumbs/KitBreadcrumbs.vue'
+import KitBreadcrumbItem from '@components/Breadcrumbs/KitBreadcrumbItem.vue'
 import CopyToClipboard from './components/CopyToClipboard/CopyToClipboard.vue'
 import {
   KitTabButton,
@@ -95,8 +95,8 @@ export {
   KitTabButton,
   KitTabHeader,
   KitTabPanels,
-  BreadcrumbItem as KitBreadcrumbItem,
-  Breadcrumbs as KitBreadcrumbs,
+  KitBreadcrumbItem,
+  KitBreadcrumbs,
   Flag as KitFlag,
   DateRangePicker as KitDateRangePicker,
   Progress as KitProgress,

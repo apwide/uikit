@@ -9,27 +9,33 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitBreadcrumbItem',
-  props: {
-    link: {
-      type: String,
-      default: '#'
-    },
-    text: {
-      type: String,
-      default: ''
-    },
-    target: {
-      type: String,
-      default: '_self'
-    }
-  }
+<script setup lang="ts">
+
+type Props = {
+  link?: string
+  text?: string
+  target?: string
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  link: '#',
+  text: '',
+  target: '_self'
+})
+
 </script>
 
 <style scoped>
+.kit-breadcrumb {
+  --kit-breadcrumb-link-color: #6b778c;
+  --kit-breadcrumb-link-after-color: #7a869a;
+}
+
+body.kit-dark .kit-breadcrumb {
+  --kit-breadcrumb-link-color: var(--kit-header-text);
+  --kit-breadcrumb-link-after-color: var(--kit-header-text);
+}
+
 .kit-breadcrumb {
   min-width: 45px;
   display: flex;
@@ -56,7 +62,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: rgb(107, 119, 140);
+  color: var(--kit-breadcrumb-link-color);
   margin-left: 0;
   display: block;
 }
@@ -68,7 +74,7 @@ export default {
 .kit-breadcrumb:after {
   display: inline-block;
   content: '/';
-  color: rgb(122, 134, 154);
+  color: var(--kit-breadcrumb-link-after-color);
   flex-shrink: 0;
   text-align: center;
   margin: 0 6px;

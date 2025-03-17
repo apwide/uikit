@@ -1,63 +1,58 @@
 <template>
   <div>
     <h3>Only last + Copy</h3>
-    <Breadcrumbs :copy="true" :items="items" :wrap="false" />
+    <KitBreadcrumbs :copy="true" :items="items" :wrap="false" />
     <h3>Custom</h3>
-    <Breadcrumbs>
-      <BreadcrumbItem text="Board">
-        <KitIcon slot="icon" size="sm" type="columns" />
-      </BreadcrumbItem>
-      <BreadcrumbItem text="Agile Poooooooooooker">
-        <KitIcon slot="icon" size="sm" type="robot" />
-      </BreadcrumbItem>
-      <BreadcrumbItem class="last" text="Awesome Session Name">
-        <Tooltip slot="icon" label="Private session">
-          <KitIcon class="icon" size="sm" type="lock" />
-        </Tooltip>
-        <Tooltip slot="link" class="tooltip" label="Session">
-          <a class="link" href="#" target="_top">Session Name loooooong</a>
-        </Tooltip>
-      </BreadcrumbItem>
-    </Breadcrumbs>
+    <KitBreadcrumbs>
+      <KitBreadcrumbItem text="Board">
+        <template #icon>
+          <KitIcon size="sm" type="columns" />
+        </template>
+      </KitBreadcrumbItem>
+      <KitBreadcrumbItem text="Agile Poooooooooooker">
+        <template #icon>
+          <KitIcon size="sm" type="robot" />
+        </template>
+      </KitBreadcrumbItem>
+      <KitBreadcrumbItem class="last" text="Awesome Session Name">
+        <template #icon>
+          <Tooltip label="Private session">
+            <KitIcon class="icon" size="sm" type="lock" />
+          </Tooltip>
+        </template>
+        <template #link>
+          <Tooltip class="tooltip" label="Session">
+            <a class="link" href="#" target="_top">Session Name loooooong</a>
+          </Tooltip>
+        </template>
+      </KitBreadcrumbItem>
+    </KitBreadcrumbs>
     <h3>With very short items</h3>
-    <Breadcrumbs :items="[{ text: 'Home' }, { text: 'dev' }, { text: '2', link: '#test/path' }]" copy />
+    <KitBreadcrumbs :items="[{ text: 'Home' }, { text: 'dev' }, { text: '2', link: '#test/path' }]" copy />
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import KitIcon from '../../src/components/Icon/KitIcon'
-import Breadcrumbs from '../../src/components/Breadcrumbs/Breadcrumbs'
-import BreadcrumbItem from '../../src/components/Breadcrumbs/BreadcrumbItem'
+import KitBreadcrumbs from '@components/Breadcrumbs/KitBreadcrumbs.vue'
+import KitBreadcrumbItem from '@components/Breadcrumbs/KitBreadcrumbItem.vue'
 import Tooltip from '../../src/components/Tooltip/Tooltip'
 
-export default {
-  name: 'BreadcrumbsStory',
-  components: {
-    KitIcon,
-    Breadcrumbs,
-    BreadcrumbItem,
-    Tooltip
+const items = [
+  {
+    text: 'first'
   },
-  data() {
-    return {
-      items: [
-        {
-          text: 'first'
-        },
-        {
-          text: 'veeeeeeery loooooong breadcrumb'
-        },
-        {
-          text: 'long breadcrumb'
-        },
-        {
-          link: '#/last-item',
-          text: 'never ellipsis'
-        }
-      ]
-    }
+  {
+    text: 'veeeeeeery loooooong breadcrumb'
+  },
+  {
+    text: 'long breadcrumb'
+  },
+  {
+    link: '#/last-item',
+    text: 'never ellipsis'
   }
-}
+]
 </script>
 <style scoped>
 .icon {

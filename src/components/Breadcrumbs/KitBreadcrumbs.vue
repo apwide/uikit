@@ -1,8 +1,8 @@
 <template>
-  <div class="kit-wrapper">
+  <div ref="me" class="kit-wrapper">
     <div class="kit-breadcrumbs">
       <slot>
-        <BreadcrumbItem v-for="item in items" :key="item.text" :link="item.link" :text="item.text" />
+        <KitBreadcrumbItem v-for="item in items" :key="item.text" :link="item.link" :text="item.text" />
       </slot>
     </div>
 
@@ -10,7 +10,7 @@
       v-if="copy"
       :text="lastItemLink"
       placement="top-start"
-      style="color: rgb(94, 108, 132)"
+      style="color: var(--kit-header-text)"
       label="Copy link to clipboard">
       <template #default="{ copied }">
         <KitIcon class="kit-copy-icon" size="sm" v-if="!copied" type="link" />
@@ -20,49 +20,42 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import CopyToClipboard from '../CopyToClipboard/CopyToClipboard'
 import KitIcon from '../Icon/KitIcon'
-import BreadcrumbItem from './BreadcrumbItem'
+import KitBreadcrumbItem from './KitBreadcrumbItem.vue'
+import { nextTick, ref, watch } from 'vue'
 
-export default {
-  name: 'KitBreadcrumbs',
-  components: {
-    KitIcon,
-    BreadcrumbItem,
-    CopyToClipboard
-  },
-  props: {
-    items: {
-      type: Array,
-      default: () => []
-    },
-    copy: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      lastItemLink: undefined
-    }
-  },
-  watch: {
-    copy: {
-      immediate: true,
-      handler(newCopyValue) {
-        if (newCopyValue) {
-          this.$nextTick(() => {
-            const links = this.$el.querySelectorAll('a')
-            if (links.length) {
-              this.lastItemLink = links[links.length - 1].href
-            }
-          })
-        }
-      }
-    }
-  }
+type Item = {
+  text: string
+  link: string
 }
+
+type Props = {
+  items?: Item[]
+  copy?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  items: () => [],
+  copy: false
+})
+
+const me = ref<HTMLDivElement>()
+const lastItemLink = ref<string | undefined>()
+
+watch(() => props.copy, newCopyValue => {
+  if (newCopyValue) {
+    nextTick(() => {
+      const links = me.value.querySelectorAll('a')
+      if (links.length) {
+        lastItemLink.value = links[links.length - 1].href
+      }
+    })
+  }
+}, {
+  immediate: true
+})
 </script>
 
 <style scoped>
@@ -72,7 +65,7 @@ export default {
 }
 
 .kit-breadcrumbs {
-  color: rgb(94, 108, 132);
+  color: var(--kit-header-text);
   display: flex;
   white-space: nowrap;
   overflow: hidden;
