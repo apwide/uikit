@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <Flag class="flag" :title="title" :description="description" :actions="actions" />
-    <Flag class="flag" :title="title" :description="description" type="info" :actions="actions" />
-    <Flag
+    <KitFlag class="flag" :title="title" :description="description" :actions="actions" />
+    <KitFlag class="flag" :title="title" :description="description" type="info" :actions="actions" />
+    <KitFlag
       v-if="show"
       class="flag"
       :title="title"
@@ -19,8 +19,8 @@
           <KitButton appearance="primary"> Send </KitButton>
         </div>
       </div>
-    </Flag>
-    <Flag
+    </KitFlag>
+    <KitFlag
       v-for="appearance in appearances"
       :key="appearance"
       class="flag"
@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import KitButton from '@components/Button/KitButton.vue'
 import { ref } from 'vue'
-import Flag from '@/components/Flag/Flag.vue'
+import KitFlag from '@components/Flag/KitFlag.vue'
 import Input from '@/components/Form/Input.vue'
 import FieldGroup from '@/components/Form/FieldGroup.vue'
 

@@ -30,7 +30,7 @@ import KitAvatar from './components/Avatar/KitAvatar.vue'
 import KitBadge from '@components/Badge/KitBadge.vue'
 import ProgressBar from './components/ProgressBar/ProgressBar.vue'
 import KitTag from '@components/Tag/KitTag.vue'
-import Flag from './components/Flag/Flag.vue'
+import KitFlag from '@components/Flag/KitFlag.vue'
 import KitBreadcrumbs from '@components/Breadcrumbs/KitBreadcrumbs.vue'
 import KitBreadcrumbItem from '@components/Breadcrumbs/KitBreadcrumbItem.vue'
 import CopyToClipboard from './components/CopyToClipboard/CopyToClipboard.vue'
@@ -97,7 +97,7 @@ export {
   KitTabPanels,
   KitBreadcrumbItem,
   KitBreadcrumbs,
-  Flag as KitFlag,
+  KitFlag,
   DateRangePicker as KitDateRangePicker,
   Progress as KitProgress,
   KitButtonGroup,

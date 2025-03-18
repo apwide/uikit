@@ -1,8 +1,12 @@
 <template>
   <transition :name="leaveLeft ? 'flag-left' : 'flag'" appear>
-    <div class="notification" :appearance="appearance">
+    <div class="kit-flag" :appearance="appearance">
       <div class="header">
         <div class="icon">
+          <CheckCircleIcon v-if="flag.name === 'success'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
+          <InfoIcon v-else-if="flag.name === 'info'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
+          <WarningIcon v-else-if="flag.name === 'warning'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
+          <ErrorIcon v-else-if="flag.name === 'error'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
           <component :is="flag.name" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
         </div>
         <span class="title">{{ title }}</span>
@@ -12,7 +16,7 @@
           size="large"
           :expanded="expanded"
           @click.native="onExpand" />
-        <EditorCloseIcon v-else class="close" @click.native="$emit('close')" />
+        <EditorCloseIcon v-else class="close" @click.native="emit('close')" />
       </div>
       <slot>
         <div class="content" :expanded="expanded">
@@ -30,7 +34,7 @@
   </transition>
 </template>
 
-<script>
+<script setup lang="ts">
 import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
 import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
 import InfoIcon from '../Icon/aui/InfoIcon'
@@ -38,95 +42,77 @@ import WarningIcon from '../Icon/aui/WarningIcon'
 import ErrorIcon from '../Icon/aui/ErrorIcon'
 import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
 
-export default {
-  name: 'KitFlag',
-  components: {
-    ChevronDownIcon,
-    success: CheckCircleIcon,
-    info: InfoIcon,
-    warning: WarningIcon,
-    error: ErrorIcon,
-    EditorCloseIcon
-  },
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    description: {
-      type: String,
-      default: ''
-    },
-    actions: {
-      type: Array,
-      default: () => []
-    },
-    appearance: {
-      type: String,
-      default: 'default'
-    },
-    type: {
-      type: String,
-      default: 'success'
-    },
-    leaveLeft: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      expanded: false
-    }
-  },
-  computed: {
-    flag() {
-      switch (this.appearance) {
-        case 'info':
-          return { name: this.appearance, primary: '#fff', secondary: '#42526E' }
-        case 'error':
-          return { name: this.appearance, primary: '#fff', secondary: '#DE350B' }
-        case 'warning':
-          return { name: this.appearance, primary: '', secondary: '#FFC400' }
-        case 'success':
-          return { name: this.appearance, primary: '#fff', secondary: '#00875A' }
-        default:
-          return { name: this.type, primary: this.color, secondary: '#fff' }
-      }
-    },
-    color() {
-      switch (this.type) {
-        case 'info':
-          return '#6554c0'
-        case 'error':
-          return '#de350a'
-        case 'warning':
-          return '#ffab00'
-        case 'success':
-          return '#36b37e'
-        default:
-          return '#6554c0'
-      }
-    }
-  },
-  methods: {
-    onExpand() {
-      this.expanded = !this.expanded
-    },
-    onClick(action) {
-      if (action.href) {
-        window.open(action.href, '_blank')
-      }
-      if (action.handler) {
-        action.handler()
-      }
-    }
+import { computed, ref } from 'vue'
+
+type Props = {
+  title?: string
+  description?: string
+  actions?: Array
+  appearance?: 'default' | 'success' | 'info' | 'error' | 'warning'
+  type?: 'success' | 'info' | 'error' | 'warning'
+  leaveLeft?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '',
+  description: '',
+  actions: () => [],
+  appearance: 'default',
+  type: 'success',
+  leaveLeft: false
+})
+
+const emit = defineEmits<{
+  (event: 'close')
+}>()
+
+const expanded = ref(false)
+const color = computed(() => {
+  switch (props.type) {
+    case 'info':
+      return '#6554c0'
+    case 'error':
+      return '#de350a'
+    case 'warning':
+      return '#ffab00'
+    case 'success':
+      return '#36b37e'
+    default:
+      return '#6554c0'
+  }
+})
+const flag = computed(() => {
+  switch (props.appearance) {
+    case 'info':
+      return { name: props.appearance, primary: '#fff', secondary: '#42526E' }
+    case 'error':
+      return { name: props.appearance, primary: '#fff', secondary: '#DE350B' }
+    case 'warning':
+      return { name: props.appearance, primary: '', secondary: '#FFC400' }
+    case 'success':
+      return { name: props.appearance, primary: '#fff', secondary: '#00875A' }
+    default:
+      return { name: props.type, primary: color.value, secondary: '#fff' }
+  }
+})
+
+function onExpand() {
+  expanded.value = !expanded.value
+}
+
+function onClick(action) {
+  if (action.href) {
+    window.open(action.href, '_blank')
+  }
+  if (action.handler) {
+    action.handler()
   }
 }
+
 </script>
 
 <style scoped>
-.notification {
+.kit-flag {
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   box-shadow: rgba(9, 30, 66, 0.31) 0px 0px 1px, rgba(9, 30, 66, 0.25) 0px 20px 32px -8px;
@@ -164,14 +150,14 @@ export default {
   padding: 0px 0px 0px 40px;
 }
 
-.notification:not([appearance='default']) .content {
+.kit-flag:not([appearance='default']) .content {
   max-height: 0px;
   opacity: 0;
   overflow: hidden;
   transition: max-height 0.3s ease 0s, opacity 0.3s ease 0s;
 }
 
-.notification:not([appearance='default']) .content[expanded='true'] {
+.kit-flag:not([appearance='default']) .content[expanded='true'] {
   max-height: 150px;
   opacity: 1;
   overflow: visible;
