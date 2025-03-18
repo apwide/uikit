@@ -14,60 +14,47 @@
   </Popper>
 </template>
 
-<script>
+<script setup lang="ts">
 import Popper from '../Popper/Popper'
 
-export default {
-  name: 'KitPopup',
-  components: { Popper },
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false
-    },
-    withoutArrow: {
-      type: Boolean,
-      default: false
-    },
-    withLightShadows: {
-      type: Boolean,
-      default: false
-    },
-    targetElement: {
-      type: HTMLElement,
-      default: undefined
-    },
-    placement: {
-      type: String,
-      default: 'bottom-end'
-    },
-    flipBehavior: {
-      type: [String, Array],
-      default: 'flip'
-    },
-    offset: {
-      type: Array,
-      default: () => [0, 5]
-    },
-    transitionDelay: {
-      type: Number,
-      default: 0
-    },
-    boundariesElement: {
-      type: [String, HTMLElement, Function],
-      default: 'viewport'
-    },
-    positionFixed: {
-      type: Boolean,
-      default: false
-    }
-  }
+type Props = {
+  isOpen?: boolean
+  withoutArrow?: boolean
+  withLightShadows?: boolean
+  targetElement?: HTMLElement
+  placement?: string
+  flipBehavior?: string | string[]
+  offset?: number[]
+  transitionDelay?: number
+  boundariesElement?: string | HTMLElement | Function
+  positionFixed?: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  isOpen: false,
+  withoutArrow: false,
+  withLightShadows: false,
+  placement: 'bottom-end',
+  flipBehavior: 'flip',
+  offset: () => [0, 5],
+  transitionDelay: 0,
+  boundariesElement: 'viewport',
+  positionFixed: false
+})
 </script>
 
 <style scoped>
+
 .kit-popup {
-  background-color: rgb(255, 255, 255);
+  --kit-popup-bg-color: var(--kit-page-bg-color);
+}
+
+.kit-dark .kit-popup {
+  --kit-popup-bg-color: #282E33;
+}
+
+.kit-popup {
+  background-color: var(--kit-popup-bg-color);
   box-shadow: 0 0 20px 4px rgb(154 161 177 / 15%), 0 4px 80px -8px rgb(36 40 47 / 25%),
     0 4px 4px -2px rgb(91 94 105 / 15%);
   box-sizing: border-box;
@@ -80,6 +67,11 @@ export default {
 
 .kit-popup[data-light-shadows] {
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+}
+
+.kit-dark .kit-popup {
+  border: 1px solid #313a41;
+  box-shadow: 0 2px 6px -2px #39424a, 0 0 1px #0304045c;
 }
 
 .kit-popup-arrow,
