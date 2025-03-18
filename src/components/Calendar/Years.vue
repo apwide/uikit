@@ -12,32 +12,28 @@
   </table>
 </template>
 
-<script>
+<script setup lang="ts">
 import { chunk } from '../../utils/utils'
 import KitButton from '../Button/KitButton.vue'
+import { computed } from 'vue'
 
 const HALF_DECADE = 5
 
-export default {
-  name: 'KitYears',
-  components: { KitButton },
-  props: {
-    yearsOfDecade: {
-      type: Array,
-      required: true
-    }
-  },
-  computed: {
-    decade() {
-      return chunk(this.yearsOfDecade, HALF_DECADE)
-    }
-  },
-  methods: {
-    onYearSelected(year) {
-      this.$emit('year-selected', year)
-    }
-  }
+type Props = {
+  yearsOfDecade: Array
 }
+
+const props = defineProps<Props>()
+const emit = defineEmits<{
+  (event: 'year-selected', data: any)
+}>()
+
+const decade = computed(() => chunk(props.yearsOfDecade, HALF_DECADE))
+
+function onYearSelected(year) {
+  emit('year-selected', year)
+}
+
 </script>
 
 <style scoped>

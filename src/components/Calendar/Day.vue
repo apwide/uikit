@@ -13,41 +13,30 @@
   </td>
 </template>
 
-<script>
+<script setup lang="ts">
 import KitButton from '../Button/KitButton.vue'
+import { computed } from 'vue'
 
-export default {
-  name: 'KitDay',
-  components: { KitButton },
-  props: {
-    day: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    date() {
-      return this.day.date.getDate()
-    },
-    isDisabled() {
-      return this.day.isDisabled
-    },
-    isHighlighted() {
-      return this.day.isHighlighted
-    },
-    isRangeStart() {
-      return this.day.isRangeStart
-    },
-    isRangeEnd() {
-      return this.day.isRangeEnd
-    }
-  },
-  methods: {
-    onDateSelected() {
-      this.$emit('date-selected', this.day)
-    }
-  }
+type Props = {
+  day: any
 }
+
+const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  (event: 'date-selected', data: any)
+}>()
+
+const date = computed(() => props.day.date.getDate())
+const isDisabled = computed(() => props.day.isDisabled)
+const isHighlighted = computed(() => props.day.isHighlighted)
+const isRangeStart = computed(() => props.day.isRangeStart)
+const isRangeEnd = computed(() => props.day.isRangeEnd)
+
+function onDateSelected() {
+  emit('date-selected', props.day)
+}
+
 </script>
 
 <style scoped>

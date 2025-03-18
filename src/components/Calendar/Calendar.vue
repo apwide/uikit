@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import {
   startOfMonth,
   endOfMonth,
@@ -46,6 +46,7 @@ import CalendarHeader from './CalendarHeader'
 import Weeks from './Weeks'
 import Months from './Months'
 import Years from './Years'
+import { computed, ref, watch } from 'vue'
 
 const MONTHS = [
   'January',
@@ -64,177 +65,159 @@ const MONTHS = [
 const DAYS_IN_WEEK = 7
 const TODAY = new Date()
 
-export default {
-  name: 'KitDatePicker',
-  components: {
-    CalendarHeader,
-    Weeks,
-    Months,
-    Years
-  },
-  props: {
-    value: {
-      type: [Date, Object],
-      default: () => undefined
-    },
-    rangeValue: {
-      type: Boolean,
-      default: false
-    },
-    disabledRange: {
-      type: Object,
-      default: () => ({
-        from: undefined,
-        to: undefined
-      })
-    },
-    visibleDate: {
-      type: Date,
-      default: undefined
-    },
-    timeZone: {
-      type: String,
-      default: undefined
-    }
-  },
-  data() {
-    return {
-      today: TODAY,
-      currentDate: undefined,
-      selectedDate: undefined,
-      currentInterval: 'days'
-    }
-  },
-  computed: {
-    weeks() {
-      return this.daysOfMonth
-    },
-    month() {
-      return MONTHS[this.currentDate.getMonth()]
-    },
-    year() {
-      return this.currentDate.getFullYear()
-    },
-    decade() {
-      const firstYearOfDecade = startOfDecade(this.currentDate).getFullYear()
-      const lastYearOfDecade = endOfDecade(this.currentDate).getFullYear()
-      return `${firstYearOfDecade} - ${lastYearOfDecade}`
-    },
-    daysOfMonth() {
-      const monthFirstDate = startOfMonth(this.currentDate)
-      const monthLastDate = endOfMonth(this.currentDate)
-      const daysOfMonth = eachDayOfInterval({
-        start: startOfWeek(monthFirstDate),
-        end: lastDayOfWeek(monthLastDate)
-      })
-      const enrichedDays = daysOfMonth.map((day) => this.enrichDay(day))
-      return chunk(enrichedDays, DAYS_IN_WEEK)
-    },
-    yearsOfDecade() {
-      const start = startOfDecade(this.currentDate).getFullYear()
-      const end = endOfDecade(this.currentDate).getFullYear()
-      return Array(end - start + 1)
-        .fill()
-        .map((_, idx) => start + idx)
-    },
-    disabledFrom() {
-      return this.disabledRange && this.disabledRange.from && startOfDay(this.disabledRange.from)
-    },
-    disabledTo() {
-      return this.disabledRange && this.disabledRange.to && endOfDay(this.disabledRange.to)
-    },
-    rangeFrom() {
-      return this.value && this.rangeValue && startOfDay(this.value.from)
-    },
-    rangeTo() {
-      return this.value && this.rangeValue && endOfDay(this.value.to)
-    }
-  },
-  watch: {
-    value: {
-      handler(date) {
-        const selectedDate = this.rangeValue ? date.from : date
-        this.selectedDate = selectedDate ? utcToZonedTime(selectedDate, this.timeZone) : undefined
-      },
-      immediate: true
-    },
-    visibleDate: {
-      handler() {
-        this.currentDate = this.visibleDate || this.selectedDate || TODAY
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    enrichDay(date) {
-      return {
-        date,
-        isToday: this.isToday(date),
-        isNotSameMonth: !isSameMonth(this.currentDate, date),
-        isSelected: this.isSelected(date),
-        isDisabled: this.isDisabled(date),
-        isHighlighted: this.isHighlighted(date),
-        isRangeStart: isSameDay(date, this.rangeFrom),
-        isRangeEnd: isSameDay(date, this.rangeTo)
-      }
-    },
-    isToday(date) {
-      return isSameDay(utcToZonedTime(new Date(), this.timeZone), date)
-    },
-    isSelected(date) {
-      if (this.rangeValue) {
-        return isSameDay(date, this.value.from) || isSameDay(date, this.value.to)
-      }
-      return isSameDay(this.selectedDate, date)
-    },
-    isDisabled(date) {
-      if (!this.disabledFrom && !this.disabledTo) {
-        return false
-      }
-      if (!this.disabledFrom) {
-        return !isAfter(date, this.disabledTo)
-      }
-      if (!this.disabledTo) {
-        return !isBefore(date, this.disabledFrom)
-      }
-      return !isAfter(date, this.disabledTo) && !isBefore(date, this.disabledFrom)
-    },
-    isHighlighted(date) {
-      if (!this.rangeValue) {
-        return false
-      }
-      return isAfter(date, this.rangeFrom) && isBefore(date, this.rangeTo)
-    },
-    onNext(callback) {
-      this.currentDate = callback(this.currentDate, this.currentInterval)
-    },
-    onPrev(callback) {
-      this.currentDate = callback(this.currentDate, this.currentInterval)
-    },
-    onMonthSelected(month) {
-      this.currentInterval = 'days'
-      this.currentDate = setMonth(this.currentDate, month)
-    },
-    onYearSelected(year) {
-      this.currentInterval = 'months'
-      this.currentDate = setYear(this.currentDate, year)
-    },
-    onDateSelected(day) {
-      const { date } = day
-      if (this.selectedDate) {
-        date.setHours(this.selectedDate.getHours())
-        date.setMinutes(this.selectedDate.getMinutes())
-        date.setSeconds(this.selectedDate.getSeconds())
-      }
-      this.selectedDate = date
-      this.currentDate = date
-      const utcDate = zonedTimeToUtc(date, this.timeZone)
-      this.$emit('date-selected', utcDate)
-    },
-    onIntervalChange(interval) {
-      this.currentInterval = interval
-    }
+type Props = {
+  value?: any
+  rangeValue?: boolean
+  disabledRange?: { from: any, to: any }
+  visibleDate?: Date
+  timeZone?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  rangeValue: false,
+  disabledRange: () => ({
+    from: undefined,
+    to: undefined
+  })
+})
+
+const emit = defineEmits<{
+  (event: 'date-selected', data: Date)
+}>()
+
+const today = ref(TODAY)
+const currentDate = ref()
+const selectedDate = ref()
+const currentInterval = ref('days')
+
+const daysOfMonth = computed(() => {
+  const monthFirstDate = startOfMonth(currentDate.value)
+  const monthLastDate = endOfMonth(currentDate.value)
+  const daysOfMonth = eachDayOfInterval({
+    start: startOfWeek(monthFirstDate),
+    end: lastDayOfWeek(monthLastDate)
+  })
+  const enrichedDays = daysOfMonth.map((day) => enrichDay(day))
+  return chunk(enrichedDays, DAYS_IN_WEEK)
+})
+const yearsOfDecade = computed(() => {
+  const start = startOfDecade(currentDate.value).getFullYear()
+  const end = endOfDecade(currentDate).getFullYear()
+  return Array(end - start + 1)
+    .fill()
+    .map((_, idx) => start + idx)
+})
+const decade = computed(() => {
+  const firstYearOfDecade = startOfDecade(currentDate.value).getFullYear()
+  const lastYearOfDecade = endOfDecade(currentDate.value).getFullYear()
+  return `${firstYearOfDecade} - ${lastYearOfDecade}`
+})
+const disabledFrom = computed(() => {
+  return props.disabledRange && props.disabledRange.from && startOfDay(props.disabledRange.from)
+})
+const disabledTo = computed(() => {
+  return props.disabledRange && props.disabledRange.to && endOfDay(props.disabledRange.to)
+})
+const rangeFrom = computed(() => {
+  return props.value && props.rangeValue && startOfDay(props.value.from)
+})
+const rangeTo = computed(() => {
+  return props.value && props.rangeValue && endOfDay(props.value.to)
+})
+const weeks = computed(() => daysOfMonth.value)
+const month = computed(() => MONTHS[currentDate.value.getMonth()])
+const year = computed(() => currentDate.value.getFullYear())
+
+watch(() => props.value, date => {
+  const value = props.rangeValue ? date.from : date
+  selectedDate.value = value ? utcToZonedTime(value, props.timeZone) : undefined
+}, {
+  immediate: true
+})
+
+watch(() => props.visibleDate, () => {
+  currentDate.value = props.visibleDate || selectedDate.value || TODAY
+}, {
+  immediate: true
+})
+
+function enrichDay(date) {
+  return {
+    date,
+    isToday: isToday(date),
+    isNotSameMonth: !isSameMonth(currentDate.value, date),
+    isSelected: isSelected(date),
+    isDisabled: isDisabled(date),
+    isHighlighted: isHighlighted(date),
+    isRangeStart: isSameDay(date, rangeFrom.value),
+    isRangeEnd: isSameDay(date, rangeTo.value)
   }
+}
+
+function isToday(date) {
+  return isSameDay(utcToZonedTime(new Date(), props.timeZone), date)
+}
+
+function isSelected(date) {
+  if (props.rangeValue) {
+    return isSameDay(date, props.value.from) || isSameDay(date, props.value.to)
+  }
+  return isSameDay(selectedDate.value, date)
+}
+
+function isDisabled(date) {
+  if (!disabledFrom.value && !disabledTo.value) {
+    return false
+  }
+  if (!disabledFrom.value) {
+    return !isAfter(date, disabledTo.value)
+  }
+  if (!disabledTo.value) {
+    return !isBefore(date, disabledFrom.value)
+  }
+  return !isAfter(date, disabledTo.value) && !isBefore(date, disabledFrom.value)
+}
+
+function isHighlighted(date) {
+  if (!props.rangeValue) {
+    return false
+  }
+  return isAfter(date, rangeFrom.value) && isBefore(date, rangeTo.value)
+}
+
+function onNext(callback) {
+  currentDate.value = callback(currentDate.value, currentInterval.value)
+}
+
+function onPrev(callback) {
+  currentDate.value = callback(currentDate.value, currentInterval)
+}
+
+function onMonthSelected(month) {
+  currentInterval.value = 'days'
+  currentDate.value = setMonth(currentDate.value, month)
+}
+
+function onYearSelected(year) {
+  currentInterval.value = 'months'
+  currentDate.value = setYear(currentDate.value, year)
+}
+
+function onDateSelected(day) {
+  const { date } = day
+  if (selectedDate.value) {
+    date.setHours(selectedDate.value.getHours())
+    date.setMinutes(selectedDate.value.getMinutes())
+    date.setSeconds(selectedDate.value.getSeconds())
+  }
+  selectedDate.value = date
+  currentDate.value = date
+  const utcDate = zonedTimeToUtc(date, props.timeZone)
+  emit('date-selected', utcDate)
+}
+
+function onIntervalChange(interval) {
+  currentInterval.value = interval
 }
 </script>
 

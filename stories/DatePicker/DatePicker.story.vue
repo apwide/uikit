@@ -26,11 +26,11 @@
 <script>
 import { subDays, format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
-import DatePicker from '@/components/Calendar/DatePicker'
+import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
 
 export default {
   name: 'DatePickerStory',
-  components: { DatePicker },
+  components: { DatePicker: KitDatePicker },
   data() {
     return {
       date: '',

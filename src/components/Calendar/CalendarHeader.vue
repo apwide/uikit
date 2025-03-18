@@ -4,11 +4,11 @@
       <KitIcon type="chevron-left" />
     </KitIconButton>
     <header>
-      <transition :name="transition">
+      <Transition :name="transition">
         <strong :key="interval.header" class="interval" :interval="currentInterval" @click="changeInterval">
           {{ interval.header }}
         </strong>
-      </transition>
+      </Transition>
     </header>
     <KitIconButton appearance="subtle" spacing="compact" @click="onNext" title="Next month">
       <KitIcon type="chevron-right" />
@@ -16,79 +16,72 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { addMonths, addYears, subMonths, subYears } from 'date-fns'
 import KitIconButton from '../Button/KitIconButton'
 import KitIcon from '../Icon/KitIcon'
+import { computed, ref } from 'vue'
 
 const DECADE = 10
 
-export default {
-  name: 'KitCalendarHeader',
-  components: { KitIcon, KitIconButton },
-  props: {
-    month: {
-      type: String,
-      required: true
-    },
-    year: {
-      type: Number,
-      required: true
-    },
-    decade: {
-      type: String,
-      required: true
-    },
-    currentInterval: {
-      type: String,
-      default: 'days'
-    }
-  },
-  data() {
-    return {
-      transition: 'slide-top'
-    }
-  },
-  computed: {
-    interval() {
-      switch (this.currentInterval) {
-        case 'days':
-          return {
-            header: `${this.month} ${this.year}`,
-            next: (t) => addMonths(t, 1),
-            prev: (t) => subMonths(t, 1)
-          }
-        case 'months':
-          return {
-            header: this.year,
-            next: (t) => addYears(t, 1),
-            prev: (t) => subYears(t, 1)
-          }
-        default:
-          return {
-            header: this.decade,
-            next: (t) => addYears(t, DECADE),
-            prev: (t) => subYears(t, DECADE)
-          }
-      }
-    }
-  },
-  methods: {
-    onNext() {
-      this.transition = 'slide-right'
-      this.$emit('prev', this.interval.next)
-    },
-    onPrev() {
-      this.transition = 'slide-left'
-      this.$emit('next', this.interval.prev)
-    },
-    changeInterval() {
-      this.transition = 'slide-top'
-      const interval = this.currentInterval === 'days' ? 'months' : 'years'
-      this.$emit('change-interval', interval)
-    }
-  }
+type Props = {
+  month: string
+  year: number
+  decade: string
+  currentInterval?: string
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  currentInterval: 'days'
+})
+
+const transition = ref('slide-top')
+
+const interval = computed(() => {
+  switch (props.currentInterval) {
+    case 'days':
+      return {
+        header: `${props.month} ${props.year}`,
+        next: (t) => addMonths(t, 1),
+        prev: (t) => subMonths(t, 1)
+      }
+    case 'months':
+      return {
+        header: props.year,
+        next: (t) => addYears(t, 1),
+        prev: (t) => subYears(t, 1)
+      }
+    default:
+      return {
+        header: props.decade,
+        next: (t) => addYears(t, DECADE),
+        prev: (t) => subYears(t, DECADE)
+      }
+  }
+})
+
+const emit = defineEmits<{
+  (event: 'prev', data: Function)
+  (event: 'next', data: Function)
+  (event: 'change-interval', data: string)
+}>()
+
+function onNext() {
+  transition.value = 'slide-right'
+  emit('prev', interval.value.next)
+}
+
+function onPrev() {
+  transition.value = 'slide-left'
+  emit('next', interval.value.prev)
+}
+
+function changeInterval() {
+  transition.value = 'slide-top'
+  const interval = props.currentInterval === 'days' ? 'months' : 'years'
+  emit('change-interval', interval)
+}
+
 </script>
 
 <style scoped>

@@ -15,9 +15,9 @@ import FieldGroup from './components/Form/FieldGroup.vue'
 import KitCheckbox from './components/Checkbox/KitCheckbox.vue'
 import KitToggle from './components/Toggle/KitToggle.vue'
 import Modal from './components/Modal/Modal.vue'
-import DatePicker from './components/Calendar/DatePicker.vue'
-import DateRangePicker from './components/Calendar/DateRangePicker.vue'
-import TimePicker from './components/Calendar/TimePicker.vue'
+import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
+import KitDateRangePicker from '@components/Calendar/KitDateRangePicker.vue'
+import KitTimePicker from '@components/Calendar/KitTimePicker.vue'
 import Lozenge from './components/Lozenge/Lozenge.vue'
 import DropdownItem from './components/Dropdown/DropdownItem.vue'
 import DropdownCheckboxItem from './components/Dropdown/DropdownCheckboxItem.vue'
@@ -74,8 +74,8 @@ export {
   Input as KitInput,
   KitCheckbox,
   KitToggle,
-  DatePicker as KitDatePicker,
-  TimePicker as KitTimePicker,
+  KitDatePicker,
+  KitTimePicker,
   KitSelect,
   KitSectionMessage,
   KitAvatar,
@@ -98,7 +98,7 @@ export {
   KitBreadcrumbItem,
   KitBreadcrumbs,
   KitFlag,
-  DateRangePicker as KitDateRangePicker,
+  KitDateRangePicker,
   Progress as KitProgress,
   KitButtonGroup,
   KitIconButton,

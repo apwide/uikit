@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import DateRangePicker from '@/components/Calendar/DateRangePicker'
+import KitDateRangePicker from '@components/Calendar/KitDateRangePicker.vue'
 
 export default {
   name: 'DateRangePickerStory',
-  components: { DateRangePicker },
+  components: { DateRangePicker: KitDateRangePicker },
   data() {
     return {
       range: {

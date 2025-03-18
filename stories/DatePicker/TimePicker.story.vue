@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import TimePicker from '@/components/Calendar/TimePicker'
+import KitTimePicker from '@components/Calendar/KitTimePicker.vue'
 
 export default {
   name: 'TimePickerStory',
-  components: { TimePicker },
+  components: { TimePicker: KitTimePicker },
   data() {
     return {
       date: ''

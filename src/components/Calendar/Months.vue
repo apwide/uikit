@@ -12,9 +12,10 @@
   </table>
 </template>
 
-<script>
+<script setup lang="ts">
 import { chunk } from '../../utils/utils'
 import KitButton from '../Button/KitButton.vue'
+import { computed } from 'vue'
 
 const MONTHS = [
   'January',
@@ -32,20 +33,14 @@ const MONTHS = [
 ]
 const MONTHS_PER_ROW = 3
 
-export default {
-  name: 'KitMonths',
-  components: { KitButton },
-  computed: {
-    monthsOfYear() {
-      return chunk(MONTHS, MONTHS_PER_ROW)
-    }
-  },
-  methods: {
-    onMonthSelected(month) {
-      const index = MONTHS.indexOf(month)
-      this.$emit('month-selected', index)
-    }
-  }
+const emit = defineEmits<{
+  (event: 'month-selected', data: number)
+}>()
+
+const monthsOfYear = computed(() => chunk(MONTHS, MONTHS_PER_ROW))
+
+function onMonthSelected(month) {
+  emit('month-selected', MONTHS.indexOf(month))
 }
 </script>
 

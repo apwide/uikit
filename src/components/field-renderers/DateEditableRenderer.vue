@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import DatePicker from '../Calendar/DatePicker'
+import KitDatePicker from '../Calendar/KitDatePicker.vue'
 import InlineEdit from '../Form/InlineEdit'
 import DateRenderer from './DateRenderer'
 
 export default {
   name: 'KitDateEditableRenderer',
-  components: { DateRenderer, InlineEdit, DatePicker },
+  components: { DateRenderer, InlineEdit, DatePicker: KitDatePicker },
   props: {
     date: {
       type: [Number, String],

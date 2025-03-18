@@ -13,31 +13,27 @@
   </table>
 </template>
 
-<script>
+<script setup lang="ts">
 import Day from './Day'
 
 const WEEKDAYS_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-export default {
-  name: 'KitWeeks',
-  components: { Day },
-  props: {
-    weeks: {
-      type: Array,
-      required: true
-    }
-  },
-  data() {
-    return {
-      weekdays: WEEKDAYS_LABELS
-    }
-  },
-  methods: {
-    onDateSelected(date) {
-      this.$emit('date-selected', date)
-    }
-  }
+type Props = {
+  weeks: Array
 }
+
+const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  (event: 'date-selected', data: any)
+}>()
+
+const weekdays = WEEKDAYS_LABELS
+
+function onDateSelected(date) {
+  emit('date-selected', date)
+}
+
 </script>
 
 <style scoped>
