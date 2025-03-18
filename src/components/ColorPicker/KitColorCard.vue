@@ -31,6 +31,14 @@ function handleClick() {
 </script>
 
 <style scoped>
+.kit-color-card {
+  --kit-color-card-border: #dedede;
+}
+
+.kit-dark .kit-color-card {
+  --kit-color-card-border: #313a41;
+}
+
 .kit-color-card__wrapper {
   display: flex;
   margin: 2px;
@@ -50,6 +58,6 @@ function handleClick() {
   width: 24px;
   height: 24px;
   border-radius: 3px;
-  border: 1px solid #dedede;
+  border: 1px solid var(--kit-color-card-border);
 }
 </style>

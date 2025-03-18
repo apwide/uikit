@@ -52,8 +52,7 @@ const selected = computed({
   }
 })
 const style = computed(() => ({
-  backgroundColor: selected.value,
-  border: '1px solid #dedede'
+  backgroundColor: selected.value
 }))
 
 function handleClickOnTrigger() {
@@ -69,6 +68,14 @@ function handleColorSelection(color: string) {
 </script>
 
 <style scoped>
+.kit-color-picker {
+  --kit-color-picker-border: #dedede;
+}
+
+.kit-dark .kit-color-picker {
+  --kit-color-picker-border: #313a41;
+}
+
 button {
   display: inline-block;
   position: relative;
@@ -87,6 +94,7 @@ button {
   width: 24px;
   height: 24px;
   border-radius: 3px;
+  border: 1px solid var(--kit-color-picker-border);
 }
 
 .kit-color-picker__content {
