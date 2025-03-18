@@ -113,15 +113,21 @@ function onClick(action) {
 
 <style scoped>
 .kit-flag {
-  background-color: rgb(255, 255, 255);
+  --kit-flag-shadow: rgba(9, 30, 66, 0.31) 0 0 1px, rgba(9, 30, 66, 0.25) 0 20px 32px -8px;
+
+  background-color: var(--kit-dialog-bg-color);
   box-sizing: border-box;
-  box-shadow: rgba(9, 30, 66, 0.31) 0px 0px 1px, rgba(9, 30, 66, 0.25) 0px 20px 32px -8px;
+  box-shadow: var(--kit-flag-shadow);
   width: 100%;
   z-index: 600;
   border-radius: 3px;
   padding: 16px;
   max-width: 600px;
   transition: all 0.5s;
+}
+
+body.kit-dark .kit-flag {
+  --kit-flag-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
 }
 
 .icon {
@@ -137,7 +143,7 @@ function onClick(action) {
 
 .title {
   font-weight: 600;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   line-height: 1.5;
 }
 
@@ -145,13 +151,13 @@ function onClick(action) {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 0px;
+  min-width: 0;
   flex: 1 1 100%;
-  padding: 0px 0px 0px 40px;
+  padding: 0 0 0 40px;
 }
 
 .kit-flag:not([appearance='default']) .content {
-  max-height: 0px;
+  max-height: 0;
   opacity: 0;
   overflow: hidden;
   transition: max-height 0.3s ease 0s, opacity 0.3s ease 0s;
@@ -176,12 +182,11 @@ function onClick(action) {
 }
 
 [appearance='default'] .action {
-  color: #0052cc;
+  color: var(--apw-link-color);
   padding-left: 0;
 }
 
 .action {
-  background: rgba(255, 255, 255, 0.08);
   padding: 0 8px;
   height: 24px;
   line-height: 24px;
