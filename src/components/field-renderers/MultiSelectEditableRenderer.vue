@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :value="value"
     :confirm="confirm"
@@ -59,7 +59,7 @@
     <slot>
       <MultiSelectRenderer :selected-values="selectedValueLabels" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <div v-else>
     <slot>
       <MultiSelectRenderer :selected-values="selectedValueLabels" />
@@ -71,7 +71,7 @@
 import {ConfirmationCallback, Normalizer} from '@components/Select/types'
 import {computed} from 'vue'
 import KitSelect from '../Select/KitSelect.vue'
-import InlineEdit from '../Form/InlineEdit'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import MultiSelectRenderer from './MultiSelectRenderer'
 
 type Props = {

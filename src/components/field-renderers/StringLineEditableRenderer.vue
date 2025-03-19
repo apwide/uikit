@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :value="value"
     :confirm="confirm"
@@ -16,7 +16,7 @@
     <slot>
       <StringLineRenderer :value="value" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <div v-else>
     <slot>
       <StringLineRenderer :value="value" />
@@ -26,7 +26,7 @@
 
 <script setup lang="ts" generic="T">
 import { ConfirmationCallback } from '@components/Select/types'
-import InlineEdit from '../Form/InlineEdit.vue'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import StringLineRenderer from './StringLineRenderer.vue'
 
 type Props = {

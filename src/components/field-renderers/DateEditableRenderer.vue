@@ -1,6 +1,6 @@
 <template>
-  <InlineEdit v-if="editable" :value="timestamp" type="date" :placement="placement" @save-requested="onSaveRequested">
-    <DatePicker
+  <KitInlineEdit v-if="editable" :value="timestamp" type="date" :placement="placement" @save-requested="onSaveRequested">
+    <KitDatePicker
       slot="editor"
       slot-scope="props"
       :value="props.value"
@@ -13,18 +13,18 @@
       @confirm="props.confirm"
       @keyup.esc="props.cancel" />
     <DateRenderer :date="timestamp" />
-  </InlineEdit>
+  </KitInlineEdit>
   <DateRenderer v-else :date="timestamp" />
 </template>
 
 <script>
 import KitDatePicker from '../Calendar/KitDatePicker.vue'
-import InlineEdit from '../Form/InlineEdit'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import DateRenderer from './DateRenderer'
 
 export default {
   name: 'KitDateEditableRenderer',
-  components: { DateRenderer, InlineEdit, DatePicker: KitDatePicker },
+  components: { DateRenderer, KitInlineEdit, KitDatePicker },
   props: {
     date: {
       type: [Number, String],

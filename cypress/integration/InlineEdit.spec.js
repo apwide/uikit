@@ -1,4 +1,4 @@
-describe('InlineEdit--StringLine', () => {
+describe('KitInlineEdit--StringLine', () => {
     beforeEach(() => {
         cy.visit('iframe.html?id=inlineedit-stringline--editablerenderer').wait(100);
     });

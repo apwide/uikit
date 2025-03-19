@@ -1,19 +1,19 @@
 <template>
-  <InlineEdit v-if="editable" :value="value" type="number" :placement="placement" @save-requested="onSaveRequested">
+  <KitInlineEdit v-if="editable" :value="value" type="number" :placement="placement" @save-requested="onSaveRequested">
     <slot>
       <NumberFloatRenderer :value="value" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <NumberFloatRenderer v-else :value="value" />
 </template>
 
 <script>
-import InlineEdit from '../Form/InlineEdit'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import NumberFloatRenderer from './NumberFloatRenderer'
 
 export default {
   name: 'KitNumberFloatEditableRenderer',
-  components: { NumberFloatRenderer, InlineEdit },
+  components: { NumberFloatRenderer, KitInlineEdit },
   props: {
     value: {
       type: Number,

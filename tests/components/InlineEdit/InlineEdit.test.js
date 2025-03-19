@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils'
-import InlineEdit from '@/components/Form/InlineEdit'
+import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import InlineEditViewContent from '@/components/Form/InlineEditViewContent'
 import InlineEditButtons from '@/components/Form/InlineEditButtons'
 import InlineErrorMessage from '@/components/Form/InlineErrorMessage'
@@ -19,7 +19,7 @@ global.document.createRange = () => ({
 
 xdescribe('InlineEdit', () => {
   it('should emit event on enter', async () => {
-    const component = shallowMount(InlineEdit, { propsData, stubs })
+    const component = shallowMount(KitInlineEdit, { propsData, stubs })
     const inlineEditViewContent = component.findComponent(InlineEditViewContent)
 
     inlineEditViewContent.trigger('click')
@@ -29,7 +29,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should show input on editing request', async () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     component.setData({ isEditing: true })
 
     const viewContent = component.findComponent(InlineEditViewContent)
@@ -42,7 +42,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should render action buttons', async () => {
-    const component = mount(InlineEdit, { propsData })
+    const component = mount(KitInlineEdit, { propsData })
     component.setData({ isEditing: true })
 
     await component.vm.$nextTick()
@@ -52,7 +52,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should cancel inline editing', () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     component.setData({ isEditing: true, editingValue: 'Some changed value' })
 
     component.vm.cancelInlineEdit()
@@ -62,7 +62,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should set the state to dirty', async () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     const editingValue = 'Some changed value'
     component.setData({ isEditing: true, editingValue })
 
@@ -72,7 +72,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should set the state to not dirty', () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     const editingValue = 'Some changed value'
     component.setData({ isEditing: true, editingValue })
 
@@ -83,7 +83,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should handle the validation error', async () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     component.setData({ isEditing: true })
 
     const error = new Error('Validation error')
@@ -102,7 +102,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should not render validation dialog when error is different type', () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     component.setData({ isEditing: true })
 
     const error = new Error('Asset not found')
@@ -119,7 +119,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it("should return from confirmEditedValue method if value didn't change", () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     component.setData({ isEditing: true, editingValue: propsData.value })
 
     component.vm.confirmEditedValue()
@@ -129,7 +129,7 @@ xdescribe('InlineEdit', () => {
   })
 
   it('should emit save-requested event on confirm if value changed', async () => {
-    const component = shallowMount(InlineEdit, { propsData })
+    const component = shallowMount(KitInlineEdit, { propsData })
     const editingValue = 'changed value'
     component.setData({ isEditing: true, editingValue })
 

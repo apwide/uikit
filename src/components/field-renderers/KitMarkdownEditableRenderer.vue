@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import KitMarkdownEditor, { ToolbarItem } from '@components/MarkdownEditor/KitMarkdownEditor.vue'
-import KitInlineEdit from '@components/Form/InlineEdit.vue'
+import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { convertNumbersToPx, findTableParent, setStyles } from '@/utils/dom'
 

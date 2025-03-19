@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :value="value"
     type="number"
@@ -9,17 +9,17 @@
     <slot>
       <NumberLongRenderer :value="value" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <NumberLongRenderer v-else :value="value" />
 </template>
 
 <script>
-import InlineEdit from '../Form/InlineEdit'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import NumberLongRenderer from './NumberLongRenderer'
 
 export default {
   name: 'KitNumberLongEditableRenderer',
-  components: { NumberLongRenderer, InlineEdit },
+  components: { NumberLongRenderer, KitInlineEdit },
   props: {
     value: {
       type: Number,

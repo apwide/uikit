@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :value="value"
     :offset="[0, 0]"
@@ -23,13 +23,13 @@
     <slot>
       <CheckboxRenderer :value="value" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <CheckboxRenderer v-else :value="value" />
 </template>
 
 <script setup lang="ts">
 import KitCheckbox from '../Checkbox/KitCheckbox.vue'
-import InlineEdit from '../Form/InlineEdit.vue'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import CheckboxRenderer from './CheckboxRenderer.vue'
 
 type Props = {

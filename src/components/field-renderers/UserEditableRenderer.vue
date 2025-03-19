@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable && !avatarOnly"
     :value="user"
     class="user-inline-edit"
@@ -38,19 +38,19 @@
     <slot>
       <UserRenderer :tag="tag" :user="user" :avatar-only="avatarOnly" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <UserRenderer v-else :tag="tag" :user="user" :avatar-only="avatarOnly" />
 </template>
 
 <script>
 import pDebounce from 'p-debounce'
 import KitSelect from '../Select/KitSelect.vue'
-import InlineEdit from '../Form/InlineEdit.vue'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import UserRenderer from './UserRenderer.vue'
 
 export default {
   name: 'KitUserEditableRenderer',
-  components: { UserRenderer, InlineEdit, KitSelect },
+  components: { UserRenderer, KitInlineEdit, KitSelect },
   props: {
     user: {
       type: Object,

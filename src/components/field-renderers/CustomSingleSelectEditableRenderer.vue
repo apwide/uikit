@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :value="value"
     :confirm="confirm"
@@ -30,7 +30,7 @@
       </KitSelect>
     </template>
     <slot />
-  </InlineEdit>
+  </KitInlineEdit>
   <div v-else class="slot">
     <slot />
   </div>
@@ -40,7 +40,7 @@
 import { Value } from '@components/Select/types'
 import { computed } from 'vue'
 import KitSelect from '../Select/KitSelect.vue'
-import InlineEdit from '../Form/InlineEdit.vue'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 
 type Props = {
   editable?: boolean

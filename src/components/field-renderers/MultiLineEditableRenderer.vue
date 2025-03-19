@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :value="value"
     :icon="icon"
@@ -27,7 +27,7 @@
       @input="onInput($event, input)"
       @blur="blur"
       @focus="focus" />
-  </InlineEdit>
+  </KitInlineEdit>
   <div v-else>
     <slot>
       <MultiLineRenderer :value="value" />
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import KitTextArea from '../Form/KitTextArea.vue'
-import InlineEdit from '../Form/InlineEdit'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import MultiLineRenderer from './MultiLineRenderer'
 
 type Props = {

@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :align="align"
     :confirm="confirm"
@@ -43,7 +43,7 @@
         <SecureStringLineRenderer :html-value="htmlValue" :value="value" />
       </slot>
     </template>
-  </InlineEdit>
+  </KitInlineEdit>
   <div v-else>
     <slot>
       <SecureStringLineRenderer :html-value="htmlValue" :value="value" />
@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue'
-import InlineEdit from '../Form/InlineEdit.vue'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitTextField from '../Form/KitTextField.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'

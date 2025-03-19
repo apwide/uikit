@@ -1,19 +1,19 @@
 <template>
-  <InlineEdit v-if="editable" :value="link" :placement="placement" @save-requested="onSaveRequested">
+  <KitInlineEdit v-if="editable" :value="link" :placement="placement" @save-requested="onSaveRequested">
     <slot>
       <HyperlinkRenderer :link="link" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <HyperlinkRenderer v-else :link="link" />
 </template>
 
 <script>
-import InlineEdit from '../Form/InlineEdit'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import HyperlinkRenderer from './HyperlinkRenderer'
 
 export default {
   name: 'KitHyperlinkEditableRenderer',
-  components: { HyperlinkRenderer, InlineEdit },
+  components: { HyperlinkRenderer, KitInlineEdit },
   props: {
     link: {
       type: String,

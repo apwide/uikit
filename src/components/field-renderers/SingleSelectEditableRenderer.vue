@@ -1,5 +1,5 @@
 <template>
-  <InlineEdit
+  <KitInlineEdit
     v-if="editable"
     :value="value"
     :confirm="confirm"
@@ -54,7 +54,7 @@
     <slot>
       <StringLineRenderer :value="normalizedValueLabel" />
     </slot>
-  </InlineEdit>
+  </KitInlineEdit>
   <div v-else>
     <slot>
       <StringLineRenderer :value="normalizedValueLabel" />
@@ -66,7 +66,7 @@
 import { ConfirmationCallback, FilterPredicate, Normalizer } from '@components/Select/types'
 import { computed } from 'vue'
 import KitSelect from '../Select/KitSelect.vue'
-import InlineEdit from '../Form/InlineEdit.vue'
+import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import StringLineRenderer from './StringLineRenderer.vue'
 
 type Props = {
