@@ -364,7 +364,7 @@ input[align='end'] {
 }
 
 .kit-inline-edit__general-error-icon {
-  color: rgb(191, 38, 0);
+  color: var(--kit-form-danger-icon);
 }
 
 .kit-inline-edit__general-error-close {

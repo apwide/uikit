@@ -51,6 +51,18 @@ function onBlur(event) {
 
 <style scoped>
 .kit-buttons-wrapper {
+  --kit-inline-edit-button-bg: white;
+  --kit-inline-edit-button-hover-bg: #efefef;
+  --kit-inline-edit-button-shadow: rgba(9, 30, 66, 0.25) 0 4px 8px -2px, rgba(9, 30, 66, 0.31) 0 0 1px;
+}
+
+.kit-dark .kit-buttons-wrapper {
+  --kit-inline-edit-button-bg: #282e33;
+  --kit-inline-edit-button-hover-bg: #A6C5E229;;
+  --kit-inline-edit-button-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
+}
+
+.kit-buttons-wrapper {
   display: flex;
   gap: 4px;
   /* reduce interaction with items below the buttons */
@@ -58,15 +70,15 @@ function onBlur(event) {
 }
 
 .kit-buttons-wrapper button {
-  background-color: white;
+  background-color: var(--kit-inline-edit-button-bg);
 }
 .kit-buttons-wrapper button:hover {
-  background-color: #efefef !important;
+  background-color: var(--kit-inline-edit-button-hover-bg) !important;
 }
 
 .kit-box-shadow-wrapper {
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgba(9, 30, 66, 0.25) 0 4px 8px -2px, rgba(9, 30, 66, 0.31) 0 0 1px;
+  background-color: var(--kit-inline-edit-button-bg);
+  box-shadow: var(--kit-inline-edit-button-shadow);
   box-sizing: border-box;
   z-index: 200;
   border-radius: 3px;
