@@ -19,20 +19,14 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
 import MultiSelectRenderer from '@/components/field-renderers/MultiSelectRenderer'
+import { ref } from 'vue'
 
-export default {
-  components: { MultiSelectRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      selectedValues: Array.from({ length: 10 }, () => faker.lorem.word()),
-      selectedValuesLong: Array.from({ length: 10 }, () => faker.lorem.sentence())
-    }
-  }
-}
+faker.seed(1)
+const selectedValues = ref(Array.from({ length: 10 }, () => faker.lorem.word()))
+const selectedValuesLong = ref(Array.from({ length: 10 }, () => faker.lorem.sentence()))
 </script>
 
 <style scoped>

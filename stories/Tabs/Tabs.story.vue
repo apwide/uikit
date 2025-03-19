@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 import KitTooltip from '../../src/components/Tooltip/Tooltip'
-import KitKitBadge from '@components/Badge/KitBadge.vue'
+import KitBadge from '@components/Badge/KitBadge.vue'
 import KitTabProvider from '../../src/components/Tabs/KitTabProvider'
 import KitTabHeaders from '../../src/components/Tabs/KitTabHeaders'
 import KitTabHeader from '../../src/components/Tabs/KitTabHeader'

@@ -2,9 +2,9 @@
   <div>
     <KitButton @click="showSpolight = true">Start</KitButton>
     <KitDropdown label="Drop down menu" ref="menuRef">
-      <KitKitDropdownItem data-cy="simple-dropdown-item"> First item </KitKitDropdownItem>
-      <KitKitDropdownItem>Second item</KitKitDropdownItem>
-      <KitKitDropdownItem disabled> Lorem ipsum dolor sit amet consectetur adipisicing elit </KitKitDropdownItem>
+      <KitDropdownItem data-cy="simple-dropdown-item"> First item </KitDropdownItem>
+      <KitDropdownItem>Second item</KitDropdownItem>
+      <KitDropdownItem disabled> Lorem ipsum dolor sit amet consectetur adipisicing elit </KitDropdownItem>
     </KitDropdown>
     <KitSpotlight v-if="showSpolight" :steps="steps" @close="showSpolight = false" />
   </div>
@@ -15,7 +15,7 @@ import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
 import { Component, ref } from 'vue'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
 import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
-import KitKitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
+import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
 import KitButton from '@components/Button/KitButton.vue'
 
 const showSpolight = ref(false)

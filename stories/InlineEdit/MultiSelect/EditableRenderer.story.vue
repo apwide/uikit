@@ -58,39 +58,30 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
 import {options} from '../../api-mocks/options'
 import MultiSelectEditableRenderer from '@/components/field-renderers/MultiSelectEditableRenderer'
-import KitKitLozenge from '@components/Lozenge/KitLozenge.vue'
+import KitLozenge from '@components/Lozenge/KitLozenge.vue'
+import { ref } from 'vue'
 
 const allowedValues = options
 
-export default {
-  components: { MultiSelectEditableRenderer, KitLozenge: KitKitLozenge },
-  data() {
-    faker.seed(1)
-    return {
-      selectedValues: allowedValues.slice(0, 3),
-      allowedValues
-    }
-  },
-  computed: {
-    normalizer() {
-      return (value) => ({ ...value, value })
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      console.log('save', value)
-      this.selectedValues = value
-      callback()
-    },
+faker.seed(1)
+const selectedValues = ref(allowedValues.slice(0, 3))
 
-    onSaveError(value, callback) {
-      setTimeout(() => callback(new Error('Something went wrong')), 100)
-    }
-  }
+function normalizer() {
+  return (value) => ({ ...value, value })
+}
+
+function onSave(value, callback) {
+  console.log('save', value)
+  selectedValues.value = value
+  callback()
+}
+
+function onSaveError(value, callback) {
+  setTimeout(() => callback(new Error('Something went wrong')), 100)
 }
 </script>
 

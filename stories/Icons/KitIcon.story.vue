@@ -34,33 +34,26 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
 import AwesomeIcon from '../../src/components/Icon/KitIcon'
-import KitKitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
+import KitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
 import KitSelect from '../../src/components/Select/KitSelect.vue'
+import { computed, ref } from 'vue'
 
-export default {
-  name: 'FontAwesomeIcons.story',
-  components: { KitSelect, KitCopyToClipboard: KitKitCopyToClipboard, AwesomeIcon },
-  data() {
-    return {
-      size: undefined
-    }
-  },
-  computed: {
-    solidSupportedIcons() {
-      const list = Object.keys(library.definitions.fas)
-      list.sort()
-      return list
-    },
-    regularSupportedIcons() {
-      const list = Object.keys(library.definitions.far)
-      list.sort()
-      return list
-    }
-  }
-}
+const size = ref()
+
+const solidSupportedIcons = computed(() => {
+  const list = Object.keys(library.definitions.fas)
+  list.sort()
+  return list
+})
+
+const regularSupportedIcons = computed(() => {
+  const list = Object.keys(library.definitions.far)
+  list.sort()
+  return list
+})
 </script>
 <style scoped>
 .story-icon {
