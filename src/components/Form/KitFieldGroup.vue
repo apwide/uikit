@@ -22,12 +22,20 @@ defineProps<Props>()
 </script>
 
 <style scoped>
+.kit-field-group {
+  --kit-field-group-label-color: #6b778c;
+}
+
+.kit-dark .kit-field-group {
+  --kit-field-group-label-color: #9FADBC;
+}
+
 .kit-field-group__error-message {
   font-size: 12px;
   font-style: inherit;
   line-height: 18px;
   font-weight: normal;
-  color: #de350b;
+  color: var(--kit-form-danger);
   margin-top: 4px;
   display: flex;
   align-items: center;
@@ -35,7 +43,7 @@ defineProps<Props>()
 
 .kit-field-group__label {
   display: inline-flex;
-  color: #6b778c;
+  color: var(--kit-field-group-label-color);
   font-size: 12px;
   line-height: 1.33333;
   font-weight: 600;
@@ -43,7 +51,7 @@ defineProps<Props>()
 }
 
 [required] .kit-field-group__label::after {
-  color: #de350b;
+  color: var(--kit-form-danger);
   font-size: 12px;
   line-height: 1.33;
   font-weight: 600;

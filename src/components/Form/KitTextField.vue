@@ -24,8 +24,6 @@
 
   --kit-text-field-loading-bg-color: white;
 
-  --kit-text-field-invalid-border-color: #de350b;
-
   --kit-text-field-select-bg-color: #f4f5f7;
   --kit-text-field-select-border-color: #f4f5f7;
   --kit-text-field-select-hover-color: #ebecf0;
@@ -46,8 +44,6 @@
   --kit-text-field-active-border-color:#579DFF;
 
   --kit-text-field-loading-bg-color: var(--apw-page-background);
-
-  --kit-text-field-invalid-border-color: #f15b50;
 
   --kit-text-field-select-bg-color: #2b2a33;
   --kit-text-field-select-border-color: #738496;
@@ -162,7 +158,7 @@ input:-moz-placeholder {
 }
 
 .kit-text-field[is-invalid]:not([disabled]):not([is-loading]) {
-  border-color: var(--kit-text-field-invalid-border-color);
+  border-color: var(--kit-form-danger);
   animation: shake 0.5s linear;
 }
 
