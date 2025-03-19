@@ -575,6 +575,16 @@ watch(suggestions, async () => {
 })
 </script>
 <style scoped>
+.kit-select {
+  --kit-select-placeholder: rgb(122, 134, 154);
+  --kit-select-ghost-bg-color: #fff;
+}
+
+.kit-dark .kit-select {
+  --kit-select-placeholder: var(--kit-body-text);
+  --kit-select-ghost-bg-color: #A6C5E229;
+}
+
 .kit-select__text {
   cursor: text;
   position: absolute;
@@ -607,7 +617,7 @@ watch(suggestions, async () => {
 }
 
 .kit-select__text [placeholder] {
-  color: rgb(122, 134, 154);
+  color: var(--kit-select-placeholder);
 }
 
 .kit-select__search {
@@ -622,7 +632,7 @@ watch(suggestions, async () => {
 
 .kit-select__ghost {
   opacity: 0.4;
-  background-color: #fff;
+  background-color: var(--kit-select-ghost-bg-color);
   pointer-events: none;
 }
 

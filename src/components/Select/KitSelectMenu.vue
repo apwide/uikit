@@ -82,8 +82,18 @@ function resetIndex() {
 
 <style scoped>
 .kit-select-menu {
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 4px 11px;
+  --kit-select-menu-bg-color: rgb(255, 255, 255);
+  --kit-select-menu-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 4px 11px;
+}
+
+.kit-dark .kit-select-menu {
+  --kit-select-menu-bg-color: rgb(40, 46, 51);
+  --kit-select-menu-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
+}
+
+.kit-select-menu {
+  background-color: var(--kit-select-menu-bg-color);
+  box-shadow: var(--kit-select-menu-shadow);
   margin-bottom: 8px;
   margin-top: 8px;
   box-sizing: border-box;

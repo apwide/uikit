@@ -12,7 +12,7 @@
       data-cy="remove-tag"
       @mousedown.prevent.stop
       @click.stop="onRemove">
-      <EditorCloseIcon primary-color="#000" size="xsmall" />
+      <EditorCloseIcon primary-color="var(--kit-tag-label)" size="xsmall" />
     </div>
   </div>
 </template>
@@ -77,12 +77,26 @@ export default {
 
 <style scoped>
 .tag {
-  background-color: rgb(223, 225, 230);
+  --kit-tag-bg:  rgb(223, 225, 230);
+  --kit-tag-text: rgb(66, 82, 110);
+  --kit-tag-label: rgb(51, 51, 51);
+  --kit-tag-remove-bg: #ffbdad;
+}
+
+.kit-dark .tag {
+  --kit-tag-bg: #A1BDD914;
+  --kit-tag-text: var(--kit-body-text);
+  --kit-tag-label: var(--kit-body-text);
+  --kit-tag-remove-bg: #5d1f1a;
+}
+
+.tag {
+  background-color: var(--kit-tag-bg);
   display: inline-flex;
   align-items: center;
   min-width: 0;
   box-sizing: border-box;
-  color: rgb(66, 82, 110);
+  color: var(--kit-tag-text);
   max-width: 100%;
   border-radius: 2px;
   margin: 4px 2px 0 2px;
@@ -95,7 +109,7 @@ export default {
 }
 
 .label {
-  color: rgb(51, 51, 51);
+  color: var(--kit-tag-label);
   font-size: 85%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -116,6 +130,7 @@ export default {
 }
 
 .remove-tag:hover {
-  background-color: #ffbdad;
+  background-color: var(--kit-tag-remove-bg);
+  color: white;
 }
 </style>
