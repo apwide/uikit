@@ -40,12 +40,20 @@ function onDateSelected() {
 </script>
 
 <style scoped>
+.kit-calendar-day {
+  --kit-calendar-day-today-border-color:#0052cc;
+}
+
+.kit-dark .kit-calendar-day {
+  --kit-calendar-day-today-border-color:#579dff;
+}
+
 .kit-calendar-day__date {
   width: 100%;
 }
 
 [highlighted] {
-  background-color: rgb(244, 245, 247);
+  background-color: var(--kit-table-row-hover-color);
 }
 
 [range-start] [selected] {
@@ -60,11 +68,11 @@ function onDateSelected() {
   font-weight: 500;
   background-color: transparent;
   position: relative;
-  color: #0052cc;
+  color: var(--kit-calendar-day-today-border-color);
 }
 
 [today]::after {
-  background-color: #0052cc;
+  background-color: var(--kit-calendar-day-today-border-color);
   bottom: 2px;
   content: '';
   display: block;

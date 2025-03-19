@@ -86,10 +86,18 @@ function changeInterval() {
 
 <style scoped>
 .kit-calendar-header {
+  --kit-calendar-header-text-color: #172b4d;
+}
+
+.kit-dark .kit-calendar-header {
+  --kit-calendar-header-text-color: var(--kit-header-text);
+}
+
+.kit-calendar-header {
   justify-content: stretch;
   align-items: center;
   display: flex;
-  color: #172b4d;
+  color: var(--kit-calendar-header-text-color);
   padding: 0 0 8px;
 }
 

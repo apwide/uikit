@@ -12,7 +12,6 @@ body {
 
 body.kit-dark {
     /*--kit-body-text: #B6C2CF;*/
-    --test: rgb(182, 194, 207);
     --kit-body-text: #9FADBC;
     --kit-header-text: var(--kit-body-text);
     --kit-page-bg-color: #1d2125;
