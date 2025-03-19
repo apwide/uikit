@@ -64,7 +64,7 @@ watch(() => props.autoFocus, isFocused => {
   if (isFocused) {
     nextTick(() => {
       if (inputField.value) {
-        inputField.focus()
+        inputField.value.focus()
       }
     })
   }

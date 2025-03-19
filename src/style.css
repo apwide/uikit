@@ -8,6 +8,7 @@ body {
     --kit-table-header-text: var(--kit-header-text);
 
     --kit-form-danger: #de350b;
+    --kit-form-warning: #FF991F;
 
     --kit-progress-top-color: #0052CC;
 
@@ -25,6 +26,7 @@ body.kit-dark {
     --kit-dialog-bg-color: #282E33;
 
     --kit-form-danger: #f15b50;
+    --kit-form-warning: #F5CD47;
 
     --kit-progress-top-color: #579DFF;
 }
