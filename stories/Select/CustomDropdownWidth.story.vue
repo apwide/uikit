@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <FieldGroup data-cy="field-group" label="Single Select">
+    <KitFieldGroup data-cy="field-group" label="Single Select">
       <Select
         v-model="value"
         data-cy="input-component"
@@ -8,7 +8,7 @@
         :options="cities"
         :dropdown-width="400"
         placeholder="select item" />
-    </FieldGroup>
+    </KitFieldGroup>
     <table>
       <thead>
         <tr>
@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import FieldGroup from '../../src/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
 import Select from '@/components/Select/KitSelect.vue'
 

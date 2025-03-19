@@ -1,10 +1,10 @@
 <template>
   <div>
-    <FieldGroup data-cy="field-group" label="Label" required>
+    <KitFieldGroup data-cy="field-group" label="Label" required>
       <Input v-model="message" should-fit-container placeholder="Click here to input" />
       The message is: {{ message }}
-    </FieldGroup>
-    <FieldGroup label="Label" required>
+    </KitFieldGroup>
+    <KitFieldGroup label="Label" required>
       <Input
         v-model="number"
         type="number"
@@ -14,12 +14,12 @@
         should-fit-container
         placeholder="Click here to input" />
       The number is: {{ number }}
-    </FieldGroup>
-    <FieldGroup label="Disabled input" required>
+    </KitFieldGroup>
+    <KitFieldGroup label="Disabled input" required>
       <Input v-model="message" should-fit-container placeholder="Click here to input" disabled />
       The message is: {{ message }}
-    </FieldGroup>
-    <FieldGroup label="Icon after" required>
+    </KitFieldGroup>
+    <KitFieldGroup label="Icon after" required>
       <template #after>
         <KitInlineDialog placement="right">
           <template v-slot:trigger="{ toggle }">
@@ -39,13 +39,13 @@
         should-fit-container
         placeholder="Click here to input" />
       The number is: {{ number }}
-    </FieldGroup>
+    </KitFieldGroup>
   </div>
 </template>
 
 <script setup lang="ts">
 import Input from '@/components/Form/Input'
-import FieldGroup from '@/components/Form/FieldGroup'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon'
 import { ref } from 'vue'

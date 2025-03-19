@@ -1,33 +1,23 @@
 <template>
   <div>
-    <FieldGroup data-cy="field-group" label="Label" required>
+    <KitFieldGroup data-cy="field-group" label="Label" required>
       <KitSecuredInput v-model="message" should-fit-container placeholder="Click here to input" />
       The message is: {{ message }}
-    </FieldGroup>
-    <FieldGroup label="Disabled input" required>
+    </KitFieldGroup>
+    <KitFieldGroup label="Disabled input" required>
       <KitSecuredInput v-model="message" should-fit-container placeholder="Click here to input" disabled />
       The message is: {{ message }}
-    </FieldGroup>
+    </KitFieldGroup>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import KitSecuredInput from '@/components/Form/KitSecuredInput'
-import FieldGroup from '@/components/Form/FieldGroup'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
+import { ref } from 'vue'
 
-export default {
-  name: 'KitSecuredInputStory',
-  components: {
-    FieldGroup,
-    KitSecuredInput
-  },
-  data() {
-    return {
-      message: '',
-      number: ''
-    }
-  }
-}
+const message = ref('')
+const number = ref('')
 </script>
 <style scoped>
 .icon {

@@ -1,15 +1,10 @@
 <template>
-  <FieldGroup label="Label" required>
+  <KitFieldGroup label="Label" required>
     <TextArea rows="5" value="candy" />
-  </FieldGroup>
+  </KitFieldGroup>
 </template>
 
-<script>
-import FieldGroup from '@/components/Form/FieldGroup'
+<script setup lang="ts">
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import TextArea from '@/components/Form/TextArea'
-
-export default {
-  name: 'TextAreaStory',
-  components: { FieldGroup, TextArea }
-}
 </script>

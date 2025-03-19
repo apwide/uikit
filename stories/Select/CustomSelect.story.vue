@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <FieldGroup data-cy="field-group" label="Custom Select">
+    <KitFieldGroup data-cy="field-group" label="Custom Select">
       <KitSelect
         v-model="value"
         data-cy="input-component"
@@ -21,7 +21,7 @@
           </KitButton>
         </template>
       </KitSelect>
-    </FieldGroup>
+    </KitFieldGroup>
     <table>
       <thead>
         <tr>
@@ -42,7 +42,7 @@ import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import KitButton from '@components/Button/KitButton.vue'
 import SearchIcon from '@components/Icon/aui/SearchIcon'
-import FieldGroup from '../../src/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
 import KitIcon from '../../src/components/Icon/KitIcon.vue'
 

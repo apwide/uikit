@@ -11,20 +11,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitFieldGroup',
-  props: {
-    label: {
-      type: String,
-      default: undefined
-    },
-    errors: {
-      type: Array,
-      default: () => []
-    }
-  }
+<script setup lang="ts">
+
+type Props = {
+  label?: string
+  errors?: Array
 }
+
+defineProps<Props>()
 </script>
 
 <style scoped>

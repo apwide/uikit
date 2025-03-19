@@ -1,20 +1,20 @@
 <template>
   <div>
-    <FieldGroup label="Select color">
+    <KitFieldGroup label="Select color">
       <KitColorPicker v-model="color" />
       selected: {{ color }}
-    </FieldGroup>
-    <FieldGroup label="Custom color list">
+    </KitFieldGroup>
+    <KitFieldGroup label="Custom color list">
       <KitColorPicker v-model="color" :colors="customColors" :columns="9" />
       selected: {{ color }}
-    </FieldGroup>
+    </KitFieldGroup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KitColorPicker from '@components/ColorPicker/KitColorPicker.vue'
-import FieldGroup from '@/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const color = ref('#0052CC')
 

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <FieldGroup class="async-select" label="Async KitSelect">
+    <KitFieldGroup class="async-select" label="Async KitSelect">
       <KitSelect
         v-model="value"
         :options="options"
@@ -22,7 +22,7 @@
           </div>
         </template>
       </KitSelect>
-    </FieldGroup>
+    </KitFieldGroup>
     <table>
       <thead>
         <tr>
@@ -43,7 +43,7 @@ import pDebounce from 'p-debounce'
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import { createPersonsList } from '../api-mocks/people'
-import FieldGroup from '../../src/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const list = createPersonsList({}, 50)
 const getUsers = (query) =>

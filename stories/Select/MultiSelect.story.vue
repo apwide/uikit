@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <FieldGroup class="multiselect" label="MultiSelect">
+    <KitFieldGroup class="multiselect" label="MultiSelect">
       <KitSelect v-model="basic" multi :options="cities" placeholder="Select city..." data-cy="multiselect-simple" />
-    </FieldGroup>
+    </KitFieldGroup>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import faker from 'faker'
 import { ref } from 'vue'
 import { many } from '../api-mocks/helpers'
-import FieldGroup from '../../src/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitSelect from '@/components/Select/KitSelect.vue'
 
 const cities = many(faker.address.city)({}, 10)

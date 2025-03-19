@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
-    <FieldGroup class="multiselect" label="Custom Tags">
+    <KitFieldGroup class="multiselect" label="Custom Tags">
       <KitSelect v-model="value" :multi="true" :options="cities" placeholder="select item">
         <template #tag="{ tag }">
           <span class="custom-tag">🌈 {{ tag.value }}</span>
         </template>
       </KitSelect>
-    </FieldGroup>
+    </KitFieldGroup>
     <table>
       <thead>
         <tr>
@@ -27,7 +27,7 @@ import faker from 'faker'
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import { many } from '../api-mocks/helpers'
-import FieldGroup from '../../src/components/Form/FieldGroup'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const cities = many(faker.address.city)({}, 10)
 const [city] = cities

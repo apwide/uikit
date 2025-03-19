@@ -1,20 +1,21 @@
 <template>
   <div class="wrapper">
-    <FieldGroup class="picker single" label="Single User">
+    <KitFieldGroup class="picker single" label="Single User">
       <UserPicker v-model="value" data-cy="single" :initial-options="[initialOptions]" :get-users="getUsers" />
-    </FieldGroup>
+    </KitFieldGroup>
     <p>{{ value }}</p>
-    <FieldGroup class="picker multi" label="Many Users">
+    <KitFieldGroup class="picker multi" label="Many Users">
       <UserPicker v-model="users" :multi="true" :get-users="getUsers" />
-    </FieldGroup>
+    </KitFieldGroup>
     <p>{{ users }}</p>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { createPersonsList } from '../api-mocks/people'
-import FieldGroup from '../../src/components/Form/FieldGroup'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import UserPicker from '@/components/Select/UserPicker'
+import { ref } from 'vue'
 
 const list = createPersonsList({}, 50)
 const [initialOptions] = list
@@ -26,18 +27,8 @@ const getUsers = (query) =>
     }, 300)
   })
 
-export default {
-  name: 'UserPickerStory',
-  components: { FieldGroup, UserPicker },
-  data() {
-    return {
-      value: undefined,
-      users: [],
-      getUsers,
-      initialOptions
-    }
-  }
-}
+const value = ref()
+const users = ref([])
 </script>
 
 <style scoped>

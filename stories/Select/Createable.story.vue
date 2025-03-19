@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
-    <FieldGroup class="createable" label="Createable">
+    <KitFieldGroup class="createable" label="Createable">
       <KitSelect v-model="value" data-cy="simple" createable multi placeholder="Type something and press enter..." />
-    </FieldGroup>
-    <FieldGroup class="createable" label="Limited number of tags">
+    </KitFieldGroup>
+    <KitFieldGroup class="createable" label="Limited number of tags">
       <KitSelect v-model="value" data-cy="limited" :max="3" createable multi placeholder="Maximum 3 elements.." />
-    </FieldGroup>
-    <FieldGroup class="createable" label="Minimum number of elements, plus validation">
+    </KitFieldGroup>
+    <KitFieldGroup class="createable" label="Minimum number of elements, plus validation">
       <KitSelect
         v-model="minmax"
         data-cy="validated"
@@ -16,7 +16,7 @@
         :min="1"
         :max="3"
         placeholder="KitSelect city..." />
-    </FieldGroup>
+    </KitFieldGroup>
     <table>
       <thead>
         <tr>
@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
-import FieldGroup from '../../src/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const value = ref([])
 const minmax = ref([10])

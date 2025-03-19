@@ -11,7 +11,7 @@ import KitColorPicker from '@components/ColorPicker/KitColorPicker.vue'
 import KitSpinner from '@components/Spinner/KitSpinner.vue'
 import Input from './components/Form/Input.vue'
 import TextArea from './components/Form/TextArea.vue'
-import FieldGroup from './components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitCheckbox from './components/Checkbox/KitCheckbox.vue'
 import KitToggle from './components/Toggle/KitToggle.vue'
 import KitModal from '@components/Modal/KitModal.vue'
@@ -69,7 +69,7 @@ export {
   KitDropdownSeparator,
   KitLozenge,
   KitSpinner,
-  FieldGroup as KitFieldGroup,
+  KitFieldGroup,
   TextArea as KitTextArea,
   Input as KitInput,
   KitCheckbox,

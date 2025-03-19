@@ -11,9 +11,9 @@
       :actions="actions"
       @close="show = false">
       <div class="content">
-        <FieldGroup label="Give us your best email address">
+        <KitFieldGroup label="Give us your best email address">
           <Input v-model="value" />
-        </FieldGroup>
+        </KitFieldGroup>
         <div class="buttons">
           <KitButton>Skip</KitButton>
           <KitButton appearance="primary"> Send </KitButton>
@@ -36,7 +36,7 @@ import KitButton from '@components/Button/KitButton.vue'
 import { ref } from 'vue'
 import KitFlag from '@components/Flag/KitFlag.vue'
 import Input from '@/components/Form/Input.vue'
-import FieldGroup from '@/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const title = ref('Welcome to the jungle')
 const description = ref('We got fun and games. We got everything you want honey, we know the names.')

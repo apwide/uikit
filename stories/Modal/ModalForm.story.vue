@@ -3,15 +3,15 @@
     <KitButton @click="showDialog"> Show Dialog </KitButton>
     <KitModal v-if="show" heading="Form Demo" @submit="onSubmit" @cancel="onCancel">
       <div slot="content">
-        <FieldGroup label="Title" required>
+        <KitFieldGroup label="Title" required>
           <Input v-model="title" auto-focus />
-        </FieldGroup>
-        <FieldGroup label="Type" required>
+        </KitFieldGroup>
+        <KitFieldGroup label="Type" required>
           <Input v-model="type" />
-        </FieldGroup>
-        <FieldGroup label="Type" required>
+        </KitFieldGroup>
+        <KitFieldGroup label="Type" required>
           <KitSelect v-model="type" :options="options" :selected="selected" />
-        </FieldGroup>
+        </KitFieldGroup>
       </div>
     </KitModal>
   </div>
@@ -23,7 +23,7 @@ import KitButton from '@components/Button/KitButton.vue'
 import KitModal from '@components/Modal/KitModal.vue'
 import KitSelect from '@/components/Select/KitSelect.vue'
 import Input from '@/components/Form/Input.vue'
-import FieldGroup from '@/components/Form/FieldGroup.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const title = ref('')
 const type = ref('')
