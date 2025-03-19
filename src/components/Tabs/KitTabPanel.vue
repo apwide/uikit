@@ -4,25 +4,15 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+import { computed, inject } from 'vue'
 
-export default Vue.extend({
-  name: 'KitTabPanel',
-  inject: {
-    state: {
-      default: () => ({
-        activeTab: undefined
-      })
-    }
-  },
-  props: {
-    id: [String, Number]
-  },
-  computed: {
-    visible() {
-      return String(this.state.activeTab) === String(this.id)
-    }
-  }
-})
+type Props = {
+  id?: string | number
+}
+
+const props = defineProps<Props>()
+
+const state = inject('state')
+const visible = computed(() => String(state.activeTab) === String(props.id))
 </script>

@@ -12,65 +12,47 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+import Vue, { computed, inject } from 'vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitTabButton from './KitTabButton.vue'
 
-export default Vue.extend({
-  name: 'KitTabHeader',
-  components: { KitIcon, KitTabButton },
-  inject: {
-    select: {
-      default: () => () => {
-        // eslint-disable-next-line no-console
-        console.log('TabKitHeader: this component can only be used with KitTabProvider.')
-      }
-    },
-    state: {
-      default: () => ({
-        activeTab: undefined,
-        reorderable: undefined
-      })
-    }
-  },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true
-    },
-    /**
-     * By default, KitTabButton is wrapping the content.
-     * Set `custom` to true to avoid that behavior.
-     * Note that the content should contain a `KitTabButton` to activate a tab.
-     */
-    custom: {
-      type: Boolean,
-      default: false
-    },
-    disabled: Boolean,
-    reorderable: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    active() {
-      return String(this.state.activeTab) === String(this.id)
-    },
-    isReorderable() {
-      if (!this.state) {
-        return false
-      }
-      return (this.state.reorderable && this.reorderable) || false
-    }
-  },
-  methods: {
-    onClick() {
-      this.select(this.id)
-    }
-  }
+type Props = {
+  id: string | number
+  /**
+   * By default, KitTabButton is wrapping the content.
+   * Set `custom` to true to avoid that behavior.
+   * Note that the content should contain a `KitTabButton` to activate a tab.
+   */
+  custom?: boolean
+  disabled?: boolean
+  reorderable?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  custom: false,
+  reorderable: false
 })
+
+const select: () => void = inject('select', () => () => {
+  // eslint-disable-next-line no-console
+  console.error('TabKitButton: this component can only be used with KitTabProvider.')
+})
+const state = inject('state', () => ({
+  activeTab: undefined
+}))
+
+const active = computed(() => String(state.activeTab) === String(props.id))
+const isReorderable = computed(() => {
+  if (!state) {
+    return false
+  }
+  return (state.reorderable && props.reorderable) || false
+})
+
+function onClick() {
+  select(props.id)
+}
 </script>
 
 <style scoped>

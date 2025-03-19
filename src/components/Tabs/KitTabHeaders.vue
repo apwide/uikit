@@ -13,53 +13,29 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+import Vue, { inject, provide } from 'vue'
 import KitDraggable from '../common/KitDraggable'
 
-export default Vue.extend({
-  name: 'KitTabHeaders',
-  components: { KitDraggable },
-  provide() {
-    const state = this.state
-    Object.defineProperty(state, 'reorderable', {
-      enumerable: true,
-      get: () => {
-        return this.reorderable
-      }
-    })
+type Props = {
+  reorderable?: boolean
+  reorderableIdsList?: Arrays
+  reorderableItemsDraggableClass?: string
+}
 
-    return {
-      state
-    }
-  },
-  inject: {
-    select: {
-      default: () => () => {
-        // eslint-disable-next-line no-console
-        console.error('TabKitHeaders: this component can only be used with KitTabProvider.')
-      }
-    },
-    state: {
-      from: 'state',
-      default: () => ({
-        activeTab: undefined
-      })
-    }
-  },
-  props: {
-    reorderable: {
-      type: Boolean,
-      default: false
-    },
-    reorderableIdsList: {
-      type: Array
-    },
-    reorderableItemsDraggableClass: {
-      type: String
-    }
+const props = withDefaults(defineProps<Props>(), {
+  reorderable: false
+})
+
+const state = inject('state')
+Object.defineProperty(state, 'reorderable', {
+  enumerable: true,
+  get: () => {
+    return props.reorderable
   }
 })
+provide('state', state)
+
 </script>
 
 <style scoped>

@@ -4,35 +4,23 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+import { inject, ref, watch } from 'vue'
 
-export default Vue.extend({
-  name: 'KitTabPanels',
-  inject: {
-    state: {
-      default: () => ({
-        activeTab: undefined
-      })
-    }
-  },
-  data() {
-    return {
-      style: { maxHeight: 'inherit' },
-      timer: null
-    }
-  },
-  watch: {
-    'state.activeTab'() {
-      clearTimeout(this.timer)
-      if (this.$refs.container) {
-        const height = this.$refs.container.getBoundingClientRect().height
-        this.style = { maxHeight: `${height}px`, overflow: 'hidden' }
-        setTimeout(() => {
-          this.style = { maxHeight: 'inherit' }
-        }, 500)
-      }
-    }
+const container = ref<HTMLDivElement>()
+const style = ref({ maxHeight: 'inherit' })
+const timer = ref(null)
+
+const state = inject('state')
+
+watch(state.activeTab, () => {
+  clearTimeout(timer.value)
+  if (container.value) {
+    const height = container.value.getBoundingClientRect().height
+    style.value = { maxHeight: `${height}px`, overflow: 'hidden' }
+    setTimeout(() => {
+      style.value = { maxHeight: 'inherit' }
+    }, 500)
   }
 })
 </script>

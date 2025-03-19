@@ -4,35 +4,30 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+import { provide } from 'vue'
 
-export default Vue.extend({
-  name: 'KitTabProvider',
-  provide() {
-    const state = {}
-    Object.defineProperty(state, 'activeTab', {
-      enumerable: true,
-      get: () => {
-        return this.value
-      }
-    })
+type Props = {
+  value: string | number
+}
 
-    return {
-      state,
-      select: this.onSelectTab
-    }
-  },
-  props: {
-    value: {
-      type: [String, Number],
-      required: true
-    }
-  },
-  methods: {
-    onSelectTab(value) {
-      this.$emit('input', value)
-    }
+const props = defineProps<Props>()
+const emit = defineEmits<{
+  (event: 'input', data: string | number)
+}>()
+
+function onSelectTab(value) {
+  emit('input', value)
+}
+
+const state = {}
+Object.defineProperty(state, 'activeTab', {
+  enumerable: true,
+  get: () => {
+    return props.value
   }
 })
+
+provide('select', onSelectTab)
+provide('state', state)
 </script>

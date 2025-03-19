@@ -1,44 +1,36 @@
 <template>
   <button class="kit-tab-button" type="button" @click="onClick" :disabled="disabled"><slot /></button>
 </template>
-<script>
-export default {
-  name: 'KitTabButton',
-  inject: {
-    select: {
-      default: () => () => {
-        // eslint-disable-next-line no-console
-        console.error('TabKitButton: this component can only be used with KitTabProvider.')
-      }
-    },
-    state: {
-      default: () => ({
-        activeTab: undefined
-      })
-    }
-  },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    stretch: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    onClick() {
-      if (!this.disabled && !this.inactive) {
-        this.select(this.id)
-      }
-    }
+<script setup lang="ts">
+
+import { inject } from 'vue'
+
+type Props = {
+  id: string | number
+  disabled?: boolean
+  stretch?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+  stretch: false
+})
+
+
+function onClick() {
+  if (!props.disabled && !props.inactive) {
+    select(props.id)
   }
 }
+
+const select: () => void = inject('select', () => () => {
+  // eslint-disable-next-line no-console
+  console.error('TabKitButton: this component can only be used with KitTabProvider.')
+})
+inject('state', () => ({
+  activeTab: undefined
+}))
+
 </script>
 
 <style scoped>

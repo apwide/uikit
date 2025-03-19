@@ -87,7 +87,7 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import KitTooltip from '../../src/components/Tooltip/Tooltip'
 import KitKitBadge from '@components/Badge/KitBadge.vue'
 import KitTabProvider from '../../src/components/Tabs/KitTabProvider'
@@ -100,38 +100,18 @@ import KitIcon from '../../src/components/Icon/KitIcon'
 import KitActionMenu from '../../src/components/Menu/KitActionMenu'
 import KitMenuItem from '../../src/components/Menu/KitMenuItem'
 import KitTabPanels from '../../src/components/Tabs/KitTabPanels'
+import { ref } from 'vue'
 
-export default {
-  name: 'TabsStory',
-  components: {
-    KitTabPanels,
-    KitMenuItem,
-    KitActionMenu,
-    KitIcon,
-    KitIconButton,
-    KitTabButton,
-    KitTabPanel,
-    KitTabHeaders,
-    KitTabProvider,
-    KitTabHeader,
-    KitBadge: KitKitBadge,
-    KitTooltip
-  },
-  data() {
-    return {
-      active: 1,
-      tabs: [0, 1, 2, 3, 4, 5, 6]
-    }
-  },
-  methods: {
-    click() {
-      alert('clicked')
-    },
-    onReorder(newList) {
-      this.tabs = newList
-      console.log('Tabs reordered', newList)
-    }
-  }
+const active = ref(1)
+const tabs = ref([0, 1, 2, 3, 4, 5, 6])
+
+function click() {
+  alert('clicked')
+}
+
+function onReorder(newList) {
+  tabs.value = newList
+  console.log('Tabs reordered', newList)
 }
 </script>
 
