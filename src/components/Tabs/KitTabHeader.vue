@@ -57,6 +57,17 @@ function onClick() {
 
 <style scoped>
 .kit-tab-header {
+  --kit-tab-header-active-border-color: rgb(0, 82, 204);
+  --kit-tab-header-text-hover-color: #0052cc;
+  --kit-tab-header-drag-icon-color: #a5adba;
+}
+
+.kit-dark .kit-tab-header {
+  --kit-tab-header-active-border-color: #579dff;
+  --kit-tab-header-text-hover-color: #579dff;
+}
+
+.kit-tab-header {
   padding: 0 5px;
   position: relative;
   white-space: normal;
@@ -66,12 +77,12 @@ function onClick() {
 
 .kit-drag-handle {
   cursor: grab;
-  color: #a5adba;
+  color: var(--kit-tab-header-drag-icon-color);
   font-size: 0.68em;
 }
 
 :not([disabled]):hover {
-  color: #0052cc;
+  color: var(--kit-tab-header-text-hover-color);
 }
 
 [active]:after {
@@ -83,7 +94,7 @@ function onClick() {
   width: inherit;
   left: 5px;
   right: 5px;
-  border-bottom: 2px solid rgb(0, 82, 204);
+  border-bottom: 2px solid var(--kit-tab-header-active-border-color);
   height: 0;
 }
 </style>

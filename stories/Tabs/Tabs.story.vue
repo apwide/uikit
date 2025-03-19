@@ -117,10 +117,20 @@ function onReorder(newList) {
 
 <style scoped>
 .content {
+  --story-tab-content-bg:  rgb(244, 245, 247);
+  --story-tab-content-text: rgb(107, 119, 140);
+}
+
+.kit-dark .content {
+  --story-tab-content-bg:  var(--kit-dialog-bg-color);
+  --story-tab-content-text: var(--kit-body-text);
+}
+
+.content {
   align-items: center;
-  background-color: rgb(244, 245, 247);
+  background-color: var(--story-tab-content-bg);
   border-radius: 3px;
-  color: rgb(107, 119, 140);
+  color: var(--story-tab-content-text);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -144,5 +154,9 @@ function onReorder(newList) {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+hr {
+  background-color: var(--kit-table-header-text);
 }
 </style>

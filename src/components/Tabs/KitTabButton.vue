@@ -34,6 +34,14 @@ inject('state', () => ({
 </script>
 
 <style scoped>
+.kit-tab-button {
+  --kit-tab-button-text-color: rgb(66, 82, 110);
+}
+
+.kit-dark .kit-tab-button {
+  --kit-tab-button-text-color: var(--kit-body-text);
+}
+
 button {
   background: none;
   border: none;
@@ -43,7 +51,7 @@ button {
   margin: 0;
   text-align: left;
   text-decoration: none;
-  color: rgb(66, 82, 110);
+  color: var(--kit-tab-button-text-color);
   outline: none;
   padding: 4px 8px;
   min-width: 70px;

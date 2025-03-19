@@ -40,6 +40,14 @@ provide('state', state)
 
 <style scoped>
 .kit-tab-headers {
+  --kit-tab-headers-border-color: rgb(235, 236, 240);
+}
+
+.kit-dark .kit-tab-headers {
+  --kit-tab-headers-border-color: #A6C5E229;
+}
+
+.kit-tab-headers {
   position: relative;
   width: 100%;
 }
@@ -60,7 +68,7 @@ nav::before {
   width: inherit;
   left: 0;
   right: 0;
-  background-color: rgb(235, 236, 240);
+  background-color: var(--kit-tab-headers-border-color);
   height: 2px;
 }
 </style>
