@@ -1,6 +1,7 @@
 <template>
   <div class="kit-modal-header__header">
-    <component :is="icon" v-if="appearance" class="kit-modal-header__icon" :primary-color="color" />
+    <ErrorIcon v-if="appearance === 'danger'" class="kit-modal-header__icon" :primary-color="color" />
+    <WarningIcon v-else-if="!!appearance" class="kit-modal-header__icon" :primary-color="color" />
     <h1 class="kit-modal-header__title">
       {{ heading }}
     </h1>

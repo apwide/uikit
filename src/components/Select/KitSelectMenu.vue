@@ -27,12 +27,12 @@
 
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { Value } from '@components/Select/types'
+import type { Value } from '@components/Select/types'
 import KitSelectOption from './KitSelectOption.vue'
 
 type Props = {
   options?: Value<unknown>[]
-  selected?: Value<unknown> | Value<unknown>[]
+  selected?: any /* Value<unknown> | Value<unknown>[] error on loading component */
   currentSuggestionIndex?: number
   hasSuggestions?: boolean
   containsQuery?: boolean

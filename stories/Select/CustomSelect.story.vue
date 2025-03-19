@@ -15,7 +15,7 @@
         <template #custom-action>
           <KitButton appearance="subtle" class="create">
             <template #icon-before>
-              <KitIcon type="plus" size="xsmall" />
+              <KitIcon type="plus" />
             </template>
             Create Issue
           </KitButton>

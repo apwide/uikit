@@ -1,7 +1,7 @@
 <template>
   <div>
     <KitFieldGroup data-cy="field-group" label="Label" required>
-      <KitKitInput v-model="message" should-fit-container placeholder="Click here to input" />
+      <KitInput v-model="message" should-fit-container placeholder="Click here to input" />
       The message is: {{ message }}
     </KitFieldGroup>
     <KitFieldGroup label="Label" required>

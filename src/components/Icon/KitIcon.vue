@@ -1,7 +1,7 @@
 <template>
   <FontAwesomeIcon class="kit-icon" :icon="icon" :title="title" :size="iconSize" :style="style" />
 </template>
-<script>
+<script setup lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faAtlassian as brandsAtlassian,
@@ -81,7 +81,7 @@ import {
   faDotCircle,
   faVideo
 } from '@fortawesome/free-solid-svg-icons'
-import Vue from 'vue'
+import { computed, getCurrentInstance } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faMinusSquare,
@@ -201,85 +201,60 @@ function prefix(/** @type: string */ style) {
   return 'unknown'
 }
 
-export default Vue.extend({
-  name: 'KitIcon',
-  components: { FontAwesomeIcon },
-  props: {
-    type: {
-      type: String,
-      required: true
-    },
-    iconStyle: {
-      type: String,
-      default: 'solid',
-      required: false,
-      validator(v) {
-        return ['solid', 'regular', 'brands'].includes(v)
-      }
-    },
-    size: {
-      type: String,
-      default: '1x',
-      required: false
-    },
-    color: {
-      type: String,
-      default: 'inherit'
-    },
-    bgColor: {
-      type: String,
-      default: 'transparent',
-      required: false
-    },
-    margin: {
-      type: String,
-      default: '0px',
-      required: false
-    },
-    padding: {
-      type: String,
-      default: '0px',
-      required: false
-    },
-    title: {
-      type: String,
-      default: undefined,
-      required: false
-    }
-  },
-  computed: {
-    icon() {
-      return {
-        prefix: prefix(this.iconStyle),
-        iconName: this.type
-      }
-    },
-    style() {
-      /** @type CSSStyleDeclaration */
-      const style = this.$props.style || {}
-      if (this.color && this.color !== 'inherit') {
-        style.color = this.color
-      }
-      if (this.padding) {
-        style.padding = this.padding
-      }
-      if (this.margin) {
-        style.margin = this.margin
-      }
-      if (this.bgColor && this.bgColor !== 'transparent') {
-        style.backgroundColor = this.bgColor
-      }
-      if (/(em|px)$/.test(this.size)) {
-        style.fontSize = this.size
-      }
-      return style
-    },
-    iconSize() {
-      if (/(em|px)$/.test(this.size)) {
-        return '1x'
-      }
-      return this.size
-    }
+type Props = {
+  type: string
+  iconStyle?: 'solid' | 'regular' | 'brands'
+  size?: string
+  color?: string
+  bgColor?: string
+  margin?: string
+  padding?: string
+  title?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  iconStyle: 'solid',
+  size: '1x',
+  color: 'inherit',
+  bgColor: 'transparent',
+  margin: '0px',
+  padding: '0px'
+})
+
+const icon = computed(() => {
+  return {
+    prefix: prefix(props.iconStyle),
+    iconName: props.type
   }
+})
+
+const instance = getCurrentInstance()
+
+const style= computed(() => {
+  /** @type CSSStyleDeclaration */
+  const style = instance.proxy.$props.style || {}
+  if (props.color && props.color !== 'inherit') {
+    style.color = props.color
+  }
+  if (props.padding) {
+    style.padding = props.padding
+  }
+  if (props.margin) {
+    style.margin = props.margin
+  }
+  if (props.bgColor && props.bgColor !== 'transparent') {
+    style.backgroundColor = props.bgColor
+  }
+  if (/(em|px)$/.test(props.size)) {
+    style.fontSize = props.size
+  }
+  return style
+})
+
+const iconSize = computed(() => {
+  if (/(em|px)$/.test(props.size)) {
+    return '1x'
+  }
+  return props.size
 })
 </script>

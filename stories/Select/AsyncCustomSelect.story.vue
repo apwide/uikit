@@ -60,6 +60,9 @@ const options = ref()
 const isFetching = ref(false)
 
 function normalizer(value) {
+  if (!value) {
+    return {}
+  }
   return {
     id: value.key,
     label: value.name,

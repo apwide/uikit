@@ -1,5 +1,5 @@
 <template>
-  <Select
+  <KitSelect
     :value="value"
     :options="users"
     :async="true"
@@ -26,14 +26,14 @@
         <UserRenderer appearance="micro" tag="span" :user="tag.value" />
       </div>
     </template>
-  </Select>
+  </KitSelect>
 </template>
 
 <script setup lang="ts">
 import pDebounce from 'p-debounce'
 import { computed, ref } from 'vue'
 import UserRenderer from '../field-renderers/UserRenderer.vue'
-import Select from './KitSelect.vue'
+import KitSelect from './KitSelect.vue'
 
 type User = { key: string; name: string; disabled: boolean }
 type GetUsers = (searchTerm: unknown) => Promise<{ data: User[] }>

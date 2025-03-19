@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <KitFieldGroup data-cy="field-group" label="Single Select">
-      <Select v-model="value" data-cy="input-component" append-to-body :options="cities" placeholder="Select city..." />
+      <KitSelect v-model="value" data-cy="input-component" append-to-body :options="cities" placeholder="Select city..." />
     </KitFieldGroup>
     <table>
       <thead>
@@ -22,7 +22,7 @@
 import { ref } from 'vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
-import Select from '@/components/Select/KitSelect.vue'
+import KitSelect from '@/components/Select/KitSelect.vue'
 
 const value = ref()
 </script>

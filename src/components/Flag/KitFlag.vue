@@ -7,7 +7,7 @@
           <InfoIcon v-else-if="flag.name === 'info'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
           <WarningIcon v-else-if="flag.name === 'warning'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
           <ErrorIcon v-else-if="flag.name === 'error'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
-          <component :is="flag.name" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
+          <component v-else :is="flag.name" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
         </div>
         <span class="title">{{ title }}</span>
         <ChevronDownIcon

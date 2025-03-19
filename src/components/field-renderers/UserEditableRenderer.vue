@@ -6,7 +6,7 @@
     :confirm="confirm"
     :placement="placement"
     @save-requested="onSaveRequested">
-    <Select
+    <KitSelect
       slot="editor"
       slot-scope="props"
       :value="props.value"
@@ -34,7 +34,7 @@
       <div slot="selected" slot-scope="{ selected }" class="label">
         <UserRenderer :tag="tag" :user="selected" :avatar-only="avatarOnly" />
       </div>
-    </Select>
+    </KitSelect>
     <slot>
       <UserRenderer :tag="tag" :user="user" :avatar-only="avatarOnly" />
     </slot>
@@ -44,13 +44,13 @@
 
 <script>
 import pDebounce from 'p-debounce'
-import Select from '../Select/KitSelect.vue'
+import KitSelect from '../Select/KitSelect.vue'
 import InlineEdit from '../Form/InlineEdit.vue'
 import UserRenderer from './UserRenderer.vue'
 
 export default {
   name: 'KitUserEditableRenderer',
-  components: { UserRenderer, InlineEdit, Select },
+  components: { UserRenderer, InlineEdit, KitSelect },
   props: {
     user: {
       type: Object,
