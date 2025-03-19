@@ -6,7 +6,7 @@
       </slot>
     </div>
 
-    <CopyToClipboard
+    <KitCopyToClipboard
       v-if="copy"
       :text="lastItemLink"
       placement="top-start"
@@ -16,12 +16,12 @@
         <KitIcon class="kit-copy-icon" size="sm" v-if="!copied" type="link" />
         <KitIcon class="kit-copy-icon" size="sm" v-else type="check" />
       </template>
-    </CopyToClipboard>
+    </KitCopyToClipboard>
   </div>
 </template>
 
 <script setup lang="ts">
-import CopyToClipboard from '../CopyToClipboard/CopyToClipboard'
+import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
 import KitIcon from '../Icon/KitIcon'
 import KitBreadcrumbItem from './KitBreadcrumbItem.vue'
 import { nextTick, ref, watch } from 'vue'

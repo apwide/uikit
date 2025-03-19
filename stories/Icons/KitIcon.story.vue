@@ -37,12 +37,12 @@
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
 import AwesomeIcon from '../../src/components/Icon/KitIcon'
-import KitCopyToClipboard from '../../src/components/CopyToClipboard/CopyToClipboard'
+import KitKitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
 import KitSelect from '../../src/components/Select/KitSelect.vue'
 
 export default {
   name: 'FontAwesomeIcons.story',
-  components: { KitSelect, KitCopyToClipboard, AwesomeIcon },
+  components: { KitSelect, KitCopyToClipboard: KitKitCopyToClipboard, AwesomeIcon },
   data() {
     return {
       size: undefined

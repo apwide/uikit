@@ -34,13 +34,13 @@
 import KitIconButton from '../Button/KitIconButton'
 import KitButtonGroup from '../Button/KitButtonGroup'
 import KitIcon from '../Icon/KitIcon'
-import CopyToClipboard from '../CopyToClipboard/CopyToClipboard'
+import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
 import StringLineRenderer from './StringLineRenderer'
 
 export default {
   name: 'KitSecureStringLineRenderer',
   components: {
-    CopyToClipboard,
+    CopyToClipboard: KitCopyToClipboard,
     KitButtonGroup,
     KitIconButton,
     KitIcon,

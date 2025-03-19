@@ -19,7 +19,7 @@ import KitButton from '../Button/KitButton.vue'
 import { ref, watch } from 'vue'
 
 type Props = {
-  appearance?: 'primary'
+  appearance?: string
   autoFocus?: boolean
   actions?: string[]
   pending?: boolean

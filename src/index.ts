@@ -33,7 +33,7 @@ import KitTag from '@components/Tag/KitTag.vue'
 import KitFlag from '@components/Flag/KitFlag.vue'
 import KitBreadcrumbs from '@components/Breadcrumbs/KitBreadcrumbs.vue'
 import KitBreadcrumbItem from '@components/Breadcrumbs/KitBreadcrumbItem.vue'
-import CopyToClipboard from './components/CopyToClipboard/CopyToClipboard.vue'
+import KitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
 import {
   KitTabButton,
   KitTabHeaders,
@@ -83,7 +83,7 @@ export {
   KitProgressBar,
   KitTag,
   KitModal,
-  CopyToClipboard as KitCopyToClipboard,
+  KitCopyToClipboard,
   KitSetToClipboard,
   KitSecuredInput,
   KitBigModal,
