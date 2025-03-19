@@ -14,7 +14,7 @@
     @stop-editing="onStopEditing"
     @save-requested="onSaveRequested">
     <template #editor="props">
-      <TextField
+      <KitTextField
         :is-disabled="props.isLoading"
         :is-focused="props.isFocused"
         :is-loading="props.isLoading"
@@ -36,7 +36,7 @@
           <KitIcon v-if="obfuscated" type="eye" />
           <KitIcon v-else type="eye-slash" />
         </KitIconButton>
-      </TextField>
+      </KitTextField>
     </template>
     <template #default>
       <slot>
@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue'
 import InlineEdit from '../Form/InlineEdit.vue'
-import TextField from '../Form/TextField.vue'
+import KitTextField from '../Form/KitTextField.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import SecureStringLineRenderer from './SecureStringLineRenderer.vue'

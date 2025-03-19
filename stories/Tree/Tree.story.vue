@@ -1,7 +1,7 @@
 <template>
   <div>
     <KitFieldGroup class="search" label="Search">
-      <Input v-model="search" />
+      <KitInput v-model="search" />
     </KitFieldGroup>
     <Tree v-model="selected" :search="search" :nodes="nodes" />
     <div style="padding: 20px">
@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import Tree from '@/components/Tree/Tree'
-import Input from '@/components/Form/Input'
+import KitInput from '@components/Form/KitInput.vue'
 import { ref } from 'vue'
 
 const selected = ref()

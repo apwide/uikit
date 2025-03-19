@@ -4,10 +4,10 @@
     <KitModal v-if="show" heading="Form Demo" @submit="onSubmit" @cancel="onCancel">
       <div slot="content">
         <KitFieldGroup label="Title" required>
-          <Input v-model="title" auto-focus />
+          <KitInput v-model="title" auto-focus />
         </KitFieldGroup>
         <KitFieldGroup label="Type" required>
-          <Input v-model="type" />
+          <KitInput v-model="type" />
         </KitFieldGroup>
         <KitFieldGroup label="Type" required>
           <KitSelect v-model="type" :options="options" :selected="selected" />
@@ -22,7 +22,7 @@ import { ref } from 'vue'
 import KitButton from '@components/Button/KitButton.vue'
 import KitModal from '@components/Modal/KitModal.vue'
 import KitSelect from '@/components/Select/KitSelect.vue'
-import Input from '@/components/Form/Input.vue'
+import KitInput from '@components/Form/KitInput.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const title = ref('')

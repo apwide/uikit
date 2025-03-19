@@ -1,6 +1,6 @@
 <template>
   <div ref="me" class="kit-time-picker" @click.stop>
-    <TextField
+    <KitTextField
       :is-focused="focused"
       :is-loading="isLoading"
       :disabled="disabled || isLoading"
@@ -20,7 +20,7 @@
         @keyup.esc="onEsc"
         @focus="onFocus"
         @blur="onBlur" />
-    </TextField>
+    </KitTextField>
     <Popup :is-open="isOpen" :target-element="me" placement="bottom-start" data-cy="select-menu">
       <TimePickerMenu :value="formattedTime" @time-selected="onTimeSelected" />
     </Popup>
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue'
-import TextField from '../Form/TextField'
+import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup'
 import TimePickerMenu from './TimePickerMenu'
 

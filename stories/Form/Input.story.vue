@@ -1,11 +1,11 @@
 <template>
   <div>
     <KitFieldGroup data-cy="field-group" label="Label" required>
-      <Input v-model="message" should-fit-container placeholder="Click here to input" />
+      <KitKitInput v-model="message" should-fit-container placeholder="Click here to input" />
       The message is: {{ message }}
     </KitFieldGroup>
     <KitFieldGroup label="Label" required>
-      <Input
+      <KitInput
         v-model="number"
         type="number"
         min="1"
@@ -16,7 +16,7 @@
       The number is: {{ number }}
     </KitFieldGroup>
     <KitFieldGroup label="Disabled input" required>
-      <Input v-model="message" should-fit-container placeholder="Click here to input" disabled />
+      <KitInput v-model="message" should-fit-container placeholder="Click here to input" disabled />
       The message is: {{ message }}
     </KitFieldGroup>
     <KitFieldGroup label="Icon after" required>
@@ -30,7 +30,7 @@
           </div>
         </KitInlineDialog>
       </template>
-      <Input
+      <KitInput
         v-model="number"
         type="number"
         min="1"
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import Input from '@/components/Form/Input'
+import KitInput from '@components/Form/KitInput.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon'

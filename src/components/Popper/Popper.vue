@@ -32,7 +32,7 @@ export default {
       }
     },
     offset: {
-      type: Array,
+      type: [Array, String],
       default: () => [0, 5]
     },
     transitionDelay: {

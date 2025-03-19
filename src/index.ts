@@ -9,8 +9,8 @@ import KitSectionMessage from '@components/SectionMessage/KitSectionMessage.vue'
 import KitButton from '@components/Button/KitButton.vue'
 import KitColorPicker from '@components/ColorPicker/KitColorPicker.vue'
 import KitSpinner from '@components/Spinner/KitSpinner.vue'
-import Input from './components/Form/Input.vue'
-import TextArea from './components/Form/TextArea.vue'
+import KitInput from '@components/Form/KitInput.vue'
+import KitTextArea from '@components/Form/KitTextArea.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitCheckbox from './components/Checkbox/KitCheckbox.vue'
 import KitToggle from './components/Toggle/KitToggle.vue'
@@ -70,8 +70,8 @@ export {
   KitLozenge,
   KitSpinner,
   KitFieldGroup,
-  TextArea as KitTextArea,
-  Input as KitInput,
+  KitTextArea,
+  KitInput,
   KitCheckbox,
   KitToggle,
   KitDatePicker,

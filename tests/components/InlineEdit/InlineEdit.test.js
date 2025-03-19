@@ -3,7 +3,7 @@ import InlineEdit from '@/components/Form/InlineEdit'
 import InlineEditViewContent from '@/components/Form/InlineEditViewContent'
 import InlineEditButtons from '@/components/Form/InlineEditButtons'
 import InlineErrorMessage from '@/components/Form/InlineErrorMessage'
-import TextField from '@/components/Form/TextField'
+import KitTextField from '@components/Form/KitTextField.vue'
 
 const stubs = { InlineEditViewContent }
 const propsData = { value: 'MackBook' }
@@ -37,7 +37,7 @@ xdescribe('InlineEdit', () => {
     await component.vm.$nextTick()
     expect(viewContent.exists()).toBe(false)
 
-    const textField = component.findComponent(TextField)
+    const textField = component.findComponent(KitTextField)
     expect(textField.exists()).toBe(true)
   })
 

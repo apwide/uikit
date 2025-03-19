@@ -13,7 +13,7 @@
     <slot>
       <MultiLineRenderer :value="value" />
     </slot>
-    <TextArea
+    <KitTextArea
       slot="editor"
       slot-scope="{ value, input, isFocused, isInvalid, isLoading, blur, focus, confirm, cancel }"
       :value="value"
@@ -35,58 +35,51 @@
   </div>
 </template>
 
-<script>
-import TextArea from '../Form/TextArea'
+<script setup lang="ts">
+import KitTextArea from '../Form/KitTextArea.vue'
 import InlineEdit from '../Form/InlineEdit'
 import MultiLineRenderer from './MultiLineRenderer'
 
-export default {
-  name: 'KitMultiLineEditableRenderer',
-  components: { MultiLineRenderer, InlineEdit, TextArea },
-  props: {
-    value: {
-      type: String,
-      default: undefined
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    },
-    icon: {
-      type: Boolean,
-      default: true
-    },
-    submitOnEnter: {
-      type: Boolean,
-      default: false
-    },
-    forceIsEditing: {
-      type: Boolean,
-      default: false
-    },
-    confirm: {
-      type: Boolean,
-      default: true
-    }
-  },
-  methods: {
-    onInput(value, inlineInput) {
-      this.$emit('change', value)
-      inlineInput(value)
-    },
-    onSaveRequested(...args) {
-      this.$emit('save-requested', ...args)
-    },
-    onStartEditing() {
-      this.$emit('start-editing')
-    },
-    onStopEditing() {
-      this.$emit('stop-editing')
-    }
-  }
+type Props = {
+  value?: string
+  editable?: boolean
+  placement?: string
+  icon?: boolean
+  submitOnEnter?: boolean
+  forceIsEditing?: boolean
+  confirm?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right',
+  icon: true,
+  submitOnEnter: false,
+  forceIsEditing: false,
+  confirm: true
+})
+
+const emit = defineEmits<{
+  (event: 'change', data?: string)
+  (event: 'save-requested', data?: any)
+  (event: 'start-editing')
+  (event: 'stop-editing')
+}>()
+
+function onInput(value, inlineInput) {
+  emit('change', value)
+  inlineInput(value)
+}
+
+function onSaveRequested(...args) {
+  emit('save-requested', ...args)
+}
+
+function onStartEditing() {
+  emit('start-editing')
+}
+
+function onStopEditing() {
+  emit('stop-editing')
 }
 </script>

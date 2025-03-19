@@ -1,6 +1,6 @@
 <template>
   <div ref="datePicker" class="kit-date-picker" @click.stop>
-    <TextField
+    <KitTextField
       :is-focused="focused"
       :is-loading="isLoading"
       :disabled="disabled || isLoading"
@@ -21,7 +21,7 @@
         @focus="onFocus"
         @blur="onBlur" />
       <KitIcon type="calendar-alt" icon-style="regular" class="kit-icon" />
-    </TextField>
+    </KitTextField>
     <Popup :is-open="isOpen" :target-element="datePicker" placement="bottom-start" data-cy="select-menu">
       <Calendar
         :value="selectedDate"
@@ -36,7 +36,7 @@
 import format from 'date-fns/format'
 import { fromUnixTime, parse, isValid } from 'date-fns'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
-import TextField from '../Form/TextField'
+import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup'
 import KitIcon from '../Icon/KitIcon'
 import Calendar from './Calendar'

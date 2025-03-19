@@ -4,10 +4,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'TextField'
-}
+<script setup lang="ts">
 </script>
 
 <style scoped>

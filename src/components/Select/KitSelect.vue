@@ -1,6 +1,6 @@
 <template>
   <div ref="containerRef" :disabled="isDisabled" class="kit-select">
-    <TextField
+    <KitTextField
       :is-focused="focused"
       :is-invalid="isInvalid"
       :is-loading="isLoading"
@@ -59,7 +59,7 @@
         @clear="onClear">
         <slot name="icon" />
       </Icons>
-    </TextField>
+    </KitTextField>
     <Popper
       v-if="shouldOpenMenu"
       ref="menuRef"
@@ -95,7 +95,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, unref, watch } from 'vue'
 import { FilterPredicate, Normalizer, Value } from '@components/Select/types'
-import TextField from '../Form/TextField.vue'
+import KitTextField from '../Form/KitTextField.vue'
 import Popper from '../Popper/Popper.vue'
 import KitSelectMenu from './KitSelectMenu.vue'
 import Tag from './Tag.vue'

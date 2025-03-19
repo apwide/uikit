@@ -35,7 +35,7 @@ import CheckboxRenderer from './CheckboxRenderer.vue'
 type Props = {
   value?: boolean
   editable?: boolean
-  placement: 'right'
+  placement?: string
 }
 
 withDefaults(defineProps<Props>(), {

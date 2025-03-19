@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import TextArea from '../../../src/components/Form/TextArea'
+import KitTextArea from '@components/Form/KitTextArea.vue'
 
 const propsData = {
   value: 'ABC',
@@ -10,7 +10,7 @@ const propsData = {
 
 describe('TextArea', () => {
   it('contains properly configured textarea', () => {
-    const component = shallowMount(TextArea, { propsData })
+    const component = shallowMount(KitTextArea, { propsData })
 
     expect(component.find('textarea').attributes()).toEqual({
       auto: 'true',
@@ -22,7 +22,7 @@ describe('TextArea', () => {
   })
 
   it('emits focus event on textarea focus', () => {
-    const component = shallowMount(TextArea, {
+    const component = shallowMount(KitTextArea, {
       propsData,
       attachTo: document.body
     })
@@ -31,7 +31,7 @@ describe('TextArea', () => {
   })
 
   it('emits blur event on textarea blur', () => {
-    const component = shallowMount(TextArea, { propsData })
+    const component = shallowMount(KitTextArea, { propsData })
     component.find('textarea').trigger('blur')
     expect(component.emitted('blur')).toBeTruthy()
   })

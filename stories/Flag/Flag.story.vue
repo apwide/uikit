@@ -12,7 +12,7 @@
       @close="show = false">
       <div class="content">
         <KitFieldGroup label="Give us your best email address">
-          <Input v-model="value" />
+          <KitInput v-model="value" />
         </KitFieldGroup>
         <div class="buttons">
           <KitButton>Skip</KitButton>
@@ -35,7 +35,7 @@
 import KitButton from '@components/Button/KitButton.vue'
 import { ref } from 'vue'
 import KitFlag from '@components/Flag/KitFlag.vue'
-import Input from '@/components/Form/Input.vue'
+import KitInput from '@components/Form/KitInput.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const title = ref('Welcome to the jungle')

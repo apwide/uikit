@@ -1,6 +1,6 @@
 <template>
   <div ref="target">
-    <TextField
+    <KitTextField
       :is-focused="focused"
       :is-invalid="isInvalid"
       :is-loading="isLoading"
@@ -41,7 +41,7 @@
         :is-fetching="isFetching"
         :is-clearable="isClearable"
         @clear="onClear" />
-    </TextField>
+    </KitTextField>
     <Popper
       v-if="isOpen && !isDirty"
       ref="menu"
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import TextField from '../../Form/TextField'
+import KitTextField from '../../Form/KitTextField.vue'
 import Popper from '../../Popper/Popper'
 import Icons from '../Icons'
 import { EventBus } from '../../event-bus'
@@ -80,7 +80,7 @@ const INPUT_WIDTH = '5px'
 
 export default {
   components: {
-    TextField,
+    KitTextField,
     Popper,
     SelectMenu,
     Icons

@@ -1,6 +1,6 @@
 <template>
   <div ref="datePicker" class="kit-daterange-picker" @click.stop>
-    <TextField
+    <KitTextField
       :is-focused="focused"
       :is-loading="isLoading"
       :disabled="isLoading"
@@ -40,7 +40,7 @@
         @focus="onFocus"
         @blur="onBlur" />
       <KitIcon type="calendar-alt" icon-style="regular" class="kit-icon" />
-    </TextField>
+    </KitTextField>
     <Popup :is-open="isOpen" :target-element="datePicker" placement="bottom-start">
       <div class="kit-daterange-picker__date-range">
         <Calendar
@@ -86,7 +86,7 @@ import {
   subWeeks,
   subYears
 } from 'date-fns'
-import TextField from '../Form/TextField'
+import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup'
 import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
 import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'

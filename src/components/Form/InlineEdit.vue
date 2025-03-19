@@ -24,7 +24,7 @@
           :is-loading="isLoading"
           :value="editingValue"
           name="editor">
-          <TextField
+          <KitTextField
             :compact="compact"
             :is-disabled="isLoading"
             :is-focused="isFocused"
@@ -47,7 +47,7 @@
               @keyup="onKeyUp"
               @keydown.meta.enter="onKeyUp"
               @keydown.exact="validate" />
-          </TextField>
+          </KitTextField>
         </slot>
         <div v-if="isGeneralError" class="kit-inline-edit__general-error">
           <KitIconButton
@@ -99,7 +99,7 @@ import Popper from '../Popper/Popper.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 import SectionMessage from '../SectionMessage/KitSectionMessage.vue'
-import TextField from './TextField.vue'
+import KitTextField from './KitTextField.vue'
 import InlineEditButtons from './InlineEditButtons.vue'
 import InlineEditViewContent from './InlineEditViewContent.vue'
 import InlineErrorMessage from './InlineErrorMessage.vue'

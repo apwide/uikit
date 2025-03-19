@@ -24,7 +24,7 @@ type Props = {
   targetElement?: HTMLElement
   placement?: string
   flipBehavior?: string | string[]
-  offset?: number[]
+  offset?: number[] | string
   transitionDelay?: number
   boundariesElement?: string | HTMLElement | Function
   positionFixed?: boolean
