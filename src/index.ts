@@ -2,7 +2,7 @@ import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import KitDraggable from '@components/common/KitDraggable'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
 import KitSelect from '@components/Select/KitSelect.vue'
-import DropdownGroup from '@components/Dropdown/KitDropdownGroup.vue'
+import KitDropdownGroup from '@components/Dropdown/KitDropdownGroup.vue'
 import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
 import { KitSpotlightStep } from '@components/Spotlight/spotlight-helpers'
 import KitSectionMessage from '@components/SectionMessage/KitSectionMessage.vue'
@@ -19,8 +19,8 @@ import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
 import KitDateRangePicker from '@components/Calendar/KitDateRangePicker.vue'
 import KitTimePicker from '@components/Calendar/KitTimePicker.vue'
 import Lozenge from './components/Lozenge/Lozenge.vue'
-import DropdownItem from './components/Dropdown/DropdownItem.vue'
-import DropdownCheckboxItem from './components/Dropdown/DropdownCheckboxItem.vue'
+import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
+import KitDropdownCheckboxItem from '@components/Dropdown/KitDropdownCheckboxItem.vue'
 import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue'
 import KitMenu from '@components/Menu/KitMenu.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
@@ -63,9 +63,9 @@ export {
   KitCollapsible,
   KitButton,
   KitDropdown,
-  DropdownItem as KitDropdownItem,
-  DropdownGroup as KitDropdownGroup,
-  DropdownCheckboxItem as KitDropdownCheckboxItem,
+  KitDropdownItem,
+  KitDropdownGroup,
+  KitDropdownCheckboxItem,
   KitDropdownSeparator,
   Lozenge as KitLozenge,
   KitSpinner,

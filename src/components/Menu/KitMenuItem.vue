@@ -1,10 +1,10 @@
 <template>
-  <DropdownItem class="kit-menu-item" @click="$emit('click', $event)">
+  <KitDropdownItem class="kit-menu-item" @click="$emit('click', $event)">
     <slot />
-  </DropdownItem>
+  </KitDropdownItem>
 </template>
 <script setup lang="ts">
-import DropdownItem from '../Dropdown/DropdownItem.vue'
+import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
 </script>
 <style scoped>
 .kit-menu-item {

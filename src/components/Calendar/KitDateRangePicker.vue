@@ -51,14 +51,14 @@
           @date-selected="onDateSelected" />
         <div v-if="showQuickRanges" class="kit-daterange-picker__quick-ranges" tabindex="-1">
           <DropdownGroup label="Quick ranges">
-            <DropdownItem @click="onQuickRange('this-week')"> This week </DropdownItem>
-            <DropdownItem @click="onQuickRange('this-month')"> This month </DropdownItem>
-            <DropdownItem @click="onQuickRange('last-week')"> Last week </DropdownItem>
-            <DropdownItem @click="onQuickRange('last-month')"> Last month </DropdownItem>
-            <DropdownItem @click="onQuickRange('last-7days')"> Last 7 days </DropdownItem>
-            <DropdownItem @click="onQuickRange('last-30days')"> Last 30 days </DropdownItem>
-            <DropdownItem @click="onQuickRange('this-year')"> This year </DropdownItem>
-            <DropdownItem @click="onQuickRange('last-year')"> Last year </DropdownItem>
+            <KitDropdownItem @click="onQuickRange('this-week')"> This week </KitDropdownItem>
+            <KitDropdownItem @click="onQuickRange('this-month')"> This month </KitDropdownItem>
+            <KitDropdownItem @click="onQuickRange('last-week')"> Last week </KitDropdownItem>
+            <KitDropdownItem @click="onQuickRange('last-month')"> Last month </KitDropdownItem>
+            <KitDropdownItem @click="onQuickRange('last-7days')"> Last 7 days </KitDropdownItem>
+            <KitDropdownItem @click="onQuickRange('last-30days')"> Last 30 days </KitDropdownItem>
+            <KitDropdownItem @click="onQuickRange('this-year')"> This year </KitDropdownItem>
+            <KitDropdownItem @click="onQuickRange('last-year')"> Last year </KitDropdownItem>
           </DropdownGroup>
         </div>
       </div>
@@ -88,7 +88,7 @@ import {
 } from 'date-fns'
 import TextField from '../Form/TextField'
 import Popup from '../common/Popup'
-import DropdownItem from '../Dropdown/DropdownItem'
+import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
 import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'
 import KitIcon from '../Icon/KitIcon'
 import Calendar from './Calendar'

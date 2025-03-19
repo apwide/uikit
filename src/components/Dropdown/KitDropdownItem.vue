@@ -5,14 +5,11 @@
     </span>
   </div>
 </template>
-<script>
-export default {
-  props: {
-    value: {
-      type: [Object, String, Number, Boolean]
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  value?: string | number | boolean | any
 }
+defineProps<Props>()
 </script>
 <style scoped>
 .dropdown-item {

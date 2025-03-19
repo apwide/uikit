@@ -1,8 +1,7 @@
 <template>
   <div class="kit-dropdown-separator" />
 </template>
-<script>
-export default {}
+<script setup lang="ts">
 </script>
 <style scoped>
 .kit-dropdown-separator {

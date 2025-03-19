@@ -24,9 +24,9 @@
       </template>
       <template #action="{ row, cellElement }">
         <KitDropdown label="Actions" @open="dropdownOpen(cellElement)" @close="dropdownClose(cellElement)">
-          <DropdownItem>Move {{ row.id }}</DropdownItem>
-          <DropdownItem>Edit {{ row.id }}</DropdownItem>
-          <DropdownItem>Delete {{ row.id }}</DropdownItem>
+          <KitDropdownItem>Move {{ row.id }}</KitDropdownItem>
+          <KitDropdownItem>Edit {{ row.id }}</KitDropdownItem>
+          <KitDropdownItem>Delete {{ row.id }}</KitDropdownItem>
         </KitDropdown>
       </template>
     </KitTable>
@@ -39,7 +39,7 @@ import { ref } from 'vue'
 import KitIcon from '@components/Icon/KitIcon.vue'
 import KitTable from '@/components/Table/KitTable.vue'
 import KitDropdown from '@/components/Dropdown/KitDropdown.vue'
-import DropdownItem from '@/components/Dropdown/DropdownItem.vue'
+import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
 
 const columns = [
   {
