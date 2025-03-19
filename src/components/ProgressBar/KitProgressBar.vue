@@ -28,7 +28,17 @@ const props = withDefaults(defineProps<Props>(), {
 
 <style scoped>
 .kit-progress-bar {
-  background: rgba(9, 30, 66, 0.13);
+  --kit-progress-bar-bg-color: rgba(9, 30, 66, 0.13);
+  --kit-progress-bar-progress-color: #42526e;
+}
+
+.kit-dark .kit-progress-bar {
+  --kit-progress-bar-bg-color: #A1BDD914;
+  --kit-progress-bar-progress-color: #9FADBC;
+}
+
+.kit-progress-bar {
+  background: var(--kit-progress-bar-bg-color);
   border-radius: 3px;
   height: 6px;
   overflow: hidden;
@@ -49,7 +59,7 @@ const props = withDefaults(defineProps<Props>(), {
 .kit-progress-bar .progress {
   left: 0;
   width: 0%;
-  background: #42526e;
+  background: var(--kit-progress-bar-progress-color);
   border-radius: 3px;
   transition: width 0.5s;
   display: block;

@@ -1,6 +1,6 @@
 export default class ProgressBar {
   constructor({
-    backgroundColor = '#0052CC',
+    backgroundColor = 'var(--kit-progress-top-color)',
     transition = 'all 0.5s ease-out',
     zIndex = '999999',
     height = '3px'

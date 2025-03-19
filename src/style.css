@@ -9,6 +9,8 @@ body {
 
     --kit-form-danger: #de350b;
 
+    --kit-progress-top-color: #0052CC;
+
 }
 
 body.kit-dark {
@@ -23,4 +25,6 @@ body.kit-dark {
     --kit-dialog-bg-color: #282E33;
 
     --kit-form-danger: #f15b50;
+
+    --kit-progress-top-color: #579DFF;
 }
