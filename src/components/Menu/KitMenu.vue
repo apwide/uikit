@@ -3,10 +3,7 @@
     <slot />
   </div>
 </template>
-<script>
-export default {
-  name: 'KitMenu'
-}
+<script setup lang="ts">
 </script>
 
 <style scoped>

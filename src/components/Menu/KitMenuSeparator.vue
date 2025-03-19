@@ -1,8 +1,7 @@
 <template>
   <div class="kit-menu-separator" />
 </template>
-<script>
-export default {}
+<script setup lang="ts">
 </script>
 <style scoped>
 .kit-menu-separator {

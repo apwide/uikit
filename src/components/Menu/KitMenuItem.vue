@@ -3,13 +3,8 @@
     <slot />
   </DropdownItem>
 </template>
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
 import DropdownItem from '../Dropdown/DropdownItem.vue'
-
-export default Vue.extend({
-  components: { DropdownItem }
-})
 </script>
 <style scoped>
 .kit-menu-item {

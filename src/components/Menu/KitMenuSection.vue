@@ -6,17 +6,12 @@
     <slot />
   </div>
 </template>
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+type Props = {
+  title?: string
+}
 
-export default Vue.extend({
-  props: {
-    title: {
-      type: String,
-      default: undefined
-    }
-  }
-})
+defineProps<Props>()
 </script>
 <style scoped>
 .kit-menu-section {

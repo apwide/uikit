@@ -7,19 +7,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    label: {
-      type: String,
-      default: undefined
-    },
-    separator: {
-      type: Boolean,
-      default: false
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  label?: string
+  separator?: boolean
 }
+
+withDefaults(defineProps<Props>(), {
+  separator: false
+})
 </script>
 
 <style scoped>

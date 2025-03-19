@@ -22,7 +22,7 @@ import Lozenge from './components/Lozenge/Lozenge.vue'
 import DropdownItem from './components/Dropdown/DropdownItem.vue'
 import DropdownCheckboxItem from './components/Dropdown/DropdownCheckboxItem.vue'
 import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue'
-import Menu from './components/Menu/Menu.vue'
+import KitMenu from '@components/Menu/KitMenu.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import KitTable from './components/Table/KitTable.vue'
 import KitProgress from './components/Progress/progress'
@@ -88,7 +88,7 @@ export {
   KitSecuredInput,
   KitBigModal,
   KitInlineEdit,
-  Menu as KitMenu,
+  KitMenu,
   KitTabHeaders,
   KitTabProvider,
   KitTabPanel,

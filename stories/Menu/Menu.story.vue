@@ -49,17 +49,17 @@
 
     <h3>Simple menu</h3>
     <div class="wrapper">
-      <Menu>
+      <KitMenu>
         <MenuSection>
           <MenuItem>First item</MenuItem>
           <MenuItem>Second item</MenuItem>
           <MenuItem>Lorem ipsum dolor sit amet consectetur adipisicing elit</MenuItem>
         </MenuSection>
-      </Menu>
+      </KitMenu>
     </div>
     <h3>Menu sections with labels</h3>
     <div class="wrapper">
-      <Menu>
+      <KitMenu>
         <MenuSection label="North America">
           <MenuItem>Canada</MenuItem>
           <MenuItem>United States of America</MenuItem>
@@ -69,11 +69,11 @@
           <MenuItem>Japan</MenuItem>
           <MenuItem>India</MenuItem>
         </MenuSection>
-      </Menu>
+      </KitMenu>
     </div>
     <h3>Items with icons</h3>
     <div class="wrapper">
-      <Menu>
+      <KitMenu>
         <MenuSection>
           <MenuItem>First item</MenuItem>
           <MenuItem>Second item</MenuItem>
@@ -84,17 +84,17 @@
           </MenuItem>
           <MenuItem>Second item</MenuItem>
         </MenuSection>
-      </Menu>
+      </KitMenu>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import KitIconMenu from '../../src/components/Menu/KitIconMenu'
 import KitMenuSection from '../../src/components/Menu/KitMenuSection'
 import KitMenuSeparator from '../../src/components/Menu/KitMenuSeparator'
 import KitIcon from '../../src/components/Icon/KitIcon'
-import Menu from '@/components/Menu/Menu'
+import KitMenu from '@components/Menu/KitMenu.vue'
 import MenuItem from '@/components/Menu/MenuItem'
 import MenuSection from '@/components/Menu/MenuSection'
 import EditorAddIcon from '@/components/Icon/aui/EditorAddIcon'
@@ -102,42 +102,16 @@ import KitActionMenu from '@/components/Menu/KitActionMenu'
 import KitMenuItem from '@/components/Menu/KitMenuItem'
 import BorderedPanel from '@/components/layout/BorderedPanel/KitBorderedPanel'
 import BorderedPanelRow from '@/components/layout/BorderedPanel/KitBorderedPanelRow'
+import { computed, ref } from 'vue'
 
-export default {
-  name: 'MenuStory',
-  components: {
-    KitIcon,
-    KitMenuSeparator,
-    KitMenuSection,
-    KitIconMenu,
-    BorderedPanelRow,
-    BorderedPanel,
-    KitActionMenu,
-    KitMenuItem,
-    Menu,
-    MenuItem,
-    MenuSection,
-    EditorAddIcon
-  },
-  data() {
-    return {
-      selected: null
-    }
-  },
-  computed: {
-    selectedValue() {
-      if (!this.selected) {
-        return 'Nothing selected'
-      }
+const selected = ref(null)
 
-      return `"${this.selected}" was selected`
-    }
-  },
-  methods: {
-    select(value) {
-      this.selected = value
-    }
-  }
+const selectedValue = computed(() => {
+  return !selected.value ? 'Nothing selected' : `"${selected.value}" was selected`
+})
+
+function select(value) {
+  selected.value = value
 }
 </script>
 

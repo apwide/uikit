@@ -9,15 +9,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    active: {
-      type: Boolean,
-      default: false
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  active?: boolean
 }
+withDefaults(defineProps<Props>(), {
+  active: false
+})
 </script>
 
 <style scoped>
