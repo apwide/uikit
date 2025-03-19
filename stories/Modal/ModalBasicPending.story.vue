@@ -1,11 +1,11 @@
 <template>
   <div>
     <KitButton @click="showDialog"> Show Dialog </KitButton>
-    <Modal v-if="show" heading="Modal Basic" auto-focus :pending="pending" @submit="onSubmit" @cancel="onCancel">
+    <KitModal v-if="show" heading="Modal Basic" auto-focus :pending="pending" @submit="onSubmit" @cancel="onCancel">
       <p slot="content">
         {{ paragraph }}
       </p>
-    </Modal>
+    </KitModal>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import faker from 'faker'
 import KitButton from '@components/Button/KitButton.vue'
 import { ref } from 'vue'
-import Modal from '@/components/Modal/Modal.vue'
+import KitModal from '@components/Modal/KitModal.vue'
 
 const paragraph = faker.lorem.paragraph()
 

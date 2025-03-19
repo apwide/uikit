@@ -7,32 +7,23 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import WarningIcon from '../Icon/aui/WarningIcon'
 import ErrorIcon from '../Icon/aui/ErrorIcon'
+import { computed } from 'vue'
 
-export default {
-  name: 'KitHeader',
-  components: { WarningIcon, ErrorIcon },
-  props: {
-    heading: {
-      type: String,
-      default: ''
-    },
-    appearance: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    icon() {
-      return this.appearance === 'danger' ? 'ErrorIcon' : 'WarningIcon'
-    },
-    color() {
-      return this.appearance === 'danger' ? '#DE350B' : '#FF991F'
-    }
-  }
+type Props = {
+  heading?: string
+  appearance?: string
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  heading: '',
+  appearance: ''
+})
+
+const icon = computed(() => props.appearance === 'danger' ? 'ErrorIcon' : 'WarningIcon')
+const color = computed(() => props.appearance === 'danger' ? '#DE350B' : '#FF991F')
 </script>
 
 <style scoped>

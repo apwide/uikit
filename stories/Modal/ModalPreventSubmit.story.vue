@@ -1,7 +1,7 @@
 <template>
   <div>
     <KitButton @click="showDialog"> Show Dialog </KitButton>
-    <KitModal
+    <KitKitModal
       v-if="show"
       heading="Modal Basic"
       auto-focus
@@ -12,7 +12,7 @@
         <p>{{ paragraph }}</p>
         <KitCheckbox v-model="shouldAllowSubmit"> By checking agree and continue </KitCheckbox>
       </template>
-    </KitModal>
+    </KitKitModal>
   </div>
 </template>
 
@@ -20,7 +20,7 @@
 import faker from 'faker'
 import { ref } from 'vue'
 import KitButton from '@components/Button/KitButton.vue'
-import KitModal from '@/components/Modal/Modal.vue'
+import KitKitModal from '@components/Modal/KitModal.vue'
 import KitCheckbox from '@/components/Checkbox/KitCheckbox.vue'
 
 const paragraph = faker.lorem.paragraph()

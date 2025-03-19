@@ -14,7 +14,7 @@ import TextArea from './components/Form/TextArea.vue'
 import FieldGroup from './components/Form/FieldGroup.vue'
 import KitCheckbox from './components/Checkbox/KitCheckbox.vue'
 import KitToggle from './components/Toggle/KitToggle.vue'
-import Modal from './components/Modal/Modal.vue'
+import KitModal from '@components/Modal/KitModal.vue'
 import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
 import KitDateRangePicker from '@components/Calendar/KitDateRangePicker.vue'
 import KitTimePicker from '@components/Calendar/KitTimePicker.vue'
@@ -82,7 +82,7 @@ export {
   KitBadge,
   KitProgressBar,
   KitTag,
-  Modal as KitModal,
+  KitModal,
   CopyToClipboard as KitCopyToClipboard,
   KitSetToClipboard,
   KitSecuredInput,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <KitButton @click="showDialog"> Show Dialog </KitButton>
-    <Modal
+    <KitModal
       v-if="show"
       heading="Modal Warning"
       auto-focus
@@ -11,7 +11,7 @@
       <p slot="content">
         {{ paragraph }}
       </p>
-    </Modal>
+    </KitModal>
   </div>
 </template>
 
@@ -19,7 +19,7 @@
 import faker from 'faker'
 import KitButton from '@components/Button/KitButton.vue'
 import { ref } from 'vue'
-import Modal from '@/components/Modal/Modal'
+import KitModal from '@components/Modal/KitModal.vue'
 
 const paragraph = faker.lorem.paragraph()
 const appearance = 'warning'

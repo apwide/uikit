@@ -1,7 +1,7 @@
 <template>
   <div>
     <KitButton @click="showDialog"> Show Dialog </KitButton>
-    <Modal v-if="show" heading="Form Demo" @submit="onSubmit" @cancel="onCancel">
+    <KitModal v-if="show" heading="Form Demo" @submit="onSubmit" @cancel="onCancel">
       <div slot="content">
         <FieldGroup label="Title" required>
           <Input v-model="title" auto-focus />
@@ -13,14 +13,14 @@
           <KitSelect v-model="type" :options="options" :selected="selected" />
         </FieldGroup>
       </div>
-    </Modal>
+    </KitModal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KitButton from '@components/Button/KitButton.vue'
-import Modal from '@/components/Modal/Modal.vue'
+import KitModal from '@components/Modal/KitModal.vue'
 import KitSelect from '@/components/Select/KitSelect.vue'
 import Input from '@/components/Form/Input.vue'
 import FieldGroup from '@/components/Form/FieldGroup.vue'

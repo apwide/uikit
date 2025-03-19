@@ -48,7 +48,7 @@ import { onBeforeUnmount, onMounted, ref, useSlots } from 'vue'
 import KitButtonGroup from '../Button/KitButtonGroup.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
-import KitModal from './Modal.vue'
+import KitModal from './KitModal.vue'
 import Header from './Header.vue'
 
 type Props = {

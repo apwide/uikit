@@ -14,55 +14,42 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import KitButton from '../Button/KitButton.vue'
+import { ref, watch } from 'vue'
 
-export default {
-  name: 'KitFooter',
-  components: { KitButton },
-  props: {
-    appearance: {
-      type: String,
-      default: 'primary'
-    },
-    autoFocus: {
-      type: Boolean,
-      default: false
-    },
-    actions: {
-      type: Array,
-      default: () => ['Continue', 'Cancel']
-    },
-    pending: {
-      type: Boolean,
-      default: false
-    },
-    shouldAllowSubmit: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data() {
-    return {
-      submit: 'Continue',
-      cancel: 'Cancel'
-    }
-  },
-  watch: {
-    actions: {
-      handler(actions = ['Continue', 'Cancel']) {
-        const [submit, cancel] = actions
-        this.submit = submit
-        this.cancel = cancel
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    onCancel() {
-      this.$emit('cancel')
-    }
-  }
+type Props = {
+  appearance?: 'primary'
+  autoFocus?: boolean
+  actions?: string[]
+  pending?: boolean
+  shouldAllowSubmit?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  appearance: 'primary',
+  autoFocus: false,
+  actions: () => ['Continue', 'Cancel'],
+  pending: false,
+  shouldAllowSubmit: true
+})
+
+const emit = defineEmits<{
+  (event: 'cancel')
+}>()
+
+const submit = ref('Continue')
+const cancel = ref('Cancel')
+
+watch(() => props.actions, ([ s, c ] = ['Continue', 'Cancel']) => {
+  submit.value = s
+  cancel.value = c
+}, {
+  immediate: true
+})
+
+function onCancel() {
+  emit('cancel')
 }
 </script>
 

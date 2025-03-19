@@ -4,21 +4,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitPositionerAbsolute',
-  props: {
-    width: {
-      type: String,
-      default: '600px'
-    }
-  },
-  computed: {
-    currentWidth() {
-      return this.width
-    }
-  }
+<script setup lang="ts">
+
+import { computed } from 'vue'
+
+type Props = {
+  width?: string
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  width: '600px'
+})
+
+const currentWidth = computed(() => props.width)
 </script>
 
 <style scoped>

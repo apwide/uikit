@@ -4,16 +4,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitBlanket',
-  props: {
-    zIndex: {
-      type: Number,
-      default: 1000
-    }
-  }
-}
+<script setup lang="ts">
+withDefaults(defineProps<{
+  zIndex?: number
+}>(), {
+  zIndex: 1000
+})
 </script>
 
 <style scoped>
