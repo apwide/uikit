@@ -141,6 +141,18 @@ onUnmounted(() => {
 
 <style scoped>
 .kit-spotlight-mask {
+  --kit-spotlight-border-color: #6e5dc6;
+  --kit-spotlight-text-color: #ffffff;
+  --kit-spotlight-bg-color: #6e5dc6;
+}
+
+.kit-dark .kit-spotlight-mask {
+  --kit-spotlight-border-color: #9f8fef;
+  --kit-spotlight-text-color: #1D2125;
+  --kit-spotlight-bg-color: #9f8fef;
+}
+
+.kit-spotlight-mask {
   position: relative;
 }
 .kit-spotlight-mask__background {
@@ -153,11 +165,11 @@ onUnmounted(() => {
 
 .kit-spotlight-mask__border {
   position: fixed;
-  border: solid 10px #6e5dc6;
+  border: solid 10px var(--kit-spotlight-border-color);
   z-index: 1000001;
   transition: all 150ms;
   border-radius: 3px;
-  color: #ffffff;
+  color: var(--kit-spotlight-text-color);
 }
 
 .kit-spotlight-mask__text {
@@ -165,8 +177,8 @@ onUnmounted(() => {
   z-index: 1000002;
   padding: 15px 20px;
   transition: all 150ms;
-  background: #6e5dc6;
+  background: var(--kit-spotlight-bg-color);
   border-radius: 0.25rem;
-  color: #ffffff;
+  color: var(--kit-spotlight-text-color);
 }
 </style>
