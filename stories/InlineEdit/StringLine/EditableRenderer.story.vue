@@ -30,13 +30,13 @@
     <p>Useful when value is to be presented differently than just text</p>
     <p>
       <StringLineEditableRenderer :value="value" @save-requested="onSave">
-        <Lozenge>{{ value }}</Lozenge>
+        <KitLozenge>{{ value }}</KitLozenge>
       </StringLineEditableRenderer>
     </p>
     <h5>Custom renderer (when none-editable)</h5>
     <p>
       <StringLineEditableRenderer :editable="false" @save-requested="onSave">
-        <Lozenge>{{ value }}</Lozenge>
+        <KitLozenge>{{ value }}</KitLozenge>
       </StringLineEditableRenderer>
     </p>
     <h5>In a bigger parent element</h5>
@@ -48,29 +48,23 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import faker from 'faker'
-import Lozenge from '../../../src/components/Lozenge/Lozenge'
+import KitLozenge from '@components/Lozenge/KitLozenge.vue'
 import StringLineEditableRenderer from '@/components/field-renderers/StringLineEditableRenderer.vue'
+import { ref } from 'vue'
 
-export default {
-  components: { Lozenge, StringLineEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.value = value
-      callback()
-    },
+faker.seed(1)
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+const value = ref(faker.lorem.sentence())
+
+function onSave(v, callback) {
+  value.value = v
+  callback()
+}
+
+function onSaveError(value, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>
 

@@ -6,22 +6,16 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'KitLozenge',
-  props: {
-    appearance: {
-      type: String,
-      validator: (value) =>
-        ['default', 'success', 'yellow', 'removed', 'inprogress', 'new', 'moved', 'brown'].includes(value),
-      default: 'default'
-    },
-    subtle: {
-      type: Boolean,
-      default: false
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  appearance?: 'default' | 'success' | 'yellow' | 'removed' | 'inprogress' | 'new' | 'moved' | 'brown'
+  subtle?: boolean
 }
+
+withDefaults(defineProps<Props>(), {
+  appearance: 'default',
+  subtle: false
+})
 </script>
 
 <style scoped>

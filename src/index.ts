@@ -18,7 +18,7 @@ import KitModal from '@components/Modal/KitModal.vue'
 import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
 import KitDateRangePicker from '@components/Calendar/KitDateRangePicker.vue'
 import KitTimePicker from '@components/Calendar/KitTimePicker.vue'
-import Lozenge from './components/Lozenge/Lozenge.vue'
+import KitLozenge from '@components/Lozenge/KitLozenge.vue'
 import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
 import KitDropdownCheckboxItem from '@components/Dropdown/KitDropdownCheckboxItem.vue'
 import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue'
@@ -67,7 +67,7 @@ export {
   KitDropdownGroup,
   KitDropdownCheckboxItem,
   KitDropdownSeparator,
-  Lozenge as KitLozenge,
+  KitLozenge,
   KitSpinner,
   FieldGroup as KitFieldGroup,
   TextArea as KitTextArea,

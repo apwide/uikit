@@ -62,12 +62,12 @@
 import faker from 'faker'
 import {options} from '../../api-mocks/options'
 import MultiSelectEditableRenderer from '@/components/field-renderers/MultiSelectEditableRenderer'
-import KitLozenge from '@/components/Lozenge/Lozenge.vue'
+import KitKitLozenge from '@components/Lozenge/KitLozenge.vue'
 
 const allowedValues = options
 
 export default {
-  components: { MultiSelectEditableRenderer, KitLozenge },
+  components: { MultiSelectEditableRenderer, KitLozenge: KitKitLozenge },
   data() {
     faker.seed(1)
     return {

@@ -2,35 +2,27 @@
   <div>
     <h3>Normal</h3>
     <p v-for="appearance in appearances" :key="appearance">
-      <Lozenge :appearance="appearance">
+      <KitLozenge :appearance="appearance">
         {{ appearance }}
-      </Lozenge>
+      </KitLozenge>
       <button style="all: unset; cursor: pointer">
-        <Lozenge :appearance="appearance"> {{ appearance }} (button) </Lozenge>
+        <KitLozenge :appearance="appearance"> {{ appearance }} (button) </KitLozenge>
       </button>
       with some text
     </p>
     <h3>Subtle</h3>
     <p v-for="appearance in appearances" :key="appearance">
-      <Lozenge :appearance="appearance" subtle> {{ appearance }} </Lozenge> with some text
+      <KitLozenge :appearance="appearance" subtle> {{ appearance }} </KitLozenge> with some text
     </p>
     <h3>Long text</h3>
     <p>
-      <Lozenge> Lorem ipsum dolor sit amet consectetur adipisicing elit. </Lozenge>
+      <KitLozenge> Lorem ipsum dolor sit amet consectetur adipisicing elit. </KitLozenge>
     </p>
   </div>
 </template>
 
-<script>
-import Lozenge from '@/components/Lozenge/Lozenge'
+<script setup lang="ts">
+import KitLozenge from '@components/Lozenge/KitLozenge.vue'
 
-export default {
-  name: 'Lozenges',
-  components: { Lozenge },
-  data() {
-    return {
-      appearances: ['default', 'success', 'yellow', 'removed', 'inprogress', 'new', 'moved', 'brown']
-    }
-  }
-}
+const appearances = ['default', 'success', 'yellow', 'removed', 'inprogress', 'new', 'moved', 'brown']
 </script>
