@@ -23,7 +23,7 @@ import DropdownItem from './components/Dropdown/DropdownItem.vue'
 import DropdownCheckboxItem from './components/Dropdown/DropdownCheckboxItem.vue'
 import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue'
 import Menu from './components/Menu/Menu.vue'
-import InlineDialog from './components/InlineDialog/InlineDialog.vue'
+import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import KitTable from './components/Table/KitTable.vue'
 import Progress from './components/Progress/progress'
 import KitAvatar from './components/Avatar/KitAvatar.vue'
@@ -102,7 +102,7 @@ export {
   Progress as KitProgress,
   KitButtonGroup,
   KitIconButton,
-  InlineDialog as KitInlineDialog,
+  KitInlineDialog,
   KitTable,
   tooltip,
   KitDraggable,

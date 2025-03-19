@@ -2,18 +2,18 @@
   <div>
     <h3>Simple inline dialog</h3>
     <p>
-      <InlineDialog>
+      <KitInlineDialog>
         <template v-slot:trigger="{ toggle }">
           <a href @click.prevent="toggle">Click me!</a>
         </template>
         <div class="content">
           <p>Inline dialog content</p>
         </div>
-      </InlineDialog>
+      </KitInlineDialog>
     </p>
     <h3>Scrolled content</h3>
     <p>
-      <InlineDialog>
+      <KitInlineDialog>
         <template v-slot:trigger="{ toggle }">
           <a href @click.prevent="toggle">Click me!</a>
         </template>
@@ -37,7 +37,7 @@
             numquam ut?
           </p>
         </div>
-      </InlineDialog>
+      </KitInlineDialog>
     </p>
     <h3>Keep to scroll parent boundaries</h3>
     <div class="scroll-container">
@@ -45,14 +45,14 @@
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae aspernatur, necessitatibus dolores minus ad illo.
         Vel ipsa, cupiditate, maxime atque dolores ut autem enim neque sit temporibus recusandae quidem cumque!
       </p>
-      <InlineDialog boundaries-element="scrollParent">
+      <KitInlineDialog boundaries-element="scrollParent">
         <template v-slot:trigger="{ toggle }">
           <a href @click.prevent="toggle">Click me!</a>
         </template>
         <div class="content">
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
-      </InlineDialog>
+      </KitInlineDialog>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aliquid quisquam ullam fugit repellendus a
         voluptatem repudiandae vero. Ipsam mollitia dolore dolorum possimus dolor amet deserunt repellendus distinctio
@@ -70,14 +70,14 @@
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae aspernatur, necessitatibus dolores minus ad illo.
         Vel ipsa, cupiditate, maxime atque dolores ut autem enim neque sit temporibus recusandae quidem cumque!
       </p>
-      <InlineDialog :position-fixed="true">
+      <KitInlineDialog :position-fixed="true">
         <template v-slot:trigger="{ toggle }">
           <a href @click.prevent="toggle">Click me!</a>
         </template>
         <div class="content">
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
-      </InlineDialog>
+      </KitInlineDialog>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aliquid quisquam ullam fugit repellendus a
         voluptatem repudiandae vero. Ipsam mollitia dolore dolorum possimus dolor amet deserunt repellendus distinctio
@@ -92,15 +92,8 @@
   </div>
 </template>
 
-<script>
-import InlineDialog from '@/components/InlineDialog/InlineDialog'
-
-export default {
-  name: 'DropdownStory',
-  components: {
-    InlineDialog
-  }
-}
+<script setup lang="ts">
+import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 </script>
 
 <style scoped>

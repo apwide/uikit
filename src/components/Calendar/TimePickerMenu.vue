@@ -139,6 +139,16 @@ function onTimeSelected(value) {
 </script>
 <style scoped>
 .kit-time-picker-menu {
+  --kit-time-picker-hover-color: #ebecf0;
+  --kit-time-picker-selected-color: #A6C5E229;
+}
+
+.kit-dark .kit-time-picker-menu {
+ --kit-time-picker-hover-color: #A1BDD914;
+ --kit-time-picker-selected-color: #A6C5E229;
+}
+
+.kit-time-picker-menu {
   height: 200px;
   overflow-y: scroll;
   padding-right: 10px;
@@ -162,15 +172,15 @@ function onTimeSelected(value) {
   /*cursor: pointer;*/
 }
 .kit-time-picker-menu li[data-highlight='true'] {
-  background-color: #ebecf0;
-  border-color: #ebecf0;
+  background-color: var(--kit-time-picker-selected-color);
+  border-color: var(--kit-time-picker-selected-color);
 }
 
 .kit-time-picker-menu >>> button[appearance='subtle']:not([disabled]):not([selected]):not([data-highlight]):hover {
   background-color: unset;
 }
 .kit-time-picker-menu >>> button[data-highlight] {
-  background-color: #ebecf0;
-  border-color: #ebecf0;
+  background-color: var(--kit-time-picker-selected-color);
+  border-color: var(--kit-time-picker-selected-color);
 }
 </style>

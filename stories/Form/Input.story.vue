@@ -20,14 +20,16 @@
       The message is: {{ message }}
     </FieldGroup>
     <FieldGroup label="Icon after" required>
-      <InlineDialog slot="after" placement="right">
-        <template v-slot:trigger="{ toggle }">
-          <EditorInfoIcon class="icon" size="small" @click.native="toggle" />
-        </template>
-        <div class="content">
-          <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
-        </div>
-      </InlineDialog>
+      <template #after>
+        <KitInlineDialog placement="right">
+          <template v-slot:trigger="{ toggle }">
+            <EditorInfoIcon class="icon" size="small" @click.native="toggle" />
+          </template>
+          <div class="content">
+            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+          </div>
+        </KitInlineDialog>
+      </template>
       <Input
         v-model="number"
         type="number"
@@ -41,27 +43,15 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import Input from '@/components/Form/Input'
 import FieldGroup from '@/components/Form/FieldGroup'
-import InlineDialog from '@/components/InlineDialog/InlineDialog'
+import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon'
+import { ref } from 'vue'
 
-export default {
-  name: 'InputStory',
-  components: {
-    FieldGroup,
-    Input,
-    InlineDialog,
-    EditorInfoIcon
-  },
-  data() {
-    return {
-      message: '',
-      number: ''
-    }
-  }
-}
+const message = ref('')
+const number = ref('')
 </script>
 <style scoped>
 .icon {
