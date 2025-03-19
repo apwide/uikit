@@ -1,10 +1,10 @@
 <template>
   <div>
-    <KitFieldGroup data-cy="field-group" label="Label" required>
+    <KitFieldGroup data-cy="field-group" :errors="errors" label="Label" required>
       <KitInput v-model="message" should-fit-container placeholder="Click here to input" />
       The message is: {{ message }}
     </KitFieldGroup>
-    <KitFieldGroup label="Label" required>
+    <KitFieldGroup label="Label" :errors="errors" required>
       <KitInput
         v-model="number"
         type="number"
@@ -15,11 +15,11 @@
         placeholder="Click here to input" />
       The number is: {{ number }}
     </KitFieldGroup>
-    <KitFieldGroup label="Disabled input" required>
+    <KitFieldGroup label="Disabled input" :errors="errors" required>
       <KitInput v-model="message" should-fit-container placeholder="Click here to input" disabled />
       The message is: {{ message }}
     </KitFieldGroup>
-    <KitFieldGroup label="Icon after" required>
+    <KitFieldGroup label="Icon after" :errors="errors" required>
       <template #after>
         <KitInlineDialog placement="right">
           <template v-slot:trigger="{ toggle }">
@@ -40,6 +40,9 @@
         placeholder="Click here to input" />
       The number is: {{ number }}
     </KitFieldGroup>
+    <KitFieldGroup label="danger">
+      <KitToggle v-model="danger" />
+    </KitFieldGroup>
   </div>
 </template>
 
@@ -48,10 +51,15 @@ import KitInput from '@components/Form/KitInput.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import KitToggle from '@components/Toggle/KitToggle.vue'
 
 const message = ref('')
 const number = ref('')
+const danger = ref(false)
+
+const errors = computed(() => danger.value ? ['This field is required. Try entering text in this field.'] : [])
+
 </script>
 <style scoped>
 .icon {
