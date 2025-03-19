@@ -25,10 +25,10 @@ import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue
 import Menu from './components/Menu/Menu.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import KitTable from './components/Table/KitTable.vue'
-import Progress from './components/Progress/progress'
+import KitProgress from './components/Progress/progress'
 import KitAvatar from './components/Avatar/KitAvatar.vue'
 import KitBadge from '@components/Badge/KitBadge.vue'
-import ProgressBar from './components/ProgressBar/ProgressBar.vue'
+import KitProgressBar from '@components/ProgressBar/KitProgressBar.vue'
 import KitTag from '@components/Tag/KitTag.vue'
 import KitFlag from '@components/Flag/KitFlag.vue'
 import KitBreadcrumbs from '@components/Breadcrumbs/KitBreadcrumbs.vue'
@@ -80,7 +80,7 @@ export {
   KitSectionMessage,
   KitAvatar,
   KitBadge,
-  ProgressBar as KitProgressBar,
+  KitProgressBar,
   KitTag,
   Modal as KitModal,
   CopyToClipboard as KitCopyToClipboard,
@@ -99,7 +99,7 @@ export {
   KitBreadcrumbs,
   KitFlag,
   KitDateRangePicker,
-  Progress as KitProgress,
+  KitProgress,
   KitButtonGroup,
   KitIconButton,
   KitInlineDialog,

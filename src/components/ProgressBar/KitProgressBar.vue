@@ -1,41 +1,33 @@
 <template>
-  <div class="progress-bar-wrapper">
+  <div class="kit-progress-bar-wrapper">
     <div v-if="showLabels" ref="labels" class="labels">
       <span class="label">{{ label }}</span>
       <span>{{ progress }}%</span>
     </div>
-    <div class="progress-bar">
+    <div class="kit-progress-bar">
       <span ref="progress" class="progress" :style="{ width: `${progress}%`, transitionDuration }" />
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitProgressBar',
-  props: {
-    progress: {
-      type: Number,
-      default: 0
-    },
-    showLabels: {
-      type: Boolean,
-      default: true
-    },
-    label: {
-      type: String,
-      default: 'Processing'
-    },
-    transitionDuration: {
-      type: String,
-      default: undefined
-    }
-  }
+<script setup lang="ts">
+
+type Props = {
+  progress?: number
+  showLabels?: boolean
+  label?: string
+  transitionDuration?: string
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  progress: 0,
+  showLabels: true,
+  label: 'Processing'
+})
 </script>
 
 <style scoped>
-.progress-bar {
+.kit-progress-bar {
   background: rgba(9, 30, 66, 0.13);
   border-radius: 3px;
   height: 6px;
@@ -54,7 +46,7 @@ export default {
   text-transform: capitalize;
 }
 
-.progress-bar .progress {
+.kit-progress-bar .progress {
   left: 0;
   width: 0%;
   background: #42526e;

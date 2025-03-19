@@ -1,36 +1,30 @@
 <template>
-  <ProgressBar :progress="progress" />
+  <KitProgressBar :progress="progress" />
 </template>
 
-<script>
-import ProgressBar from '@/components/ProgressBar/ProgressBar'
+<script setup lang="ts">
+import KitProgressBar from '@components/ProgressBar/KitProgressBar.vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-export default {
-  name: 'ProgressBarStory',
-  components: { ProgressBar },
-  data() {
-    return {
-      progress: 0,
-      timer: undefined
-    }
-  },
-  mounted() {
-    this.timer = this.updateProgress()
-  },
-  beforeDestroy() {
-    clearTimeout(this.timer)
-  },
-  methods: {
-    updateProgress() {
-      if (this.progress >= 100) {
-        this.progress = 0
-      }
-      this.progress = this.progress + 5
-      return setTimeout(() => {
-        this.updateProgress()
-      }, Math.floor(Math.random() * 500) + 200)
-    }
+const progress = ref(0)
+const timer = ref()
+
+onMounted(() => {
+  timer.value = updateProgress()
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(timer.value)
+})
+
+function updateProgress() {
+  if (progress.value >= 100) {
+    progress.value = 0
   }
+  progress.value = progress.value + 5
+  return setTimeout(() => {
+    updateProgress()
+  }, Math.floor(Math.random() * 500) + 200)
 }
 </script>
 
