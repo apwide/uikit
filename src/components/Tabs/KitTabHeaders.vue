@@ -5,7 +5,7 @@
       :list="reorderableIdsList"
       handleSelector=".kit-drag-handle"
       draggable-class="kit-is-reorderable"
-      @reorder="$emit('reorder', $event)">
+      @reorder="emit('reorder', $event)">
       <nav>
         <slot />
       </nav>
@@ -26,6 +26,10 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   reorderable: false
 })
+
+const emit = defineEmits<{
+  (event: 'reorder', data: any)
+}>()
 
 const state = inject('state')
 Object.defineProperty(state, 'reorderable', {
