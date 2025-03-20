@@ -8,6 +8,9 @@
           <KitMenuItem @click="select('edit')"> Edit entry </KitMenuItem>
           <KitMenuSeparator />
           <KitMenuItem @click="select('delete')"> Delete entry </KitMenuItem>
+          <KitMenuSection title="Section">
+            <KitMenuItem @click="select('clone')"> Clone entry </KitMenuItem>
+          </KitMenuSection>
         </KitActionMenu>
       </template>
       <BorderedPanelRow label="Reporting scheme" value="Some text" />

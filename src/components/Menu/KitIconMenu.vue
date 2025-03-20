@@ -74,4 +74,7 @@ function handleClose() {
 .kit-icon-menu {
   color: #091e42;
 }
+.kit-dark .kit-icon-menu {
+  color: var(--kit-body-text);
+}
 </style>

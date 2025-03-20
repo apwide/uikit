@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-item" v-on="$listeners" @click="$emit('select', value)">
+  <div class="dropdown-item" v-on="$listeners" @click="emit('select', value)">
     <span class="dropdown-item-label">
       <slot />
     </span>
@@ -10,6 +10,9 @@ type Props = {
   value?: string | number | boolean | any
 }
 defineProps<Props>()
+const emit = defineEmits<{
+  (event: 'select', data: MouseEvent)
+}>()
 </script>
 <style scoped>
 .dropdown-item {
