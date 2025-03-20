@@ -56,9 +56,28 @@ function onFocus(e) {
 
 <style scoped>
 .kit-radio {
+  --kit-radio-border: #999;
+  --kit-radio-selected-border: #6b778c;
+  --kit-radio-selected-center: white;
+  --kit-radio-hover-center: #ebecf0;
+}
+
+.kit-dark .kit-radio {
+  --kit-radio-border: #738496;
+  --kit-radio-selected-border: #579dff;
+  --kit-radio-selected-center: var(--apw-page-background);
+  --kit-radio-hover-center: #A1BDD914;
+ }
+
+.kit-radio {
   cursor: pointer;
   padding: 2px 0;
   margin-bottom: -2px;
+}
+
+.kit-radio,
+.kit-radio input {
+  cursor: pointer;
 }
 
 input {
@@ -67,7 +86,7 @@ input {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 1px solid #999;
+  border: 1px solid var(--kit-radio-border);
   margin-right: 5px;
   position: relative;
   top: 3px;
@@ -79,8 +98,8 @@ input:active {
 }
 
 input:checked {
-  background-color: white;
-  border: 5px #6b778c solid;
+  background-color: var(--kit-radio-selected-center);
+  border: 5px var(--kit-radio-selected-border) solid;
 }
 
 label[disabled],
@@ -90,6 +109,6 @@ label[disabled] input {
 }
 
 label:hover input[type='radio'] {
-  background-color: rgb(235, 236, 240);
+  background-color: var(--kit-radio-hover-center);
 }
 </style>
