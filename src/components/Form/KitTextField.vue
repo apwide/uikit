@@ -19,8 +19,8 @@
   --kit-text-field-disabled-bg-color: #f4f5f7;
   --kit-text-field-disabled-text-color: #a5adba;
 
-  --kit-text-field-active-bg-color: #ebecf0;
-  --kit-text-field-active-border-color: #f4f5f7;
+  --kit-text-field-active-bg-color: #fff;
+  --kit-text-field-active-border-color: #4c9aff;
 
   --kit-text-field-loading-bg-color: white;
 
@@ -154,6 +154,7 @@ input:-moz-placeholder {
 
 .kit-text-field[is-focused]:not([disabled]):not([is-loading]) {
   background-color: var(--kit-text-field-active-bg-color);
+  background: var(--kit-text-field-active-bg-color);
   border-color: var(--kit-text-field-active-border-color);
 }
 
