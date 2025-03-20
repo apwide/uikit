@@ -121,7 +121,7 @@ function onReorder(newList) {
   --story-tab-content-text: rgb(107, 119, 140);
 }
 
-.kit-dark .content {
+[data-color-mode="dark"] .content {
   --story-tab-content-bg:  var(--kit-dialog-bg-color);
   --story-tab-content-text: var(--kit-body-text);
 }

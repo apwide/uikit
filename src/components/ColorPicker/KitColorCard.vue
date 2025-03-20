@@ -35,7 +35,7 @@ function handleClick() {
   --kit-color-card-border: #dedede;
 }
 
-.kit-dark .kit-color-card {
+[data-color-mode="dark"] .kit-color-card {
   --kit-color-card-border: #313a41;
 }
 

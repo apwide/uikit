@@ -89,7 +89,7 @@ function changeInterval() {
   --kit-calendar-header-text-color: #172b4d;
 }
 
-.kit-dark .kit-calendar-header {
+[data-color-mode="dark"] .kit-calendar-header {
   --kit-calendar-header-text-color: var(--kit-header-text);
 }
 

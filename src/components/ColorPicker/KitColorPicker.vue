@@ -72,7 +72,7 @@ function handleColorSelection(color: string) {
   --kit-color-picker-border: #dedede;
 }
 
-.kit-dark .kit-color-picker {
+[data-color-mode="dark"] .kit-color-picker {
   --kit-color-picker-border: #313a41;
 }
 

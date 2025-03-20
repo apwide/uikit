@@ -18,7 +18,7 @@ defineProps<Props>()
   --kit-menu-section-title-text: rgb(107, 119, 140);
 }
 
-.kit-dark .kit-menu-section {
+[data-color-mode="dark"] .kit-menu-section {
   --kit-menu-section-title-text: var(--kit-body-text);
 }
 

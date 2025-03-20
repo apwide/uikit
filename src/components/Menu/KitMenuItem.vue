@@ -13,7 +13,7 @@ const emit = defineEmits<{
 .kit-menu-item {
   --kit-menu-item-text: rgb(66, 82, 110);
 }
-.kit-dark .kit-menu-item {
+[data-color-mode="dark"] .kit-menu-item {
   --kit-menu-item-text: var(--kit-body-text);
 }
 .kit-menu-item {

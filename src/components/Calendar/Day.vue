@@ -44,7 +44,7 @@ function onDateSelected() {
   --kit-calendar-day-today-border-color:#0052cc;
 }
 
-.kit-dark .kit-calendar-day {
+[data-color-mode="dark"] .kit-calendar-day {
   --kit-calendar-day-today-border-color:#579dff;
 }
 

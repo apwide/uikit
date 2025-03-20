@@ -66,7 +66,7 @@ export default {
   --kit-dropdown-checkbox-hover-text: rgb(23, 43, 77);
 }
 
-.kit-dark .kit-dropdown-checkbox-item {
+[data-color-mode="dark"] .kit-dropdown-checkbox-item {
   --kit-dropdown-checkbox-bg: #282e33;
   --kit-dropdown-checkbox-text: var(--kit-body-text);
   --kit-dropdown-checkbox-hover-bg: rgba(161, 189, 217, 0.08);

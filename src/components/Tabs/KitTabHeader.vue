@@ -62,7 +62,7 @@ function onClick() {
   --kit-tab-header-drag-icon-color: #a5adba;
 }
 
-.kit-dark .kit-tab-header {
+[data-color-mode="dark"] .kit-tab-header {
   --kit-tab-header-active-border-color: #579dff;
   --kit-tab-header-text-hover-color: #579dff;
 }

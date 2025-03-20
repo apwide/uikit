@@ -30,7 +30,7 @@
   --kit-text-field-select-hover-border-color: #ebecf0;
 }
 
-.kit-dark .kit-text-field {
+[data-color-mode="dark"] .kit-text-field {
   --kit-text-field-placeholder-color: #b6c2cf;
   --kit-text-field-border-color: #738496;
   --kit-text-field-text-color: #b6c2cf;

@@ -8,7 +8,7 @@
   --kit-dropdown-separator-border: #dfe1e6;
 }
 
-.kit-dark .kit-dropdown-separator {
+[data-color-mode="dark"] .kit-dropdown-separator {
   --kit-dropdown-separator-border: #738496;
 }
 

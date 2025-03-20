@@ -83,7 +83,7 @@ export default {
   --kit-tag-remove-bg: #ffbdad;
 }
 
-.kit-dark .tag {
+[data-color-mode="dark"] .tag {
   --kit-tag-bg: #A1BDD914;
   --kit-tag-text: var(--kit-body-text);
   --kit-tag-label: var(--kit-body-text);

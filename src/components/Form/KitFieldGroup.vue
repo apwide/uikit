@@ -26,7 +26,7 @@ defineProps<Props>()
   --kit-field-group-label-color: #6b778c;
 }
 
-.kit-dark .kit-field-group {
+[data-color-mode="dark"] .kit-field-group {
   --kit-field-group-label-color: #9FADBC;
 }
 

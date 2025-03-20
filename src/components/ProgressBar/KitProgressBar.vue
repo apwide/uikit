@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
   --kit-progress-bar-progress-color: #42526e;
 }
 
-.kit-dark .kit-progress-bar {
+[data-color-mode="dark"] .kit-progress-bar {
   --kit-progress-bar-bg-color: #A1BDD914;
   --kit-progress-bar-progress-color: #9FADBC;
 }

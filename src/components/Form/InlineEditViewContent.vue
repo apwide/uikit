@@ -55,7 +55,7 @@ function mouseHasMoved({ clientX, clientY }) {
   --kit-inline-edit-label-hover-bg: #ebecf0;
 }
 
-.kit-dark .kit-inline-edit-view-content {
+[data-color-mode="dark"] .kit-inline-edit-view-content {
   --kit-inline-edit-active-border: #4c9aff;
   --kit-inline-edit-label-hover-bg: #282E33;
 }

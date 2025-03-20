@@ -64,7 +64,7 @@ const Icon = computed(() => {
   padding: 16px;
 }
 
-.kit-dark .kit-section-message {
+[data-color-mode="dark"] .kit-section-message {
   background-color: #1C2B41;
 }
 
@@ -78,7 +78,7 @@ const Icon = computed(() => {
   background-color: rgb(234, 230, 255);
 }
 
-.kit-dark .kit-section-message[appearance='setup'] {
+[data-color-mode="dark"] .kit-section-message[appearance='setup'] {
   background-color: #2B273F;
 }
 
@@ -96,7 +96,7 @@ const Icon = computed(() => {
   background-color: rgb(255, 250, 230);
 }
 
-.kit-dark .kit-section-message[appearance='warning'] {
+[data-color-mode="dark"] .kit-section-message[appearance='warning'] {
   background-color: #332E1B;
 }
 
@@ -109,7 +109,7 @@ const Icon = computed(() => {
   background-color: rgb(255, 235, 230);
 }
 
-.kit-dark .kit-section-message[appearance='error'] {
+[data-color-mode="dark"] .kit-section-message[appearance='error'] {
   background-color: #42221F;
 }
 
@@ -122,7 +122,7 @@ const Icon = computed(() => {
   background-color: rgb(227, 252, 239);
 }
 
-.kit-dark .kit-section-message[appearance='confirmation'] {
+[data-color-mode="dark"] .kit-section-message[appearance='confirmation'] {
   background-color: #1C3329;
 }
 
@@ -135,7 +135,7 @@ const Icon = computed(() => {
   background-color: rgb(234, 230, 255);
 }
 
-.kit-dark .kit-section-message[appearance='change'] {
+[data-color-mode="dark"] .kit-section-message[appearance='change'] {
   background-color: #2B273F;
 }
 
@@ -158,7 +158,7 @@ const Icon = computed(() => {
   margin: 0;
 }
 
-.kit-dark .kit-section-message .kit-section-message__title {
+[data-color-mode="dark"] .kit-section-message .kit-section-message__title {
   color: var(--apw-body-text);
 }
 

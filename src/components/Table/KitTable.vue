@@ -154,7 +154,7 @@ onMounted(() => {
   --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
 }
 
-.kit-dark .kit-table-wrapper {
+[data-color-mode="dark"] .kit-table-wrapper {
   --kit-table-bg-color: var(--kit-page-bg-color);
   --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
 }

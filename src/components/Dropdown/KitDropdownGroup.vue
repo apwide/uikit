@@ -33,7 +33,7 @@ defineProps<Props>()
   --kit-dropdown-group-title: rgb(107, 119, 140);;
 }
 
-.kit-dark .kit-dropdown-group {
+[data-color-mode="dark"] .kit-dropdown-group {
   --kit-dropdown-group-title: var(--kit-body-text);
 }
 

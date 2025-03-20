@@ -51,7 +51,7 @@ function onClick() {
   --kit-table-header-text-color: var(--kit-body-text);
 }
 
-.kit-dark .kit-table-header-cell {
+[data-color-mode="dark"] .kit-table-header-cell {
   --kit-table-header-border-color: #A6C5E229;
   --kit-table-header-bg-color: #1d2125;
   --kit-table-header-text-color: var(--kit-body-text);

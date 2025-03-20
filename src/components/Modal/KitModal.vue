@@ -159,7 +159,7 @@ onUnmounted(() => {
   --kit-modal-container-text-color: rgb(9, 30, 66);
 }
 
-.kit-dark .kit-modal-container {
+[data-color-mode="dark"] .kit-modal-container {
   --kit-modal-container-bg-color: #282e33;
   --kit-modal-container-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
   --kit-modal-container-text-color: #b6c2cf;

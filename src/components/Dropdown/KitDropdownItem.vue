@@ -23,7 +23,7 @@ const emit = defineEmits<{
   --kit-dropdown-item-disabled-text: #5e6c84;
 }
 
-.kit-dark .dropdown-item {
+[data-color-mode="dark"] .dropdown-item {
   --kit-dropdown-item-bg: #282e33;
   --kit-dropdown-item-text: var(--kit-body-text);
   --kit-dropdown-item-hover-bg: rgba(161, 189, 217, 0.08);

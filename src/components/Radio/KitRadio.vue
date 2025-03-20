@@ -62,7 +62,7 @@ function onFocus(e) {
   --kit-radio-hover-center: #ebecf0;
 }
 
-.kit-dark .kit-radio {
+[data-color-mode="dark"] .kit-radio {
   --kit-radio-border: #738496;
   --kit-radio-selected-border: #579dff;
   --kit-radio-selected-center: var(--apw-page-background);

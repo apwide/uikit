@@ -146,7 +146,7 @@ onUnmounted(() => {
   --kit-spotlight-bg-color: #6e5dc6;
 }
 
-.kit-dark .kit-spotlight-mask {
+[data-color-mode="dark"] .kit-spotlight-mask {
   --kit-spotlight-border-color: #9f8fef;
   --kit-spotlight-text-color: #1D2125;
   --kit-spotlight-bg-color: #9f8fef;

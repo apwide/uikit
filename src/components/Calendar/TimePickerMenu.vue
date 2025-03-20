@@ -143,7 +143,7 @@ function onTimeSelected(value) {
   --kit-time-picker-selected-color: #A6C5E229;
 }
 
-.kit-dark .kit-time-picker-menu {
+[data-color-mode="dark"] .kit-time-picker-menu {
  --kit-time-picker-hover-color: #A1BDD914;
  --kit-time-picker-selected-color: #A6C5E229;
 }

@@ -69,7 +69,7 @@ watch(current, async (isCurrent) => {
   --kit-select-option-hover-shadow: inset 2px 0px 0px #0C66E4;
 }
 
-.kit-dark .kit-select-option {
+[data-color-mode="dark"] .kit-select-option {
   --kit-select-option-selected-bg: #1C2B41;
   --kit-select-option-selected-text:#579DFF;
   --kit-select-option-current-bg: rgba(161, 189, 217, 0.08);

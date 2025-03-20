@@ -56,7 +56,7 @@ function onBlur(event) {
   --kit-inline-edit-button-shadow: rgba(9, 30, 66, 0.25) 0 4px 8px -2px, rgba(9, 30, 66, 0.31) 0 0 1px;
 }
 
-.kit-dark .kit-buttons-wrapper {
+[data-color-mode="dark"] .kit-buttons-wrapper {
   --kit-inline-edit-button-bg: #282e33;
   --kit-inline-edit-button-hover-bg: #A6C5E229;;
   --kit-inline-edit-button-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;

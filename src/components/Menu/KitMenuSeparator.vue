@@ -7,7 +7,7 @@
 .kit-menu-separator {
   --kit-menu-separator-border: #dfe1e6;
 }
-.kit-dark .kit-menu-separator {
+[data-color-mode="dark"] .kit-menu-separator {
   --kit-menu-separator-border: #738496;
 }
 .kit-menu-separator {

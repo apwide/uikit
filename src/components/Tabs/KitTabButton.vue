@@ -38,7 +38,7 @@ inject('state', () => ({
   --kit-tab-button-text-color: rgb(66, 82, 110);
 }
 
-.kit-dark .kit-tab-button {
+[data-color-mode="dark"] .kit-tab-button {
   --kit-tab-button-text-color: var(--kit-body-text);
 }
 

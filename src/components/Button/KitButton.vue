@@ -180,17 +180,17 @@ button[appearance='default']:active >>> svg {
 }
 
 /*default-dark*/
-.kit-dark button[appearance='default'] {
+[data-color-mode="dark"] button[appearance='default'] {
   background-color: #A1BDD914;
   color: var(--kit-body-text);
 }
 
-.kit-dark button[appearance='default']:not([disabled]):not([selected]):hover {
+[data-color-mode="dark"] button[appearance='default']:not([disabled]):not([selected]):hover {
   background-color: #A6C5E229;
   color: var(--kit-body-text);
 }
 
-.kit-dark button[appearance='default']:not([disabled]):not([selected]):active {
+[data-color-mode="dark"] button[appearance='default']:not([disabled]):not([selected]):active {
   background-color: #BFDBF847;
   color: var(--kit-body-text);
 }
@@ -216,21 +216,21 @@ button[appearance='primary'][loading] >>> .kit-spinner {
 }
 
 /*primary-dark*/
-.kit-dark button[appearance='primary'] {
+[data-color-mode="dark"] button[appearance='primary'] {
   background-color: #579DFF;
   color: #1D2125;
   font-weight: 600;
 }
 
-.kit-dark button[appearance='primary']:not([disabled]):not([selected]):hover {
+[data-color-mode="dark"] button[appearance='primary']:not([disabled]):not([selected]):hover {
   background-color: #85B8FF;
 }
 
-.kit-dark button[appearance='primary']:not([disabled]):not([selected]):active {
+[data-color-mode="dark"] button[appearance='primary']:not([disabled]):not([selected]):active {
   background-color: #CCE0FF;
 }
 
-.kit-dark button[appearance='primary'][loading] >>> .kit-spinner {
+[data-color-mode="dark"] button[appearance='primary'][loading] >>> .kit-spinner {
   color: #1D2125;
 }
 
@@ -251,17 +251,17 @@ button[appearance='link']:not([disabled]):not([selected]):active {
 }
 
 /*link-dark*/
-.kit-dark button[appearance='link'] {
+[data-color-mode="dark"] button[appearance='link'] {
   background: none;
   color: #579dff;
 }
 
-.kit-dark button[appearance='link']:not([disabled]):not([selected]):hover {
+[data-color-mode="dark"] button[appearance='link']:not([disabled]):not([selected]):hover {
   color: #579dff;
   text-decoration: underline;
 }
 
-.kit-dark button[appearance='link']:not([disabled]):not([selected]):active {
+[data-color-mode="dark"] button[appearance='link']:not([disabled]):not([selected]):active {
   text-decoration: none;
   color: #85B8FF;
 }
@@ -282,15 +282,15 @@ button[appearance='subtle']:not([disabled]):not([selected]):active {
 }
 
 /*subtle-dark*/
-.kit-dark button[appearance='subtle'] {
+[data-color-mode="dark"] button[appearance='subtle'] {
   color: #9FADBC;
 }
 
-.kit-dark button[appearance='subtle']:not([disabled]):not([selected]):hover {
+[data-color-mode="dark"] button[appearance='subtle']:not([disabled]):not([selected]):hover {
   background-color: #A1BDD914;
 }
 
-.kit-dark button[appearance='subtle']:not([disabled]):not([selected]):active {
+[data-color-mode="dark"] button[appearance='subtle']:not([disabled]):not([selected]):active {
   background-color: #A6C5E229;
   color: #9FADBC;
 }
@@ -312,17 +312,17 @@ button[appearance='subtle-link']:not([disabled]):not([selected]):active {
 }
 
 /*subtle-link-dark*/
-.kit-dark button[appearance='subtle-link'] {
+[data-color-mode="dark"] button[appearance='subtle-link'] {
   background: none;
   color: #9FADBC;
 }
 
-.kit-dark button[appearance='subtle-link']:not([disabled]):not([selected]):hover {
+[data-color-mode="dark"] button[appearance='subtle-link']:not([disabled]):not([selected]):hover {
   text-decoration: underline;
   color: #9FADBC;
 }
 
-.kit-dark button[appearance='subtle-link']:not([disabled]):not([selected]):active {
+[data-color-mode="dark"] button[appearance='subtle-link']:not([disabled]):not([selected]):active {
   text-decoration: none;
   color: #B6C2CF;
 }
@@ -415,20 +415,20 @@ button[selected]:active >>> svg {
   color: rgb(244, 245, 247);
 }
 
-.kit-dark button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']),
-.kit-dark button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover,
-.kit-dark button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active {
+[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']),
+[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover,
+[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active {
   background-color: #1C2B41;
   color: #579DFF;
 }
 
-.kit-dark button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> svg,
-.kit-dark button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover >>> svg,
-.kit-dark button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active >>> svg {
+[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> svg,
+[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover >>> svg,
+[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active >>> svg {
   color: #579DFF;
 }
 
-.kit-dark button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover {
+[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover {
   background-color: #09326C;
 }
 
@@ -438,8 +438,8 @@ button[disabled] >>> svg {
   pointer-events: none;
 }
 
-.kit-dark button[disabled] span.kit-button__wrapper,
-.kit-dark button[disabled] >>> svg {
+[data-color-mode="dark"] button[disabled] span.kit-button__wrapper,
+[data-color-mode="dark"] button[disabled] >>> svg {
   color: #BFDBF847;
 }
 
@@ -451,7 +451,7 @@ button[loading][disabled] >>> .kit-spinner {
   color: #172b4d;
 }
 
-.kit-dark button[loading][selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> .kit-spinner > svg {
+[data-color-mode="dark"] button[loading][selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> .kit-spinner > svg {
   --kit-spinner-color: #579DFF;
   color: #579DFF !important;
 }
@@ -460,7 +460,7 @@ button[disabled]:not([appearance='subtle-link']):not([appearance='link']):not([a
   background-color: #f5f6f8;
 }
 
-.kit-dark button[disabled]:not([appearance='subtle-link']):not([appearance='link']):not([appearance='subtle']) {
+[data-color-mode="dark"] button[disabled]:not([appearance='subtle-link']):not([appearance='link']):not([appearance='subtle']) {
   background-color: #BCD6F00A;
 }
 

@@ -49,7 +49,7 @@ const props = withDefaults(defineProps<Props>(), {
   --kit-popup-bg-color: var(--kit-page-bg-color);
 }
 
-.kit-dark .kit-popup {
+[data-color-mode="dark"] .kit-popup {
   --kit-popup-bg-color: #282E33;
 }
 
@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<Props>(), {
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
 }
 
-.kit-dark .kit-popup {
+[data-color-mode="dark"] .kit-popup {
   border: 1px solid #313a41;
   box-shadow: 0 2px 6px -2px #39424a, 0 0 1px #0304045c;
 }

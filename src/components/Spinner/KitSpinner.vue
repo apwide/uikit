@@ -62,7 +62,7 @@ const origin = computed(() => dimensions.value.px / 2)
   --kit-spinner-color: #42526e;
 }
 
-.kit-dark .kit-spinner {
+[data-color-mode="dark"] .kit-spinner {
   --kit-spinner-color: var(--kit-body-text);
 }
 

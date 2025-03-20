@@ -580,7 +580,7 @@ watch(suggestions, async () => {
   --kit-select-ghost-bg-color: #fff;
 }
 
-.kit-dark .kit-select {
+[data-color-mode="dark"] .kit-select {
   --kit-select-placeholder: var(--kit-body-text);
   --kit-select-ghost-bg-color: #A6C5E229;
 }

@@ -126,7 +126,7 @@ function onClick(action) {
   transition: all 0.5s;
 }
 
-.kit-dark .kit-flag {
+[data-color-mode="dark"] .kit-flag {
   --kit-flag-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
 }
 

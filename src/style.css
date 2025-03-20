@@ -15,7 +15,7 @@ body {
 
 }
 
-.kit-dark {
+[data-color-mode="dark"] body {
     /*--kit-body-text: #B6C2CF;*/
     --kit-body-text: #9FADBC;
     --kit-header-text: var(--kit-body-text);

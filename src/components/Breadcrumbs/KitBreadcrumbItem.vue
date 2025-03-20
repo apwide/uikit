@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   --kit-breadcrumb-link-after-color: #7a869a;
 }
 
-.kit-dark .kit-breadcrumb {
+[data-color-mode="dark"] .kit-breadcrumb {
   --kit-breadcrumb-link-color: var(--kit-header-text);
   --kit-breadcrumb-link-after-color: var(--kit-header-text);
 }

@@ -86,7 +86,7 @@ function resetIndex() {
   --kit-select-menu-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 4px 11px;
 }
 
-.kit-dark .kit-select-menu {
+[data-color-mode="dark"] .kit-select-menu {
   --kit-select-menu-bg-color: rgb(40, 46, 51);
   --kit-select-menu-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
 }

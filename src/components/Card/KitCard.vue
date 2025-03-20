@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   --kit-card-shadow1-color: rgba(9, 30, 66, 0.31);
   --kit-card-shadow2-color: var(--kit-card-shadow1-color);
 }
-.kit-dark .kit-card {
+[data-color-mode="dark"] .kit-card {
   --kit-card-bg-color: #282E33;
   --kit-card-border-color: #313a41;
   --kit-card-shadow1-color: #39424a;
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
   background-color: var(--kit-card-bg-color);
   padding: 10px;
 }
-.kit-dark .kit-card {
+[data-color-mode="dark"] .kit-card {
   border: 1px solid var(--kit-card-border-color);
 }
 .kit-card[elevation='1'] {
