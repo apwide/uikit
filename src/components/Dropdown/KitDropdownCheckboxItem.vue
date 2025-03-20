@@ -1,5 +1,5 @@
 <template>
-  <KitCheckbox class="dropdown-checkbox-item" :checked="checked" :value="value" @input="onInput">
+  <KitCheckbox class="kit-dropdown-checkbox-item" :checked="checked" :value="value" @input="onInput">
     <span class="label-text">
       <slot />
     </span>
@@ -59,12 +59,26 @@ export default {
 </script>
 
 <style scoped>
-.dropdown-checkbox-item {
+.kit-dropdown-checkbox-item {
+  --kit-dropdown-checkbox-bg: rgb(255, 255, 255);
+  --kit-dropdown-checkbox-text: rgb(23, 43, 77);
+  --kit-dropdown-checkbox-hover-bg: rgb(244, 245, 247);
+  --kit-dropdown-checkbox-hover-text: rgb(23, 43, 77);
+}
+
+.kit-dark .kit-dropdown-checkbox-item {
+  --kit-dropdown-checkbox-bg: #282e33;
+  --kit-dropdown-checkbox-text: var(--kit-body-text);
+  --kit-dropdown-checkbox-hover-bg: rgba(161, 189, 217, 0.08);
+  --kit-dropdown-checkbox-hover-text: var(--kit-body-text);
+}
+
+.kit-dropdown-checkbox-item {
   align-items: center;
   box-sizing: border-box;
   cursor: pointer;
-  background-color: rgb(255, 255, 255);
-  color: rgb(23, 43, 77);
+  background-color: var(--kit-dropdown-checkbox-bg);
+  color: var(--kit-dropdown-checkbox-text);
   text-decoration: none;
   padding: 5px 12px 6px 7px;
   overflow: hidden;
@@ -73,35 +87,35 @@ export default {
   height: 40px;
 }
 
-.dropdown-checkbox-item.checkbox-wrapper {
+.kit-dropdown-checkbox-item.checkbox-wrapper {
   display: flex;
 }
 
-.dropdown-checkbox-item:hover {
-  background-color: rgb(244, 245, 247);
-  color: rgb(23, 43, 77);
-  fill: rgb(244, 245, 247);
+.kit-dropdown-checkbox-item:hover {
+  background-color: var(--kit-dropdown-checkbox-hover-bg);
+  color: var(--kit-dropdown-checkbox-hover-text);
+  fill: var(--kit-dropdown-checkbox-hover-bg);
   text-decoration: none;
 }
 
-.dropdown-checkbox-item >>> .label {
+.kit-dropdown-checkbox-item >>> .label {
   overflow: hidden;
   display: flex;
   width: 100%;
 }
 
-.dropdown-checkbox-item .label-text {
+.kit-dropdown-checkbox-item .label-text {
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1;
 }
 
-.dropdown-checkbox-item .only-button {
+.kit-dropdown-checkbox-item .only-button {
   margin-left: auto;
   display: none;
 }
 
-.dropdown-checkbox-item:hover .only-button {
+.kit-dropdown-checkbox-item:hover .only-button {
   display: block;
 }
 </style>

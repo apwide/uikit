@@ -13,10 +13,26 @@ defineProps<Props>()
 </script>
 <style scoped>
 .dropdown-item {
+  --kit-dropdown-item-bg: rgb(255, 255, 255);
+  --kit-dropdown-item-text: rgb(23, 43, 77);
+  --kit-dropdown-item-hover-bg: rgb(244, 245, 247);
+  --kit-dropdown-item-hover-text: rgb(23, 43, 77);
+  --kit-dropdown-item-disabled-text: #5e6c84;
+}
+
+.kit-dark .dropdown-item {
+  --kit-dropdown-item-bg: #282e33;
+  --kit-dropdown-item-text: var(--kit-body-text);
+  --kit-dropdown-item-hover-bg: rgba(161, 189, 217, 0.08);
+  --kit-dropdown-item-hover-text: var(--kit-body-text);
+  --kit-dropdown-item-disabled-text: #BFDBF847;
+}
+
+.dropdown-item {
   align-items: center;
   box-sizing: border-box;
-  background-color: rgb(255, 255, 255);
-  color: rgb(23, 43, 77);
+  background-color: var(--kit-dropdown-item-bg);
+  color: var(--kit-dropdown-item-text);
   text-decoration: none;
   padding: 8px 12px 7px;
   overflow: hidden;
@@ -35,14 +51,14 @@ defineProps<Props>()
 
 .dropdown-item:not([non-link]):not([disabled]):hover {
   cursor: pointer;
-  background-color: rgb(244, 245, 247);
-  color: rgb(23, 43, 77);
-  fill: rgb(244, 245, 247);
+  background-color: var(--kit-dropdown-item-hover-bg);
+  color: var(--kit-dropdown-item-hover-text);
+  fill: var(--kit-dropdown-item-hover-bg);
   text-decoration: none;
 }
 
 .dropdown-item[disabled] {
   cursor: not-allowed;
-  color: #5e6c84;
+  color: var(--kit-dropdown-item-disabled-text);
 }
 </style>
