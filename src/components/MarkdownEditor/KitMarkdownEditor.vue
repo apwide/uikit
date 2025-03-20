@@ -241,6 +241,26 @@ onUnmounted(() => {
 
 <style scoped>
 .kit-markdown-editor {
+  --kit-md-link-text: #333333;
+  --kit-md-url-text: #0052cc;
+  --kit-md-line-text: #172b4d; /* ? */
+
+  --kit-md-status-bar-border: #ced4da;
+  --kit-md-error-bg: #edc8be;
+  --kit-md-error-text: #8b0000;
+
+}
+.kit-dark .kit-markdown-editor {
+  --kit-md-tool-bg: #A1BDD914;
+  --kit-md-toolbar-bg: #282e33;
+  --kit-md-tool-hover-bg: #A6C5E229;
+  --kit-md-tool-border: transparent;
+  --kit-md-border: #738496;
+  --kit-md-tool-active-bg: #1C2B41;
+  --kit-md-tool-active-text: #579DFF;
+  --kit-md-tool-click-bg:  rgba(179, 212, 255, 0.6);
+}
+.kit-markdown-editor {
   width: 100%;
 }
 /** PREVIEW */
@@ -270,13 +290,13 @@ onUnmounted(() => {
   font-size: 16px;
 }
 .kit-markdown-editor >>> .cm-link {
-  color: #333333;
+  color: var(--kit-md-link-text);
 }
 .kit-markdown-editor >>> .cm-url {
-  color: #0052cc;
+  color: var(--kit-md-url-text);
 }
 .kit-markdown-editor >>> .CodeMirror-line {
-  color: #172b4d;
+  color: var(--kit-md-line-text);
 }
 .kit-markdown-editor[data-has-status-bar='true'] >>> .CodeMirror {
   border-bottom: none;
@@ -286,7 +306,7 @@ onUnmounted(() => {
 }
 
 .kit-markdown-editor[data-has-status-bar='true'] >>> .editor-statusbar {
-  border: 1px solid #ced4da;
+  border: 1px solid var(--kit-md-status-bar-border);
   border-top: none;
   padding: 2px 2px;
 }
@@ -342,7 +362,73 @@ onUnmounted(() => {
 
 .kit-markdown-editor >>> .kit-markdown-editor__error {
   border-radius: 3px;
-  background-color: #edc8be;
-  color: #8b0000;
+  background-color: var(--kit-md-error-bg);
+  color: var(--kit-md-error-text);
 }
+
+.kit-dark .kit-markdown-editor >>> .easymde-dropdown {
+  background: linear-gradient(to bottom right, var(--kit-md-toolbar-bg) 0%, var(--kit-md-toolbar-bg) 84%, var(--kit-body-text) 50%, var(--kit-body-text) 100%);
+  border: 1px solid var(--kit-md-toolbar-bg);
+  border-radius: 3px;
+}
+
+.kit-dark .kit-markdown-editor >>> .easymde-dropdown:hover {
+  background: linear-gradient(to bottom right, var(--kit-md-tool-hover-bg) 0%, var(--kit-md-tool-hover-bg) 84%, var(--kit-body-text) 50%, var(--kit-body-text) 100%);
+}
+
+.kit-dark .kit-markdown-editor >>> button {
+  border-color: var(--kit-md-tool-border);
+}
+
+.kit-dark .kit-markdown-editor >>> button:hover {
+  background: var(--kit-md-tool-hover-bg);
+}
+
+.kit-dark .kit-markdown-editor >>> button:active {
+  background: var(--kit-md-tool-click-bg);
+}
+
+.kit-dark .kit-markdown-editor >>> button.active:active {
+  background: var(--kit-md-tool-click-bg);
+}
+
+.kit-dark .kit-markdown-editor >>> button.active {
+  background: var(--kit-md-tool-active-bg);
+  color: var(--kit-md-tool-active-text);
+}
+
+.kit-dark .kit-markdown-editor >>> button {
+  color: var(--kit-body-text);
+}
+.kit-dark .kit-markdown-editor >>> .editor-toolbar,
+.kit-dark .kit-markdown-editor >>> .editor-statusbar {
+  background-color: var(--kit-md-toolbar-bg);
+}
+
+.kit-dark .kit-markdown-editor >>> .editor-toolbar {
+  border-top: 1px solid var(--kit-md-border);
+  border-left: 1px solid var(--kit-md-border);
+  border-right: 1px solid var(--kit-md-border);
+}
+
+.kit-dark .kit-markdown-editor >>> .CodeMirror {
+  border-top: 1px solid var(--kit-md-border);
+  border-left: 1px solid var(--kit-md-border);
+  border-right: 1px solid var(--kit-md-border);
+}
+
+.kit-dark .kit-markdown-editor >>> .editor-statusbar {
+  border: 1px solid var(--kit-md-border);
+}
+
+.kit-dark .kit-markdown-editor >>> .editor-toolbar i.separator {
+  border-left: 1px solid var(--kit-md-border);
+  border-right: 1px solid transparent;
+}
+
+.kit-dark .kit-markdown-editor >>> .editor-toolbar .easymde-dropdown-content {
+  background-color: var(--kit-md-toolbar-bg);
+
+}
+
 </style>
