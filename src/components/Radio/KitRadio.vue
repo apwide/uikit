@@ -12,58 +12,45 @@
   </label>
 </template>
 
-<script>
-export default {
-  name: 'KitCheckbox',
-  model: {
-    prop: 'checked',
-    event: 'input'
+<script setup lang="ts">
+
+import { computed, ref } from 'vue'
+
+type Props = {
+  value: any
+  name?: string
+  checked?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  checked: true
+})
+
+const radio = ref<HTMLLabelElement>()
+
+const emit = defineEmits<{
+  (event: 'input', data?: any)
+  (event: 'blur', data: FocusEvent)
+  (event: 'focus', data: FocusEvent)
+}>()
+
+const isChecked = computed({
+  get() {
+    return props.checked
   },
-  props: {
-    value: {
-      type: [Object, String],
-      required: true,
-      default: undefined
-    },
-    name: {
-      type: String,
-      default: undefined
-    },
-    checked: {
-      type: Boolean,
-      required: true
-    }
-  },
-  computed: {
-    isChecked: {
-      get() {
-        return this.checked
-      },
-      set(value) {
-        this.$emit('input', value)
-      }
-    }
-  },
-  watch: {
-    isFocused: {
-      handler(isFocused) {
-        if (isFocused) {
-          this.$nextTick(() => this.$refs.input.focus())
-        }
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    onBlur(e) {
-      if (!this.$refs.radio.contains(e.relatedTarget)) {
-        this.$emit('blur', e)
-      }
-    },
-    onFocus(e) {
-      this.$emit('focus', e)
-    }
+  set(value) {
+    emit('input', value)
   }
+})
+
+function onBlur(e) {
+  if (!radio.value.contains(e.relatedTarget)) {
+    emit('blur', e)
+  }
+}
+
+function onFocus(e) {
+  emit('focus', e)
 }
 </script>
 

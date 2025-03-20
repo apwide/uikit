@@ -9,43 +9,43 @@
       @input="currentKey = $event" />
   </div>
 </template>
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+import Vue, { computed } from 'vue'
 import KitRadio from './KitRadio'
 
-export default Vue.extend({
-  components: { KitRadio },
-  props: {
-    value: {
-      type: [String, Object],
-      default: ''
-    },
-    values: {
-      type: Array,
-      default: () => []
-    },
-    normalizer: {
-      type: Function,
-      default: (str) => ({ key: str, label: str, value: str })
-    }
+type Props = {
+  value?: any
+  values?: Array
+  normalizer?: Function
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  value: '',
+  values: () => [],
+  normalizer: (str) => ({ key: str, label: str, value: str })
+})
+
+const emit = defineEmits<{
+  (event: 'input', data?: any)
+}>()
+
+const name = computed(() => {
+  return `kit-d-${Date.now()}`
+})
+
+const availableValues = computed(() => {
+  return props.values.map((v) => props.normalizer(v))
+})
+
+const currentKey = computed({
+  get() {
+    return props.normalizer(props.value).key
   },
-  computed: {
-    name() {
-      return `kit-d-${Date.now()}`
-    },
-    availableValues() {
-      return this.values.map((v) => this.normalizer(v))
-    },
-    currentKey: {
-      get() {
-        return this.normalizer(this.value).key
-      },
-      set(newValue) {
-        this.$emit('input', newValue.value)
-      }
-    }
+  set(newValue) {
+    emit('input', newValue.value)
   }
 })
+
 </script>
 <style scoped>
 .kit-radio-group {
