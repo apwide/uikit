@@ -15,7 +15,7 @@ body {
 
 }
 
-body.kit-dark {
+.kit-dark {
     /*--kit-body-text: #B6C2CF;*/
     --kit-body-text: #9FADBC;
     --kit-header-text: var(--kit-body-text);

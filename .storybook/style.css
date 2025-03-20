@@ -11,7 +11,7 @@ body {
     --apw-page-background: #ffffff;
 }
 
-body.kit-dark {
+.kit-dark {
     --apw-link-color: #579DFF;
     --apw-page-background: #1d2125;
     --apw-body-text: #B6C2CF;

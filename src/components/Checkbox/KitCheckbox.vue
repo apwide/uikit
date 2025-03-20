@@ -123,7 +123,7 @@ input[type='checkbox'] {
   --kit-checkbox-disabled-border-color: #BCD6F00A;
 }
 
-body.kit-dark .kit-checkbox__wrapper {
+.kit-dark .kit-checkbox__wrapper {
   --kit-checkbox-checked-color: #579DFF;
   --kit-checkbox-checked-hover-color: #85B8FF;
   --kit-checkbox-checked-tick-color: #1D2125;
