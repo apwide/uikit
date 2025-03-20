@@ -77,20 +77,6 @@ export default {
 
 <style scoped>
 .tag {
-  --kit-tag-bg:  rgb(223, 225, 230);
-  --kit-tag-text: rgb(66, 82, 110);
-  --kit-tag-label: rgb(51, 51, 51);
-  --kit-tag-remove-bg: #ffbdad;
-}
-
-[data-color-mode="dark"] .tag {
-  --kit-tag-bg: #A1BDD914;
-  --kit-tag-text: var(--kit-body-text);
-  --kit-tag-label: var(--kit-body-text);
-  --kit-tag-remove-bg: #5d1f1a;
-}
-
-.tag {
   background-color: var(--kit-tag-bg);
   display: inline-flex;
   align-items: center;

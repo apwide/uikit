@@ -29,14 +29,6 @@ defineProps<Props>()
 </script>
 
 <style scoped>
-.kit-dropdown-group {
-  --kit-dropdown-group-title: rgb(107, 119, 140);;
-}
-
-[data-color-mode="dark"] .kit-dropdown-group {
-  --kit-dropdown-group-title: var(--kit-body-text);
-}
-
 .kit-dropdown-group .kit-dg__title {
   align-items: center;
   color: var(--kit-dropdown-group-title);

@@ -16,22 +16,6 @@ const emit = defineEmits<{
 </script>
 <style scoped>
 .dropdown-item {
-  --kit-dropdown-item-bg: rgb(255, 255, 255);
-  --kit-dropdown-item-text: rgb(23, 43, 77);
-  --kit-dropdown-item-hover-bg: rgb(244, 245, 247);
-  --kit-dropdown-item-hover-text: rgb(23, 43, 77);
-  --kit-dropdown-item-disabled-text: #5e6c84;
-}
-
-[data-color-mode="dark"] .dropdown-item {
-  --kit-dropdown-item-bg: #282e33;
-  --kit-dropdown-item-text: var(--kit-body-text);
-  --kit-dropdown-item-hover-bg: rgba(161, 189, 217, 0.08);
-  --kit-dropdown-item-hover-text: var(--kit-body-text);
-  --kit-dropdown-item-disabled-text: #BFDBF847;
-}
-
-.dropdown-item {
   align-items: center;
   box-sizing: border-box;
   background-color: var(--kit-dropdown-item-bg);

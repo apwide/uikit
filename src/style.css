@@ -9,26 +9,80 @@ body {
 
     --kit-form-danger: #de350b;
     --kit-form-danger-icon: #bf2600;
-    --kit-form-warning: #FF991F;
+    --kit-form-warning: #ff991f;
 
-    --kit-progress-top-color: #0052CC;
+    --kit-progress-top-color: #0052cc;
+
+    --kit-select-placeholder: rgb(122, 134, 154);
+    --kit-select-ghost-bg-color: #ffffff;
+    --kit-select-menu-bg-color: rgb(255, 255, 255);
+    --kit-select-menu-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 4px 11px;
+    --kit-select-option-selected-bg: #42526e;
+    --kit-select-option-selected-text: #ffffff;
+    --kit-select-option-current-bg: #ebecf0;
+    --kit-select-option-selected-hover-bg: #7d98c7;
+    --kit-select-option-selected-hover-text: #ffffff;
+    --kit-select-option-hover-shadow: inset 2px 0px 0px #0c66e4;
+    --kit-tag-bg: #dfe1e6;
+    --kit-tag-text: #42526e;
+    --kit-tag-label: #333333;
+    --kit-tag-remove-bg: #ffbdad;
+
+    --kit-dropdown-item-bg: #ffffff;
+    --kit-dropdown-item-text: #172b4d;
+    --kit-dropdown-item-hover-bg: #f4f5f7;
+    --kit-dropdown-item-hover-text: #172b4d;
+    --kit-dropdown-item-disabled-text: #5e6c84;
+    --kit-dropdown-separator-border: #dfe1e6;
+    --kit-dropdown-group-title: #6b778c;
+    --kit-dropdown-checkbox-bg: #ffffff;
+    --kit-dropdown-checkbox-text: #172b4d;
+    --kit-dropdown-checkbox-hover-bg: #f4f5f7;
+    --kit-dropdown-checkbox-hover-text: #172b4d;
 
 }
 
 [data-color-mode="dark"] body {
-    /*--kit-body-text: #B6C2CF;*/
-    --kit-body-text: #9FADBC;
+    /*--kit-body-text: #b6c2cf;*/
+    --kit-body-text: #9fadbc;
     --kit-header-text: var(--kit-body-text);
     --kit-page-bg-color: #1d2125;
 
-    --kit-table-row-hover-color: #A1BDD914;
+    --kit-table-row-hover-color: #a1bdd914;
     --kit-table-header-text: var(--kit-header-text);
 
-    --kit-dialog-bg-color: #282E33;
+    --kit-dialog-bg-color: #282e33;
 
     --kit-form-danger: #f15b50;
     --kit-form-danger-icon: #f15b50;
-    --kit-form-warning: #F5CD47;
+    --kit-form-warning: #f5cd47;
 
-    --kit-progress-top-color: #579DFF;
+    --kit-progress-top-color: #579dff;
+
+    --kit-select-placeholder: var(--kit-body-text);
+    --kit-select-ghost-bg-color: #a6c5e229;
+    --kit-select-menu-bg-color: rgb(40, 46, 51);
+    --kit-select-menu-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045c, 0px 0px 1px 1px #03040480;
+    --kit-select-option-selected-bg: #1c2b41;
+    --kit-select-option-selected-text:#579dff;
+    --kit-select-option-current-bg: rgba(161, 189, 217, 0.08);
+    --kit-select-option-selected-hover-bg: #09326c;
+    --kit-select-option-selected-hover-text: #579dff;
+    --kit-select-option-hover-shadow: rgb(87, 157, 255) 2px 0px 0px 0px inset;
+    --kit-tag-bg: #a1bdd914;
+    --kit-tag-text: var(--kit-body-text);
+    --kit-tag-label: var(--kit-body-text);
+    --kit-tag-remove-bg: #5d1f1a;
+
+    --kit-dropdown-item-bg: #282e33;
+    --kit-dropdown-item-text: var(--kit-body-text);
+    --kit-dropdown-item-hover-bg: rgba(161, 189, 217, 0.08);
+    --kit-dropdown-item-hover-text: var(--kit-body-text);
+    --kit-dropdown-item-disabled-text: #bfdbf847;
+    --kit-dropdown-separator-border: #738496;
+    --kit-dropdown-group-title: var(--kit-body-text);
+    --kit-dropdown-checkbox-bg: #282e33;
+    --kit-dropdown-checkbox-text: var(--kit-body-text);
+    --kit-dropdown-checkbox-hover-bg: rgba(161, 189, 217, 0.08);
+    --kit-dropdown-checkbox-hover-text: var(--kit-body-text);
 }

@@ -60,20 +60,6 @@ export default {
 
 <style scoped>
 .kit-dropdown-checkbox-item {
-  --kit-dropdown-checkbox-bg: rgb(255, 255, 255);
-  --kit-dropdown-checkbox-text: rgb(23, 43, 77);
-  --kit-dropdown-checkbox-hover-bg: rgb(244, 245, 247);
-  --kit-dropdown-checkbox-hover-text: rgb(23, 43, 77);
-}
-
-[data-color-mode="dark"] .kit-dropdown-checkbox-item {
-  --kit-dropdown-checkbox-bg: #282e33;
-  --kit-dropdown-checkbox-text: var(--kit-body-text);
-  --kit-dropdown-checkbox-hover-bg: rgba(161, 189, 217, 0.08);
-  --kit-dropdown-checkbox-hover-text: var(--kit-body-text);
-}
-
-.kit-dropdown-checkbox-item {
   align-items: center;
   box-sizing: border-box;
   cursor: pointer;

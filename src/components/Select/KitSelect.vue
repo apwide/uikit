@@ -575,16 +575,6 @@ watch(suggestions, async () => {
 })
 </script>
 <style scoped>
-.kit-select {
-  --kit-select-placeholder: rgb(122, 134, 154);
-  --kit-select-ghost-bg-color: #fff;
-}
-
-[data-color-mode="dark"] .kit-select {
-  --kit-select-placeholder: var(--kit-body-text);
-  --kit-select-ghost-bg-color: #A6C5E229;
-}
-
 .kit-select__text {
   cursor: text;
   position: absolute;

@@ -61,24 +61,6 @@ watch(current, async (isCurrent) => {
 
 <style scoped>
 .kit-select-option {
-  --kit-select-option-selected-bg: #42526e;
-  --kit-select-option-selected-text: #fff;
-  --kit-select-option-current-bg: #ebecf0;
-  --kit-select-option-selected-hover-bg: #7d98c7;
-  --kit-select-option-selected-hover-text: #fff;
-  --kit-select-option-hover-shadow: inset 2px 0px 0px #0C66E4;
-}
-
-[data-color-mode="dark"] .kit-select-option {
-  --kit-select-option-selected-bg: #1C2B41;
-  --kit-select-option-selected-text:#579DFF;
-  --kit-select-option-current-bg: rgba(161, 189, 217, 0.08);
-  --kit-select-option-selected-hover-bg: #09326C;
-  --kit-select-option-selected-hover-text: #579DFF;
-  --kit-select-option-hover-shadow: rgb(87, 157, 255) 2px 0px 0px 0px inset;
-}
-
-.kit-select-option {
   cursor: pointer;
   display: block;
   font-size: inherit;
