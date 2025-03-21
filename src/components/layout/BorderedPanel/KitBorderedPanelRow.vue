@@ -14,28 +14,20 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+import Vue, { ref } from 'vue'
 
-export default Vue.extend({
-  props: {
-    label: {
-      type: String
-    },
-    value: {
-      type: String
-    },
-    forceShowAfter: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      showAfterLabel: false
-    }
-  }
+type Props = {
+  label?: string
+  value?: string
+  forceShowAfter?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  forceShowAfter: false
 })
+
+const showAfterLabel = ref(false)
 </script>
 
 <style scoped>

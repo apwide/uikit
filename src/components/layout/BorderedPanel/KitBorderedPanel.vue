@@ -16,24 +16,15 @@
   </aside>
 </template>
 
-<script>
-import Vue from 'vue'
+<script setup lang="ts">
+type Props = {
+  title?: string
+  headerFloatingTitle?: string
+  noHeader?: boolean
+}
 
-export default Vue.extend({
-  props: {
-    title: {
-      type: String,
-      default: undefined
-    },
-    headerFloatingTitle: {
-      type: String,
-      default: undefined
-    },
-    noHeader: {
-      type: Boolean,
-      default: false
-    }
-  }
+withDefaults(defineProps<Props>(), {
+  noHeader: false
 })
 </script>
 
