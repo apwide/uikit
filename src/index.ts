@@ -52,6 +52,7 @@ import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import KitSecuredInput from './components/Form/KitSecuredInput.vue'
 import KitCard from './components/Card/KitCard.vue'
 import KitRadioGroup from './components/Radio/KitRadioGroup.vue'
+import KitRadio from './components/Radio/KitRadio.vue'
 import KitCollapsible from './components/Collapsible/KitCollapsible.vue'
 
 import './style.css'
@@ -60,6 +61,7 @@ export {
   KitCard,
   KitIcon,
   KitRadioGroup,
+  KitRadio,
   KitCollapsible,
   KitButton,
   KitDropdown,
