@@ -1,10 +1,11 @@
 <template>
   <div>
     <h3>Simple dropdown</h3>
+    <b>selected value: {{ singleSelected }}</b>
     <p>
       <KitDropdown data-cy="simple-dropdown" label="Drop down menu">
-        <KitDropdownItem data-cy="simple-dropdown-item"> First item </KitDropdownItem>
-        <KitDropdownItem>Second item</KitDropdownItem>
+        <KitDropdownItem :selected="singleSelected === 'first'" data-cy="simple-dropdown-item" @click="singleSelected = 'first'"> First item </KitDropdownItem>
+        <KitDropdownItem :selected="singleSelected === 'second'" @click="singleSelected = 'second'">Second item</KitDropdownItem>
         <KitDropdownItem disabled> Lorem ipsum dolor sit amet consectetur adipisicing elit </KitDropdownItem>
       </KitDropdown>
     </p>
@@ -22,7 +23,7 @@
         <KitDropdownGroup label="Europe">
           <KitDropdownItem>Poland</KitDropdownItem>
           <KitDropdownItem>Germany</KitDropdownItem>
-          <KitDropdownItem>France</KitDropdownItem>
+          <KitDropdownItem selected>France (Selected)</KitDropdownItem>
           <KitDropdownItem>United Kingdom</KitDropdownItem>
           <KitDropdownItem>Spain</KitDropdownItem>
         </KitDropdownGroup>
@@ -149,6 +150,7 @@ import KitDropdownSeparator from '@/components/Dropdown/KitDropdownSeparator.vue
 import KitIconButton from '@/components/Button/KitIconButton.vue'
 import KitIcon from '@/components/Icon/KitIcon.vue'
 
+const singleSelected = ref('second')
 const selected = ref(['second'])
 const mixedValue = ref(false)
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-item" v-on="$listeners" @click="emit('select', value)">
+  <div class="dropdown-item" v-on="$listeners" @click="emit('select', value)" :selected="selected">
     <span class="dropdown-item-label">
       <slot />
     </span>
@@ -8,8 +8,12 @@
 <script setup lang="ts">
 type Props = {
   value?: string | number | boolean | any
+  selected?: boolean
 }
-defineProps<Props>()
+
+withDefaults(defineProps<Props>(), {
+  selected: false
+})
 const emit = defineEmits<{
   (event: 'select', data: MouseEvent)
 }>()
@@ -48,4 +52,15 @@ const emit = defineEmits<{
   cursor: not-allowed;
   color: var(--kit-dropdown-item-disabled-text);
 }
+
+.dropdown-item[selected]:not([disabled]) {
+  background-color: var(--kit-dropdown-item-selected-bg);
+  color: var(--kit-dropdown-item-selected-text);
+}
+
+.dropdown-item[selected]:not([disabled]):hover {
+  background-color: var(--kit-dropdown-item-selected-hover-bg);
+  color: var(--kit-dropdown-item-selected-hover-text);
+}
+
 </style>
