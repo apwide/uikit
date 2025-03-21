@@ -154,18 +154,6 @@ onUnmounted(() => {
 
 <style scoped>
 .kit-modal-container {
-  --kit-modal-container-bg-color: rgb(255, 255, 255);
-  --kit-modal-container-shadow: rgba(9, 30, 66, 0.08) 0 0 0 1px, rgba(9, 30, 66, 0.08) 0 2px 1px, rgba(9, 30, 66, 0.31) 0 0 20px -6px;
-  --kit-modal-container-text-color: rgb(9, 30, 66);
-}
-
-[data-color-mode="dark"] .kit-modal-container {
-  --kit-modal-container-bg-color: #1d2125;
-  --kit-modal-container-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
-  --kit-modal-container-text-color: #b6c2cf;
-}
-
-.kit-modal-container {
   background-color: var(--kit-modal-container-bg-color);
   box-shadow: var(--kit-modal-container-shadow);
   color: var(--kit-modal-container-text-color);
