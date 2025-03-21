@@ -101,6 +101,21 @@ body {
     --kit-modal-container-shadow: rgba(9, 30, 66, 0.08) 0 0 0 1px, rgba(9, 30, 66, 0.08) 0 2px 1px, rgba(9, 30, 66, 0.31) 0 0 20px -6px;
     --kit-modal-container-text-color: #091e42;
 
+    --kit-text-field-placeholder-color: #7a869a;
+    --kit-text-field-border-color: #dfe1e6;
+    --kit-text-field-text-color: #091e42;
+    --kit-text-field-bg-color: #fafbfc;
+    --kit-text-field-hover-color: #ebecf0;
+    --kit-text-field-disabled-bg-color: #f4f5f7;
+    --kit-text-field-disabled-text-color: #a5adba;
+    --kit-text-field-active-bg-color: #fff;
+    --kit-text-field-active-border-color: #4c9aff;
+    --kit-text-field-loading-bg-color: white;
+    --kit-text-field-select-bg-color: #f4f5f7;
+    --kit-text-field-select-border-color: #f4f5f7;
+    --kit-text-field-select-hover-color: #ebecf0;
+    --kit-text-field-select-hover-border-color: #ebecf0;
+
 }
 
 [data-color-mode="dark"] body {
@@ -193,4 +208,19 @@ body {
     --kit-modal-container-bg-color: #1d2125;
     --kit-modal-container-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
     --kit-modal-container-text-color: #b6c2cf;
+
+    --kit-text-field-placeholder-color: #b6c2cf;
+    --kit-text-field-border-color: #738496;
+    --kit-text-field-text-color: #b6c2cf;
+    --kit-text-field-bg-color: #22272B;
+    --kit-text-field-hover-color: #282E33;
+    --kit-text-field-disabled-bg-color: #282E33;
+    --kit-text-field-disabled-text-color: #b6c2cf;
+    --kit-text-field-active-bg-color: #22272b;
+    --kit-text-field-active-border-color:#579DFF;
+    --kit-text-field-loading-bg-color: var(--apw-page-background);
+    --kit-text-field-select-bg-color: #2b2a33;
+    --kit-text-field-select-border-color: #738496;
+    --kit-text-field-select-hover-color: #282E33;
+    --kit-text-field-select-hover-border-color: #738496;
 }
