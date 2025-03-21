@@ -30,7 +30,7 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped>
 .kit-bordered-panel {
-  border: 1px solid #dfe1e6;
+  border: 1px solid var(--kit-bordered-panel-border);
   border-radius: 4px;
   margin-bottom: 8px;
 }
@@ -41,10 +41,10 @@ withDefaults(defineProps<Props>(), {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: stretch;
-  color: #172b4d;
+  color: var(--kit-bordered-panel-header-text);
   padding: 6px 12px;
   overflow: hidden;
-  border-bottom: 1px solid #dfe1e6;
+  border-bottom: 1px solid var(--kit-bordered-panel-border);
 }
 
 .kit-bordered-panel__header-title {

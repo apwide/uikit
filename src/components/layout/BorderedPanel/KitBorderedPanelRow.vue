@@ -39,7 +39,7 @@ const showAfterLabel = ref(false)
 }
 
 .kit-bordered-panel-row__key {
-  color: #42526e;
+  color: var(--kit-bordered-panel-row-text);
   min-width: 120px;
   width: 40%;
   max-width: 170px;

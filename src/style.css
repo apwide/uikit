@@ -88,6 +88,10 @@ body {
     --kit-dropdown-checkbox-hover-bg: #f4f5f7;
     --kit-dropdown-checkbox-hover-text: #172b4d;
 
+    --kit-bordered-panel-border: #dfe1e6;
+    --kit-bordered-panel-header-text: #172b4d;
+    --kit-bordered-panel-row-text: #42526e;
+
 }
 
 [data-color-mode="dark"] body {
@@ -167,4 +171,8 @@ body {
     --kit-dropdown-checkbox-text: var(--kit-body-text);
     --kit-dropdown-checkbox-hover-bg: rgba(161, 189, 217, 0.08);
     --kit-dropdown-checkbox-hover-text: var(--kit-body-text);
+
+    --kit-bordered-panel-border: #738496;
+    --kit-bordered-panel-header-text: var(--kit-body-text);
+    --kit-bordered-panel-row-text: var(--kit-body-text);
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>KitActionMenu</h3>
-    <BorderedPanel title="Classy menu">
+    <KitBorderedPanel title="Classy menu">
       <template #actions>
         <KitActionMenu title="Bla bla bla">
           <KitMenuItem @click="select('add')"> Add entry </KitMenuItem>
@@ -13,23 +13,23 @@
           </KitMenuSection>
         </KitActionMenu>
       </template>
-      <BorderedPanelRow label="Reporting scheme" value="Some text" />
-      <BorderedPanelRow label="Reporting scheme" value="Some text" />
-      <BorderedPanelRow label="Selected value in the menu" :value="selectedValue" />
-    </BorderedPanel>
+      <KitBorderedPanelRow label="Reporting scheme" value="Some text" />
+      <KitBorderedPanelRow label="Reporting scheme" value="Some text" />
+      <KitBorderedPanelRow label="Selected value in the menu" :value="selectedValue" />
+    </KitBorderedPanel>
 
     <h3>KitActionMenu - disappears if no content</h3>
-    <BorderedPanel title="Classy menu">
+    <KitBorderedPanel title="Classy menu">
       <template #actions>
         <KitActionMenu title="Bla bla bla">
           <KitMenuItem v-if="false" @click="select('add')"> Add entry </KitMenuItem>
         </KitActionMenu>
       </template>
-      <BorderedPanelRow label="Reporting scheme" value="Some text" />
-      <BorderedPanelRow label="Selected value in the menu" :value="selectedValue" />
-    </BorderedPanel>
+      <KitBorderedPanelRow label="Reporting scheme" value="Some text" />
+      <KitBorderedPanelRow label="Selected value in the menu" :value="selectedValue" />
+    </KitBorderedPanel>
     <h3>KitActionMenu and KitIconMenu</h3>
-    <BorderedPanel title="Classy menu">
+    <KitBorderedPanel title="Classy menu">
       <template #actions>
         <KitIconMenu title="Permission menu">
           <template #icon>
@@ -47,8 +47,8 @@
           <KitMenuItem @click="select('add')"> Add entry </KitMenuItem>
         </KitActionMenu>
       </template>
-      <BorderedPanelRow label="Reporting scheme" value="Some text" />
-    </BorderedPanel>
+      <KitBorderedPanelRow label="Reporting scheme" value="Some text" />
+    </KitBorderedPanel>
 
     <h3>Simple menu</h3>
     <div class="wrapper">
@@ -103,8 +103,8 @@ import MenuSection from '@/components/Menu/MenuSection'
 import EditorAddIcon from '@/components/Icon/aui/EditorAddIcon'
 import KitActionMenu from '@/components/Menu/KitActionMenu'
 import KitMenuItem from '@/components/Menu/KitMenuItem'
-import BorderedPanel from '@/components/layout/BorderedPanel/KitBorderedPanel'
-import BorderedPanelRow from '@/components/layout/BorderedPanel/KitBorderedPanelRow'
+import KitBorderedPanel from '@/components/layout/BorderedPanel/KitBorderedPanel'
+import KitBorderedPanelRow from '@/components/layout/BorderedPanel/KitBorderedPanelRow'
 import { computed, ref } from 'vue'
 
 const selected = ref(null)
