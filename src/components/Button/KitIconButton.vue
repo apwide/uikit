@@ -1,6 +1,6 @@
 <template>
   <KitButton
-    appearance="subtle"
+    :appearance="appearance"
     :spacing="spacing"
     class="kit-icon-button"
     v-bind="$attrs"
@@ -37,10 +37,12 @@ import KitButton from './KitButton.vue'
 
 type Props = {
   title: string
+  appearance?: string
   spacing?: KitButtonSpacing
 }
 
 withDefaults(defineProps<Props>(), {
-  spacing: 'default'
+  spacing: 'default',
+  appearance: 'subtle'
 })
 </script>
