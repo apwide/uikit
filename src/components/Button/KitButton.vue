@@ -162,285 +162,185 @@ button:focus {
 
 /*default*/
 button[appearance='default'] {
-  background-color: #f6f7f8;
-  color: #505f79;
+  background-color: var(--kit-btn-default-bg);
+  color: var(--kit-btn-default-text);
 }
 
 button[appearance='default']:not([disabled]):not([selected]):hover {
-  background-color: #efeff2;
+  background-color: var(--kit-btn-default-hover-bg);
 }
 
 button[appearance='default']:not([disabled]):not([selected]):active {
-  background-color: rgba(179, 212, 255, 0.6);
-  color: #0052cc;
+  background-color: var(--kit-btn-default-active-bg);
+  color: var(--kit-btn-default-active-text);
 }
 
 button[appearance='default']:active >>> svg {
-  color: #0052cc;
+  color: var(--kit-btn-default-active-text);
 }
-
-/*default-dark*/
-[data-color-mode="dark"] button[appearance='default'] {
-  background-color: #A1BDD914;
-  color: var(--kit-body-text);
-}
-
-[data-color-mode="dark"] button[appearance='default']:not([disabled]):not([selected]):hover {
-  background-color: #A6C5E229;
-  color: var(--kit-body-text);
-}
-
-[data-color-mode="dark"] button[appearance='default']:not([disabled]):not([selected]):active {
-  background-color: #BFDBF847;
-  color: var(--kit-body-text);
-}
-
 
 /*primary*/
 button[appearance='primary'] {
-  background-color: #0052cc;
-  color: #ffffff;
+  background-color: var(--kit-btn-primary-bg);
+  color: var(--kit-btn-primary-text);
   font-weight: 600;
 }
 
 button[appearance='primary']:not([disabled]):not([selected]):hover {
-  background-color: #0065ff;
+  background-color: var(--kit-btn-primary-hover-bg);
 }
 
 button[appearance='primary']:not([disabled]):not([selected]):active {
-  background-color: #0747a6;
+  background-color: var(--kit-btn-primary-active-bg);
 }
 
 button[appearance='primary'][loading] >>> .kit-spinner {
-  color: #fff;
-}
-
-/*primary-dark*/
-[data-color-mode="dark"] button[appearance='primary'] {
-  background-color: #579DFF;
-  color: #1D2125;
-  font-weight: 600;
-}
-
-[data-color-mode="dark"] button[appearance='primary']:not([disabled]):not([selected]):hover {
-  background-color: #85B8FF;
-}
-
-[data-color-mode="dark"] button[appearance='primary']:not([disabled]):not([selected]):active {
-  background-color: #CCE0FF;
-}
-
-[data-color-mode="dark"] button[appearance='primary'][loading] >>> .kit-spinner {
-  color: #1D2125;
+  color: var(--kit-btn-primary-text);
 }
 
 /*link*/
 button[appearance='link'] {
   background: none;
-  color: #0052cc;
+  color: var(--kit-btn-link-text);
 }
 
 button[appearance='link']:not([disabled]):not([selected]):hover {
-  color: #0065ff;
+  color: var(--kit-btn-link-hover-bg);
   text-decoration: underline;
 }
 
 button[appearance='link']:not([disabled]):not([selected]):active {
   text-decoration: none;
-  color: #0747a6;
-}
-
-/*link-dark*/
-[data-color-mode="dark"] button[appearance='link'] {
-  background: none;
-  color: #579dff;
-}
-
-[data-color-mode="dark"] button[appearance='link']:not([disabled]):not([selected]):hover {
-  color: #579dff;
-  text-decoration: underline;
-}
-
-[data-color-mode="dark"] button[appearance='link']:not([disabled]):not([selected]):active {
-  text-decoration: none;
-  color: #85B8FF;
+  color: var(--kit-btn-link-active-text);
 }
 
 /*subtle*/
 button[appearance='subtle'] {
-  background: none;
-  color: #505f79;
+  background: var(--kit-btn-subtle-bg);
+  color: var(--kit-btn-subtle-text);
 }
 
 button[appearance='subtle']:not([disabled]):not([selected]):hover {
-  background-color: rgba(9, 30, 66, 0.08);
+  background-color: var(--kit-btn-subtle-hover-bg);
 }
 
 button[appearance='subtle']:not([disabled]):not([selected]):active {
-  background-color: rgba(179, 212, 255, 0.6);
-  color: #0052cc;
-}
-
-/*subtle-dark*/
-[data-color-mode="dark"] button[appearance='subtle'] {
-  color: #9FADBC;
-}
-
-[data-color-mode="dark"] button[appearance='subtle']:not([disabled]):not([selected]):hover {
-  background-color: #A1BDD914;
-}
-
-[data-color-mode="dark"] button[appearance='subtle']:not([disabled]):not([selected]):active {
-  background-color: #A6C5E229;
-  color: #9FADBC;
+  background-color: var(--kit-btn-subtle-active-bg);
+  color: var(--kit-btn-subtle-active-text);
 }
 
 /*subtle-link*/
 button[appearance='subtle-link'] {
   background: none;
-  color: #6b778c;
+  color: var(--kit-btn-subtle-link-text);
 }
 
 button[appearance='subtle-link']:not([disabled]):not([selected]):hover {
   text-decoration: underline;
-  color: #8993a4;
+  color: var(--kit-btn-subtle-link-hover-text);
 }
 
 button[appearance='subtle-link']:not([disabled]):not([selected]):active {
   text-decoration: none;
-  color: #505f79;
-}
-
-/*subtle-link-dark*/
-[data-color-mode="dark"] button[appearance='subtle-link'] {
-  background: none;
-  color: #9FADBC;
-}
-
-[data-color-mode="dark"] button[appearance='subtle-link']:not([disabled]):not([selected]):hover {
-  text-decoration: underline;
-  color: #9FADBC;
-}
-
-[data-color-mode="dark"] button[appearance='subtle-link']:not([disabled]):not([selected]):active {
-  text-decoration: none;
-  color: #B6C2CF;
+  color: var(--kit-btn-subtle-link-active-text);
 }
 
 /*warning*/
 button[appearance='warning'] {
-  background-color: #ffab00;
-  color: #172b4d;
+  background-color: var(--kit-btn-warn-bg);
+  color: var(--kit-btn-warn-text);
 }
 
 button:focus[appearance='warning'] {
-  box-shadow: #ff8b00 0 0 0 2px;
+  box-shadow: var(--kit-btn-warn-bg) 0 0 0 2px;
 }
 button[appearance='warning']:not([disabled]):not([selected]):hover {
-  background-color: #ffc400;
+  background-color: var(--kit-btn-warn-hover-bg);
 }
 
 button[appearance='warning']:not([disabled]):not([selected]):active,
 button[appearance='warning'][selected],
 button[appearance='warning'][selected]:hover {
-  background-color: #ff991f;
-  color: #172b4d;
+  background-color: var(--kit-btn-warn-active-bg);
+  color: var(--kit-btn-warn-active-text);
 }
 
 button[appearance='warning']:active >>> svg,
 button[appearance='warning'][selected] >>> svg,
 button[appearance='warning'][selected]:hover >>> svg {
-  color: #172b4d;
+  color: var(--kit-btn-warn-active-text);
 }
 
 /*danger*/
 button[appearance='danger'] {
-  background-color: #de350b;
-  color: #ffffff;
+  background-color: var(--kit-btn-danger-bg);
+  color: var(--kit-btn-danger-text);
 }
 
 button:focus[appearance='danger'] {
-  box-shadow: #ff8f73 0 0 0 2px;
+  box-shadow: var(--kit-btn-danger-border) 0 0 0 2px;
 }
 
 button[appearance='danger']:not([disabled]):not([selected]):hover {
-  background-color: #ff5630;
+  background-color: var(--kit-btn-danger-hover-bg);
 }
 
 button[appearance='danger']:not([disabled]):not([selected]):active,
 button[appearance='danger'][selected],
 button[appearance='danger'][selected]:hover {
-  background-color: #bf2600;
+  background-color: var(--kit-btn-danger-active-bg);
 }
 
 button[appearance='danger'][loading] >>> .kit-spinner {
-  color: #fff;
+  color: var(--kit-btn-danger-active-text);
 }
 
 /*help*/
 button[appearance='help'] {
-  background-color: #413394;
-  color: #ffffff;
+  background-color: var(--kit-btn-help-bg);
+  color: var(--kit-btn-help-text);
 }
 
 button:focus[appearance='help'] {
-  box-shadow: #ff8f73 0 0 0 2px;
+  box-shadow: var(--kit-btn-help-border) 0 0 0 2px;
 }
 
 button[appearance='help']:not([disabled]):not([selected]):hover {
-  background-color: #6252bf;
+  background-color: var(--kit-btn-help-hover-bg);
 }
 
 button[appearance='help']:not([disabled]):not([selected]):active,
 button[appearance='help'][selected],
 button[appearance='help'][selected]:hover {
-  background-color: #352a8dff;
+  background-color: var(--kit-btn-help-active-bg);
 }
 
 button[appearance='help'][loading] >>> .kit-spinner {
-  color: #fff;
+  color: var(--kit-btn-help-active-text);
 }
 
-button[selected],
-button[selected]:hover,
-button[selected]:active {
-  background-color: #253858;
-  color: rgb(244, 245, 247);
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']),
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover,
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active {
+  background-color: var(--kit-btn-selected-bg);
+  color: var(--kit-btn-selected-text);
   text-decoration: none;
 }
 
-button[selected] >>> svg,
-button[selected]:hover >>> svg,
-button[selected]:active >>> svg {
-  color: rgb(244, 245, 247);
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover {
+  background-color: var(--kit-btn-selected-hover-bg);
 }
 
-[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']),
-[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover,
-[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active {
-  background-color: #1C2B41;
-  color: #579DFF;
-}
-
-[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> svg,
-[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover >>> svg,
-[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active >>> svg {
-  color: #579DFF;
-}
-
-[data-color-mode="dark"] button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover {
-  background-color: #09326C;
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> svg,
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover >>> svg,
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active >>> svg {
+  color: var(--kit-btn-selected-text);
 }
 
 button[disabled] span.kit-button__wrapper,
 button[disabled] >>> svg {
-  color: #a5adba;
+  color: var(--kit-btn-disabled-text);
   pointer-events: none;
-}
-
-[data-color-mode="dark"] button[disabled] span.kit-button__wrapper,
-[data-color-mode="dark"] button[disabled] >>> svg {
-  color: #BFDBF847;
 }
 
 button[disabled] {
@@ -448,20 +348,11 @@ button[disabled] {
 }
 
 button[loading][disabled] >>> .kit-spinner {
-  color: #172b4d;
-}
-
-[data-color-mode="dark"] button[loading][selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> .kit-spinner > svg {
-  --kit-spinner-color: #579DFF;
-  color: #579DFF !important;
+  color: var(--kit-btn-disabled-text);
 }
 
 button[disabled]:not([appearance='subtle-link']):not([appearance='link']):not([appearance='subtle']) {
-  background-color: #f5f6f8;
-}
-
-[data-color-mode="dark"] button[disabled]:not([appearance='subtle-link']):not([appearance='link']):not([appearance='subtle']) {
-  background-color: #BCD6F00A;
+  background-color: var(--kit-btn-disabled-bg);
 }
 
 button::-moz-focus-inner,

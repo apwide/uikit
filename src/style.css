@@ -13,6 +13,50 @@ body {
 
     --kit-progress-top-color: #0052cc;
 
+    --kit-btn-selected-bg:  #253858;
+    --kit-btn-selected-text: #f4f5f7;
+    --kit-btn-selected-hover-bg: var(--kit-btn-selected-bg);
+    --kit-btn-disabled-bg: #f5f6f8;
+    --kit-btn-disabled-text: #a5adba;
+    --kit-btn-default-bg: #f6f7f8;
+    --kit-btn-default-text: #505f79;
+    --kit-btn-default-hover-bg: #efeff2;
+    --kit-btn-default-active-bg: rgba(179, 212, 255, 0.6);
+    --kit-btn-default-active-text: #0052cc;
+    --kit-btn-primary-bg: #0052cc;
+    --kit-btn-primary-text: #ffffff;
+    --kit-btn-primary-hover-bg: #0065ff;
+    --kit-btn-primary-active-bg: #0747a6;
+    --kit-btn-link-text: #0052cc;
+    --kit-btn-link-hover-bg: #0065ff;
+    --kit-btn-link-active-text: #0747a6;
+    --kit-btn-subtle-link-text: #6b778c;
+    --kit-btn-subtle-link-hover-text: #8993a4;
+    --kit-btn-subtle-link-active-text: #505f79;
+    --kit-btn-subtle-bg: none;
+    --kit-btn-subtle-text: #505f79;
+    --kit-btn-subtle-hover-bg: rgba(9, 30, 66, 0.08);
+    --kit-btn-subtle-active-bg: rgba(179, 212, 255, 0.6);
+    --kit-btn-subtle-active-text: #0052cc;
+    --kit-btn-warn-bg: #ffab00;
+    --kit-btn-warn-text: #172b4d;
+    --kit-btn-warn-hover-bg: #ffc400;
+    --kit-btn-warn-active-bg: #ff991f;
+    --kit-btn-warn-active-text: #172b4d;
+    --kit-btn-danger-bg: #de350b;
+    --kit-btn-danger-text: #ffffff;
+    --kit-btn-danger-border: #ff8f73;
+    --kit-btn-danger-hover-bg: #ff5630;
+    --kit-btn-danger-active-bg: #bf2600;
+    --kit-btn-danger-active-text: #ffffff;
+    --kit-btn-help-bg: #413394;
+    --kit-btn-help-text: #ffffff;
+    --kit-btn-help-border: #ff8f73;
+    --kit-btn-help-hover-bg: #6252bf;
+    --kit-btn-help-active-bg: #352a8dff;
+    --kit-btn-help-active-text: #ffffff;
+
+
     --kit-select-placeholder: rgb(122, 134, 154);
     --kit-select-ghost-bg-color: #ffffff;
     --kit-select-menu-bg-color: rgb(255, 255, 255);
@@ -62,6 +106,35 @@ body {
     --kit-form-warning: #f5cd47;
 
     --kit-progress-top-color: #579dff;
+
+    --kit-btn-text: var(--kit-body-text);
+
+
+    --kit-btn-selected-bg: #1c2b41;
+    --kit-btn-selected-text: #579dff;
+    --kit-btn-selected-hover-bg: #09326c;
+    --kit-btn-disabled-bg: #bcd6f00a;
+    --kit-btn-disabled-text: #bfdbf847;
+    --kit-btn-default-bg: #a1bdd914;
+    --kit-btn-default-text: var(--kit-body-text);
+    --kit-btn-default-hover-bg: #a6c5e229;
+    --kit-btn-default-active-bg: #bfdbf847;
+    --kit-btn-default-active-text: var(--kit-body-text);
+    --kit-btn-primary-bg: #579dff;
+    --kit-btn-primary-text: #1d2125;
+    --kit-btn-primary-hover-bg: #85b8ff;
+    --kit-btn-primary-active-bg: #cce0ff;
+    --kit-btn-link-text: #579dff;
+    --kit-btn-link-hover-bg: #579dff;
+    --kit-btn-link-active-text: #85b8ff;
+    --kit-btn-subtle-link-text: #9fadbc;
+    --kit-btn-subtle-link-hover-text: #9fadbc;
+    --kit-btn-subtle-link-active-text: #b6c2cf;
+    --kit-btn-subtle-bg: none;
+    --kit-btn-subtle-text: var(--kit-btn-text);
+    --kit-btn-subtle-hover-bg: #a1bdd914;
+    --kit-btn-subtle-active-bg: #a6c5e229;
+    --kit-btn-subtle-active-text: #9fadbc;
 
     --kit-select-placeholder: var(--kit-body-text);
     --kit-select-ghost-bg-color: #a6c5e229;
