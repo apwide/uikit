@@ -56,20 +56,6 @@ function onFocus(e) {
 
 <style scoped>
 .kit-radio {
-  --kit-radio-border: #999;
-  --kit-radio-selected-border: #6b778c;
-  --kit-radio-selected-center: white;
-  --kit-radio-hover-center: #ebecf0;
-}
-
-[data-color-mode="dark"] .kit-radio {
-  --kit-radio-border: #738496;
-  --kit-radio-selected-border: #579dff;
-  --kit-radio-selected-center: var(--apw-page-background);
-  --kit-radio-hover-center: #A1BDD914;
- }
-
-.kit-radio {
   cursor: pointer;
   padding: 2px 0;
   margin-bottom: -2px;
