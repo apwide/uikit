@@ -22,9 +22,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import KitButton from '@components/Button/KitButton.vue'
+import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitTransitionExpand from '@/components/common/KitTransitionExpand.vue'
 import KitCheckbox from '@/components/Checkbox/KitCheckbox.vue'
-import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 
 const expanded = ref(false)
 const enterTransition = ref(true)

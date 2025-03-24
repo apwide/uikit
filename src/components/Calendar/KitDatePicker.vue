@@ -36,11 +36,12 @@
 import format from 'date-fns/format'
 import { fromUnixTime, parse, isValid } from 'date-fns'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { computed, getCurrentInstance, ref } from 'vue'
+import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup'
 import KitIcon from '../Icon/KitIcon'
 import Calendar from './Calendar'
-import { computed, getCurrentInstance, ref } from 'vue'
 
 const MILISECONDS_IN_SECOND = 1000
 
@@ -50,7 +51,7 @@ type Props = {
   isLoading?: boolean
   isInvalid?: boolean
   dateFormat?: string
-  disabledRange?: { from: any, to: any }
+  disabledRange?: DateRange
   disabled?: boolean
   timeZone?: string
 }

@@ -1,9 +1,9 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
+import KitTextField from '@components/Form/KitTextField.vue'
 import InlineEditViewContent from '@/components/Form/InlineEditViewContent'
 import InlineEditButtons from '@/components/Form/InlineEditButtons'
 import InlineErrorMessage from '@/components/Form/InlineErrorMessage'
-import KitTextField from '@components/Form/KitTextField.vue'
 
 const stubs = { InlineEditViewContent }
 const propsData = { value: 'MackBook' }

@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import Vue, { computed, inject } from 'vue'
+import { computed, inject } from 'vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitTabButton from './KitTabButton.vue'
 

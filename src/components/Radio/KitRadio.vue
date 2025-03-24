@@ -17,7 +17,7 @@
 import { computed, ref } from 'vue'
 
 type Props = {
-  value: any
+  value: unknown
   name?: string
   checked?: boolean
 }
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
 const radio = ref<HTMLLabelElement>()
 
 const emit = defineEmits<{
-  (event: 'input', data?: any)
+  (event: 'input', data?: unknown)
   (event: 'blur', data: FocusEvent)
   (event: 'focus', data: FocusEvent)
 }>()

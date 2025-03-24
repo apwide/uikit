@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import TooltipContent from './TooltipContent.vue'
 import { nextTick, ref } from 'vue'
+import TooltipContent from './TooltipContent.vue'
 
 type Props = {
   label: string

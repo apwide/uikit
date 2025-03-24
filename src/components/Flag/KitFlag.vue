@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
 import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
 import InfoIcon from '../Icon/aui/InfoIcon'
@@ -42,7 +43,6 @@ import WarningIcon from '../Icon/aui/WarningIcon'
 import ErrorIcon from '../Icon/aui/ErrorIcon'
 import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
 
-import { computed, ref } from 'vue'
 
 type Props = {
   title?: string

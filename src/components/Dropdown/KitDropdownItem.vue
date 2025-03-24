@@ -7,7 +7,7 @@
 </template>
 <script setup lang="ts">
 type Props = {
-  value?: string | number | boolean | any
+  value?: string | number | boolean | unknown
   selected?: boolean
 }
 

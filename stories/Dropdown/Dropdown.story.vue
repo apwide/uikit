@@ -143,9 +143,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import KitDropdownGroup from '@components/Dropdown/KitDropdownGroup.vue'
-import KitDropdown from '@/components/Dropdown/KitDropdown.vue'
 import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
 import KitDropdownCheckboxItem from '@components/Dropdown/KitDropdownCheckboxItem.vue'
+import KitDropdown from '@/components/Dropdown/KitDropdown.vue'
 import KitDropdownSeparator from '@/components/Dropdown/KitDropdownSeparator.vue'
 import KitIconButton from '@/components/Button/KitIconButton.vue'
 import KitIcon from '@/components/Icon/KitIcon.vue'

@@ -13,19 +13,19 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { chunk } from '../../utils/utils'
 import KitButton from '../Button/KitButton.vue'
-import { computed } from 'vue'
 
 const HALF_DECADE = 5
 
 type Props = {
-  yearsOfDecade: Array
+  yearsOfDecade: number[]
 }
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (event: 'year-selected', data: any)
+  (event: 'year-selected', data: number)
 }>()
 
 const decade = computed(() => chunk(props.yearsOfDecade, HALF_DECADE))

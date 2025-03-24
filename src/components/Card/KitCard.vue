@@ -7,7 +7,7 @@
 type Props = {
   elevation?: number | string
 }
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   elevation: 1
 })
 </script>

@@ -93,11 +93,12 @@
 </template>
 
 <script setup lang="ts">
+import KitMenu from '@components/Menu/KitMenu.vue'
+import { computed, ref } from 'vue'
 import KitIconMenu from '../../src/components/Menu/KitIconMenu'
 import KitMenuSection from '../../src/components/Menu/KitMenuSection'
 import KitMenuSeparator from '../../src/components/Menu/KitMenuSeparator'
 import KitIcon from '../../src/components/Icon/KitIcon'
-import KitMenu from '@components/Menu/KitMenu.vue'
 import MenuItem from '@/components/Menu/MenuItem'
 import MenuSection from '@/components/Menu/MenuSection'
 import EditorAddIcon from '@/components/Icon/aui/EditorAddIcon'
@@ -105,7 +106,6 @@ import KitActionMenu from '@/components/Menu/KitActionMenu'
 import KitMenuItem from '@/components/Menu/KitMenuItem'
 import KitBorderedPanel from '@/components/layout/BorderedPanel/KitBorderedPanel'
 import KitBorderedPanelRow from '@/components/layout/BorderedPanel/KitBorderedPanelRow'
-import { computed, ref } from 'vue'
 
 const selected = ref(null)
 

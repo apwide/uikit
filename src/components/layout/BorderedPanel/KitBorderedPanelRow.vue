@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import Vue, { ref } from 'vue'
+import { ref } from 'vue'
 
 type Props = {
   label?: string

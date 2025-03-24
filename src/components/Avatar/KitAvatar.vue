@@ -30,8 +30,8 @@
 </template>
 
 <script setup lang="ts">
-import { Online, Busy, Offline, Focus, Approved, Declined } from './Icons'
 import { computed, ref } from 'vue'
+import { Online, Busy, Offline, Focus, Approved, Declined } from './Icons'
 
 type Props = {
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'

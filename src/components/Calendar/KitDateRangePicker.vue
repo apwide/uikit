@@ -86,25 +86,26 @@ import {
   subWeeks,
   subYears
 } from 'date-fns'
+import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue'
+import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup'
 import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
 import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'
 import KitIcon from '../Icon/KitIcon'
 import Calendar from './Calendar'
-import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue'
 
 const MILISECONDS_IN_SECOND = 1000
 
 type Props = {
-  value?: { from: undefined, to: undefined }
+  value?: DateRange
   isFocused?: boolean
   isLoading?: boolean
   isInvalid?: boolean
   dateFormat?: string
   disabledTyping?: boolean
   showQuickRanges?: boolean
-  disabledRange?: { from: undefined, to: undefined }
+  disabledRange?: DateRange
   timeZone?: string
   fromPlaceholder?: string
   toPlaceholder?: string
@@ -122,7 +123,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data: { from: any, to: any })
+  (event: 'input', data: DateRange)
   (event: 'confirm', data: KeyboardEvent)
   (event: 'focus', data: FocusEvent)
   (event: 'blur', data: FocusEvent)

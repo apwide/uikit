@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
-import TreeSelect from '@/components/Select/TreeSelect/TreeSelect'
 import { ref } from 'vue'
+import TreeSelect from '@/components/Select/TreeSelect/TreeSelect'
 
 const value = ref()
 const nodes = [

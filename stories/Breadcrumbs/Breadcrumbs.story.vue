@@ -33,9 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import KitIcon from '../../src/components/Icon/KitIcon'
 import KitBreadcrumbs from '@components/Breadcrumbs/KitBreadcrumbs.vue'
 import KitBreadcrumbItem from '@components/Breadcrumbs/KitBreadcrumbItem.vue'
+import KitIcon from '../../src/components/Icon/KitIcon'
 import Tooltip from '../../src/components/Tooltip/Tooltip'
 
 const items = [

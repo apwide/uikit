@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import KitTextField from './KitTextField.vue'
 import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
+import KitTextField from './KitTextField.vue'
 
 const ENTER = 13
 

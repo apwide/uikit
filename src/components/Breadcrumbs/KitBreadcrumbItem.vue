@@ -17,7 +17,7 @@ type Props = {
   target?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   link: '#',
   text: '',
   target: '_self'

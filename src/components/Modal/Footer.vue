@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import KitButton from '../Button/KitButton.vue'
 import { ref, watch } from 'vue'
+import KitButton from '../Button/KitButton.vue'
 
 type Props = {
   appearance?: string

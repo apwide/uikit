@@ -12,12 +12,11 @@
 </template>
 
 <script setup lang="ts">
-import KitSecuredInput from '@/components/Form/KitSecuredInput'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { ref } from 'vue'
+import KitSecuredInput from '@/components/Form/KitSecuredInput'
 
 const message = ref('')
-const number = ref('')
 </script>
 <style scoped>
 .icon {

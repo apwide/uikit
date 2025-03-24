@@ -12,11 +12,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onBeforeUnmount, ref } from 'vue'
 import KitButton from '../Button/KitButton.vue'
 import KitIcon from '../Icon/KitIcon'
 import Tooltip from '../Tooltip/Tooltip'
 import SetToClipboard from './SetToClipboard'
-import { computed, onBeforeUnmount, ref } from 'vue'
 
 type Props = {
   appearance?: string

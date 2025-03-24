@@ -36,10 +36,10 @@
 
 <script setup lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
-import AwesomeIcon from '../../src/components/Icon/KitIcon'
 import KitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
-import KitSelect from '../../src/components/Select/KitSelect.vue'
 import { computed, ref } from 'vue'
+import AwesomeIcon from '../../src/components/Icon/KitIcon'
+import KitSelect from '../../src/components/Select/KitSelect.vue'
 
 const size = ref()
 

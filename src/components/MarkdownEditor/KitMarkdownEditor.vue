@@ -140,7 +140,7 @@ onMounted(() => {
     })
   }
 
-  const status: any[] = [buildCharacterCounter(props.sizeLimit, props.toolbar)]
+  const status: unknown[] = [buildCharacterCounter(props.sizeLimit, props.toolbar)]
 
   hasStatusBar.value = status.length > 0
   const minHeight = props.readonly ? '1em' : `${props.minHeight}px`
@@ -367,13 +367,15 @@ onUnmounted(() => {
 }
 
 [data-color-mode="dark"] .kit-markdown-editor >>> .easymde-dropdown {
-  background: linear-gradient(to bottom right, var(--kit-md-toolbar-bg) 0%, var(--kit-md-toolbar-bg) 84%, var(--kit-body-text) 50%, var(--kit-body-text) 100%);
+  background: linear-gradient(to bottom right, var(--kit-md-toolbar-bg) 0%, var(--kit-md-toolbar-bg) 84%,
+    var(--kit-body-text) 50%, var(--kit-body-text) 100%);
   border: 1px solid var(--kit-md-toolbar-bg);
   border-radius: 3px;
 }
 
 [data-color-mode="dark"] .kit-markdown-editor >>> .easymde-dropdown:hover {
-  background: linear-gradient(to bottom right, var(--kit-md-tool-hover-bg) 0%, var(--kit-md-tool-hover-bg) 84%, var(--kit-body-text) 50%, var(--kit-body-text) 100%);
+  background: linear-gradient(to bottom right, var(--kit-md-tool-hover-bg) 0%, var(--kit-md-tool-hover-bg) 84%,
+    var(--kit-body-text) 50%, var(--kit-body-text) 100%);
 }
 
 [data-color-mode="dark"] .kit-markdown-editor >>> button {

@@ -60,10 +60,10 @@
 
 <script setup lang="ts">
 import faker from 'faker'
-import {options} from '../../api-mocks/options'
-import MultiSelectEditableRenderer from '@/components/field-renderers/MultiSelectEditableRenderer'
 import KitLozenge from '@components/Lozenge/KitLozenge.vue'
 import { ref } from 'vue'
+import {options} from '../../api-mocks/options'
+import MultiSelectEditableRenderer from '@/components/field-renderers/MultiSelectEditableRenderer'
 
 const allowedValues = options
 

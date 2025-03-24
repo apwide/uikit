@@ -123,7 +123,7 @@ function redraw() {
 }
 
 function onClick(event: MouseEvent) {
-  if (!textRef.value?.contains(event.target!)) {
+  if (!textRef.value?.contains(event.target || null)) {
     event.stopPropagation()
     event.preventDefault()
   }

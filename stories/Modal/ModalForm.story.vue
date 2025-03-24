@@ -21,9 +21,9 @@
 import { ref } from 'vue'
 import KitButton from '@components/Button/KitButton.vue'
 import KitModal from '@components/Modal/KitModal.vue'
-import KitSelect from '@/components/Select/KitSelect.vue'
 import KitInput from '@components/Form/KitInput.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
+import KitSelect from '@/components/Select/KitSelect.vue'
 
 const title = ref('')
 const type = ref('')

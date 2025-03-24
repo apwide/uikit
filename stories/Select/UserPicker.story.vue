@@ -12,10 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import { createPersonsList } from '../api-mocks/people'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
-import UserPicker from '@/components/Select/UserPicker'
 import { ref } from 'vue'
+import { createPersonsList } from '../api-mocks/people'
+import UserPicker from '@/components/Select/UserPicker'
 
 const list = createPersonsList({}, 50)
 const [initialOptions] = list

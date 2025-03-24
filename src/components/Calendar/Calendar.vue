@@ -41,12 +41,13 @@ import {
   setMonth
 } from 'date-fns'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { computed, ref, watch } from 'vue'
+import type { CalendarDate, DateRange } from '@components/Calendar/CalendarType'
 import { chunk } from '../../utils/utils'
 import CalendarHeader from './CalendarHeader'
 import Weeks from './Weeks'
 import Months from './Months'
 import Years from './Years'
-import { computed, ref, watch } from 'vue'
 
 const MONTHS = [
   'January',
@@ -66,9 +67,10 @@ const DAYS_IN_WEEK = 7
 const TODAY = new Date()
 
 type Props = {
-  value?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value?: any /* Date | number | DateRange */ /* not supporting external TS type */
   rangeValue?: boolean
-  disabledRange?: { from: any, to: any }
+  disabledRange?: DateRange
   visibleDate?: Date
   timeZone?: string
 }
@@ -85,9 +87,8 @@ const emit = defineEmits<{
   (event: 'date-selected', data: Date)
 }>()
 
-const today = ref(TODAY)
-const currentDate = ref()
-const selectedDate = ref()
+const currentDate = ref<Date | number>()
+const selectedDate = ref<Date | number>()
 const currentInterval = ref('days')
 
 const daysOfMonth = computed(() => {
@@ -203,7 +204,7 @@ function onYearSelected(year) {
   currentDate.value = setYear(currentDate.value, year)
 }
 
-function onDateSelected(day) {
+function onDateSelected(day: CalendarDate) {
   const { date } = day
   if (selectedDate.value) {
     date.setHours(selectedDate.value.getHours())

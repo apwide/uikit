@@ -7,7 +7,7 @@ type Props = {
   value?: string | number
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   value: '-'
 })
 </script>

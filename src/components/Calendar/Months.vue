@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { chunk } from '../../utils/utils'
 import KitButton from '../Button/KitButton.vue'
-import { computed } from 'vue'
 
 const MONTHS = [
   'January',

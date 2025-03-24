@@ -14,7 +14,7 @@ type Props = {
   link?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   label: '',
   color: '',
   tag: 'span'

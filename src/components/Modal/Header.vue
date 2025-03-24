@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import WarningIcon from '../Icon/aui/WarningIcon'
 import ErrorIcon from '../Icon/aui/ErrorIcon'
-import { computed } from 'vue'
 
 type Props = {
   heading?: string
@@ -23,7 +23,6 @@ const props = withDefaults(defineProps<Props>(), {
   appearance: ''
 })
 
-const icon = computed(() => props.appearance === 'danger' ? 'ErrorIcon' : 'WarningIcon')
 const color = computed(() => props.appearance === 'danger' ? '#DE350B' : '#FF991F')
 </script>
 

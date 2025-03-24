@@ -21,8 +21,8 @@
 
 <script setup lang="ts">
 import faker from 'faker'
-import MultiSelectRenderer from '@/components/field-renderers/MultiSelectRenderer'
 import { ref } from 'vue'
+import MultiSelectRenderer from '@/components/field-renderers/MultiSelectRenderer'
 
 faker.seed(1)
 const selectedValues = ref(Array.from({ length: 10 }, () => faker.lorem.word()))

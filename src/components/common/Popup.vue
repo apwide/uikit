@@ -26,11 +26,12 @@ type Props = {
   flipBehavior?: string | string[]
   offset?: number[] | string
   transitionDelay?: number
+  // eslint-disable-next-line @typescript-eslint/ban-types
   boundariesElement?: string | HTMLElement | Function
   positionFixed?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   isOpen: false,
   withoutArrow: false,
   withLightShadows: false,

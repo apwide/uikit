@@ -12,12 +12,11 @@
 
 <script setup lang="ts">
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
-import Tree from '@/components/Tree/Tree'
 import KitInput from '@components/Form/KitInput.vue'
 import { ref } from 'vue'
+import Tree from '@/components/Tree/Tree'
 
 const selected = ref()
-const value = ref()
 const search = ref()
 
 const nodes = [

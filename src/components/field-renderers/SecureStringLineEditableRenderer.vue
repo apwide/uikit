@@ -85,7 +85,7 @@ withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (event: 'start-editing')
   (event: 'stop-editing')
-  (event: 'save-requested', value: string, callback: any)
+  (event: 'save-requested', value: string, callback: CallableFunction)
 }>()
 
 const obfuscated = ref(true)

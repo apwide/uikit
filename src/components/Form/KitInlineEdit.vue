@@ -111,7 +111,7 @@ const TAB = 9
 const Status = { VALIDATION_ERROR: 422 }
 
 type Props = {
-  value: any
+  value: unknown
   type?: string
   step?: string
   maxlength?: number
@@ -166,7 +166,7 @@ const generalErrorTrigger = ref()
 const emit = defineEmits<{
   (event: 'start-editing')
   (event: 'stop-editing')
-  (event: 'save-requested', value: any, callback: (e: Error) => void)
+  (event: 'save-requested', value: unknown, callback: (e: Error) => void)
 }>()
 
 const elementToAlignButtonsTo = computed(() => props.elementToPositionConfirmButtonsTo || container.value)

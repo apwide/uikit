@@ -19,10 +19,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed, nextTick, ref, watch } from 'vue'
 import KitIconButton from '../Button/KitIconButton'
 import KitIcon from '../Icon/KitIcon'
 import KitTextField from './KitTextField.vue'
-import { computed, nextTick, ref, watch } from 'vue'
 
 type Props = {
   value?: number | string

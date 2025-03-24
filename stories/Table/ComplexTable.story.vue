@@ -37,9 +37,9 @@
 import faker from 'faker'
 import { ref } from 'vue'
 import KitIcon from '@components/Icon/KitIcon.vue'
+import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
 import KitTable from '@/components/Table/KitTable.vue'
 import KitDropdown from '@/components/Dropdown/KitDropdown.vue'
-import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
 
 const columns = [
   {

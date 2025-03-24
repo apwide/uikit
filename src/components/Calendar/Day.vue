@@ -14,17 +14,18 @@
 </template>
 
 <script setup lang="ts">
-import KitButton from '../Button/KitButton.vue'
 import { computed } from 'vue'
+import type { CalendarDate } from '@components/Calendar/CalendarType'
+import KitButton from '../Button/KitButton.vue'
 
 type Props = {
-  day: any
+  day: CalendarDate
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (event: 'date-selected', data: any)
+  (event: 'date-selected', data: CalendarDate)
 }>()
 
 const date = computed(() => props.day.date.getDate())

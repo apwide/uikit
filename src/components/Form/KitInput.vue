@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import KitTextField from './KitTextField.vue'
 import { computed, nextTick, ref, watch } from 'vue'
+import KitTextField from './KitTextField.vue'
 
 type Props = {
   value?: string | number

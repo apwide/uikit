@@ -18,11 +18,13 @@
 
 <script setup lang="ts">
 import { addMonths, addYears, subMonths, subYears } from 'date-fns'
+import { computed, ref } from 'vue'
 import KitIconButton from '../Button/KitIconButton'
 import KitIcon from '../Icon/KitIcon'
-import { computed, ref } from 'vue'
 
 const DECADE = 10
+
+export type MoveFunction = (value: Date | number) => Date
 
 type Props = {
   month: string
@@ -61,8 +63,8 @@ const interval = computed(() => {
 })
 
 const emit = defineEmits<{
-  (event: 'prev', data: Function)
-  (event: 'next', data: Function)
+  (event: 'prev', data: MoveFunction)
+  (event: 'next', data: MoveFunction)
   (event: 'change-interval', data: string)
 }>()
 

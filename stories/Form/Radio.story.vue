@@ -19,9 +19,9 @@
 
 <script setup lang="ts">
 import faker from 'faker'
-import KitRadioGroup from '../../src/components/Radio/KitRadioGroup'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { computed, ref } from 'vue'
+import KitRadioGroup from '../../src/components/Radio/KitRadioGroup'
 
 const values = Array.from({ length: 10 }).map(() => faker.internet.email())
 

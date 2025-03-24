@@ -51,8 +51,8 @@
 <script setup lang="ts">
 import faker from 'faker'
 import KitLozenge from '@components/Lozenge/KitLozenge.vue'
-import StringLineEditableRenderer from '@/components/field-renderers/StringLineEditableRenderer.vue'
 import { ref } from 'vue'
+import StringLineEditableRenderer from '@/components/field-renderers/StringLineEditableRenderer.vue'
 
 faker.seed(1)
 

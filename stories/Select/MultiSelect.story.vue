@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import faker from 'faker'
 import { ref } from 'vue'
-import { many } from '../api-mocks/helpers'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
+import { many } from '../api-mocks/helpers'
 import KitSelect from '@/components/Select/KitSelect.vue'
 
 const cities = many(faker.address.city)({}, 10)

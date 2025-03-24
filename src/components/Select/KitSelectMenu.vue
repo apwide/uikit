@@ -32,6 +32,7 @@ import KitSelectOption from './KitSelectOption.vue'
 
 type Props = {
   options?: Value<unknown>[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selected?: any /* Value<unknown> | Value<unknown>[] error on loading component */
   currentSuggestionIndex?: number
   hasSuggestions?: boolean

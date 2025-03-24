@@ -10,13 +10,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import Vue, { computed } from 'vue'
+import { computed } from 'vue'
 import KitRadio from './KitRadio'
 
+type Normalizer<TYPE> = (v: TYPE) => { key: string, label: string, value: unknown }
+
 type Props = {
-  value?: any
+  value?: unknown
   values?: Array
-  normalizer?: Function
+  normalizer?: Normalizer
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data?: any)
+  (event: 'input', data?: unknown)
 }>()
 
 const name = computed(() => {

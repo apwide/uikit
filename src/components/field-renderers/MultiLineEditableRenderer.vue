@@ -50,7 +50,7 @@ type Props = {
   confirm?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   editable: true,
   placement: 'right',
   icon: true,
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   (event: 'change', data?: string)
-  (event: 'save-requested', data?: any)
+  (event: 'save-requested', data?: CallableFunction)
   (event: 'start-editing')
   (event: 'stop-editing')
 }>()

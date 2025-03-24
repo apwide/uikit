@@ -26,8 +26,8 @@
 import faker from 'faker'
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
-import { many } from '../api-mocks/helpers'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
+import { many } from '../api-mocks/helpers'
 
 const cities = many(faker.address.city)({}, 10)
 const [city] = cities

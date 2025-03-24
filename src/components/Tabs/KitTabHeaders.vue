@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import Vue, { inject, provide } from 'vue'
+import { inject, provide } from 'vue'
 import KitDraggable from '../common/KitDraggable'
 
 type Props = {
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'reorder', data: any)
+  (event: 'reorder', data: unknown[])
 }>()
 
 const state = inject('state')

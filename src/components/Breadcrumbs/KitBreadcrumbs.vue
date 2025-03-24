@@ -21,10 +21,10 @@
 </template>
 
 <script setup lang="ts">
+import { nextTick, ref, watch } from 'vue'
 import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
 import KitIcon from '../Icon/KitIcon'
 import KitBreadcrumbItem from './KitBreadcrumbItem.vue'
-import { nextTick, ref, watch } from 'vue'
 
 type Item = {
   text: string

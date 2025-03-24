@@ -19,7 +19,7 @@ type Props = {
   transitionDuration?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   progress: 0,
   showLabels: true,
   label: 'Processing'

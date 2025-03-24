@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import type { CalendarDate } from '@components/Calendar/CalendarType'
 import Day from './Day'
 
 const WEEKDAYS_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -22,15 +23,15 @@ type Props = {
   weeks: Array
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const emit = defineEmits<{
-  (event: 'date-selected', data: any)
+  (event: 'date-selected', data: CalendarDate)
 }>()
 
 const weekdays = WEEKDAYS_LABELS
 
-function onDateSelected(date) {
+function onDateSelected(date: CalendarDate) {
   emit('date-selected', date)
 }
 

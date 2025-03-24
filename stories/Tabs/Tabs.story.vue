@@ -88,8 +88,9 @@
 </template>
 
 <script setup lang="ts">
-import KitTooltip from '../../src/components/Tooltip/Tooltip'
 import KitBadge from '@components/Badge/KitBadge.vue'
+import { ref } from 'vue'
+import KitTooltip from '../../src/components/Tooltip/Tooltip'
 import KitTabProvider from '../../src/components/Tabs/KitTabProvider'
 import KitTabHeaders from '../../src/components/Tabs/KitTabHeaders'
 import KitTabHeader from '../../src/components/Tabs/KitTabHeader'
@@ -100,7 +101,6 @@ import KitIcon from '../../src/components/Icon/KitIcon'
 import KitActionMenu from '../../src/components/Menu/KitActionMenu'
 import KitMenuItem from '../../src/components/Menu/KitMenuItem'
 import KitTabPanels from '../../src/components/Tabs/KitTabPanels'
-import { ref } from 'vue'
 
 const active = ref(1)
 const tabs = ref([0, 1, 2, 3, 4, 5, 6])
