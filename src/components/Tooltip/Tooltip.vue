@@ -6,7 +6,7 @@
     <TooltipContent
       v-if="show"
       ref="popper"
-      :target-element="$refs.target"
+      :target-element="target"
       :boundaries-element="boundariesElement"
       :placement="placement"
       :offset="offset"
@@ -14,70 +14,58 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import TooltipContent from './TooltipContent.vue'
+import { nextTick, ref } from 'vue'
 
-export default {
-  name: 'KitTooltip',
-  components: { TooltipContent },
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    placement: {
-      type: String,
-      default: 'top'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    offset: {
-      type: Array,
-      default: () => [0, 5]
-    },
-    appendToBody: {
-      type: Boolean,
-      default: false
-    },
-    boundariesElement: {
-      type: String,
-      default: 'viewport'
-    }
-  },
-  data() {
-    return {
-      show: false
-    }
-  },
-  methods: {
-    onMouseEnter() {
-      if (this.disabled) {
-        return
-      }
-      this.show = true
-      if (this.appendToBody) {
-        this.$nextTick(() => {
-          this.append()
-        })
-      }
-    },
-    onMouseLeave() {
-      if (this.appendToBody) {
-        if (this.$refs.popper) {
-          document.body.removeChild(this.$refs.popper.$el)
-        }
-      }
-      this.show = false
-    },
-    append() {
-      if (this.$refs.popper) {
-        document.body.appendChild(this.$refs.popper.$el)
-      }
-    }
+type Props = {
+  label: string
+  placement?: string
+  disabled?: boolean
+  offset?: number[]
+  appendToBody?: boolean
+  boundariesElement?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  placement: 'top',
+  disabled: false,
+  offset: () => [0, 5],
+  appendToBody: false,
+  boundariesElement: 'viewport'
+})
+
+const target = ref<HTMLDivElement>()
+const popper = ref<InstanceType<TooltipContent>>()
+const show = ref(false)
+
+function onMouseEnter() {
+  if (props.disabled) {
+    return
+  }
+  show.value = true
+  if (props.appendToBody) {
+    nextTick(() => {
+      append()
+    })
   }
 }
+
+function onMouseLeave() {
+  if (props.appendToBody) {
+    if (popper.value) {
+      document.body.removeChild(popper.value.$el)
+    }
+  }
+  show.value = false
+}
+
+function append() {
+  if (popper.value) {
+    document.body.appendChild(popper.value.$el)
+  }
+}
+
 </script>
 
 <style scoped>

@@ -14,42 +14,26 @@
   </transition>
 </template>
 
-<script>
+<script setup lang="ts">
 import Popper from '../Popper/Popper.vue'
 
-export default {
-  components: { Popper },
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    placement: {
-      type: String,
-      default: 'bottom'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    offset: {
-      type: Array,
-      default: () => [0, 5]
-    },
-    boundariesElement: {
-      type: String,
-      default: 'viewport'
-    },
-    targetElement: {
-      type: HTMLElement,
-      required: true
-    },
-    withDelay: {
-      type: Boolean,
-      default: true
-    }
-  }
+type Props = {
+  label: string
+  placement?: string
+  disabled?: boolean
+  offset?: number[]
+  boundariesElement?: string
+  targetElement: HTMLElement
+  withDelay?: boolean
 }
+
+withDefaults(defineProps<Props>(), {
+  placement: 'bottom',
+  disabled: false,
+  offset: () => [0, 5],
+  boundariesElement: 'viewport',
+  withDelay: true
+})
 </script>
 
 <style scoped>
