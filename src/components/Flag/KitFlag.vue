@@ -182,7 +182,7 @@ function onClick(action) {
 }
 
 [appearance='default'] .action {
-  color: var(--apw-link-color);
+  color: var(--kit-btn-link-text);
   padding-left: 0;
 }
 

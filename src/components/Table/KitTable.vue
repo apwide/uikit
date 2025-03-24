@@ -150,16 +150,6 @@ onMounted(() => {
 
 <style scoped>
 .kit-table-wrapper {
-  --kit-table-bg-color: var(--kit-page-bg-color);
-  --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
-}
-
-[data-color-mode="dark"] .kit-table-wrapper {
-  --kit-table-bg-color: var(--kit-page-bg-color);
-  --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
-}
-
-.kit-table-wrapper {
   width: 100%;
   max-height: 100%;
   overflow: auto;
@@ -204,7 +194,7 @@ table .kit-infinite-scroll-loader {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--kit-table-busy-bg-color);
   z-index: 200;
 }
 

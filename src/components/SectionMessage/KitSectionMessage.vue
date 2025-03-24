@@ -59,89 +59,65 @@ const Icon = computed(() => {
 <style scoped>
 .kit-section-message {
   display: flex;
-  background-color: rgb(222, 235, 255);
+  background-color: var(--kit-section-message-bg);
   border-radius: 3px;
   padding: 16px;
-}
-
-[data-color-mode="dark"] .kit-section-message {
-  background-color: #1C2B41;
 }
 
 .kit-section-message .kit-section-message__icon {
   width: 40px;
   flex: 0 0 auto;
-  color: rgb(7, 71, 166);
+  color: var(--kit-section-message-icon);
 }
 
 .kit-section-message[appearance='setup'] {
-  background-color: rgb(234, 230, 255);
-}
-
-[data-color-mode="dark"] .kit-section-message[appearance='setup'] {
-  background-color: #2B273F;
+  background-color: var(--kit-section-message-setup-bg);
 }
 
 .kit-section-message[appearance='setup'] .kit-section-message__icon {
-  color: rgb(101, 84, 192);
+  color: var(--kit-section-message-setup-icon);
 }
 
 .kit-section-message[appearance='setup']
   .kit-section-message__actions
   >>> button[appearance='primary']:not([disabled='disabled']) {
-  background-color: rgb(101, 84, 192);
+  background-color: var(--kit-section-message-setup-primary-bg);
 }
 
 .kit-section-message[appearance='warning'] {
-  background-color: rgb(255, 250, 230);
-}
-
-[data-color-mode="dark"] .kit-section-message[appearance='warning'] {
-  background-color: #332E1B;
+  background-color: var(--kit-section-message-warn-bg);
 }
 
 .kit-section-message[appearance='warning'] .kit-section-message__icon {
-  color: rgb(255, 139, 0);
-  fill: rgb(255, 250, 230);
+  color: var(--kit-section-message-warn-icon);
+  fill: var(--kit-section-message-warn-bg);
 }
 
 .kit-section-message[appearance='error'] {
-  background-color: rgb(255, 235, 230);
-}
-
-[data-color-mode="dark"] .kit-section-message[appearance='error'] {
-  background-color: #42221F;
+  background-color: var(--kit-section-message-error-bg);
 }
 
 .kit-section-message[appearance='error'] .kit-section-message__icon {
-  color: rgb(191, 38, 0);
-  fill: rgb(255, 235, 230);
+  color: var(--kit-section-message-error-icon);
+  fill: var(--kit-section-message-error-bg);
 }
 
 .kit-section-message[appearance='confirmation'] {
-  background-color: rgb(227, 252, 239);
-}
-
-[data-color-mode="dark"] .kit-section-message[appearance='confirmation'] {
-  background-color: #1C3329;
+  background-color: var(--kit-section-message-confirm-bg);
 }
 
 .kit-section-message[appearance='confirmation'] .kit-section-message__icon {
-  color: rgb(0, 102, 68);
-  fill: rgb(227, 252, 239);
+  color: var(--kit-section-message-confirm-icon);
+  fill: var(--kit-section-message-confirm-bg);
 }
 
 .kit-section-message[appearance='change'] {
-  background-color: rgb(234, 230, 255);
-}
-
-[data-color-mode="dark"] .kit-section-message[appearance='change'] {
-  background-color: #2B273F;
+  background-color: var(--kit-section-message-change-bg);
 }
 
 .kit-section-message[appearance='change'] .kit-section-message__icon {
-  color: rgb(64, 50, 148);
-  fill: rgb(234, 230, 255);
+  color: var(--kit-section-message-change-icon);
+  fill: var(--kit-section-message-change-bg);
 }
 
 .kit-section-message .kit-section-message__content-wrapper {
@@ -152,14 +128,10 @@ const Icon = computed(() => {
   font-size: 1.14286em;
   font-style: inherit;
   line-height: 1.25;
-  color: rgb(23, 43, 77);
+  color: var(--kit-section-message-title);
   font-weight: 600;
   letter-spacing: -0.006em;
   margin: 0;
-}
-
-[data-color-mode="dark"] .kit-section-message .kit-section-message__title {
-  color: var(--apw-body-text);
 }
 
 .kit-section-message .kit-section-message__content:not(:first-child) {
@@ -183,7 +155,7 @@ const Icon = computed(() => {
 }
 
 .kit-section-message .kit-section-message__actions ul li + li::before {
-  color: rgb(66, 82, 110);
+  color: var(--kit-section-mmesage-point);
   content: '·';
   display: inline-block;
   text-align: center;

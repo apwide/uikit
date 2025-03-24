@@ -45,18 +45,6 @@ function onClick() {
 </script>
 
 <style scoped>
-.kit-table-header-cell {
-  --kit-table-header-border-color: #dfe1e6;
-  --kit-table-header-bg-color: white;
-  --kit-table-header-text-color: var(--kit-body-text);
-}
-
-[data-color-mode="dark"] .kit-table-header-cell {
-  --kit-table-header-border-color: #A6C5E229;
-  --kit-table-header-bg-color: #1d2125;
-  --kit-table-header-text-color: var(--kit-body-text);
-}
-
 th {
   background-color: var(--kit-table-header-bg-color);
   padding: 0;

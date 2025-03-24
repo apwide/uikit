@@ -20,7 +20,7 @@ withDefaults(defineProps<{
   left: 0;
   opacity: 1;
   position: fixed;
-  background: rgba(9, 30, 66, 0.54);
+  background: var(--kit-blanket-bg);
   transition: opacity 220ms ease 0s;
 }
 </style>
