@@ -105,12 +105,12 @@
     }
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.6.13",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
     "@fortawesome/free-regular-svg-icons": "5.15.4",
     "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@fortawesome/vue-fontawesome": "2.0.10",
-    "@popperjs/core": "2.11.8",
     "date-fns": "2.30.0",
     "date-fns-tz": "2.0.0",
     "easymde": "2.18.0",

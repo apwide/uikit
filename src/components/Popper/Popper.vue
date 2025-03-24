@@ -7,7 +7,7 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { createPopper, type Instance } from '@popperjs/core'
+import { arrow, autoPlacement, autoUpdate, computePosition, flip, limitShift, offset, shift } from '@floating-ui/dom'
 import { getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 type Props = {
@@ -42,20 +42,16 @@ const props = withDefaults(defineProps<Props>(), {
   positionFixed: false
 })
 
-const contentWidth = ref(0)
 const popper = ref<Instance>()
-const interval = ref<number>()
 
 onMounted(() => {
   nextTick(() => {
     initPopper()
   })
-  interval.value = setInterval(updateBasedOnContent, 250)
 })
 
 onBeforeUnmount(() => {
-  clearInterval(interval.value)
-  setTimeout(() => popper.value.destroy(), props.transitionDelay)
+  setTimeout(() => popper.value(), props.transitionDelay)
 })
 
 
@@ -63,41 +59,48 @@ const instance = getCurrentInstance()
 
 function initPopper() {
   const [defaultSlot] = instance.proxy.$slots.default
-  const boundariesElement =
-    typeof props.boundariesElement === 'function' ? props.boundariesElement() : props.boundariesElement
+  // const boundariesElement =
+  //   typeof props.boundariesElement === 'function' ? props.boundariesElement() : props.boundariesElement
+  const elm: HTMLElement = defaultSlot.elm
+  const arrowElm: HTMLElement | null = elm.querySelector('[data-popper-arrow]')
 
-  popper.value = createPopper(props.targetElement, defaultSlot.elm, {
-    placement: props.placement,
-    positionFixed: props.positionFixed,
-    modifiers: [
-      {
-        name: 'offset',
-        options: { offset: props.offset }
-      },
-      {
-        name: 'preventOverflow',
-        options: { boundary: boundariesElement }
-      }
-    ]
-  })
-}
+  popper.value = autoUpdate(props.targetElement, elm, async () => {
+    const { x, y, middlewareData, placement } = await computePosition(props.targetElement, elm, {
+      placement: props.placement !== 'auto' ? props.placement : undefined,
+      strategy: props.positionFixed ? 'fixed' : 'absolute',
+      middleware: [
+        ...props.placement === 'auto' ? [autoPlacement()] : [],
+        flip(),
+        shift(({ limiter: limitShift() })),
+        offset({ mainAxis: 5,  crossAxis: 0 }),
+        ...arrowElm ? [arrow({ element: arrowElm })] : [],
+      ]
+    })
 
-function updateBasedOnContent() {
-  try {
-    const [defaultSlot] = instance.proxy.$slots.default
-    const currentContentWidth = defaultSlot.elm.getBoundingClientRect().width
+    const side = placement.split("-")[0];
 
-    if (currentContentWidth !== contentWidth.value) {
-      contentWidth.value = currentContentWidth
-      popper.value.update()
+    const staticSide = {
+      top: "bottom",
+      right: "left",
+      bottom: "top",
+      left: "right"
+    }[side];
+
+    if (middlewareData.arrow && arrowElm) {
+      const xArrow = middlewareData.arrow.x
+      const yArrow = middlewareData.arrow.y
+      Object.assign(arrowElm.style, {
+        left: xArrow != null ? `${xArrow}px` : '',
+        top: yArrow != null ? `${yArrow}px` : '',
+        [staticSide]: `${-(arrowElm.offsetWidth / 2)}px`
+      })
     }
-  } catch (e) {
-    // ignore
-  }
-}
 
-function update() {
-  popper.value?.update()
+    Object.assign(elm.style, {
+      left: `${x}px`,
+      top: `${y}px`
+    })
+  })
 }
 
 </script>
