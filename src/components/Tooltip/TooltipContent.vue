@@ -20,7 +20,6 @@ import Popper from '../Popper/Popper.vue'
 type Props = {
   label: string
   placement?: string
-  disabled?: boolean
   offset?: number[]
   boundariesElement?: string
   targetElement: HTMLElement
@@ -29,7 +28,6 @@ type Props = {
 
 withDefaults(defineProps<Props>(), {
   placement: 'bottom',
-  disabled: false,
   offset: () => [0, 5],
   boundariesElement: 'viewport',
   withDelay: true

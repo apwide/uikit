@@ -1,13 +1,5 @@
-<script lang="ts">
-export default {
-  render() {
-    const [defaultSlot] = this.$slots.default
-    return defaultSlot
-  }
-}
-</script>
 <script setup lang="ts">
-import { arrow, autoPlacement, autoUpdate, computePosition, flip, limitShift, offset, shift } from '@floating-ui/dom'
+import { arrow, autoPlacement, autoUpdate, computePosition, flip, limitShift, offset as foffset, shift } from '@floating-ui/dom'
 import { getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 type Props = {
@@ -72,7 +64,7 @@ function initPopper() {
         ...props.placement === 'auto' ? [autoPlacement()] : [],
         flip(),
         shift(({ limiter: limitShift() })),
-        offset({ mainAxis: 5,  crossAxis: 0 }),
+        foffset({ mainAxis: 5,  crossAxis: 0 }),
         ...arrowElm ? [arrow({ element: arrowElm })] : [],
       ]
     })
@@ -103,4 +95,12 @@ function initPopper() {
   })
 }
 
+</script>
+<script lang="ts">
+export default {
+  render() {
+    const [defaultSlot] = this.$slots.default
+    return defaultSlot
+  }
+}
 </script>
