@@ -23,7 +23,7 @@ import KitIssuePriorityRenderer from './IssuePriorityRenderer'
 import KitIssueStatusRenderer from './IssueStatusRenderer'
 import KitIssueTypeRenderer from './IssueTypeRenderer'
 import KitIssueRenderer from './IssueRenderer'
-import KitLinkedIssuesList from './LinkedIssuesList'
+// import KitLinkedIssuesList from './LinkedIssuesList'
 import KitMarkdownEditableRenderer from './KitMarkdownEditableRenderer.vue'
 import KitMultiLineEditableRenderer from './MultiLineEditableRenderer'
 import KitMultiLineRenderer from './MultiLineRenderer'
@@ -54,7 +54,7 @@ export {
   KitIssueStatusRenderer,
   KitIssueTypeRenderer,
   KitIssueRenderer,
-  KitLinkedIssuesList,
+  // KitLinkedIssuesList,
   KitMarkdownEditableRenderer,
   KitMultiLineEditableRenderer,
   KitMultiLineRenderer,
@@ -83,7 +83,7 @@ export {
   KitIssueStatusRenderer as IssueStatusRenderer,
   KitIssueTypeRenderer as IssueTypeRenderer,
   KitIssueRenderer as IssueRenderer,
-  KitLinkedIssuesList as LinkedIssuesList,
+  // KitLinkedIssuesList as LinkedIssuesList,
   KitMultiLineEditableRenderer as MultiLineEditableRenderer,
   KitMultiLineRenderer as MultiLineRenderer
 }
