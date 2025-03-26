@@ -6,28 +6,21 @@
   </ul>
 </template>
 
-<script>
+<script setup lang="ts">
+import type { Issue } from '@components/field-renderers/types'
 import IssueRenderer from './IssueRenderer'
 
-export default {
-  name: 'KitLinkedIssuesList',
-  components: { IssueRenderer },
-  props: {
-    issues: {
-      type: Array,
-      default: () => []
-    },
-    baseUrl: {
-      type: String,
-      default: ''
-    },
-    appearance: {
-      type: String,
-      default: 'normal',
-      validator: (value) => ['normal', 'compact', 'micro'].includes(value)
-    }
-  }
+type Props = {
+  issues?: Issue[]
+  baseUrl?: string
+  appearance?: 'normal' | 'compact' | 'micro'
 }
+
+withDefaults(defineProps<Props>(), {
+  issues: () => [],
+  baseUrl: '',
+  appearance: 'normal'
+})
 </script>
 
 <style scoped>

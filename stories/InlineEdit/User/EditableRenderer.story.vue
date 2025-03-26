@@ -14,11 +14,11 @@
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <UserEditableRenderer :user="user" :load-options="loadOptions" :editable="false" />
+      <UserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" :editable="false" />
     </p>
     <h5>Avatar only:</h5>
     <p>
-      <UserEditableRenderer :user="user" :avatar-only="true" />
+      <UserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" :avatar-only="true" />
     </p>
   </div>
 </template>

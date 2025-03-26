@@ -6,23 +6,18 @@
   </span>
 </template>
 
-<script>
+<script setup lang="ts">
 import Checked from '../Icon/aui/EditorDoneIcon'
 
-export default {
-  name: 'KitCheckboxRenderer',
-  components: { Checked },
-  props: {
-    value: {
-      type: Boolean,
-      default: false
-    },
-    label: {
-      type: String,
-      default: ''
-    }
-  }
+type Props = {
+  value?: boolean
+  label?: string
 }
+
+withDefaults(defineProps<Props>(), {
+  value: false,
+  label: ''
+})
 </script>
 
 <style scoped>

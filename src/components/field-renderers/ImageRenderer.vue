@@ -13,48 +13,34 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
 import KitButton from '../Button/KitButton.vue'
 import SearchIcon from '../Icon/aui/SearchIcon'
 
-export default {
-  name: 'KitImageRenderer',
-  components: { KitButton, SearchIcon },
-  props: {
-    url: {
-      type: String,
-      default: undefined
-    },
-    height: {
-      type: [Number, String],
-      default: 24
-    },
-    width: {
-      type: [Number, String],
-      default: 24
-    },
-    showActions: {
-      type: Boolean,
-      default: false
-    },
-    zoomable: {
-      type: Boolean,
-      default: true
-    },
-    isLoading: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    placeholderSize() {
-      const height = +this.height || Number.POSITIVE_INFINITY
-      const width = +this.width || Number.POSITIVE_INFINITY
-      const size = Math.min(width, height) || 100
-      return size
-    }
-  }
+type Props = {
+  url?: string
+  height?: string | number
+  width?: string | number
+  showActions?: boolean
+  zoomable?: boolean
+  isLoading?: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  height: 24,
+  width: 24,
+  showActions: false,
+  zoomable: true,
+  isLoading: false
+})
+
+const placeholderSize = computed(() => {
+  const height = +props.height || Number.POSITIVE_INFINITY
+  const width = +props.width || Number.POSITIVE_INFINITY
+  return Math.min(width, height) || 100
+})
+
 </script>
 
 <style scoped>

@@ -11,41 +11,28 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitUserRenderer',
-  props: {
-    user: {
-      type: Object,
-      default: undefined
-    },
-    avatarOnly: {
-      type: Boolean,
-      default: false
-    },
-    tag: {
-      type: String,
-      default: 'span'
-    },
-    appearance: {
-      type: String,
-      default: undefined
-    },
-    alt: {
-      type: String,
-      default: undefined
-    },
-    link: {
-      type: String,
-      default: '#'
-    }
-  },
-  methods: {
-    onClick(e) {
-      if (this.tag === 'a') {
-        e.stopPropagation()
-      }
-    }
+<script setup lang="ts">
+
+import type { User } from '@components/field-renderers/types'
+
+type Props = {
+  user?: User
+  avatarOnly?: boolean
+  tag?: string
+  appearance?: 'micro'
+  alt?: string
+  link?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  avatarOnly: false,
+  tag: 'span',
+  link: '#'
+})
+
+function onClick(e: MouseEvent) {
+  if (props.tag === 'a') {
+    e.stopPropagation()
   }
 }
 </script>

@@ -2,23 +2,15 @@
   <UserEditableRendererEnriched :user="user" :avatar-only="avatarOnly" :editable="false" />
 </template>
 
-<script>
+<script setup lang="ts">
 import UserEditableRendererEnriched from './UserEditableRendererEnriched'
 
-export default {
-  name: 'KitUserRendererEnriched',
-  components: {
-    UserEditableRendererEnriched
-  },
-  props: {
-    user: {
-      type: Object,
-      required: true
-    },
-    avatarOnly: {
-      type: Boolean,
-      default: false
-    }
-  }
+type Props = {
+  user?: unknown
+  avatarOnly?: boolean
 }
+
+withDefaults(defineProps<Props>(), {
+  avatarOnly: false
+})
 </script>

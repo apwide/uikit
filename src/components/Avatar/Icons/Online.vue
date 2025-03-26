@@ -6,11 +6,6 @@
   </PresenceWrapper>
 </template>
 
-<script>
+<script setup lang="ts">
 import PresenceWrapper from './PresenceWrapper'
-
-export default {
-  name: 'KitOnline',
-  components: { PresenceWrapper }
-}
 </script>

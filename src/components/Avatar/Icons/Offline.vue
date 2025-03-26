@@ -11,11 +11,6 @@
   </PresenceWrapper>
 </template>
 
-<script>
+<script setup lang="ts">
 import PresenceWrapper from './PresenceWrapper'
-
-export default {
-  name: 'KitOffline',
-  components: { PresenceWrapper }
-}
 </script>

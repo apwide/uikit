@@ -9,18 +9,8 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContentLoader from './ContentLoader'
 
 const random = () => Math.random() * (1 - 0.7) + 0.7
-
-export default {
-  name: 'KitPageDetailsLoader',
-  components: { ContentLoader },
-  data() {
-    return {
-      random
-    }
-  }
-}
 </script>

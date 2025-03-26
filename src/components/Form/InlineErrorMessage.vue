@@ -13,27 +13,19 @@
   </Popper>
 </template>
 
-<script>
-import Popper from '../Popper/Popper'
+<script setup lang="ts">
+import Popper from '../Popper/Popper.vue'
+import type GeneralError from '@components/Form/GeneralError'
 
-export default {
-  name: 'KitInlineErrorMessage',
-  components: { Popper },
-  props: {
-    error: {
-      type: Error,
-      required: true
-    },
-    targetElement: {
-      type: HTMLElement,
-      required: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    }
-  }
+type Props = {
+  error: Error | GeneralError
+  targetElement: HTMLElement
+  placement?: string
 }
+
+withDefaults(defineProps<Props>(), {
+  placement: 'right'
+})
 </script>
 
 <style scoped>

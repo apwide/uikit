@@ -8,11 +8,6 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContentLoader from './ContentLoader'
-
-export default {
-  name: 'KitAvatarDetailsLoader',
-  components: { ContentLoader }
-}
 </script>

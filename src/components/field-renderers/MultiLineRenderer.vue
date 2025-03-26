@@ -2,16 +2,13 @@
   <div class="multi-line-wrapper" :title="value" v-text="value" />
 </template>
 
-<script>
-export default {
-  name: 'KitMultiLineRenderer',
-  props: {
-    value: {
-      type: String,
-      default: undefined
-    }
-  }
+<script setup lang="ts">
+
+type Props = {
+  value?: string
 }
+
+defineProps<Props>()
 </script>
 
 <style scoped>

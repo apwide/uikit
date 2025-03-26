@@ -28,50 +28,28 @@
   </component>
 </template>
 
-<script>
+<script setup lang="ts">
 import { Promised } from 'vue-promised'
 import ContentLoader from '../ContentLoader/ContentLoader'
 import { isPromise } from '../../utils/utils'
 
-export default {
-  name: 'KitPromisedContentLoader',
-  components: { Promised, ContentLoader },
-  props: {
-    value: {
-      type: Promise,
-      required: true
-    },
-    width: {
-      type: [Number, String],
-      default: '200px'
-    },
-    height: {
-      type: [Number, String],
-      default: '16px'
-    },
-    tag: {
-      type: String,
-      default: 'span'
-    },
-    pendingDelay: {
-      type: Number,
-      default: 200
-    },
-    preserveAspectRatio: {
-      type: String,
-      default: 'none'
-    },
-    viewBox: {
-      type: String,
-      default: undefined
-    }
-  },
-  methods: {
-    isPromise(payload) {
-      return isPromise(payload)
-    }
-  }
+type Props = {
+  value: Promise
+  width?: number | string
+  height?: number | string
+  tag?: string
+  pendingDelay?: number
+  preserveAspectRatio?: string
+  viewBox?: string
 }
+
+withDefaults(defineProps<Props>(), {
+  width: '200px',
+  height: '16px',
+  tag: 'span',
+  pendingDelay: 200,
+  preserveAspectRatio: 'none'
+})
 </script>
 
 <style scoped>

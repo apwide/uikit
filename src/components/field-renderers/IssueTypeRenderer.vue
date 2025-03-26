@@ -5,28 +5,21 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitIssueTypeRenderer',
-  props: {
-    value: {
-      type: Object,
-      required: true
-    },
-    compact: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    typeName() {
-      return this.value && this.value.name
-    },
-    typeIconUrl() {
-      return this.value && this.value.iconUrl
-    }
-  }
+<script setup lang="ts">
+import type { IssueType } from '@components/field-renderers/types'
+import { computed } from 'vue'
+
+type Props = {
+  value: IssueType
+  compact?: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  compact: false
+})
+
+const typeName = computed(() => props.value?.name)
+const typeIconUrl = computed(() => props.value?.iconUrl)
 </script>
 
 <style scoped>

@@ -58,9 +58,6 @@ function isInside(e: MouseEvent, rect: DOMRect) {
 }
 
 function requestHide(e: MouseEvent) {
-  if (false) {
-    return
-  }
   if (isInside(e, trigger.value.getBoundingClientRect()) || isInside(e, popper.value.$el.getBoundingClientRect())) {
     return
   }

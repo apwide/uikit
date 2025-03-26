@@ -4,10 +4,7 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'PresenceWrapper'
-}
+<script setup lang="ts">
 </script>
 
 <style scoped>

@@ -16,71 +16,68 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import pDebounce from 'p-debounce'
+import { computed, onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
 import Popper from '../Popper/Popper'
 import KitButton from '../Button/KitButton.vue'
 
-export default {
-  name: 'KitMultiSelectRenderer',
-  components: { Popper, KitButton },
-  props: {
-    selectedValues: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      isOpen: false,
-      visibleCount: this.selectedValues.length
-    }
-  },
-  computed: {
-    visibleValues() {
-      return this.selectedValues.slice(0, this.visibleCount)
-    },
-    hiddenValues() {
-      return this.selectedValues.slice(this.visibleCount)
-    }
-  },
-  created() {
-    this.onResize = pDebounce(this.handleResize, 100)
-    this.breakPoints = []
-  },
-  mounted() {
-    window.addEventListener('resize', this.onResize)
-    this.checkOverflow()
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.onResize)
-  },
-  updated() {
-    this.checkOverflow()
-  },
-  methods: {
-    handleResize() {
-      this.checkOverflow()
-    },
-    checkOverflow() {
-      const { overflowContainer } = this.$refs
-      const hasOverflow = overflowContainer.scrollWidth > overflowContainer.clientWidth
-      if (hasOverflow) {
-        this.breakPoints[this.visibleCount] = overflowContainer.clientWidth
-        this.visibleCount -= 1
-      }
-      while (
-        overflowContainer.clientWidth > this.breakPoints[this.visibleCount + 1] &&
-        this.visibleCount < this.selectedValues.length
-      ) {
-        this.visibleCount += 1
-      }
-    },
-    toggleDropdown() {
-      this.isOpen = !this.isOpen
-    }
+type Props = {
+  selectedValues?: Array
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  selectedValues: () => []
+})
+
+const overflowContainer = ref<HTMLDivElement>()
+const isOpen = ref(false)
+const visibleCount = ref(0)
+const breakPoints = []
+
+const visibleValues = computed(() => props.selectedValues.slice(0, visibleCount.value))
+const hiddenValues = computed(() => props.selectedValues.slice(visibleCount.value))
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+  checkOverflow()
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
+onUpdated(() => {
+  checkOverflow()
+})
+
+const handleResize = pDebounce(() => checkOverflow(), 100)
+
+function checkOverflow() {
+  if (!overflowContainer.value) {
+    return
+  }
+  const hasOverflow = overflowContainer.value.scrollWidth > overflowContainer.value.clientWidth
+  if (hasOverflow) {
+    breakPoints[visibleCount.value] = overflowContainer.value.clientWidth
+    visibleCount.value -= 1
+  }
+  while (
+    overflowContainer.value.clientWidth > breakPoints[visibleCount.value + 1] &&
+    visibleCount.value < selectedValues.value.length
+    ) {
+    visibleCount.value += 1
   }
 }
+
+function toggleDropdown() {
+  isOpen.value = !isOpen.value
+}
+
+(() => {
+  visibleCount.value = props.selectedValues.length
+})()
+
 </script>
 
 <style scoped>

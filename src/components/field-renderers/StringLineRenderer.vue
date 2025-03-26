@@ -2,16 +2,12 @@
   <div class="string-line-wrapper" :title="value" v-text="value" />
 </template>
 
-<script>
-export default {
-  name: 'KitStringLineRenderer',
-  props: {
-    value: {
-      type: String,
-      default: undefined
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  value?: string
 }
+
+defineProps<Props>()
 </script>
 
 <style scoped>

@@ -7,31 +7,26 @@
   <NumberFloatRenderer v-else :value="value" />
 </template>
 
-<script>
+<script setup lang="ts">
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import NumberFloatRenderer from './NumberFloatRenderer'
 
-export default {
-  name: 'KitNumberFloatEditableRenderer',
-  components: { NumberFloatRenderer, KitInlineEdit },
-  props: {
-    value: {
-      type: Number,
-      default: undefined
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    }
-  },
-  methods: {
-    onSaveRequested(...args) {
-      this.$emit('save-requested', ...args)
-    }
-  }
+type Props = {
+  value?: number
+  editable?: boolean
+  placement?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right'
+})
+
+const emit = defineEmits<{
+  (event: 'save-requested', data?: number, callback?: (e?: Error) => void)
+}>()
+
+function onSaveRequested(...args) {
+  emit('save-requested', ...args)
 }
 </script>

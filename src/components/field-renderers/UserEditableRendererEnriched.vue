@@ -6,56 +6,48 @@
       :load-options="user.getUsers"
       :editable="editable"
       v-on="$listeners" />
-    <template slot="loader-shape">
+    <template #loader-shape>
       <circle cx="12" cy="12" :r="12" />
       <rect x="28" y="4" :rx="8" :ry="8" :width="45" :height="16" />
       <rect x="78" y="4" :rx="8" :ry="8" :width="70" :height="16" />
     </template>
-    <component
-      :is="editable ? 'UserEditableRenderer' : 'UserRenderer'"
-      slot="error-message"
-      :user="{ key: user.value }"
-      :editable="true"
-      v-on="$listeners">
-      <div class="user-error">
-        <div class="avatar">
-          <CrossIcon size="small" />
+    <template #error-message>
+      <component
+        :is="componentToUse"
+        :user="{ key: user.value }"
+        :editable="true"
+        v-on="$listeners">
+        <div class="user-error">
+          <div class="avatar">
+            <CrossIcon size="small" />
+          </div>
+          <span>{{ user.value }} <small>(deleted)</small></span>
         </div>
-        <span>{{ user.value }} <small>(deleted)</small></span>
-      </div>
-    </component>
+      </component>
+    </template>
   </PromisedContentLoader>
 </template>
 
-<script>
+<script setup lang="ts">
+import type { User } from '@components/field-renderers/types'
+import { computed } from 'vue'
 import CrossIcon from '../Icon/aui/CrossIcon'
 import PromisedContentLoader from '../common/PromisedContentLoader'
 import UserEditableRenderer from './UserEditableRenderer'
 import UserRenderer from './UserRenderer'
 
-export default {
-  name: 'KitUserRendererEnriched',
-  components: {
-    UserEditableRenderer,
-    UserRenderer,
-    PromisedContentLoader,
-    CrossIcon
-  },
-  props: {
-    user: {
-      type: Object,
-      required: true
-    },
-    avatarOnly: {
-      type: Boolean,
-      default: false
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    }
-  }
+type Props = {
+  user: User
+  avatarOnly?: boolean
+  editable?: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  avatarOnly: false,
+  editable: true
+})
+
+const componentToUse = computed(() => props.editable ? UserEditableRenderer : UserRenderer)
 </script>
 
 <style scoped>

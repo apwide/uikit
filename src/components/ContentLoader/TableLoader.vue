@@ -22,41 +22,26 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContentLoader from './ContentLoader'
 
 const random = () => Math.random() * (1 - 0.7) + 0.7
-export default {
-  name: 'KitTableLoader',
-  components: { ContentLoader },
-  props: {
-    rows: {
-      type: Number,
-      default: 10
-    },
-    isLoading: {
-      type: Boolean,
-      default: false
-    },
-    viewBox: {
-      type: String,
-      default: '0 0 1260 40'
-    },
-    width: {
-      type: String,
-      default: '100%'
-    },
-    height: {
-      type: String,
-      default: '40px'
-    },
-    preserveAspectRatio: {
-      type: String,
-      default: 'none'
-    }
-  },
-  data() {
-    return { random }
-  }
+
+type Props = {
+  rows?: number
+  isLoading?: boolean
+  viewBox?: string
+  width?: string
+  height?: string
+  preserveAspectRatio?: string
 }
+
+withDefaults(defineProps<Props>(), {
+  rows: 10,
+  isLoading: false,
+  viewBox: '0 0 1260 40',
+  width: '100%',
+  height: '40px',
+  preserveAspectRatio: 'none'
+})
 </script>

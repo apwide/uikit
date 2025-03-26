@@ -7,31 +7,27 @@
   <HyperlinkRenderer v-else :link="link" />
 </template>
 
-<script>
+<script setup lang="ts">
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import HyperlinkRenderer from './HyperlinkRenderer'
 
-export default {
-  name: 'KitHyperlinkEditableRenderer',
-  components: { HyperlinkRenderer, KitInlineEdit },
-  props: {
-    link: {
-      type: String,
-      default: undefined
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    }
-  },
-  methods: {
-    onSaveRequested(...args) {
-      this.$emit('save-requested', ...args)
-    }
-  }
+type Props = {
+  link?: string
+  editable?: boolean
+  placement?: string
 }
+
+withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right'
+})
+
+const emit = defineEmits<{
+  (event: 'save-requested', data?: undefined, callback: (e: Error) => void)
+}>()
+
+function onSaveRequested(...args) {
+  emit('save-requested', ...args)
+}
+
 </script>

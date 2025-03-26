@@ -2,23 +2,17 @@
   <div class="date" v-text="formattedDate" />
 </template>
 
-<script>
+<script setup lang="ts">
 import format from 'date-fns/format'
+import { computed } from 'vue'
 
-export default {
-  name: 'KitDateRenderer',
-  props: {
-    date: {
-      type: [String, Number],
-      default: undefined
-    }
-  },
-  computed: {
-    formattedDate() {
-      return this.date && format(new Date(this.date), 'dd MMMM yyyy')
-    }
-  }
+type Props = {
+  date?: string | number
 }
+
+const props = defineProps<Props>()
+
+const formattedDate = computed(() => props.date && format(new Date(props.date), 'dd MMMM yyyy'))
 </script>
 
 <style scoped>

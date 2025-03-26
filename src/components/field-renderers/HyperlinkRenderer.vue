@@ -2,16 +2,11 @@
   <a class="hyperlink" target="_top" :href="link" v-text="link" />
 </template>
 
-<script>
-export default {
-  name: 'KitHyperLinkRenderer',
-  props: {
-    link: {
-      type: String,
-      default: undefined
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  link?: string
 }
+defineProps<Props>()
 </script>
 
 <style scoped>

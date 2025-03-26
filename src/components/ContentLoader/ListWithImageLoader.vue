@@ -8,17 +8,14 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContentLoader from './ContentLoader'
 
-export default {
-  name: 'KitListWithImageLoader',
-  components: { ContentLoader },
-  props: {
-    items: {
-      type: Number,
-      default: 3
-    }
-  }
+type Props = {
+  items?: number
 }
+
+withDefaults(defineProps<Props>(), {
+  items: 3
+})
 </script>

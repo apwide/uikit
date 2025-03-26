@@ -2,16 +2,12 @@
   <div class="number-long-wrapper" :title="value" v-text="value" />
 </template>
 
-<script>
-export default {
-  name: 'KitNumberLongRenderer',
-  props: {
-    value: {
-      type: Number,
-      default: undefined
-    }
-  }
+<script setup lang="ts">
+type Props = {
+  value?: number
 }
+
+defineProps<Props>()
 </script>
 
 <style scoped>

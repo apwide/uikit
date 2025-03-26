@@ -2,16 +2,13 @@
   <div class="number-float-wrapper" :title="value" v-text="value" />
 </template>
 
-<script>
-export default {
-  name: 'KitNumberFloatRenderer',
-  props: {
-    value: {
-      type: Number,
-      default: undefined
-    }
-  }
+<script setup lang="ts">
+
+type Props = {
+  value?: number
 }
+
+defineProps<Props>()
 </script>
 
 <style scoped>

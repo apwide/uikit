@@ -17,62 +17,62 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted } from 'vue'
 import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
 
-export default {
-  name: 'KitTag',
-  components: { EditorCloseIcon },
-  props: {
-    tag: {
-      type: Object,
-      default: () => ({})
-    },
-    index: {
-      type: Number,
-      required: true
-    },
-    count: {
-      type: Number,
-      required: true
-    },
-    min: {
-      type: Number,
-      default: 0
-    }
-  },
-  data() {
-    return {}
-  },
-  computed: {
-    shouldShowRemoveButton() {
-      return this.min !== this.count && !this.tag.disabled
-    }
-  },
-  created() {
-    document.addEventListener('dragover', this.onDragOver) // https://bugzilla.mozilla.org/show_bug.cgi?id=505521
-  },
-  beforeDestroy() {
-    document.removeEventListener('dragover', this.onDragOver)
-  },
-  methods: {
-    onDragOver(e) {
-      this.$emit('drag', e)
-    },
-    onRemove() {
-      this.$emit('on-remove', this.tag.id)
-    },
-    onDragStart(e) {
-      this.$emit('dragstart', e, this.index)
-    },
-    onDragEnd(e) {
-      this.$emit('dragend', e)
-    },
-    onDrag(e) {
-      this.$emit('drag', e)
-    }
+type Props = {
+  tag?: {
+    id?: string | number
+    disabled?: boolean
   }
+  index: number
+  count: number
+  min?: number
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  tag: () => ({}),
+  min: 0
+})
+
+const emit = defineEmits<{
+  (event: 'drag', data: DragEvent)
+  (event: 'on-remove', data: string | number)
+  (event: 'dragstart', data: DragEvent)
+  (event: 'dragend', data: DragEvent)
+}>()
+
+const shouldShowRemoveButton = computed(() => props.min !== props.count && !props.tag.disabled)
+
+onMounted(() => {
+  document.addEventListener('dragover', onDragOver) // https://bugzilla.mozilla.org/show_bug.cgi?id=505521
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('dragover', onDragOver)
+})
+
+function onDragOver(e) {
+  emit('drag', e)
+}
+
+function onRemove() {
+  emit('on-remove', props.tag.id)
+}
+
+function onDragStart(e) {
+  emit('dragstart', e, props.index)
+}
+
+function onDragEnd(e) {
+  emit('dragend', e)
+}
+
+function onDrag(e) {
+  emit('drag', e)
+}
+
 </script>
 
 <style scoped>

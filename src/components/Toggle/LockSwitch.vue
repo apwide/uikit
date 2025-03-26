@@ -10,46 +10,42 @@
   </label>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed, getCurrentInstance, ref } from 'vue'
 import LockFilledIcon from '../Icon/aui/LockFilledIcon'
 import UnlockFilledIcon from '../Icon/aui/UnlockFilledIcon'
 
-export default {
-  name: 'KitLockSwitch',
-  components: { LockFilledIcon, UnlockFilledIcon },
-  props: {
-    value: {
-      type: [Number, String, Boolean],
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    size: {
-      type: String,
-      default: 'regular'
-    }
-  },
-  data() {
-    return { id: undefined }
-  },
-  computed: {
-    iconSize() {
-      return this.size === 'large' ? 'xsmall' : 'xxsmall'
-    }
-  },
-  created() {
-    // eslint-disable-next-line
-    this.id = this._uuid
-  },
-  methods: {
-    toggle() {
-      if (this.disabled) return
-      this.$emit('input', !this.value)
-    }
-  }
+type Props = {
+  value?: number | string | boolean
+  disabled?: boolean
+  size?: 'regular' | 'large'
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  value: false,
+  disabled: false,
+  size: 'regular'
+})
+
+const id = ref()
+const iconSize = computed(() => props.size === 'large' ? 'xsmall' : 'xxsmall')
+
+const emit = defineEmits<{
+  (event: 'input', data?: boolean)
+}>()
+
+function toggle() {
+  if (props.disabled) return
+  emit('input', !props.value)
+}
+
+const instance = getCurrentInstance()
+
+(() => {
+  // eslint-disable-next-line
+  id.value = instance. instance.proxy._uuid
+})()
+
 </script>
 
 <style scoped>

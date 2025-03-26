@@ -1,51 +1,51 @@
 <template>
-  <component :is="tag" ref="infinite-scroll-loader" class="infinite-scroll-loader">
-    <Spinner size="small" />
+  <component :is="tag" ref="infiniteScrollLoader" class="infinite-scroll-loader">
+    <KitSpinner size="small" />
   </component>
 </template>
 
-<script>
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import KitSpinner from '../Spinner/KitSpinner.vue'
 
-export default {
-  name: 'KitInfiniteScroll',
-  components: { Spinner: KitSpinner },
-  props: {
-    tag: {
-      type: String,
-      default: 'td'
+type Props = {
+  tag?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  tag: 'td'
+})
+
+const emit = defineEmits<{
+  (event: 'table-bottom-reached', data: () => void)
+}>()
+
+const infiniteScrollLoader = ref<Element>()
+const observer = ref<IntersectionObserver>()
+
+onMounted(() => {
+  observer.value = new IntersectionObserver(([entries]) => {
+    if (entries.isIntersecting) {
+      tableBottomReached()
     }
-  },
-  data() {
-    return {
-      observer: undefined
-    }
-  },
-  async mounted() {
-    this.observer = new IntersectionObserver(([entries]) => {
-      if (entries.isIntersecting) {
-        this.tableBottomReached()
-      }
-    })
-    this.observe()
-  },
-  beforeDestroy() {
-    this.observer.disconnect()
-  },
-  methods: {
-    observe() {
-      if (!this.$refs['infinite-scroll-loader']) {
-        return
-      }
-      this.observer.disconnect()
-      this.observer.observe(this.$refs['infinite-scroll-loader'])
-    },
-    tableBottomReached() {
-      this.$emit('table-bottom-reached', () => {
-        this.observe()
-      })
-    }
+  })
+  observe()
+})
+
+onBeforeUnmount(() => {
+  observer.value.disconnect()
+})
+
+function observe() {
+  if (!infiniteScrollLoader.value) {
+    return
   }
+  observer.value.disconnect()
+  observer.value.observe(infiniteScrollLoader.value)
+}
+
+function tableBottomReached() {
+  emit('table-bottom-reached', () => observe())
 }
 </script>
 

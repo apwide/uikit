@@ -29,75 +29,53 @@
   </svg>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
+
 const uid = () => Math.random().toString(36).substring(2)
 
-export default {
-  name: 'KitContentLoader',
-  props: {
-    speed: {
-      type: Number,
-      default: 2
-    },
-    preserveAspectRatio: {
-      type: String,
-      default: 'none'
-    },
-    baseUrl: {
-      type: String,
-      default: ''
-    },
-    primaryColor: {
-      type: String,
-      default: '#f9f9f9'
-    },
-    secondaryColor: {
-      type: String,
-      default: '#ecebeb'
-    },
-    primaryOpacity: {
-      type: Number,
-      default: 1
-    },
-    secondaryOpacity: {
-      type: Number,
-      default: 1
-    },
-    uniqueKey: {
-      type: String,
-      default: ''
-    },
-    animate: {
-      type: Boolean,
-      default: true
-    },
-    viewBox: {
-      type: String,
-      default: undefined
-    },
-    width: {
-      type: [String, Number],
-      default: '300px'
-    },
-    height: {
-      type: [String, Number],
-      default: '20px'
-    }
-  },
-
-  computed: {
-    fill() {
-      return { fill: `url(${this.baseUrl}#${this.idGradient})` }
-    },
-    idClip() {
-      return this.uniqueKey ? `${this.uniqueKey}-idClip` : uid()
-    },
-    idGradient() {
-      return this.uniqueKey ? `${this.uniqueKey}-idGradient` : uid()
-    },
-    clipPath() {
-      return `url(${this.baseUrl}#${this.idClip})`
-    }
-  }
+type Props = {
+  speed?: number
+  preserveAspectRatio?: string
+  baseUrl?: string
+  primaryColor?: string
+  secondaryColor?: string
+  primaryOpacity?: number
+  secondaryOpacity?: number
+  uniqueKey?: string
+  animate?: boolean
+  viewBox?: string
+  width?: string | number
+  height?: string | number
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  speed: 2,
+  preserveAspectRatio: 'none',
+  baseUrl: '',
+  primaryColor: '#f9f9f9',
+  secondaryColor: '#ecebeb',
+  primaryOpacity: 1,
+  secondaryOpacity: 1,
+  uniqueKey: '',
+  animate: true,
+  width: '300px',
+  height: '20px',
+})
+
+const fill = computed(() => {
+  return { fill: `url(${props.baseUrl}#${idGradient.value})` }
+})
+
+const idClip = computed(() => {
+  return props.uniqueKey ? `${props.uniqueKey}-idClip` : uid()
+})
+
+const idGradient = computed(() => {
+  return props.uniqueKey ? `${props.uniqueKey}-idGradient` : uid()
+})
+
+const clipPath = computed(() => {
+  return `url(${props.baseUrl}#${idClip.value})`
+})
 </script>

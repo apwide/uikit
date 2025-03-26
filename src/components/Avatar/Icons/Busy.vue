@@ -10,11 +10,6 @@
   </PresenceWrapper>
 </template>
 
-<script>
+<script setup lang="ts">
 import PresenceWrapper from './PresenceWrapper'
-
-export default {
-  name: 'KitBusy',
-  components: { PresenceWrapper }
-}
 </script>

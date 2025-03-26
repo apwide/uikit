@@ -4,24 +4,19 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'KitIssueStatusRenderer',
-  props: {
-    value: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    statusName() {
-      return this.value && this.value.name
-    },
-    statusColor() {
-      return this.value && this.value.statusCategory && this.value.statusCategory.colorName
-    }
-  }
+<script setup lang="ts">
+
+import { IssueStatus } from '@components/field-renderers/types'
+import { computed } from 'vue'
+
+type Props = {
+  value?: IssueStatus
 }
+
+defineProps<Props>()
+
+const statusName = computed(() => props.value?.name)
+const statusColor = computed(() => props.value?.statusCategory?.colorName)
 </script>
 
 <style scoped>

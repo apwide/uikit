@@ -16,69 +16,55 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import type { Issue } from '@components/field-renderers/types'
 import QuestionIcon from '../Icon/aui/QuestionIcon'
 import IssueStatusRenderer from './IssueStatusRenderer'
 import IssuePriorityRenderer from './IssuePriorityRenderer'
 import IssueTypeRenderer from './IssueTypeRenderer'
 import User from './UserRenderer'
 
-export default {
-  name: 'KitIssueRenderer',
-  components: {
-    IssueStatusRenderer,
-    IssuePriorityRenderer,
-    IssueTypeRenderer,
-    User,
-    QuestionIcon
-  },
-  props: {
-    issue: {
-      type: Object,
-      default: undefined
-    },
-    baseUrl: {
-      type: String,
-      default: ''
-    },
-    appearance: {
-      type: String,
-      default: 'normal',
-      validator: (value) => ['normal', 'compact', 'micro'].includes(value)
-    }
-  },
-  computed: {
-    fields() {
-      return this.issue.fields || {}
-    },
-    issueType() {
-      return this.fields.issuetype
-    },
-    href() {
-      return `${this.baseUrl}/browse/${this.issue.key}`
-    },
-    status() {
-      return this.fields.status
-    },
-    isResolved() {
-      return !!this.fields.resolution
-    },
-    priority() {
-      return this.fields.priority
-    },
-    assignee() {
-      const { assignee } = this.fields
-      if (!assignee) {
-        return undefined
-      }
-      return {
-        name: assignee.displayName,
-        avatar: assignee.avatarUrls && assignee.avatarUrls['48x48'],
-        username: assignee.name
-      }
-    }
-  }
+type Props = {
+  issue?: Issue
+  baseUrl?: string
+  appearance?: 'normal' | 'compact' | 'micro'
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  baseUrl: '',
+  appearance: 'normal'
+})
+
+fields = computed(() => {
+  return props.issue.fields || {}
+})
+const issueType = computed(() => {
+  return fields.value.issuetype
+})
+const href = computed(() => {
+  return `${props.baseUrl}/browse/${props.issue.key}`
+})
+const status = computed(() => {
+  return fields.value.status
+})
+const isResolved = computed(() => {
+  return !!fields.value.resolution
+})
+const priority = computed(() => {
+  return fields.value.priority
+})
+const assignee = computed(() => {
+  const { assignee } = fields.value
+  if (!assignee) {
+    return undefined
+  }
+  return {
+    name: assignee.displayName,
+    avatar: assignee.avatarUrls && assignee.avatarUrls['48x48'],
+    username: assignee.name
+  }
+})
 </script>
 
 <style scoped>

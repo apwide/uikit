@@ -5,16 +5,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KitIssuePriorityRenderer',
-  props: {
-    value: {
-      type: Object,
-      default: () => ({})
-    }
-  }
+<script setup lang="ts">
+import type { IssuePriority } from '@components/field-renderers/types'
+
+type Props = {
+  value?: IssuePriority
 }
+
+withDefaults(defineProps<Props>(), {
+  value: () => ({})
+})
 </script>
 
 <style scoped>

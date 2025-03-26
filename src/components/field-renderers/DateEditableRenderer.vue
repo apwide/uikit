@@ -17,38 +17,30 @@
   <DateRenderer v-else :date="timestamp" />
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
 import KitDatePicker from '../Calendar/KitDatePicker.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import DateRenderer from './DateRenderer'
 
-export default {
-  name: 'KitDateEditableRenderer',
-  components: { DateRenderer, KitInlineEdit, KitDatePicker },
-  props: {
-    date: {
-      type: [Number, String],
-      default: undefined
-    },
-    editable: {
-      type: Boolean,
-      default: true
-    },
-    placement: {
-      type: String,
-      default: 'right'
-    }
-  },
-  computed: {
-    timestamp() {
-      return this.date && parseInt(this.date, 10)
-    }
-  },
-  methods: {
-    onSaveRequested(value, callback) {
-      const timestamp = value.toString()
-      this.$emit('save-requested', timestamp, callback)
-    }
-  }
+type Props = {
+  date?: number | string
+  editable?: boolean
+  placement?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  editable: true,
+  placement: 'right'
+})
+
+const emit = defineEmits<{
+  (event: 'save-requested', data?: string, callback: (e: Error) => void)
+}>()
+
+const timestamp = computed(() => props.date && parseInt(props.date, 10))
+
+function onSaveRequested(value, callback: CallableFunction) {
+  emit('save-requested', value.toString(), callback)
 }
 </script>

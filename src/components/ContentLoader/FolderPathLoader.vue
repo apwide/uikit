@@ -6,24 +6,21 @@
   </ContentLoader>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
 import ContentLoader from './ContentLoader'
 
-export default {
-  name: 'KitFolderPathLoader',
-  components: { ContentLoader },
-  props: {
-    size: {
-      type: String,
-      default: 'normal'
-    }
-  },
-  computed: {
-    loaderHeight() {
-      return this.size === 'small' ? 17 : 20
-    }
-  }
+type Props = {
+  size?: 'normal' | 'small'
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'normal'
+})
+
+const loaderHeight = computed(() => {
+  return props.size === 'small' ? 17 : 20
+})
 </script>
 <style scoped>
 .loader-text {

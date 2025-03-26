@@ -9,13 +9,8 @@
   </PresenceWrapper>
 </template>
 
-<script>
+<script setup lang="ts">
 import PresenceWrapper from './PresenceWrapper'
-
-export default {
-  name: 'KitDeclined',
-  components: { PresenceWrapper }
-}
 </script>
 
 <style scoped></style>

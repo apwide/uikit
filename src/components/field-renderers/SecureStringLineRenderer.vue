@@ -10,14 +10,14 @@
       "
       style="flex: 1" />
     <KitButtonGroup spacing="narrow" class="secure-string-line__icons">
-      <CopyToClipboard :text="value" title="Copy to clipboard">
+      <KitCopyToClipboard :text="value" title="Copy to clipboard">
         <template #default="{ copied }">
           <KitIconButton class="secure-string-line__icon" title="Copy to clipboard">
             <KitIcon v-if="!copied" type="clone" icon-style="regular" />
             <KitIcon v-else type="check" />
           </KitIconButton>
         </template>
-      </CopyToClipboard>
+      </KitCopyToClipboard>
       <KitIconButton
         :title="eyeTitle"
         class="secure-string-line__icon"
@@ -30,47 +30,27 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed, ref } from 'vue'
 import KitIconButton from '../Button/KitIconButton'
 import KitButtonGroup from '../Button/KitButtonGroup'
 import KitIcon from '../Icon/KitIcon'
 import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
 import StringLineRenderer from './StringLineRenderer'
 
-export default {
-  name: 'KitSecureStringLineRenderer',
-  components: {
-    CopyToClipboard: KitCopyToClipboard,
-    KitButtonGroup,
-    KitIconButton,
-    KitIcon,
-    StringLineRenderer
-  },
-  props: {
-    value: {
-      type: String,
-      default: undefined
-    },
-    htmlValue: {
-      type: String,
-      default: undefined
-    }
-  },
-  data() {
-    return {
-      obfuscated: true
-    }
-  },
-  computed: {
-    eyeTitle() {
-      return this.obfuscated ? 'Reveal' : 'Hide'
-    }
-  },
-  methods: {
-    toggleFieldType() {
-      this.obfuscated = !this.obfuscated
-    }
-  }
+type Props = {
+  value?: string
+  htmlValue?: string
+}
+
+defineProps<Props>()
+const obfuscated = ref(true)
+
+
+const eyeTitle = computed(() => obfuscated.value ? 'Reveal' : 'Hide')
+
+function toggleFieldType() {
+  obfuscated.value = !obfuscated.value
 }
 </script>
 
