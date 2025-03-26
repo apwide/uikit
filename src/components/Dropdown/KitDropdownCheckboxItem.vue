@@ -73,7 +73,7 @@ export default {
   height: 40px;
 }
 
-.kit-dropdown-checkbox-item.checkbox-wrapper {
+.kit-dropdown-checkbox-item.kit-checkbox__wrapper {
   display: flex;
 }
 
