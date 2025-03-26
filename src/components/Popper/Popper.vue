@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { arrow, autoPlacement, autoUpdate, computePosition, flip, limitShift, offset as foffset, shift } from '@floating-ui/dom'
-import { getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 type Props = {
   targetElement: HTMLElement
@@ -35,6 +35,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const popper = ref<Instance>()
+const translatedOffset = computed(() => {
+  const [crossAxis, mainAxis] = props.offset
+  return { crossAxis, mainAxis }
+})
 
 onMounted(() => {
   nextTick(() => {
@@ -64,7 +68,7 @@ function initPopper() {
         ...props.placement === 'auto' ? [autoPlacement()] : [],
         flip(),
         shift(({ limiter: limitShift() })),
-        foffset({ mainAxis: 5,  crossAxis: 0 }),
+        foffset(translatedOffset.value),
         ...arrowElm ? [arrow({ element: arrowElm })] : [],
       ]
     })

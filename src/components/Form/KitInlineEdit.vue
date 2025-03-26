@@ -61,7 +61,6 @@
     </div>
     <Popper
       v-if="elementToAlignButtonsTo && isEditing && !isLoading && !hideConfirmButtons"
-      ref="buttons"
       :offset="offset"
       :target-element="elementToAlignButtonsTo">
       <InlineEditButtons @blur="onBlur" @cancel="cancelInlineEdit" @confirm="confirmEditedValue" />
@@ -157,7 +156,6 @@ const contentWidth = ref(0)
 const contentHeight = ref(0)
 
 const container = ref<HTMLDivElement>()
-const buttons = ref()
 const input = ref()
 const wrapperContainer = ref<HTMLDivElement>()
 const valueView = ref()
@@ -208,10 +206,6 @@ async function editingRequested() {
 
 function onInput(value: string) {
   editingValue.value = value
-
-  if (buttons.value) {
-    buttons.value.update()
-  }
 }
 
 async function onBlur(event) {
@@ -314,9 +308,6 @@ function isValidId(key) {
 watch(editingValue, async () => {
   isDirty.value = true
   await nextTick()
-  if (buttons.value) {
-    buttons.value.update()
-  }
 })
 watchEffect(() => (editingValue.value = props.value))
 watchEffect(() => {

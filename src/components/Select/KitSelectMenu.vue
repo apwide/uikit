@@ -86,7 +86,7 @@ function resetIndex() {
   background-color: var(--kit-select-menu-bg-color);
   box-shadow: var(--kit-select-menu-shadow);
   margin-bottom: 8px;
-  margin-top: 8px;
+  margin-top: 0;
   box-sizing: border-box;
   border-radius: 4px;
   width: 100%;

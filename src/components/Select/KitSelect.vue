@@ -62,7 +62,6 @@
     </KitTextField>
     <Popper
       v-if="shouldOpenMenu"
-      ref="menuRef"
       :boundaries-element="boundariesElement"
       :offset="[0, 0]"
       :target-element="containerRef"
@@ -81,7 +80,6 @@
         :style="{ width: selectWidth }"
         data-cy="select-menu"
         @mouseover="onMouseOverSuggestion"
-        @update-popper-position="updatePopperPosition"
         @option-selected="onOptionSelected">
         <template #option="{ option, isCurrent }">
           <slot :is-current="isCurrent" :option="option" name="option" />
@@ -254,7 +252,6 @@ const showClearIcon = computed(() => {
 
 const inputRef = ref<HTMLInputElement>()
 const containerRef = ref<HTMLElement>()
-const menuRef = ref<typeof Popper>()
 const listRef = ref<HTMLDivElement>()
 
 function onFocus(e: FocusEvent) {
@@ -329,15 +326,10 @@ async function resize() {
   }
 }
 
-function updatePopperPosition() {
-  menuRef.value?.update()
-}
-
 async function onInput({ target }) {
   search.value = target.value
   isOpen.value = true
   await resize()
-  updatePopperPosition()
 }
 
 async function onRemove(id: string) {
@@ -348,10 +340,8 @@ async function onRemove(id: string) {
   const s = selectedValues
     .filter((option: Value<unknown>) => option.id !== id || option.disabled)
     .map((option: Value<unknown>) => option.value)
-  updatePopperPosition()
   emit('input', s)
   await nextTick()
-  updatePopperPosition()
 }
 
 function removeOption() {
@@ -508,7 +498,6 @@ watch(
       await nextTick()
       if (inputRef.value) {
         inputRef.value.click()
-        updateInterval = setInterval(updatePopperPosition, 100)
       }
     }
   },
@@ -571,7 +560,6 @@ watch(suggestions, async () => {
     }
   }
   await nextTick()
-  updatePopperPosition()
 })
 </script>
 <style scoped>

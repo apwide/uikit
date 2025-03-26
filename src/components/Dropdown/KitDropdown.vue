@@ -103,13 +103,6 @@ function onOutsideClick(event: MouseEvent) {
   }
 }
 
-function updatePopperPosition() {
-  if (menu.value) {
-    const [popper] = menu.value.$children
-    popper.update()
-  }
-}
-
 function onTriggerClick() {
   open.value = !open.value
 }
@@ -129,7 +122,6 @@ watch(open, async (current) => {
     document.addEventListener('keydown', onKeyDown)
     if (props.appendToBody && menu.value) {
       document.body.appendChild(menu.value.$el)
-      updatePopperPosition()
     }
     emit('open')
   } else {

@@ -204,10 +204,6 @@ export default {
       }
     },
 
-    suggestions() {
-      this.$nextTick(() => this.updatePopperPosition())
-    },
-
     index(index) {
       this.currentSuggestionId = this.visibleNodesIds[index]
     }
@@ -264,7 +260,6 @@ export default {
       this.search = target.value
       this.isOpen = true
       this.resize()
-      this.updatePopperPosition()
     },
 
     removeOption() {
@@ -321,12 +316,6 @@ export default {
           this.currentWidth = `${this.$refs.input.scrollWidth}px`
         }
       })
-    },
-
-    updatePopperPosition() {
-      if (this.$refs.menu) {
-        this.$refs.menu.update()
-      }
     },
 
     getChildNodes(children = []) {
