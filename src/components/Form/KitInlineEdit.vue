@@ -334,6 +334,10 @@ input[align='end'] {
 }
 
 .kit-inline-edit__general-error-dialog {
+  width: max-content;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 500;
   max-width: 400px;
   min-width: 200px;

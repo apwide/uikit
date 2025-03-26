@@ -91,6 +91,8 @@ function resetIndex() {
   border-radius: 4px;
   width: 100%;
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1000;
 }
 

@@ -30,6 +30,10 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped>
 .kit-inline-error-message {
+  width: max-content;
+  position: absolute;
+  top: 0;
+  left: 0;
   color: #091e42;
   font-size: 14px;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
