@@ -4,6 +4,8 @@ body {
     --kit-page-bg-color: #ffffff;
     --kit-dialog-bg-color: var(--kit-page-bg-color);
 
+    --kit-link-color: #0052cc;
+
     --kit-table-row-hover-color: #f4f5f7;
     --kit-table-header-text: var(--kit-header-text);
 
@@ -147,6 +149,8 @@ body {
     --kit-body-text: #9fadbc;
     --kit-header-text: var(--kit-body-text);
     --kit-page-bg-color: #1d2125;
+
+    --kit-link-color: #579DFF;
 
     --kit-table-row-hover-color: #a1bdd914;
     --kit-table-header-text: var(--kit-header-text);

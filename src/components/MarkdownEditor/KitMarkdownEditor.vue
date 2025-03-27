@@ -242,15 +242,21 @@ onUnmounted(() => {
 <style scoped>
 .kit-markdown-editor {
   --kit-md-link-text: #333333;
-  --kit-md-url-text: #0052cc;
   --kit-md-line-text: #172b4d; /* ? */
 
   --kit-md-status-bar-border: #ced4da;
   --kit-md-error-bg: #edc8be;
   --kit-md-error-text: #8b0000;
 
+  --kit-md-preview-bg: #fafafa;
+  --kit-md-cursor-color: black;
+
 }
 [data-color-mode="dark"] .kit-markdown-editor {
+  /* link */
+  --kit-md-line-text: var(--kit-body-text); /* ? */
+  --kit-md-link-text: #CCE0FF;
+
   --kit-md-tool-bg: #A1BDD914;
   --kit-md-toolbar-bg: #282e33;
   --kit-md-tool-hover-bg: #A6C5E229;
@@ -259,10 +265,17 @@ onUnmounted(() => {
   --kit-md-tool-active-bg: #1C2B41;
   --kit-md-tool-active-text: #579DFF;
   --kit-md-tool-click-bg:  rgba(179, 212, 255, 0.6);
+
+  --kit-md-preview-bg: #22272B;
+  --kit-md-cursor-color: var(--kit-body-text);
 }
 .kit-markdown-editor {
   width: 100%;
 }
+.kit-markdown-editor >>>  .CodeMirror-cursor {
+  border-left: 1px solid var(--kit-md-cursor-color);
+}
+
 /** PREVIEW */
 .kit-markdown-editor >>> .editor-preview h1,
 .kit-markdown-editor >>> .editor-preview h2,
@@ -293,9 +306,16 @@ onUnmounted(() => {
   color: var(--kit-md-link-text);
 }
 .kit-markdown-editor >>> .cm-url {
-  color: var(--kit-md-url-text);
+  color: var(--kit-link-color);
 }
 .kit-markdown-editor >>> .CodeMirror-line {
+  color: var(--kit-md-line-text);
+}
+.kit-markdown-editor >>> .CodeMirror {
+  background: var(--kit-page-bg-color);
+}
+.kit-markdown-editor >>> .editor-preview {
+  background: var(--kit-md-preview-bg);
   color: var(--kit-md-line-text);
 }
 .kit-markdown-editor[data-has-status-bar='true'] >>> .CodeMirror {
