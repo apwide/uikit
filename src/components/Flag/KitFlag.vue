@@ -113,21 +113,16 @@ function onClick(action) {
 
 <style scoped>
 .kit-flag {
-  --kit-flag-shadow: rgba(9, 30, 66, 0.31) 0 0 1px, rgba(9, 30, 66, 0.25) 0 20px 32px -8px;
-
   background-color: var(--kit-dialog-bg-color);
   box-sizing: border-box;
-  box-shadow: var(--kit-flag-shadow);
+  box-shadow: var(--kit-overlay-shadow);
+  border: var(--kit-overlay-border);
   width: 100%;
   z-index: 600;
   border-radius: 3px;
   padding: 16px;
   max-width: 600px;
   transition: all 0.5s;
-}
-
-[data-color-mode="dark"] .kit-flag {
-  --kit-flag-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
 }
 
 .icon {

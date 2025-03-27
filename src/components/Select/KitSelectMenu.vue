@@ -84,7 +84,8 @@ function resetIndex() {
 <style scoped>
 .kit-select-menu {
   background-color: var(--kit-select-menu-bg-color);
-  box-shadow: var(--kit-select-menu-shadow);
+  box-shadow: var(--kit-overlay-shadow);
+  border: var(--kit-overlay-border);
   margin-bottom: 8px;
   margin-top: 0;
   box-sizing: border-box;

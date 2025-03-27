@@ -42,6 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (event: 'open')
   (event: 'close')
+  (event: 'click-outside')
 }>()
 
 const dialogContainer = ref<HTMLDivElement>()
@@ -56,6 +57,7 @@ function onOutsideClick(event) {
   if (props.closeOnOutsideClick) {
     open.value = false
   }
+  emit('click-outside')
 }
 
 function onKeyDown(event) {

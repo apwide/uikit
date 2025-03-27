@@ -45,38 +45,24 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <style scoped>
-
-.kit-popup {
-  --kit-popup-bg-color: var(--kit-page-bg-color);
-}
-
-[data-color-mode="dark"] .kit-popup {
-  --kit-popup-bg-color: #282E33;
-}
-
 .kit-popup {
   width: max-content;
   position: absolute;
   top: 0;
   left: 0;
   background-color: var(--kit-popup-bg-color);
-  box-shadow: 0 0 20px 4px rgb(154 161 177 / 15%), 0 4px 80px -8px rgb(36 40 47 / 25%),
-    0 4px 4px -2px rgb(91 94 105 / 15%);
+  box-shadow: var(--kit-overlay-shadow);
   box-sizing: border-box;
   display: block;
   z-index: 400;
   border-radius: 4px;
   flex: 1 1 auto;
   padding: 4px;
+  border: var(--kit-overlay-border);
 }
 
 .kit-popup[data-light-shadows] {
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
-}
-
-[data-color-mode="dark"] .kit-popup {
-  border: 1px solid #313a41;
-  box-shadow: 0 2px 6px -2px #39424a, 0 0 1px #0304045c;
+  box-shadow: var(--kit-popup-light-shadow);
 }
 
 .kit-popup-arrow,

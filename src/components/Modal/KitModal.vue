@@ -155,7 +155,8 @@ onUnmounted(() => {
 <style scoped>
 .kit-modal-container {
   background-color: var(--kit-modal-container-bg-color);
-  box-shadow: var(--kit-modal-container-shadow);
+  box-shadow: var(--kit-overlay-shadow);
+  border: var(--kit-overlay-border);
   color: var(--kit-modal-container-text-color);
   display: flex;
   flex-direction: column;

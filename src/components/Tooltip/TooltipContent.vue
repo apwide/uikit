@@ -42,7 +42,7 @@ withDefaults(defineProps<Props>(), {
   padding: 2px 10px;
   font-size: 12px;
   font-weight: 400;
-  box-shadow: 0 1px 2px 1px rgba(0, 1, 0, 0.2);
+  box-shadow: var(--kit-tooltip-shadow);
   white-space: nowrap;
   pointer-events: none;
   background-color: #172b4d;

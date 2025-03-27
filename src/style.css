@@ -4,6 +4,10 @@ body {
     --kit-page-bg-color: #ffffff;
     --kit-dialog-bg-color: var(--kit-page-bg-color);
 
+    --kit-overlay-shadow: 0px 8px 12px #1E1F2126, 0px 0px 1px #1E1F214F;
+    --kit-tooltip-shadow: 0 1px 2px 1px rgba(0, 1, 0, 0.2);
+    --kit-overlay-border: none;
+
     --kit-link-color: #0052cc;
 
     --kit-table-row-hover-color: #f4f5f7;
@@ -62,7 +66,6 @@ body {
     --kit-select-placeholder: rgb(122, 134, 154);
     --kit-select-ghost-bg-color: #ffffff;
     --kit-select-menu-bg-color: rgb(255, 255, 255);
-    --kit-select-menu-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 4px 11px;
     --kit-select-option-selected-bg: #42526e;
     --kit-select-option-selected-text: #ffffff;
     --kit-select-option-current-bg: #ebecf0;
@@ -102,8 +105,10 @@ body {
     --kit-blanket-bg: rgba(9, 30, 66, 0.54);
 
     --kit-modal-container-bg-color: #ffffff;
-    --kit-modal-container-shadow: rgba(9, 30, 66, 0.08) 0 0 0 1px, rgba(9, 30, 66, 0.08) 0 2px 1px, rgba(9, 30, 66, 0.31) 0 0 20px -6px;
     --kit-modal-container-text-color: #091e42;
+
+    --kit-popup-bg-color: var(--kit-page-bg-color);
+    --kit-popup-light-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
 
     --kit-text-field-placeholder-color: #7a869a;
     --kit-text-field-border-color: #dfe1e6;
@@ -161,6 +166,9 @@ body {
 
     --kit-link-color: #579DFF;
 
+    --kit-overlay-shadow: 0px 0px 0px 1px #BDBDBD1F, 0px 8px 12px #0104045C, 0px 0px 1px 1px #01040480;
+    --kit-overlay-border: 1px solid #313a41;
+
     --kit-table-row-hover-color: #a1bdd914;
     --kit-table-header-text: var(--kit-header-text);
 
@@ -204,7 +212,6 @@ body {
     --kit-select-placeholder: var(--kit-body-text);
     --kit-select-ghost-bg-color: #a6c5e229;
     --kit-select-menu-bg-color: rgb(40, 46, 51);
-    --kit-select-menu-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045c, 0px 0px 1px 1px #03040480;
     --kit-select-option-selected-bg: #1c2b41;
     --kit-select-option-selected-text:#579dff;
     --kit-select-option-current-bg: rgba(161, 189, 217, 0.08);
@@ -247,6 +254,8 @@ body {
     --kit-modal-container-bg-color: #1d2125;
     --kit-modal-container-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045c, 0px 0px 1px 1px #03040480;
     --kit-modal-container-text-color: #b6c2cf;
+
+    --kit-popup-bg-color: #282E33;
 
     --kit-text-field-placeholder-color: #b6c2cf;
     --kit-text-field-border-color: #738496;

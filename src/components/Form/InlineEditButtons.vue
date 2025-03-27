@@ -53,13 +53,11 @@ function onBlur(event) {
 .kit-buttons-wrapper {
   --kit-inline-edit-button-bg: white;
   --kit-inline-edit-button-hover-bg: #efefef;
-  --kit-inline-edit-button-shadow: rgba(9, 30, 66, 0.25) 0 4px 8px -2px, rgba(9, 30, 66, 0.31) 0 0 1px;
 }
 
 [data-color-mode="dark"] .kit-buttons-wrapper {
   --kit-inline-edit-button-bg: #282e33;
-  --kit-inline-edit-button-hover-bg: #A6C5E229;;
-  --kit-inline-edit-button-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045C, 0px 0px 1px 1px #03040480;
+  --kit-inline-edit-button-hover-bg: #A6C5E229;
 }
 
 .kit-buttons-wrapper {
@@ -79,7 +77,8 @@ function onBlur(event) {
 
 .kit-box-shadow-wrapper {
   background-color: var(--kit-inline-edit-button-bg);
-  box-shadow: var(--kit-inline-edit-button-shadow);
+  box-shadow: var(--kit-overlay-shadow);
+  border: var(--kit-overlay-border);
   box-sizing: border-box;
   z-index: 200;
   border-radius: 3px;

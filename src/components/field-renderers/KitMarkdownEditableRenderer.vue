@@ -337,7 +337,7 @@ onBeforeUnmount(() => {
 }
 .kit-markdown-editable-renderer__editor {
   background-color: var(--kit-md-toolbar-bg);
-  box-shadow: rgba(9, 30, 66, 0.25) 0 4px 8px -2px, rgba(9, 30, 66, 0.31) 0 0 1px;
+  box-shadow: var(--kit-overlay-shadow);
   box-sizing: border-box;
 }
 </style>
