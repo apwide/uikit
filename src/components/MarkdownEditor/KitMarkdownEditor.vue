@@ -241,35 +241,6 @@ onUnmounted(() => {
 
 <style scoped>
 .kit-markdown-editor {
-  --kit-md-link-text: #333333;
-  --kit-md-line-text: #172b4d; /* ? */
-
-  --kit-md-status-bar-border: #ced4da;
-  --kit-md-error-bg: #edc8be;
-  --kit-md-error-text: #8b0000;
-
-  --kit-md-preview-bg: #fafafa;
-  --kit-md-cursor-color: black;
-
-}
-[data-color-mode="dark"] .kit-markdown-editor {
-  /* link */
-  --kit-md-line-text: var(--kit-body-text); /* ? */
-  --kit-md-link-text: #CCE0FF;
-
-  --kit-md-tool-bg: #A1BDD914;
-  --kit-md-toolbar-bg: #282e33;
-  --kit-md-tool-hover-bg: #A6C5E229;
-  --kit-md-tool-border: transparent;
-  --kit-md-border: #738496;
-  --kit-md-tool-active-bg: #1C2B41;
-  --kit-md-tool-active-text: #579DFF;
-  --kit-md-tool-click-bg:  rgba(179, 212, 255, 0.6);
-
-  --kit-md-preview-bg: #22272B;
-  --kit-md-cursor-color: var(--kit-body-text);
-}
-.kit-markdown-editor {
   width: 100%;
 }
 .kit-markdown-editor >>>  .CodeMirror-cursor {
@@ -329,6 +300,7 @@ onUnmounted(() => {
   border: 1px solid var(--kit-md-status-bar-border);
   border-top: none;
   padding: 2px 2px;
+  background: inherit;
 }
 
 /** Editor style cancelling when not editing */
@@ -422,9 +394,12 @@ onUnmounted(() => {
 [data-color-mode="dark"] .kit-markdown-editor >>> button {
   color: var(--kit-body-text);
 }
-[data-color-mode="dark"] .kit-markdown-editor >>> .editor-toolbar,
-[data-color-mode="dark"] .kit-markdown-editor >>> .editor-statusbar {
+[data-color-mode="dark"] .kit-markdown-editor >>> .editor-toolbar {
   background-color: var(--kit-md-toolbar-bg);
+}
+
+[data-color-mode="dark"] .kit-markdown-editor >>> .editor-statusbar {
+  background-color: var(--kit-page-bg-color);
 }
 
 [data-color-mode="dark"] .kit-markdown-editor >>> .editor-toolbar {
@@ -441,6 +416,7 @@ onUnmounted(() => {
 
 [data-color-mode="dark"] .kit-markdown-editor >>> .editor-statusbar {
   border: 1px solid var(--kit-md-border);
+  border-top: none;
 }
 
 [data-color-mode="dark"] .kit-markdown-editor >>> .editor-toolbar i.separator {

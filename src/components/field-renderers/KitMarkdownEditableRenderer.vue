@@ -204,7 +204,7 @@ async function positionEditor() {
     }
 
     if (toolbar) {
-      toolbar.style.backgroundColor = 'white'
+      toolbar.style.backgroundColor = 'var(--kit-md-toolbar-bg)'
 
       const isInTable = Boolean(findTableParent(containerRef.value))
 
@@ -336,7 +336,7 @@ onBeforeUnmount(() => {
   min-width: 200px;
 }
 .kit-markdown-editable-renderer__editor {
-  background-color: white;
+  background-color: var(--kit-md-toolbar-bg);
   box-shadow: rgba(9, 30, 66, 0.25) 0 4px 8px -2px, rgba(9, 30, 66, 0.31) 0 0 1px;
   box-sizing: border-box;
 }
