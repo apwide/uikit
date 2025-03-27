@@ -63,6 +63,7 @@ function onBlur(event) {
 }
 
 .kit-buttons-wrapper {
+  position: absolute;
   display: flex;
   gap: 4px;
   /* reduce interaction with items below the buttons */
