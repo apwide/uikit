@@ -30,6 +30,7 @@ import KitBreadcrumbItem from '@components/Breadcrumbs/KitBreadcrumbItem.vue'
 import KitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
 import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import KitBigTooltip from '@components/Tooltip/KitBigTooltip.vue'
+import KitPopup from '@components/common/Popup.vue'
 import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue'
 import KitTable from './components/Table/KitTable.vue'
 import KitProgress from './components/Progress/progress'
@@ -113,7 +114,8 @@ export {
   KitSpotlight,
   KitSpotlightStep,
   KitColorPicker,
-  KitBigTooltip
+  KitBigTooltip,
+  KitPopup
 }
 export * from './components/layout/index'
 export * from './components/Menu/index'
