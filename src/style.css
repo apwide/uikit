@@ -4,7 +4,7 @@ body {
     --kit-page-bg-color: #ffffff;
     --kit-dialog-bg-color: var(--kit-page-bg-color);
 
-    --kit-overlay-shadow: 0px 8px 12px #1E1F2126, 0px 0px 1px #1E1F214F;
+    --kit-overlay-shadow: 0px 8px 12px #1e1f2126, 0px 0px 1px #1e1f214f;
     --kit-tooltip-shadow: 0 1px 2px 1px rgba(0, 1, 0, 0.2);
     --kit-overlay-border: none;
 
@@ -158,15 +158,15 @@ body {
 
 }
 
-[data-color-mode="dark"] body {
+[data-color-mode="dark"] body, html[data-color-mode="dark"] {
     /*--kit-body-text: #b6c2cf;*/
     --kit-body-text: #9fadbc;
     --kit-header-text: var(--kit-body-text);
     --kit-page-bg-color: #1d2125;
 
-    --kit-link-color: #579DFF;
+    --kit-link-color: #579dff;
 
-    --kit-overlay-shadow: 0px 0px 0px 1px #BDBDBD1F, 0px 8px 12px #0104045C, 0px 0px 1px 1px #01040480;
+    --kit-overlay-shadow: 0px 0px 0px 1px #bdbdbd1f, 0px 8px 12px #0104045c, 0px 0px 1px 1px #01040480;
     --kit-overlay-border: 1px solid #313a41;
 
     --kit-table-row-hover-color: #a1bdd914;
@@ -255,7 +255,7 @@ body {
     --kit-modal-container-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045c, 0px 0px 1px 1px #03040480;
     --kit-modal-container-text-color: #b6c2cf;
 
-    --kit-popup-bg-color: #282E33;
+    --kit-popup-bg-color: #282e33;
 
     --kit-text-field-placeholder-color: #b6c2cf;
     --kit-text-field-border-color: #738496;
@@ -289,15 +289,15 @@ body {
     --kit-section-message-change-bg: #2b273f;
 
     --kit-md-line-text: var(--kit-body-text); /* ? */
-    --kit-md-link-text: #CCE0FF;
-    --kit-md-tool-bg: #A1BDD914;
+    --kit-md-link-text: #cce0ff;
+    --kit-md-tool-bg: #a1bdd914;
     --kit-md-toolbar-bg: #282e33;
-    --kit-md-tool-hover-bg: #A6C5E229;
+    --kit-md-tool-hover-bg: #a6c5e229;
     --kit-md-tool-border: transparent;
     --kit-md-border: #738496;
-    --kit-md-tool-active-bg: #1C2B41;
-    --kit-md-tool-active-text: #579DFF;
+    --kit-md-tool-active-bg: #1c2b41;
+    --kit-md-tool-active-text: #579dff;
     --kit-md-tool-click-bg:  rgba(179, 212, 255, 0.6);
-    --kit-md-preview-bg: #22272B;
+    --kit-md-preview-bg: #22272b;
     --kit-md-cursor-color: var(--kit-body-text);
 }

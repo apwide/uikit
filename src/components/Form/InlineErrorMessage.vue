@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import Popper from '../Popper/Popper.vue'
 import type GeneralError from '@components/Form/GeneralError'
+import Popper from '../Popper/Popper.vue'
 
 type Props = {
   error: Error | GeneralError
