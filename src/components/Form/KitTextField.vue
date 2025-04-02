@@ -59,7 +59,7 @@ input:-moz-placeholder {
 
 .kit-text-field {
   align-items: center;
-  border: solid 2px var(--kit-text-field-border-color);
+  border: solid 1px var(--kit-text-field-border-color);
   border-radius: 3px;
   box-sizing: border-box;
   padding: 0;
@@ -113,6 +113,7 @@ input:-moz-placeholder {
   background-color: var(--kit-text-field-active-bg-color);
   background: var(--kit-text-field-active-bg-color);
   border-color: var(--kit-text-field-active-border-color);
+  box-shadow: inset 0 0 0 1px var(--kit-text-field-active-border-color);
 }
 
 .kit-text-field[is-invalid]:not([disabled]):not([is-loading]) {

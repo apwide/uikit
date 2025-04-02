@@ -107,9 +107,9 @@ describe('KitInlineEdit--StringLine', () => {
     });
 
     it('renderer should have constant height', () => {
-        cy.get('[data-cy=editable]').should('have.css', 'height', '36px');
+        cy.get('[data-cy=editable]').should('have.css', 'height', '34px');
         cy.get('[data-cy=editable]').click();
-        cy.get('[data-cy=editable]').should('have.css', 'height', '36px');
+        cy.get('[data-cy=editable]').should('have.css', 'height', '34px');
     });
 
     it('should stay focused when invalid', () => {

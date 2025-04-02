@@ -113,7 +113,7 @@ function onClick(action) {
 
 <style scoped>
 .kit-flag {
-  background-color: var(--kit-dialog-bg-color);
+  background-color: var(--kit-dialog-bg);
   box-sizing: border-box;
   box-shadow: var(--kit-overlay-shadow);
   border: var(--kit-overlay-border);

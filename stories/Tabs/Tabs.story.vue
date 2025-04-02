@@ -122,7 +122,7 @@ function onReorder(newList) {
 }
 
 [data-color-mode="dark"] .content {
-  --story-tab-content-bg:  var(--kit-dialog-bg-color);
+  --story-tab-content-bg:  var(--kit-dialog-bg);
   --story-tab-content-text: var(--kit-body-text);
 }
 

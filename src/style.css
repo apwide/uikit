@@ -1,13 +1,13 @@
 body {
     --kit-body-text: #172b4d;
     --kit-header-text: #5e6c84;
-    --kit-page-bg-color: #ffffff;
-    --kit-dialog-bg-color: var(--kit-page-bg-color);
-
+    --kit-page-bg: #ffffff;
+    --kit-dialog-bg: var(--kit-page-bg);
     --kit-overlay-shadow: 0px 8px 12px #1e1f2126, 0px 0px 1px #1e1f214f;
     --kit-tooltip-shadow: 0 1px 2px 1px rgba(0, 1, 0, 0.2);
     --kit-overlay-border: none;
-
+    --kit-input-border: #dfe1e6;
+    --kit-page-border: #dfe1e6;
     --kit-link-color: #0052cc;
 
     --kit-table-row-hover-color: #f4f5f7;
@@ -62,7 +62,6 @@ body {
     --kit-btn-help-active-bg: #352a8dff;
     --kit-btn-help-active-text: #ffffff;
 
-
     --kit-select-placeholder: rgb(122, 134, 154);
     --kit-select-ghost-bg-color: #ffffff;
     --kit-select-menu-bg-color: rgb(255, 255, 255);
@@ -86,14 +85,14 @@ body {
     --kit-dropdown-item-selected-text: #ffffff;
     --kit-dropdown-item-selected-hover-bg: #7d98c7;
     --kit-dropdown-item-selected-hover-text: #ffffff;
-    --kit-dropdown-separator-border: #dfe1e6;
+    --kit-dropdown-separator-border: var(--kit-input-border);
     --kit-dropdown-group-title: #6b778c;
     --kit-dropdown-checkbox-bg: #ffffff;
     --kit-dropdown-checkbox-text: #172b4d;
     --kit-dropdown-checkbox-hover-bg: #f4f5f7;
     --kit-dropdown-checkbox-hover-text: #172b4d;
 
-    --kit-bordered-panel-border: #dfe1e6;
+    --kit-bordered-panel-border: var(--kit-page-border);
     --kit-bordered-panel-header-text: #172b4d;
     --kit-bordered-panel-row-text: #42526e;
 
@@ -107,11 +106,11 @@ body {
     --kit-modal-container-bg-color: #ffffff;
     --kit-modal-container-text-color: #091e42;
 
-    --kit-popup-bg-color: var(--kit-page-bg-color);
+    --kit-popup-bg-color: var(--kit-page-bg);
     --kit-popup-light-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
 
     --kit-text-field-placeholder-color: #7a869a;
-    --kit-text-field-border-color: #dfe1e6;
+    --kit-text-field-border-color: var(--kit-input-border);
     --kit-text-field-text-color: #091e42;
     --kit-text-field-bg-color: #fafbfc;
     --kit-text-field-hover-color: #ebecf0;
@@ -125,7 +124,7 @@ body {
     --kit-text-field-select-hover-color: #ebecf0;
     --kit-text-field-select-hover-border-color: #ebecf0;
 
-    --kit-table-bg-color: var(--kit-page-bg-color);
+    --kit-table-bg-color: var(--kit-page-bg);
     --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);
     --kit-table-header-border-color: #dfe1e6;
     --kit-table-header-bg-color: white;
@@ -162,17 +161,17 @@ body {
     /*--kit-body-text: #b6c2cf;*/
     --kit-body-text: #9fadbc;
     --kit-header-text: var(--kit-body-text);
-    --kit-page-bg-color: #1d2125;
-
+    --kit-page-bg: #1d2125;
     --kit-link-color: #579dff;
-
     --kit-overlay-shadow: 0px 0px 0px 1px #bdbdbd1f, 0px 8px 12px #0104045c, 0px 0px 1px 1px #01040480;
     --kit-overlay-border: 1px solid #313a41;
+    --kit-input-border: #7e8188;
+    --kit-page-border: #e3e4f21f; /* separator / tab */
 
     --kit-table-row-hover-color: #a1bdd914;
     --kit-table-header-text: var(--kit-header-text);
 
-    --kit-dialog-bg-color: #282e33;
+    --kit-dialog-bg: #282e33;
 
     --kit-form-danger: #f15b50;
     --kit-form-danger-icon: #f15b50;
@@ -181,8 +180,6 @@ body {
     --kit-progress-top-color: #579dff;
 
     --kit-btn-text: var(--kit-body-text);
-
-
     --kit-btn-selected-bg: #1c2b41;
     --kit-btn-selected-text: #579dff;
     --kit-btn-selected-hover-bg: #09326c;
@@ -233,20 +230,20 @@ body {
     --kit-dropdown-item-selected-hover-bg: #09326c;
     --kit-dropdown-item-selected-hover-text: #579dff;
 
-    --kit-dropdown-separator-border: #738496;
+    --kit-dropdown-separator-border: var(--kit-input-border);
     --kit-dropdown-group-title: var(--kit-body-text);
     --kit-dropdown-checkbox-bg: #282e33;
     --kit-dropdown-checkbox-text: var(--kit-body-text);
     --kit-dropdown-checkbox-hover-bg: rgba(161, 189, 217, 0.08);
     --kit-dropdown-checkbox-hover-text: var(--kit-body-text);
 
-    --kit-bordered-panel-border: #738496;
+    --kit-bordered-panel-border: var(--kit-page-border);
     --kit-bordered-panel-header-text: var(--kit-body-text);
     --kit-bordered-panel-row-text: var(--kit-body-text);
 
-    --kit-radio-border: #738496;
+    --kit-radio-border: var(--kit-input-border);
     --kit-radio-selected-border: #579dff;
-    --kit-radio-selected-center: var(--kit-page-bg-color);
+    --kit-radio-selected-center: var(--kit-page-bg);
     --kit-radio-hover-center: #a1bdd914;
 
     --kit-blanket-bg: #10121499;
@@ -258,7 +255,7 @@ body {
     --kit-popup-bg-color: #282e33;
 
     --kit-text-field-placeholder-color: #b6c2cf;
-    --kit-text-field-border-color: #738496;
+    --kit-text-field-border-color: var(--kit-input-border);
     --kit-text-field-text-color: #b6c2cf;
     --kit-text-field-bg-color: #22272b;
     --kit-text-field-hover-color: #282e33;
@@ -266,14 +263,13 @@ body {
     --kit-text-field-disabled-text-color: #b6c2cf;
     --kit-text-field-active-bg-color: #22272b;
     --kit-text-field-active-border-color:#579dff;
-    --kit-text-field-loading-bg-color: var(--kit-page-bg-color);
-    /*--kit-text-field-select-bg-color: #2b2a33;*/
+    --kit-text-field-loading-bg-color: var(--kit-page-bg);
     --kit-text-field-select-bg-color: var(--kit-text-field-active-bg-color);
-    --kit-text-field-select-border-color: #738496;
+    --kit-text-field-select-border-color: var(--kit-input-border);
     --kit-text-field-select-hover-color: #282e33;
-    --kit-text-field-select-hover-border-color: #738496;
+    --kit-text-field-select-hover-border-color: var(--kit-input-border);
 
-    --kit-table-bg-color: var(--kit-page-bg-color);
+    --kit-table-bg-color: var(--kit-page-bg);
     --kit-table-busy-bg-color: var(--kit-blanket-bg);
     --kit-table-header-border-color: #a6c5e229;
     --kit-table-header-bg-color: #1d2125;
@@ -294,7 +290,7 @@ body {
     --kit-md-toolbar-bg: #282e33;
     --kit-md-tool-hover-bg: #a6c5e229;
     --kit-md-tool-border: transparent;
-    --kit-md-border: #738496;
+    --kit-md-border: var(--kit-input-border);
     --kit-md-tool-active-bg: #1c2b41;
     --kit-md-tool-active-text: #579dff;
     --kit-md-tool-click-bg:  rgba(179, 212, 255, 0.6);

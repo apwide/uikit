@@ -71,7 +71,7 @@ function mouseHasMoved({ clientX, clientY }) {
   background-color: transparent;
   border-radius: 3px;
   outline: none;
-  border: transparent 2px solid;
+  border: transparent 1px solid;
   min-width: 44px;
   cursor: pointer;
   padding: 6px;
@@ -86,7 +86,7 @@ function mouseHasMoved({ clientX, clientY }) {
 }
 
 :focus > .kit-inline-edit-view-content__label {
-  border: 2px solid var(--kit-inline-edit-active-border);
+  border: 1px solid var(--kit-inline-edit-active-border);
   background: transparent;
 }
 

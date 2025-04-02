@@ -101,7 +101,7 @@ onBeforeUnmount(() => {
 }
 
 .kit-dialog-content {
-  background-color: var(--kit-dialog-bg-color);
+  background-color: var(--kit-dialog-bg);
   max-width: 300px;
   max-height: 400px;
   overflow: auto;

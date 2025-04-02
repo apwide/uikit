@@ -283,7 +283,7 @@ onUnmounted(() => {
   color: var(--kit-md-line-text);
 }
 .kit-markdown-editor >>> .CodeMirror {
-  background: var(--kit-page-bg-color);
+  background: var(--kit-page-bg);
 }
 .kit-markdown-editor >>> .editor-preview {
   background: var(--kit-md-preview-bg);
@@ -399,7 +399,7 @@ onUnmounted(() => {
 }
 
 [data-color-mode="dark"] .kit-markdown-editor >>> .editor-statusbar {
-  background-color: var(--kit-page-bg-color);
+  background-color: var(--kit-page-bg);
 }
 
 [data-color-mode="dark"] .kit-markdown-editor >>> .editor-toolbar {

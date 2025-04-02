@@ -13,7 +13,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 <style scoped>
 .kit-card {
-  --kit-card-bg-color: var(--kit-page-bg-color);
+  --kit-card-bg-color: var(--kit-page-bg);
   --kit-card-border-color: #e0e2e6;
   --kit-card-shadow1-color: rgba(9, 30, 66, 0.31);
   --kit-card-shadow2-color: var(--kit-card-shadow1-color);
