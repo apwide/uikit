@@ -84,7 +84,7 @@
         <template #option="{ option, isCurrent }">
           <slot :is-current="isCurrent" :option="option" name="option" />
         </template>
-        <slot name="custom-action" />
+        <slot name="custom-action" :search="search" />
       </KitSelectMenu>
     </Popper>
   </div>
