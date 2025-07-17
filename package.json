@@ -8,7 +8,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && rimraf dist/*.uikit.*",
+    "build": "rimraf dist && webpack --mode=production --node-env=production",
     "storybook": "start-storybook -p 9001 -s ./public -c .storybook --ci",
     "lint": "eslint src stories tests --ext .js,.vue,.ts",
     "lint-fix": "eslint src stories tests --fix --ext .js,.vue,.ts",
