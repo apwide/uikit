@@ -19,12 +19,43 @@ const config = {
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
     new MiniCssExtractPlugin({
-      filename: 'bundle.css'
+      filename: '[name].css'
     }),
     new VueLoaderPlugin()
   ],
   externals: {
     vue: 'vue'
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+        styles: {
+          enforce: true,
+          name(module) {
+            if (module.context && module.context.match(/[\\/](.*)\/(MarkdownEditor|easymde)\/(.*)/i)) {
+              return 'easymde'
+            } else {
+              return 'bundle'
+            }
+          },
+          reuseExistingChunk: false,
+          chunks: 'all',
+          test(module) {
+            return module.type === 'css/mini-extract'
+          }
+        },
+        scripts: {
+          minSize: 999999999999999999,
+          enforce: true,
+          reuseExistingChunk: true,
+          chunks: 'all',
+          test(module) {
+            return module.type !== 'css/mini-extract'
+          }
+        }
+      }
+    }
   },
   module: {
     rules: [
@@ -67,11 +98,11 @@ const config = {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
         sideEffects: true
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+        loader: ['url-loader']
       }
-      // {
-      //   test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-      //   type: 'asset'
-      // }
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

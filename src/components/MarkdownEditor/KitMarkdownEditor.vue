@@ -9,6 +9,8 @@ import { nextTick, onMounted, onUnmounted, ref, unref, watch, watchEffect } from
 import * as DOMPurify from 'dompurify'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
+import './css/fontawesome.min.css'
+import './css/solid.min.css'
 import { hasHeadings } from '@components/MarkdownEditor/utils'
 
 export type ToolbarItem =
@@ -147,6 +149,7 @@ onMounted(() => {
 
   editor.value = new EasyMDE({
     element: me.value,
+    autoDownloadFontAwesome: false,
     minHeight,
     placeholder: props.placeholder,
     status,
