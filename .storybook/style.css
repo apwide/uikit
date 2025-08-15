@@ -13,7 +13,7 @@ body {
 
 [data-color-mode="dark"] body, html[data-color-mode="dark"] {
     --apw-link-color: #579DFF;
-    --apw-page-background: #1d2125;
+    --apw-page-background: #1F1f21;
     --apw-body-text: #B6C2CF;
 }
 

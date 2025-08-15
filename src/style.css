@@ -161,7 +161,7 @@ body {
     /*--kit-body-text: #b6c2cf;*/
     --kit-body-text: #9fadbc;
     --kit-header-text: var(--kit-body-text);
-    --kit-page-bg: #1d2125;
+    --kit-page-bg: #1F1f21;
     --kit-link-color: #579dff;
     --kit-overlay-shadow: 0px 0px 0px 1px #bdbdbd1f, 0px 8px 12px #0104045c, 0px 0px 1px 1px #01040480;
     --kit-overlay-border: 1px solid #313a41;
@@ -248,7 +248,7 @@ body {
 
     --kit-blanket-bg: #10121499;
 
-    --kit-modal-container-bg-color: #1d2125;
+    --kit-modal-container-bg-color: #1F1f21;
     --kit-modal-container-shadow: 0px 0px 0px 1px #39424a, 0px 8px 12px #0304045c, 0px 0px 1px 1px #03040480;
     --kit-modal-container-text-color: #b6c2cf;
 
@@ -272,7 +272,7 @@ body {
     --kit-table-bg-color: var(--kit-page-bg);
     --kit-table-busy-bg-color: var(--kit-blanket-bg);
     --kit-table-header-border-color: #a6c5e229;
-    --kit-table-header-bg-color: #1d2125;
+    --kit-table-header-bg-color: #1F1f21;
     --kit-table-header-text-color: var(--kit-body-text);
 
     --kit-section-message-title: var(--kit-body-text);
