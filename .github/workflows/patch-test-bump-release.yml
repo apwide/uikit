@@ -8,6 +8,7 @@ on:
       - '**.ts'
       - '**.vue'
       - '**.json'
+      - '**.css'
 jobs:
   tests:
     name: Ensure tests and builds are OK
