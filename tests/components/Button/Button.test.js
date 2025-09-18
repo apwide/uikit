@@ -18,6 +18,6 @@ describe('Button', () => {
     const clickHandler = jest.fn()
     const component = shallowMount(KitButton, { slots: { default: 'Click me!' }, listeners: { click: clickHandler } })
     component.trigger('click')
-    expect(clickHandler).toBeCalled()
+    expect(clickHandler).toHaveBeenCalled()
   })
 })
