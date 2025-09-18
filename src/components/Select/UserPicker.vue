@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import pDebounce from 'p-debounce'
 import { computed, ref } from 'vue'
 import UserRenderer from '../field-renderers/UserRenderer.vue'
 import KitSelect from './KitSelect.vue'
+import { debounce } from '@components/utils'
 
 type User = { key: string; name: string; disabled: boolean }
 type GetUsers = (searchTerm: unknown) => Promise<{ data: User[] }>
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const users = ref<User[]>([])
 const isFetching = ref(false)
-const debouncedGetUsers = computed(() => pDebounce(onSearchChange, 200))
+const debouncedGetUsers = computed(() => debounce(onSearchChange, 200))
 
 function loadInitialOptions() {
   users.value = props.initialOptions

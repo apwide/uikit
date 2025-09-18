@@ -39,11 +39,11 @@
 </template>
 
 <script setup lang="ts">
-import pDebounce from 'p-debounce'
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { createPersonsList } from '../api-mocks/people'
+import { debounce } from '@components/utils'
 
 const list = createPersonsList({}, 50)
 const getUsers = (query) =>
@@ -53,7 +53,7 @@ const getUsers = (query) =>
       resolve(results)
     }, 1000)
   })
-const debouncedUsers = pDebounce(getUsers, 100)
+const debouncedUsers = debounce(getUsers, 100)
 
 const value = ref()
 const options = ref()

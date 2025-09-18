@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import pDebounce from 'p-debounce'
 import { createPersonsList } from '../../api-mocks/people'
 import UserEditableRenderer from '@/components/field-renderers/UserEditableRenderer'
+import { debounce } from '@components/utils'
 
 const list = createPersonsList({}, 50)
 const getUsers = (query) =>
@@ -38,7 +38,7 @@ const getUsers = (query) =>
       resolve(results)
     }, 1000)
   })
-const debouncedUsers = pDebounce(getUsers, 100)
+const debouncedUsers = debounce(getUsers, 100)
 
 export default {
   components: { UserEditableRenderer },

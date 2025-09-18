@@ -47,12 +47,12 @@
 </template>
 
 <script setup lang="ts">
-import pDebounce from 'p-debounce'
 import { ref } from 'vue'
 import type { User } from '@components/field-renderers/types'
 import KitSelect from '../Select/KitSelect.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import UserRenderer from './UserRenderer.vue'
+import { debounce } from '@components/utils'
 
 type Props = {
   user?: User
@@ -85,7 +85,7 @@ const emit = defineEmits<{
 const users = ref([])
 const isFetching = ref(false)
 
-const onSearchChange = pDebounce(async function(query) {
+const onSearchChange = debounce(async function(query) {
   isFetching.value = true
   try {
     const { data: users } = await loadOptions(query)

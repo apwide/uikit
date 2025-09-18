@@ -17,10 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import pDebounce from 'p-debounce'
 import { computed, onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
 import Popper from '../Popper/Popper'
 import KitButton from '../Button/KitButton.vue'
+import { debounce } from '@components/utils'
 
 type Props = {
   selectedValues?: Array
@@ -51,7 +51,7 @@ onUpdated(() => {
   checkOverflow()
 })
 
-const handleResize = pDebounce(() => checkOverflow(), 100)
+const handleResize = debounce(() => checkOverflow(), 100)
 
 function checkOverflow() {
   if (!overflowContainer.value) {
