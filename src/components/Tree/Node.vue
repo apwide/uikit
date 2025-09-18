@@ -6,14 +6,14 @@
       :hovered="hovered"
       :level="level"
       @mouseenter.native="$emit('highlight', node.id.toString())">
-      <div
-        v-if="hasChildNodes"
-        slot="chevron"
-        class="icon"
-        :expanded="isExpanded"
-        @click="$emit('toggle-expand', node.id.toString())">
-        <ChevronRightIcon />
-      </div>
+      <template v-if="hasChildNodes" #chevron>
+        <div
+          class="icon"
+          :expanded="isExpanded"
+          @click="$emit('toggle-expand', node.id.toString())">
+          <ChevronRightIcon />
+        </div>
+      </template>
       <slot name="label">
         {{ node.label }}
       </slot>

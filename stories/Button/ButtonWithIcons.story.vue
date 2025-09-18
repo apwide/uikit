@@ -24,11 +24,16 @@
     </p>
     <h2>Button with an icon</h2>
     <p>
-      <KitButton
-        >Pick Date
-        <KitIcon type="calendar-alt" icon-style="regular" slot="icon-after" />
+      <KitButton>Pick Date
+        <template #icon-after>
+          <KitIcon type="calendar-alt" icon-style="regular" />
+        </template>
       </KitButton>
-      <KitButton>Pick Date <KitIcon type="calendar-alt" icon-style="regular" slot="icon-before" /> </KitButton>
+      <KitButton>Pick Date
+        <template #icon-before>
+          <KitIcon type="calendar-alt" icon-style="regular" />
+        </template>
+      </KitButton>
     </p>
 
     <h2>KitButtonGroup</h2>

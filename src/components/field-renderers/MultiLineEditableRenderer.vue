@@ -13,20 +13,20 @@
     <slot>
       <MultiLineRenderer :value="value" />
     </slot>
-    <KitTextArea
-      slot="editor"
-      slot-scope="{ value, input, isFocused, isInvalid, isLoading, blur, focus, confirm, cancel }"
-      :value="value"
-      :is-focused="isFocused"
-      :is-invalid="isInvalid"
-      :is-loading="isLoading"
-      :submit-on-enter="submitOnEnter"
-      @confirm="confirm"
-      @keydown.meta.enter="confirm"
-      @keyup.esc="cancel"
-      @input="onInput($event, input)"
-      @blur="blur"
-      @focus="focus" />
+    <template #editor="{ value, input, isFocused, isInvalid, isLoading, blur, focus, confirm, cancel }">
+      <KitTextArea
+        :value="value"
+        :is-focused="isFocused"
+        :is-invalid="isInvalid"
+        :is-loading="isLoading"
+        :submit-on-enter="submitOnEnter"
+        @confirm="confirm"
+        @keydown.meta.enter="confirm"
+        @keyup.esc="cancel"
+        @input="onInput($event, input)"
+        @blur="blur"
+        @focus="focus" />
+    </template>
   </KitInlineEdit>
   <div v-else>
     <slot>

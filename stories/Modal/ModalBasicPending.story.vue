@@ -2,9 +2,11 @@
   <div>
     <KitButton @click="showDialog"> Show Dialog </KitButton>
     <KitModal v-if="show" heading="Modal Basic" auto-focus :pending="pending" @submit="onSubmit" @cancel="onCancel">
-      <p slot="content">
-        {{ paragraph }}
-      </p>
+      <template #content>
+        <p>
+          {{ paragraph }}
+        </p>
+      </template>
     </KitModal>
   </div>
 </template>

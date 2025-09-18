@@ -1,18 +1,18 @@
 <template>
   <KitInlineEdit v-if="editable" :value="timestamp" type="date" :placement="placement" @save-requested="onSaveRequested">
-    <KitDatePicker
-      slot="editor"
-      slot-scope="props"
-      :value="props.value"
-      :is-invalid="props.isInvalid"
-      :is-focused="props.isFocused"
-      :is-loading="props.isLoading"
-      @input="props.input"
-      @blur="props.blur"
-      @focus="props.focus"
-      @confirm="props.confirm"
-      @keyup.esc="props.cancel" />
-    <DateRenderer :date="timestamp" />
+    <template #editor="{ props }">
+      <KitDatePicker
+        :value="props.value"
+        :is-invalid="props.isInvalid"
+        :is-focused="props.isFocused"
+        :is-loading="props.isLoading"
+        @input="props.input"
+        @blur="props.blur"
+        @focus="props.focus"
+        @confirm="props.confirm"
+        @keyup.esc="props.cancel" />
+      <DateRenderer :date="timestamp" />
+    </template>
   </KitInlineEdit>
   <DateRenderer v-else :date="timestamp" />
 </template>

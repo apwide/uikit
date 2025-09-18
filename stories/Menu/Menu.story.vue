@@ -82,7 +82,9 @@
           <MenuItem>Second item</MenuItem>
           <MenuItem active> Active item </MenuItem>
           <MenuItem>
-            <EditorAddIcon slot="icon-before" />
+            <template #icon-before>
+              <EditorAddIcon />
+            </template>
             Add item
           </MenuItem>
           <MenuItem>Second item</MenuItem>

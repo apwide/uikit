@@ -2,12 +2,16 @@
   <div>
     <KitButton @click="showDialog"> Show Dialog </KitButton>
     <KitModal v-if="show" heading="Modal Basic" auto-focus width="400px" @submit="onSubmit" @cancel="onCancel">
-      <p slot="content">
-        {{ paragraph }}
-      </p>
-      <div slot="footer" class="footer">
-        <KitButton appearance="primary" @click="onCancel"> Go it! </KitButton>
-      </div>
+      <template #content>
+        <p>
+          {{ paragraph }}
+        </p>
+      </template>
+      <template #footer>
+        <div class="footer">
+          <KitButton appearance="primary" @click="onCancel"> Go it! </KitButton>
+        </div>
+      </template>
     </KitModal>
   </div>
 </template>

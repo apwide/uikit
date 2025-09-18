@@ -35,9 +35,11 @@
         </slot>
       </div>
     </template>
-    <div slot="content" class="kit-modal__content">
-      <slot />
-    </div>
+    <template #content>
+      <div class="kit-modal__content">
+        <slot />
+      </div>
+    </template>
     <template #footer>
       <slot name="footer"></slot>
     </template>

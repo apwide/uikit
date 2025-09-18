@@ -8,9 +8,11 @@
       :appearance="appearance"
       @submit="onSubmit"
       @cancel="onCancel">
-      <p slot="content">
-        {{ paragraph }}
-      </p>
+      <template #content>
+        <p>
+          {{ paragraph }}
+        </p>
+      </template>
     </KitModal>
   </div>
 </template>

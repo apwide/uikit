@@ -63,7 +63,10 @@
         :placeholder="searchPromptText"
         @mouseover="onMouseOverSuggestion"
         @option-selected="onOptionSelected">
-        <slot slot="option" slot-scope="{ option, isCurrent }" name="option" :is-current="isCurrent" :option="option" />
+        <template #option="{ option, isCurrent }">
+          <slot name="option" :is-current="isCurrent" :option="option">
+          </slot>
+        </template>
       </SelectMenu>
     </Popper>
   </div>

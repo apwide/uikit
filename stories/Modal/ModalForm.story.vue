@@ -2,17 +2,19 @@
   <div>
     <KitButton @click="showDialog"> Show Dialog </KitButton>
     <KitModal v-if="show" heading="Form Demo" @submit="onSubmit" @cancel="onCancel">
-      <div slot="content">
-        <KitFieldGroup label="Title" required>
-          <KitInput v-model="title" auto-focus />
-        </KitFieldGroup>
-        <KitFieldGroup label="Type" required>
-          <KitInput v-model="type" />
-        </KitFieldGroup>
-        <KitFieldGroup label="Type" required>
-          <KitSelect v-model="type" :options="options" :selected="selected" />
-        </KitFieldGroup>
-      </div>
+      <template #content>
+        <div>
+          <KitFieldGroup label="Title" required>
+            <KitInput v-model="title" auto-focus />
+          </KitFieldGroup>
+          <KitFieldGroup label="Type" required>
+            <KitInput v-model="type" />
+          </KitFieldGroup>
+          <KitFieldGroup label="Type" required>
+            <KitSelect v-model="type" :options="options" :selected="selected" />
+          </KitFieldGroup>
+        </div>
+      </template>
     </KitModal>
   </div>
 </template>

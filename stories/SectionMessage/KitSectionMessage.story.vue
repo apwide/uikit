@@ -6,10 +6,12 @@
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui nesciunt totam ipsa suscipit corrupti dolorum,
           dolor sit nihil? Earum ab alias dolorum molestiae porro consectetur deleniti ducimus velit amet a?
         </p>
-        <ul slot="actions">
-          <li><a href>Help</a></li>
-          <li><a href>Ignore</a></li>
-        </ul>
+        <template #actions>
+          <ul>
+            <li><a href>Help</a></li>
+            <li><a href>Ignore</a></li>
+          </ul>
+        </template>
       </KitSectionMessage>
     </div>
     <div v-for="appearance of appearances" :key="appearance" class="wrapper">
