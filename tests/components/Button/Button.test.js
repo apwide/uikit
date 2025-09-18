@@ -6,7 +6,7 @@ describe('Button', () => {
   it('renders correct content for a button', () => {
     const component = shallowMount(KitButton, { slots: { default: 'Click me!' } })
 
-    expect(component.find({ ref: 'label' }).text()).toBe('Click me!')
+    expect(component.findComponent({ ref: 'label' }).text()).toBe('Click me!')
   })
 
   it('renders spinner if passed loading prop', () => {
