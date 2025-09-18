@@ -41,7 +41,7 @@
     "@babel/preset-env": "7.28.3",
     "@babel/preset-typescript": "7.27.1",
     "@storybook/vue": "5.3.21",
-    "@types/dompurify": "^3.0.4",
+    "@types/dompurify": "3.0.5",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@vue/cli-plugin-babel": "5.0.9",
     "@vue/eslint-config-standard": "8.0.1",
@@ -104,7 +104,7 @@
     }
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.6.13",
+    "@floating-ui/dom": "1.7.4",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
     "@fortawesome/free-regular-svg-icons": "5.15.4",
