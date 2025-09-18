@@ -14,7 +14,7 @@ describe('SingleSelect', () => {
 
     it('should focus input on tab key', () => {
         cy.get('body').click();
-        cy.get('body').tab();
+        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
         cy.get('input').should('have.focus');
         cy.get('[data-cy=input-wrapper]').should('have.css', 'border-color', 'rgb(76, 154, 255)');
     });
@@ -22,7 +22,7 @@ describe('SingleSelect', () => {
     it('option selection should close the dropdown and focus input', () => {
         cy.get('[data-cy=input-wrapper]').click();
         cy.get('[data-cy=select-option]').first().click();
-        cy.get('[data-cy=select-menu]').should('not.be.visible');
+        cy.get('[data-cy=select-menu]').should('not.exist');
         cy.get('input').should('have.focus');
     });
 

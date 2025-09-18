@@ -6,14 +6,14 @@ describe('CreateableSelect', () => {
 
     it('option selection should not be possible', () => {
         cy.get('[data-cy=simple]').click();
-        cy.get('[data-cy=select-menu]').should('not.be.visible');
+        cy.get('[data-cy=select-menu]').should('not.exist');
         cy.get('[data-cy=simple] input').should('have.focus');
     });
 
     it('arrow keys should not open the dropdown', () => {
         cy.get('[data-cy=simple]').click();
         cy.get('[data-cy=simple] input').type('{downarrow}');
-        cy.get('[data-cy=select-menu]').should('not.be.visible');
+        cy.get('[data-cy=select-menu]').should('not.exist');
     });
 
     it('should create element on enter', () => {

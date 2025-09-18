@@ -1,12 +1,7 @@
 describe('Input', () => {
-    before(() => {
+    beforeEach(() => {
         cy.visit('iframe.html?id=form--input');
     });
-
-    afterEach(() => {
-        cy.get('body').click();
-    });
-
 
     it('should focus input on click', () => {
         cy.get('[data-cy=field-group] [data-cy=input-wrapper]').click();
@@ -17,7 +12,7 @@ describe('Input', () => {
     });
 
     it('should focus input on tab key', () => {
-        cy.get('body').tab();
+        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
         cy.get('[data-cy=field-group] [data-cy=input-wrapper] input')
             .should('have.focus');
         cy.get('[data-cy=field-group] [data-cy=input-wrapper]')

@@ -42,8 +42,8 @@
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
-import { createPersonsList } from '../api-mocks/people'
 import { debounce } from '@components/utils'
+import { createPersonsList } from '../api-mocks/people'
 
 const list = createPersonsList({}, 50)
 const getUsers = (query) =>

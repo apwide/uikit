@@ -18,9 +18,9 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
+import { debounce } from '@components/utils'
 import Popper from '../Popper/Popper'
 import KitButton from '../Button/KitButton.vue'
-import { debounce } from '@components/utils'
 
 type Props = {
   selectedValues?: Array

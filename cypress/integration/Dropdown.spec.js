@@ -11,13 +11,13 @@ describe('Dropdown', () => {
   it('should close the dropdown on item click', () => {
     cy.get('[data-cy=simple-dropdown]').click()
     cy.get('[data-cy=simple-dropdown-item]').click()
-    cy.get('[data-cy=simple-dropdown-item]').should('not.be.visible')
+    cy.get('[data-cy=simple-dropdown-item]').should('not.exist')
   })
 
   it('should close the dropdown on click outside', () => {
     cy.get('[data-cy=simple-dropdown]').click()
     cy.wait(300)
     cy.get('body').click()
-    cy.get('[data-cy=simple-dropdown-item]').should('not.be.visible')
+    cy.get('[data-cy=simple-dropdown-item]').should('not.exist')
   })
 })

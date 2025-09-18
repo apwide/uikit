@@ -49,10 +49,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { User } from '@components/field-renderers/types'
+import { debounce } from '@components/utils'
 import KitSelect from '../Select/KitSelect.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import UserRenderer from './UserRenderer.vue'
-import { debounce } from '@components/utils'
 
 type Props = {
   user?: User

@@ -54,7 +54,7 @@
     "concurrently": "9.2.1",
     "core-js": "3.45.1",
     "css-loader": "5.2.7",
-    "cypress": "4.12.1",
+    "cypress": "15.2.0",
     "cypress-plugin-tab": "1.0.5",
     "dompurify": "3.2.7",
     "eslint": "8.53.0",

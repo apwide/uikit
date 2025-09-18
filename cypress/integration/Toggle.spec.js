@@ -17,7 +17,7 @@ describe('Toggle', () => {
 
   it('should focus toggle on tab key', () => {
     cy.get('body').click()
-    cy.get('body').tab()
+    cy.get('body').press(Cypress.Keyboard.Keys.TAB)
     cy.get('[data-cy=toggle] input').should('have.focus')
     cy.get('[data-cy=toggle] .kit-toggle__slide').should('have.css', 'border-color', 'rgb(76, 154, 255)')
   })

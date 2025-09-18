@@ -24,9 +24,9 @@
 </template>
 
 <script>
+import { debounce } from '@components/utils'
 import { createPersonsList } from '../../api-mocks/people'
 import UserEditableRenderer from '@/components/field-renderers/UserEditableRenderer'
-import { debounce } from '@components/utils'
 
 const list = createPersonsList({}, 50)
 const getUsers = (query) =>

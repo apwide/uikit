@@ -31,9 +31,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { debounce } from '@components/utils'
 import UserRenderer from '../field-renderers/UserRenderer.vue'
 import KitSelect from './KitSelect.vue'
-import { debounce } from '@components/utils'
 
 type User = { key: string; name: string; disabled: boolean }
 type GetUsers = (searchTerm: unknown) => Promise<{ data: User[] }>

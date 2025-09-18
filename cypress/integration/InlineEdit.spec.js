@@ -16,7 +16,7 @@ describe('KitInlineEdit--StringLine', () => {
     });
 
     it('should focus renderer on tab key', () => {
-        cy.get('body').tab();
+        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
         cy.get('[data-cy=editable] [data-cy=view-content]').should(
             'have.focus'
         );
@@ -28,7 +28,7 @@ describe('KitInlineEdit--StringLine', () => {
     });
 
     it('should start editing mode on enter', () => {
-        cy.get('body').tab();
+        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
         cy.get('body').type('{enter}');
         cy.get('[data-cy=editable] [data-cy=input-wrapper] input').should(
             'have.focus'
@@ -97,12 +97,12 @@ describe('KitInlineEdit--StringLine', () => {
 
     it('should navigate through buttons on tab', () => {
         // input focus
-        cy.get('body').tab();
+        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
         cy.get('body').type('{enter}');
         // input focus
-        cy.get('input').tab();
+        cy.get('input').press(Cypress.Keyboard.Keys.TAB);
         cy.get('[data-cy=submit-button]').should('have.focus');
-        cy.get('[data-cy=submit-button]').tab();
+        cy.get('[data-cy=submit-button]').press(Cypress.Keyboard.Keys.TAB);
         cy.get('[data-cy=cancel-button]').should('have.focus');
     });
 
@@ -133,7 +133,7 @@ describe('KitInlineEdit--StringLine', () => {
     it('should not start editing mode when passed editing false', () => {
         cy.get('[data-cy=non-editable]').click();
         cy.get('[data-cy=non-editable] [data-cy=input-wrapper] input').should(
-            'not.be.visible'
+            'not.exist'
         );
     });
 });
