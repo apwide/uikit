@@ -36,7 +36,7 @@
 
 <script>
 import { addDays, subDays } from 'date-fns'
-import { format, utcToZonedTime } from 'date-fns-tz'
+import { format, toZonedTime } from 'date-fns-tz'
 import Calendar from '@/components/Calendar/Calendar'
 
 export default {
@@ -73,7 +73,7 @@ export default {
     },
 
     formatDate(date, timeZone) {
-      return date && format(utcToZonedTime(date, timeZone), 'yyyy-MM-dd HH:mm')
+      return date && format(toZonedTime(date, timeZone), 'yyyy-MM-dd HH:mm')
     }
   }
 }

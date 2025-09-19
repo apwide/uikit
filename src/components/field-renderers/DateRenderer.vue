@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import format from 'date-fns/format'
+import { format } from 'date-fns'
 import { computed } from 'vue'
 
 type Props = {

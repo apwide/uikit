@@ -33,9 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import format from 'date-fns/format'
-import { fromUnixTime, parse, isValid } from 'date-fns'
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { format, fromUnixTime, parse, isValid } from 'date-fns'
+import { toZonedTime, fromZonedTime } from 'date-fns-tz'
 import { computed, getCurrentInstance, ref } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
@@ -83,7 +82,7 @@ const formattedDate = computed(() => {
   if (!valid.value) {
     return ''
   }
-  const date = utcToZonedTime(props.value, props.timeZone)
+  const date = toZonedTime(props.value, props.timeZone)
   return format(date, props.dateFormat)
 })
 
@@ -115,7 +114,7 @@ function onInput(e) {
     if (e.target.value !== formatted) return
     const date = new Date(timestamp)
     copyTime(date)
-    const utcDate = zonedTimeToUtc(date, props.timeZone)
+    const utcDate = fromZonedTime(date, props.timeZone)
     selectedDate.value = utcDate.getTime()
   }
 }

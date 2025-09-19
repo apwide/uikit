@@ -47,6 +47,7 @@
     "@storybook/addon-essentials": "6.5.16",
     "@storybook/addon-links": "6.5.16",
     "@storybook/builder-webpack5": "6.5.16",
+    "@storybook/core-events": "^6.5.16",
     "@storybook/manager-webpack5": "6.5.16",
     "@storybook/vue": "6.5.16",
     "@types/dompurify": "3.0.5",
@@ -118,9 +119,8 @@
     "@fortawesome/free-regular-svg-icons": "7.0.1",
     "@fortawesome/free-solid-svg-icons": "7.0.1",
     "@fortawesome/vue-fontawesome": "2.0.10",
-    "@storybook/core-events": "^6.5.16",
-    "date-fns": "2.30.0",
-    "date-fns-tz": "2.0.0",
+    "date-fns": "4.1.0",
+    "date-fns-tz": "3.2.0",
     "easymde": "2.20.0",
     "vue-promised": "1.2.2"
   }

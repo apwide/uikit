@@ -40,7 +40,7 @@ import {
   setYear,
   setMonth
 } from 'date-fns'
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { toZonedTime, fromZonedTime } from 'date-fns-tz'
 import { computed, ref, watch } from 'vue'
 import type { CalendarDate, DateRange } from '@components/Calendar/CalendarType'
 import { chunk } from '../../utils/utils'
@@ -131,7 +131,7 @@ const year = computed(() => currentDate.value.getFullYear())
 
 watch(() => props.value, date => {
   const value = props.rangeValue ? date.from : date
-  selectedDate.value = value ? utcToZonedTime(value, props.timeZone) : undefined
+  selectedDate.value = value ? toZonedTime(value, props.timeZone) : undefined
 }, {
   immediate: true
 })
@@ -156,7 +156,7 @@ function enrichDay(date) {
 }
 
 function isToday(date) {
-  return isSameDay(utcToZonedTime(new Date(), props.timeZone), date)
+  return isSameDay(toZonedTime(new Date(), props.timeZone), date)
 }
 
 function isSelected(date) {
@@ -213,7 +213,7 @@ function onDateSelected(day: CalendarDate) {
   }
   selectedDate.value = date
   currentDate.value = date
-  const utcDate = zonedTimeToUtc(date, props.timeZone)
+  const utcDate = fromZonedTime(date, props.timeZone)
   emit('date-selected', utcDate)
 }
 

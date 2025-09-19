@@ -25,7 +25,7 @@
 
 <script>
 import { subDays, format } from 'date-fns'
-import { utcToZonedTime } from 'date-fns-tz'
+import { toZonedTime } from 'date-fns-tz'
 import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
 
 export default {
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     formatDate(date, timeZone) {
-      return date && format(utcToZonedTime(date, timeZone), 'yyyy-MM-dd HH:mm')
+      return date && format(toZonedTime(date, timeZone), 'yyyy-MM-dd HH:mm')
     }
   }
 }
