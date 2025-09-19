@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import KitCollapsible from '../../src/components/Collapsible/KitCollapsible'
 
 const paragraphs = Array.from({ length: 4 }).map(() => faker.lorem.paragraph(10))

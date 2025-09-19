@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { createPerson } from './people'
 import { many } from './helpers'
 
@@ -222,7 +222,7 @@ export const statuses = [
   }
 ]
 
-const randomKey = () => `${faker.hacker.abbreviation()}-${faker.random.number({ min: 1, max: 9999 })}`
+const randomKey = () => `${faker.hacker.abbreviation()}-${faker.number.int({ min: 1, max: 9999 })}`
 
 export const personToAssignee = (person) => ({
   name: person.key,
@@ -237,10 +237,10 @@ export const personToAssignee = (person) => ({
 export const createIssue = ({
   key = randomKey(),
   summary = faker.lorem.sentence(),
-  priority = faker.random.arrayElement(priorities),
-  assignee = faker.random.boolean() ? personToAssignee(createPerson()) : undefined,
-  status = faker.random.arrayElement(statuses),
-  type = faker.random.arrayElement(types)
+  priority = faker.helpers.arrayElement(priorities),
+  assignee = faker.datatype.boolean() ? personToAssignee(createPerson()) : undefined,
+  status = faker.helpers.arrayElement(statuses),
+  type = faker.helpers.arrayElement(types)
 } = {}) => {
   const issue = {
     key,

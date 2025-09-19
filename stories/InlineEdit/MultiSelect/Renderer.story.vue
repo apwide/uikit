@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { ref } from 'vue'
 import MultiSelectRenderer from '@/components/field-renderers/MultiSelectRenderer'
 

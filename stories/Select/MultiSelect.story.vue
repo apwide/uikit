@@ -7,13 +7,13 @@
 </template>
 
 <script setup lang="ts">
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { ref } from 'vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { many } from '../api-mocks/helpers'
 import KitSelect from '@/components/Select/KitSelect.vue'
 
-const cities = many(faker.address.city)({}, 10)
+const cities = many(faker.location.city)({}, 10)
 
 const basic = ref([])
 </script>

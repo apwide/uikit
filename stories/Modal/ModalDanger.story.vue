@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import KitButton from '@components/Button/KitButton.vue'
 import { ref } from 'vue'
 import KitModal from '@components/Modal/KitModal.vue'

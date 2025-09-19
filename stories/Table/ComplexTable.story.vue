@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { ref } from 'vue'
 import KitIcon from '@components/Icon/KitIcon.vue'
 import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
@@ -85,11 +85,11 @@ const columns = [
 const data = ref(
   Array.from({ length: 10 }).map((_, index) => ({
     id: index,
-    account: faker.finance.account(),
-    name: faker.name.firstName(),
-    address: faker.address.country(),
+    account: faker.finance.accountNumber(),
+    name: faker.person.firstName(),
+    address: faker.location.country(),
     email: faker.internet.email(),
-    job: faker.name.jobTitle()
+    job: faker.person.jobTitle()
   }))
 )
 
@@ -110,11 +110,11 @@ function loadMoreData(callback) {
         ...data.value,
         ...Array.from({ length: 10 }).map((_, index) => ({
           id: lastId.value + index,
-          account: faker.finance.account(),
-          name: faker.name.firstName(),
-          address: faker.address.country(),
+          account: faker.finance.accountNumber(),
+          name: faker.person.firstName(),
+          address: faker.location.country(),
           email: faker.internet.email(),
-          job: faker.name.jobTitle()
+          job: faker.person.jobTitle()
         }))
       ]
       lastId.value += 10

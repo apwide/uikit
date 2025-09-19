@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import DateEditableRenderer from '@/components/field-renderers/DateEditableRenderer'
 
 export default {

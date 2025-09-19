@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import NumberLongRenderer from '@/components/field-renderers/NumberLongRenderer'
 
 export default {
@@ -20,7 +20,7 @@ export default {
   data() {
     faker.seed(1)
     return {
-      value: faker.random.number() * 1234
+      value: faker.number.int() * 1234
     }
   }
 }

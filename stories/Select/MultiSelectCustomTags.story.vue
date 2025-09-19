@@ -23,13 +23,13 @@
 </template>
 
 <script setup lang="ts">
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { many } from '../api-mocks/helpers'
 
-const cities = many(faker.address.city)({}, 10)
+const cities = many(faker.location.city)({}, 10)
 const [city] = cities
 
 const value = ref([city])

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import SecureStringLineRenderer from '../../../src/components/field-renderers/SecureStringLineRenderer'
 
 export default {

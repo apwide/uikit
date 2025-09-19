@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import SingleSelectEditableRenderer from '@/components/field-renderers/SingleSelectEditableRenderer'
 
 const allowedValues = Array.from({ length: 10 }, () => faker.lorem.word())

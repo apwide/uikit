@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import CheckboxEditableRenderer from '@/components/field-renderers/CheckboxEditableRenderer'
 
 export default {

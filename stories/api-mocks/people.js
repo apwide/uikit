@@ -1,11 +1,11 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { many } from './helpers'
 
 // eslint-disable-next-line
 export const createPerson = ({
-  name = faker.name.findName(),
+  name = faker.person.fullName(),
   key,
-  avatar = `https://i.pravatar.cc/300?u=${faker.datatype.uuid()}`
+  avatar = `https://i.pravatar.cc/300?u=${faker.string.uuid()}`
 } = {}) => {
   const person = {
     name,

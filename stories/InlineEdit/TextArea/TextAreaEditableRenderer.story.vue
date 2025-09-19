@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import MultiLineEditableRenderer from '@/components/field-renderers/MultiLineEditableRenderer'
 
 export default {

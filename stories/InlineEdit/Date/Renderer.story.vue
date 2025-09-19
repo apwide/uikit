@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import DateRenderer from '@/components/field-renderers/DateRenderer'
 
 export default {

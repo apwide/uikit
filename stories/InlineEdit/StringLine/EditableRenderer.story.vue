@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import KitLozenge from '@components/Lozenge/KitLozenge.vue'
 import { ref } from 'vue'
 import StringLineEditableRenderer from '@/components/field-renderers/StringLineEditableRenderer.vue'

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import KitButton from '@components/Button/KitButton.vue'
 import KitTable from '@/components/Table/KitTable.vue'
 
@@ -44,9 +44,9 @@ const columns = [
 
 const data = Array.from({ length: 100 }).map((_, index) => ({
   id: index,
-  name: faker.name.firstName(),
+  name: faker.person.firstName(),
   email: faker.internet.email(),
-  job: faker.name.jobTitle()
+  job: faker.person.jobTitle()
 }))
 </script>
 
