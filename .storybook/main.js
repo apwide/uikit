@@ -1,6 +1,7 @@
-module.exports = {
-  core: {
-    builder: 'webpack5'
+const config = {
+  framework: {
+    name: '@storybook/vue-webpack5',
+    options: {}
   },
   stories: ['../stories/**/*.stories.js'],
   addons: [
@@ -10,3 +11,5 @@ module.exports = {
     '@storybook/addon-docs'
   ]
 }
+
+export default config
