@@ -12,8 +12,10 @@ const config = {
   output: {
     filename: 'uikit.js',
     path: path.resolve('.', 'dist'),
-    library: '',
-    libraryTarget: 'commonjs'
+    library: {
+      type: 'umd',
+      name: 'uikit'
+    }
   },
   plugins: [
     // Add your plugins here
@@ -83,6 +85,10 @@ const config = {
       '@': path.resolve(__dirname, './src'),
       '@components': path.resolve(__dirname, './src/components')
     }
+  },
+  performance: {
+    maxAssetSize: 1000000,
+    maxEntrypointSize: 1000000
   }
 }
 

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref, unref, watch, watchEffect } from 'vue'
-import * as DOMPurify from 'dompurify'
+import DOMPurify from 'dompurify'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
 import { hasHeadings } from '@components/MarkdownEditor/utils'
