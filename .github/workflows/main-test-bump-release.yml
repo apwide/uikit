@@ -16,10 +16,10 @@ jobs:
     name: Ensure tests and builds are OK
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: 18
+          node-version: 20
           cache: 'npm'
       - run: npm ci
       - run: npm run lint
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Bump
         if: success()
         uses: 'phips28/gh-action-bump-version@master'
@@ -48,11 +48,11 @@ jobs:
           major-wording: 'BREAKING'
           default: 'minor'
           commit-message: 'chore: version bump to {{version}}'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         env:
           NODE_OPTIONS: --openssl-legacy-provider
         with:
-          node-version: 18
+          node-version: 20
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - name: Install
