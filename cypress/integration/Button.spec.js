@@ -1,6 +1,6 @@
 describe('Button', () => {
     before(() => {
-        cy.visit('iframe.html?id=button--buttonapperance');
+        cy.visit('iframe.html?id=button--button-apperance');
     });
 
     it('should change the knob', () => {

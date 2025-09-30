@@ -1,6 +1,6 @@
 describe('Date-Picker', () => {
     beforeEach(() => {
-        cy.visit('iframe.html?id=select--singleselect');
+        cy.visit('iframe.html?id=select--single-select');
     });
 
     it('should focus input on click', () => {
@@ -10,8 +10,8 @@ describe('Date-Picker', () => {
     });
 
     it('should focus input on tab key', () => {
-        cy.get('body').click();
-        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
+        cy.get('.sb-show-main').click();
+        cy.press(Cypress.Keyboard.Keys.TAB);
         cy.get('input').should('have.focus');
         cy.get('[data-cy=input-wrapper]').should('have.css', 'border-color', 'rgb(76, 154, 255)');
     });

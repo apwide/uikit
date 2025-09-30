@@ -1,7 +1,7 @@
 
 describe('UserPicker', () => {
     beforeEach(() => {
-        cy.visit('iframe.html?id=select--userpicker');
+        cy.visit('iframe.html?id=select--user-picker');
     });
 
     it('should search elements and show spinner', () => {

@@ -1,6 +1,6 @@
 describe('Modal-Basic', () => {
     before(() => {
-        cy.visit('iframe.html?id=modal--modalbasic');
+        cy.visit('iframe.html?id=modal--modal-basic');
     });
 
     beforeEach(() => {

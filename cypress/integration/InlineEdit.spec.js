@@ -1,6 +1,6 @@
 describe('KitInlineEdit--StringLine', () => {
     beforeEach(() => {
-        cy.visit('iframe.html?id=inlineedit-stringline--editablerenderer').wait(100);
+        cy.visit('iframe.html?id=inlineedit-stringline--editable-renderer').wait(100);
     });
 
     it('should focus input on click', () => {
@@ -16,7 +16,8 @@ describe('KitInlineEdit--StringLine', () => {
     });
 
     it('should focus renderer on tab key', () => {
-        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
+        cy.get('.sb-show-main').focus();
+        cy.press(Cypress.Keyboard.Keys.TAB);
         cy.get('[data-cy=editable] [data-cy=view-content]').should(
             'have.focus'
         );
@@ -28,7 +29,8 @@ describe('KitInlineEdit--StringLine', () => {
     });
 
     it('should start editing mode on enter', () => {
-        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
+        cy.get('.sb-show-main').focus();
+        cy.press(Cypress.Keyboard.Keys.TAB);
         cy.get('body').type('{enter}');
         cy.get('[data-cy=editable] [data-cy=input-wrapper] input').should(
             'have.focus'
@@ -97,7 +99,8 @@ describe('KitInlineEdit--StringLine', () => {
 
     it('should navigate through buttons on tab', () => {
         // input focus
-        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
+        cy.get('.sb-show-main').focus();
+        cy.press(Cypress.Keyboard.Keys.TAB);
         cy.get('body').type('{enter}');
         // input focus
         cy.get('input').press(Cypress.Keyboard.Keys.TAB);

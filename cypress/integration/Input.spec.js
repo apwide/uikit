@@ -12,7 +12,8 @@ describe('Input', () => {
     });
 
     it('should focus input on tab key', () => {
-        cy.get('body').press(Cypress.Keyboard.Keys.TAB);
+        cy.get('.sb-show-main').click();
+        cy.press(Cypress.Keyboard.Keys.TAB);
         cy.get('[data-cy=field-group] [data-cy=input-wrapper] input')
             .should('have.focus');
         cy.get('[data-cy=field-group] [data-cy=input-wrapper]')

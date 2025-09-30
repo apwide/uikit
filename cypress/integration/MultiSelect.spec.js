@@ -1,7 +1,7 @@
 
 describe('MultiSelect', () => {
     beforeEach(() => {
-        cy.visit('iframe.html?id=select--multiselect');
+        cy.visit('iframe.html?id=select--multi-select');
     });
 
     it('should display selected values', () => {
