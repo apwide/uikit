@@ -1,0 +1,5 @@
+/**
+ * vue-promised v1.2.2
+ * (c) 2020 Eduardo San Martin Morote <posva13@gmail.com>
+ * @license MIT
+ */
