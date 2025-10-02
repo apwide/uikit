@@ -17,7 +17,10 @@ module.exports = async ({ config }) => {
       {
         loader: 'babel-loader',
         options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }], require('../modules/babel-preset-typescript')],
+          presets: [
+            ['@babel/preset-env', { targets: 'defaults' }],
+            '@babel/preset-typescript'
+          ],
           plugins: [
             '@babel/plugin-proposal-optional-chaining',
             '@babel/plugin-proposal-object-rest-spread',
@@ -34,7 +37,7 @@ module.exports = async ({ config }) => {
 
   config.module.rules.push({
     test: /\.svg$/,
-    loader: 'vue-svg-loader',
+    loader: 'svg-inline-loader',
     exclude: [path.resolve(__dirname, './stories/assets/images/')],
     options: {
       svgo: {

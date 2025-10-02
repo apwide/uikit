@@ -92,8 +92,8 @@ export default {
 </script>
 
 <style scoped>
-.label >>> .icon,
-.label >>> .indeterminate {
+.label :deep(.icon),
+.label :deep(.indeterminate) {
   display: none;
 }
 
@@ -122,7 +122,7 @@ export default {
   color: inherit;
 }
 
->>> input:not([is-invalid]):focus + .icon rect {
+:deep(input:not([is-invalid]):focus + .icon rect) {
   /*stroke: #dfe1e6;*/
 }
 </style>

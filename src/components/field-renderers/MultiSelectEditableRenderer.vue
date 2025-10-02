@@ -30,15 +30,9 @@
           :async="async"
           :confirm="confirm"
           :keep-open-on-select="keepOpenOnSelect"
-          @input="
-            props.input($event)
-            emit('input', $event)
-          "
+          @input="onInput(props, $event)"
           @search-change="emit('search-change', $event)"
-          @blur="
-            props.blur($event)
-            emit('blur', $event)
-          "
+          @blur="onBlur(props, $event)"
           @confirm="props.confirm"
           @focus="props.focus"
           @cancel="props.cancel">
@@ -132,5 +126,15 @@ function onSaveRequested(value, callback) {
   } catch (error) {
     callback(error)
   }
+}
+
+function onInput(props, data) {
+  props.input(data)
+  emit('input', data)
+}
+
+function onBlur(props, data) {
+  props.blur(data)
+  emit('blur', data)
 }
 </script>

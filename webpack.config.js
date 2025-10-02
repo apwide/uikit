@@ -31,18 +31,29 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|ts|tsx)$/i,
+        test: /\.ts$/,
+        exclude: /node_modules/,
         use: [
-          // {
-          //   loader: 'ts-loader',
-          //   options: {
-          //     appendTsSuffixTo: [/\.vue$/]
-          //   }
-          // }
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+              transpileOnly: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(js|ts|tsx)$/i,
+        exclude: /node_modules|\.vue\.ts$/,
+        use: [
           {
             loader: 'babel-loader',
             options: {
-              presets: [['@babel/preset-env', { targets: 'defaults' }], require('./modules/babel-preset-typescript')],
+              presets: [
+                ['@babel/preset-env', { targets: 'defaults' }],
+                '@babel/preset-typescript'
+              ],
               plugins: [
                 '@babel/plugin-proposal-optional-chaining',
                 '@babel/plugin-proposal-object-rest-spread',
@@ -55,13 +66,15 @@ const config = {
             }
           }
         ],
-        exclude: ['/node_modules/']
       },
       {
         test: /\.vue$/i,
         use: [
           {
-            loader: 'vue-loader'
+            loader: 'vue-loader',
+            options: {
+              compilerOptions: {}
+            }
           }
         ]
       },
@@ -74,9 +87,6 @@ const config = {
       //   test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
       //   type: 'asset'
       // }
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ]
   },
   resolve: {

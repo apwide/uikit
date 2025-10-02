@@ -70,7 +70,7 @@ withDefaults(defineProps<Props>(), {
   /*margin-bottom: -5px;*/
 }
 
-.kit-bordered-panel__body >>> .kit-bordered-panel__row:last-child {
+.kit-bordered-panel__body :deep(.kit-bordered-panel__row:last-child) {
   margin-bottom: 6px;
 }
 </style>

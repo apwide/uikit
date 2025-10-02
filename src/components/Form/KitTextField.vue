@@ -8,8 +8,8 @@
 </script>
 
 <style scoped>
->>> textarea,
->>> input {
+:deep(textarea),
+:deep(input) {
   background: transparent;
   border: 0;
   color: inherit;

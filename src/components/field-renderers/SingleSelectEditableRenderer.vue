@@ -28,15 +28,9 @@
         style="flex: 1"
         :fixed-select-width="fixedSelectWidth"
         :confirm="confirm"
-        @input="
-          props.input($event)
-          emit('input', $event)
-        "
+        @input="onInput(props, $event)"
         @search-change="emit('search-change', $event)"
-        @blur="
-          props.blur($event)
-          emit('blur', $event)
-        "
+        @blur="onBlur(props, $event)"
         @confirm="props.confirm"
         @focus="props.focus"
         @cancel="props.cancel">
@@ -126,5 +120,15 @@ const normalizedValueLabel = computed(() => {
 function onSaveRequested(option, callback) {
   const value = option || ''
   emit('save-requested', value, callback)
+}
+
+function onInput(props, data) {
+  props.input(data)
+  emit('input', data)
+}
+
+function onBlur(props, data) {
+  props.blur(data)
+  emit('blur', data)
 }
 </script>

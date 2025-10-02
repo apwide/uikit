@@ -324,7 +324,7 @@ onBeforeUnmount(() => {
   position: relative;
   padding: 10px 0;
 }
-.kit-markdown-editable-renderer[data-disabled-ok='true'] >>> .kit-buttons-wrapper__ok {
+.kit-markdown-editable-renderer[data-disabled-ok='true'] :deep(.kit-buttons-wrapper__ok) {
   visibility: hidden;
 }
 .kit-markdown-editable-renderer__editor-container {

@@ -89,6 +89,6 @@ function onSaveError(value, callback) {
 .limited-width {
   width: 300px;
 }
-.custom-multi-select >>> .tag {
+.custom-multi-select :deep(.tag) {
 }
 </style>

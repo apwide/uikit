@@ -80,7 +80,7 @@ const Icon = computed(() => {
 
 .kit-section-message[appearance='setup']
   .kit-section-message__actions
-  >>> button[appearance='primary']:not([disabled='disabled']) {
+  :deep(button[appearance='primary']:not([disabled='disabled'])) {
   background-color: var(--kit-section-message-setup-primary-bg);
 }
 

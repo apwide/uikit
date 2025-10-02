@@ -346,7 +346,7 @@ input[align='end'] {
 }
 
 /* Clearly a hack */
-.kit-inline-edit--has-general-error >>> .kit-text-field {
+.kit-inline-edit--has-general-error :deep(.kit-text-field) {
   padding-right: 25px;
 }
 

@@ -21,10 +21,7 @@
           <KitIconButton
             class="kit-modal__close"
             title="close"
-            @click="
-              emit('cancel')
-              emit('close')
-            ">
+            @click="cancel">
             <KitIcon type="times" style="font-size: 1.2rem" />
           </KitIconButton>
         </KitButtonGroup>
@@ -79,6 +76,11 @@ const emit = defineEmits<{
 const slots = useSlots()
 const modalWidth = ref('')
 
+function cancel() {
+  emit('cancel')
+  emit('close')
+}
+
 function resize() {
   const { width } = document.body.getBoundingClientRect()
   if (width > 1200) {
@@ -114,7 +116,7 @@ onBeforeUnmount(() => {
   padding: 0 10px 0 20px;
 }
 
-.kit-modal >>> header {
+.kit-modal :deep(header) {
   display: block;
 }
 </style>

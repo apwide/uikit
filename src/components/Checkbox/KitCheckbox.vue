@@ -151,51 +151,51 @@ input[type='checkbox'] {
   min-width: 0;
 }
 
-input:checked + .kit-checkbox__icon >>> rect {
+input:checked + .kit-checkbox__icon :deep(rect) {
   color: var(--kit-checkbox-checked-color);
   stroke: var(--kit-checkbox-checked-color);
 }
 
-input + .kit-checkbox__icon >>> rect {
+input + .kit-checkbox__icon :deep(rect) {
   color: var(--kit-checkbox-fill-color);
   stroke: var(--kit-checkbox-border-color);
 }
 
-label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> rect {
+label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon :deep(rect) {
   fill: var(--kit-checkbox-hover-color);
 }
 
-label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> path {
+label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon :deep(path) {
   fill: var(--kit-checkbox-hover-color);
 }
 
-label:hover input:checked:not(:disabled) + .kit-checkbox__icon >>> rect {
+label:hover input:checked:not(:disabled) + .kit-checkbox__icon :deep(rect) {
   color: var(--kit-checkbox-checked-hover-color);
   stroke: var(--kit-checkbox-checked-hover-color);
 }
 
-input + .kit-checkbox__icon >>> path {
+input + .kit-checkbox__icon :deep(path) {
   fill: var(--kit-checkbox-checked-tick-color);
 }
 
-input:not([is-invalid]):focus + .kit-checkbox__icon >>> rect {
+input:not([is-invalid]):focus + .kit-checkbox__icon :deep(rect) {
   stroke: var(--kit-checkbox-focus-color);
 }
 
-input[is-invalid] + .kit-checkbox__icon >>> rect {
+input[is-invalid] + .kit-checkbox__icon :deep(rect) {
   stroke: #ff5630;
 }
 
-input[disabled] + .kit-checkbox__icon >>> rect {
+input[disabled] + .kit-checkbox__icon :deep(rect) {
   stroke: var(--kit-checkbox-disabled-border-color);
   color: var(--kit-checkbox-disabled-color);
 }
 
-input[disabled] + .kit-checkbox__icon >>> path {
+input[disabled] + .kit-checkbox__icon :deep(path) {
   fill: var(--kit-checkbox-disabled-border-color);
 }
 
-input:checked[disabled] + .kit-checkbox__icon >>> path {
+input:checked[disabled] + .kit-checkbox__icon :deep(path) {
   fill: #a5adba;
 }
 
@@ -205,12 +205,12 @@ label[disabled] input {
   color: #97a0af;
 }
 
-:not(.kit-checkbox__indeterminate) >>> rect {
+:not(.kit-checkbox__indeterminate) :deep(rect) {
   transition: 0.2s ease-in-out;
   stroke-width: 2px;
 }
 
->>> path {
+:deep(path) {
   transition: 0.2s ease-in-out;
 }
 </style>

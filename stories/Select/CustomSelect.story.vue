@@ -60,7 +60,7 @@ const value = ref()
   border-top: 1px solid #f6f9fc;
 }
 
-.create >>> span {
+.create :deep(span) {
   justify-content: flex-start;
 }
 </style>
