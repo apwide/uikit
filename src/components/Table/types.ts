@@ -7,4 +7,5 @@ export type Column = {
 
 export type BasicRow = {
   id: number | string
+  clazz: string | undefined
 }

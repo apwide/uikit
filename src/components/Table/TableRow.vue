@@ -1,6 +1,7 @@
 <template>
   <tr
     class="kit-table-row"
+    :class="row.clazz"
     @click="emit('click', $event)"
     @dblclick="emit('dblclick', $event)"
     @mouseenter="handleMouseEnter"
