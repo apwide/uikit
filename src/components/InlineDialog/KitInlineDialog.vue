@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue'
-import Popup from '../common/Popup'
+import Popup from '../common/Popup.vue'
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/ban-types

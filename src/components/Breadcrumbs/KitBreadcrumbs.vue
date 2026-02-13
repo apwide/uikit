@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue'
 import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
-import KitIcon from '../Icon/KitIcon'
+import KitIcon from '../Icon/KitIcon.vue'
 import KitBreadcrumbItem from './KitBreadcrumbItem.vue'
 
 type Item = {

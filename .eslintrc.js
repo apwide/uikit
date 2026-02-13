@@ -8,7 +8,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:vue/essential',
+    'plugin:vue/vue3-essential',
     '@vue/standard',
     'standard',
     '@vue/typescript',
@@ -16,7 +16,6 @@ module.exports = {
   ],
   rules: {
     'multiline-ternary': 'off',
-    'import/no-webpack-loader-syntax': 'off',
     'no-console': 'error',
     'max-len': [
       'error',
@@ -50,15 +49,23 @@ module.exports = {
   overrides: [
     {
       files: ['tests/**/*.[j|t]s'],
-      env: {
-        'jest/globals': true
+      globals: {
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        vi: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly'
       },
       rules: {
         '@typescript-eslint/no-empty-function': 'off'
       }
     },
     {
-      files: ['**/Icon/*.js', '**/Icon/aui/*.js', '**/Avatar/Icons/*.vue', '**/KitAvatar.vue'],
+      files: ['**/Icon/*.vue', '**/Icon/aui/*.vue', '**/Avatar/Icons/*.vue', '**/KitAvatar.vue', '**/assets/svgs/*.vue'],
       rules: {
         'max-len': 'off'
       }

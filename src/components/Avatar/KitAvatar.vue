@@ -1,5 +1,5 @@
 <template>
-  <div class="kit-avatar__outer" :style="`zIndex: ${zIndex}`">
+  <div class="kit-avatar__outer" :style="`z-index: ${zIndex}`">
     <slot name="avatar-header" />
     <component :is="tag" :href="link" target="_blank" class="kit-avatar__wrapper" :square="`${square}`" :size="size" :style="style">
       <img v-if="avatar && !error" draggable="false" :src="avatar" alt="avatar" @error="error = true" />
@@ -31,7 +31,13 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Online, Busy, Offline, Focus, Approved, Declined } from './Icons'
+import Online from './Icons/Online.vue'
+import Busy from './Icons/Busy.vue'
+import Offline from './Icons/Offline.vue'
+import Focus from './Icons/Focus.vue'
+import Approved from './Icons/Approved.vue'
+import Declined from './Icons/Declined.vue'
+
 
 type Props = {
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'

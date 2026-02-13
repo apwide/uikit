@@ -1,9 +1,9 @@
 <template>
   <div
     ref="optionRef"
-    :selected="isSelected"
+    :selected="isSelected || undefined"
     class="kit-select-option"
-    :current="current"
+    :current="current || undefined"
     @click.stop="onOptionSelected"
     @mouseover="onMouseOver">
     <slot name="option" :option="option.value" :is-current="current">

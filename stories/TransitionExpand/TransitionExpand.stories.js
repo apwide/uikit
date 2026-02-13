@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './TransitionExpand.story.vue';
-
-const sourceCode = require(`!!html-loader!./TransitionExpand.story.vue`);
+import sourceCode from './TransitionExpand.story.vue?raw';
 
 export default {
   title: 'TransitionExpand',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

@@ -23,27 +23,19 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { subDays, format } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
-import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
+import DatePicker from '@components/Calendar/KitDatePicker.vue'
 
-export default {
-  name: 'DatePickerStory',
-  components: { DatePicker: KitDatePicker },
-  data() {
-    return {
-      date: '',
-      noPastRange: {
-        to: subDays(new Date(), 1)
-      }
-    }
-  },
-  methods: {
-    formatDate(date, timeZone) {
-      return date && format(toZonedTime(date, timeZone), 'yyyy-MM-dd HH:mm')
-    }
-  }
+const date = ref('')
+const noPastRange = {
+  to: subDays(new Date(), 1)
+}
+
+function formatDate(dateToFormat, timeZone) {
+  return dateToFormat && format(toZonedTime(dateToFormat, timeZone), 'yyyy-MM-dd HH:mm')
 }
 </script>
 

@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './TextAreaEditableRenderer.story.vue';
-
-const sourceCode = require(`!!html-loader!./TextAreaEditableRenderer.story.vue`);
+import sourceCode from './TextAreaEditableRenderer.story.vue?raw';
 
 export default {
   title: 'InlineEdit/TextArea',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

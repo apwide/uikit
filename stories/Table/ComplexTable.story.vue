@@ -160,7 +160,7 @@ function dropdownClose(cellElement) {
   flex-direction: column;
 }
 
->>> .table-row-cell[with-dropdown] {
+:deep(.table-row-cell[with-dropdown]) {
   z-index: 100;
 }
 </style>

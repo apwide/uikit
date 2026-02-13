@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Badge.story.vue';
-
-const sourceCode = require(`!!html-loader!./Badge.story.vue`);
+import sourceCode from './Badge.story.vue?raw';
 
 export default {
   title: 'Badge',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

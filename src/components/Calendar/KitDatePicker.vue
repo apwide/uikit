@@ -14,7 +14,7 @@
         width="50%"
         placeholder="e.g. 31/12/2018"
         :disabled="disabled || isLoading"
-        v-on="listeners"
+        v-bind="forwardedAttrs"
         @keydown.enter="onEnter"
         @input="onInput"
         @keyup.esc="onEsc"
@@ -35,17 +35,16 @@
 <script setup lang="ts">
 import { format, fromUnixTime, parse, isValid } from 'date-fns'
 import { toZonedTime, fromZonedTime } from 'date-fns-tz'
-import { computed, getCurrentInstance, ref } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
-import Popup from '../common/Popup'
-import KitIcon from '../Icon/KitIcon'
-import Calendar from './Calendar'
+import Popup from '../common/Popup.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import Calendar from './Calendar.vue'
 
 const MILISECONDS_IN_SECOND = 1000
 
 type Props = {
-  value?: number | string
   isFocused?: boolean
   isLoading?: boolean
   isInvalid?: boolean
@@ -65,32 +64,33 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data: Date)
   (event: 'confirm', data: KeyboardEvent)
   (event: 'focus', data: FocusEvent)
   (event: 'blur', data: FocusEvent)
 }>()
+
+const modelValue = defineModel<number | string>()
 
 const datePicker = ref<HTMLDivElement>()
 const input = ref<HTMLInputElement>()
 const focused = ref(false)
 const isOpen = ref(false)
 
-const valid = computed(() => props.value && isValid(props.value))
+const valid = computed(() => modelValue.value && isValid(modelValue.value))
 
 const formattedDate = computed(() => {
   if (!valid.value) {
     return ''
   }
-  const date = toZonedTime(props.value, props.timeZone)
+  const date = toZonedTime(modelValue.value, props.timeZone)
   return format(date, props.dateFormat)
 })
 
-const instance = getCurrentInstance()
-const listeners = computed(() => {
+const attrs = useAttrs()
+const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { focus, blur, input, ...listeners } = instance.proxy.$listeners
-  return listeners
+  const { onFocus, onBlur, onInput, ...rest } = attrs
+  return rest
 })
 
 const selectedDate = computed({
@@ -98,10 +98,10 @@ const selectedDate = computed({
     if (!valid.value) {
       return undefined
     }
-    return fromUnixTime(props.value / MILISECONDS_IN_SECOND)
+    return fromUnixTime(modelValue.value / MILISECONDS_IN_SECOND)
   },
   set(date) {
-    emit('input', date)
+    modelValue.value = date
   }
 })
 

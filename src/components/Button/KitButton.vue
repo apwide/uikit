@@ -3,13 +3,12 @@
     ref="button"
     type="button"
     :appearance="appearance"
-    :disabled="isDisabled"
-    :selected="isSelected"
-    :loading="isLoading"
+    :disabled="isDisabled || undefined"
+    :selected="isSelected || undefined"
+    :loading="isLoading || undefined"
     :spacing="spacing"
-    :round="round"
-    v-on="listeners">
-    <span class="kit-button__wrapper" tabindex="-1" :icon-is-only-child="iconIsOnlyChild">
+    :round="round || undefined">
+    <span class="kit-button__wrapper" tabindex="-1" :icon-is-only-child="iconIsOnlyChild || undefined">
       <slot v-if="!isLoading" name="icon-before" />
       <span v-if="$slots.default" ref="label" class="kit-button__label"><slot /></span>
       <slot v-if="!isLoading" name="icon-after" />
@@ -51,7 +50,6 @@ const iconIsOnlyChild = computed(() => {
     (!me.$slots['icon-after'] && me.$slots['icon-before'] && !me.$slots.default)
   )
 })
-const listeners = computed(() => instance.proxy.$listeners)
 const button = ref<HTMLButtonElement>()
 
 onMounted(async () => {
@@ -144,7 +142,7 @@ button[loading] span.kit-button__label {
   opacity: 0;
 }
 
-button[loading] >>> .kit-spinner {
+button[loading] :deep(.kit-spinner) {
   display: flex;
   position: absolute;
   left: 50%;
@@ -152,7 +150,7 @@ button[loading] >>> .kit-spinner {
   transform: translate(-50%, -50%);
 }
 
-button[loading][selected] >>> .kit-spinner {
+button[loading][selected] :deep(.kit-spinner) {
   color: #fff;
 }
 
@@ -175,7 +173,7 @@ button[appearance='default']:not([disabled]):not([selected]):active {
   color: var(--kit-btn-default-active-text);
 }
 
-button[appearance='default']:active >>> svg {
+button[appearance='default']:active :deep(svg) {
   color: var(--kit-btn-default-active-text);
 }
 
@@ -194,7 +192,7 @@ button[appearance='primary']:not([disabled]):not([selected]):active {
   background-color: var(--kit-btn-primary-active-bg);
 }
 
-button[appearance='primary'][loading] >>> .kit-spinner {
+button[appearance='primary'][loading] :deep(.kit-spinner) {
   color: var(--kit-btn-primary-text);
 }
 
@@ -265,9 +263,9 @@ button[appearance='warning'][selected]:hover {
   color: var(--kit-btn-warn-active-text);
 }
 
-button[appearance='warning']:active >>> svg,
-button[appearance='warning'][selected] >>> svg,
-button[appearance='warning'][selected]:hover >>> svg {
+button[appearance='warning']:active :deep(svg),
+button[appearance='warning'][selected] :deep(svg),
+button[appearance='warning'][selected]:hover :deep(svg) {
   color: var(--kit-btn-warn-active-text);
 }
 
@@ -291,7 +289,7 @@ button[appearance='danger'][selected]:hover {
   background-color: var(--kit-btn-danger-active-bg);
 }
 
-button[appearance='danger'][loading] >>> .kit-spinner {
+button[appearance='danger'][loading] :deep(.kit-spinner) {
   color: var(--kit-btn-danger-active-text);
 }
 
@@ -315,7 +313,7 @@ button[appearance='help'][selected]:hover {
   background-color: var(--kit-btn-help-active-bg);
 }
 
-button[appearance='help'][loading] >>> .kit-spinner {
+button[appearance='help'][loading] :deep(.kit-spinner) {
   color: var(--kit-btn-help-active-text);
 }
 
@@ -331,14 +329,14 @@ button[selected]:not([appearance='danger']):not([appearance='warning']):not([app
   background-color: var(--kit-btn-selected-hover-bg);
 }
 
-button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) >>> svg,
-button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover >>> svg,
-button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active >>> svg {
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']) :deep(svg),
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):hover :deep(svg),
+button[selected]:not([appearance='danger']):not([appearance='warning']):not([appearance='help']):active :deep(svg) {
   color: var(--kit-btn-selected-text);
 }
 
 button[disabled] span.kit-button__wrapper,
-button[disabled] >>> svg {
+button[disabled] :deep(svg) {
   color: var(--kit-btn-disabled-text);
   pointer-events: none;
 }
@@ -347,7 +345,7 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-button[loading][disabled] >>> .kit-spinner {
+button[loading][disabled] :deep(.kit-spinner) {
   color: var(--kit-btn-disabled-text);
 }
 

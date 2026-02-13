@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Dropdown.story.vue';
-
-const sourceCode = require(`!!html-loader!./Dropdown.story.vue`);
+import sourceCode from './Dropdown.story.vue?raw';
 
 export default {
   title: 'Dropdown',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

@@ -1,11 +1,11 @@
 <template>
   <div ref="wrapperContainer" :editing="isEditing" class="kit-inline-edit__wrapper">
-    <div ref="container" :compact="compact" :is-invalid="!!error" class="kit-inline-edit">
+    <div ref="container" :compact="compact || undefined" :is-invalid="!!error" class="kit-inline-edit">
       <InlineEditViewContent
         v-if="!isEditing || keepReadonlyViewOnEdit"
         ref="valueView"
         :align="align"
-        :compact="compact"
+        :compact="compact || undefined"
         :icon="icon"
         @edit-requested="onEditRequested">
         <slot />
@@ -346,7 +346,7 @@ input[align='end'] {
 }
 
 /* Clearly a hack */
-.kit-inline-edit--has-general-error >>> .kit-text-field {
+.kit-inline-edit--has-general-error :deep(.kit-text-field) {
   padding-right: 25px;
 }
 

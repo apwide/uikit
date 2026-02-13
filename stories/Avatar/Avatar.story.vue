@@ -10,7 +10,7 @@
 </template>
 <script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import KitAvatar from '@/components/Avatar/KitAvatar'
+import KitAvatar from '@/components/Avatar/KitAvatar.vue'
 
 const avatar = `https://i.pravatar.cc/300?u=${faker.string.uuid()}`
 const sizes = ['xxlarge', 'xlarge', 'large', 'medium', 'small', 'xsmall']

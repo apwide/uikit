@@ -5,9 +5,11 @@
       <KitLozenge :appearance="appearance">
         {{ appearance }}
       </KitLozenge>
+      &nbsp;
       <button style="all: unset; cursor: pointer">
         <KitLozenge :appearance="appearance"> {{ appearance }} (button) </KitLozenge>
       </button>
+      &nbsp;
       with some text
     </p>
     <h3>Subtle</h3>

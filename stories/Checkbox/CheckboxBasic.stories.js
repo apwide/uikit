@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './CheckboxBasic.story.vue';
-
-const sourceCode = require(`!!html-loader!./CheckboxBasic.story.vue`);
+import sourceCode from './CheckboxBasic.story.vue?raw';
 
 export default {
   title: 'Checkbox',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

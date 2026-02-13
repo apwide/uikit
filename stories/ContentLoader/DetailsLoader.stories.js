@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './DetailsLoader.story.vue';
-
-const sourceCode = require(`!!html-loader!./DetailsLoader.story.vue`);
+import sourceCode from './DetailsLoader.story.vue?raw';
 
 export default {
   title: 'ContentLoader',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

@@ -20,11 +20,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import MagicStick from '@components/Icon/MagicStick.vue'
-import InfoIcon from '../Icon/aui/InfoIcon'
-import WarningIcon from '../Icon/aui/WarningIcon'
-import ErrorIcon from '../Icon/aui/ErrorIcon'
-import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
-import QuestionCircleIcon from '../Icon/aui/QuestionCircleIcon'
+import InfoIcon from '../Icon/aui/InfoIcon.vue'
+import WarningIcon from '../Icon/aui/WarningIcon.vue'
+import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
+import CheckCircleIcon from '../Icon/aui/CheckCircleIcon.vue'
+import QuestionCircleIcon from '../Icon/aui/QuestionCircleIcon.vue'
 
 type SectionMessageAppearance = 'info' | 'warning' | 'error' | 'confirmation' | 'change' | 'setup'
 
@@ -80,7 +80,7 @@ const Icon = computed(() => {
 
 .kit-section-message[appearance='setup']
   .kit-section-message__actions
-  >>> button[appearance='primary']:not([disabled='disabled']) {
+  :deep(button[appearance='primary']:not([disabled='disabled'])) {
   background-color: var(--kit-section-message-setup-primary-bg);
 }
 
@@ -142,19 +142,19 @@ const Icon = computed(() => {
   margin-top: 8px;
 }
 
-.kit-section-message .kit-section-message__actions ul {
+.kit-section-message .kit-section-message__actions :deep(ul) {
   display: flex;
   padding-left: 0;
   list-style: none;
 }
 
-.kit-section-message .kit-section-message__actions ul li {
+.kit-section-message .kit-section-message__actions :deep(ul li) {
   align-items: center;
   display: flex;
   margin: 0;
 }
 
-.kit-section-message .kit-section-message__actions ul li + li::before {
+.kit-section-message .kit-section-message__actions :deep(ul li + li::before) {
   color: var(--kit-section-mmesage-point);
   content: '·';
   display: inline-block;

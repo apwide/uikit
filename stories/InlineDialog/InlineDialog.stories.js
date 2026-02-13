@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './InlineDialog.story.vue';
-
-const sourceCode = require(`!!html-loader!./InlineDialog.story.vue`);
+import sourceCode from './InlineDialog.story.vue?raw';
 
 export default {
   title: 'InlineDialog',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

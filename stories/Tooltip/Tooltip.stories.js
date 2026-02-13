@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Tooltip.story.vue';
-
-const sourceCode = require(`!!html-loader!./Tooltip.story.vue`);
+import sourceCode from './Tooltip.story.vue?raw';
 
 export default {
   title: 'Tooltip',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

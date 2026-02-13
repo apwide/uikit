@@ -1,6 +1,6 @@
 <template>
-  <transition :name="leaveLeft ? 'flag-left' : 'flag'" appear>
-    <div class="kit-flag" :appearance="appearance">
+  <transition :name="leaveLeft ? 'flag-left' : 'flag'" appear @after-leave="emit('close')">
+    <div v-if="visible" class="kit-flag" :appearance="appearance">
       <div class="header">
         <div class="icon">
           <CheckCircleIcon v-if="flag.name === 'success'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
@@ -15,8 +15,8 @@
           class="chevron"
           size="large"
           :expanded="expanded"
-          @click.native="onExpand" />
-        <EditorCloseIcon v-else class="close" @click.native="emit('close')" />
+          @click="onExpand" />
+        <EditorCloseIcon v-else class="close" @click="visible = false" />
       </div>
       <slot>
         <div class="content" :expanded="expanded">
@@ -36,12 +36,12 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
-import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
-import InfoIcon from '../Icon/aui/InfoIcon'
-import WarningIcon from '../Icon/aui/WarningIcon'
-import ErrorIcon from '../Icon/aui/ErrorIcon'
-import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
+import ChevronDownIcon from '../Icon/aui/ChevronDownIcon.vue'
+import CheckCircleIcon from '../Icon/aui/CheckCircleIcon.vue'
+import InfoIcon from '../Icon/aui/InfoIcon.vue'
+import WarningIcon from '../Icon/aui/WarningIcon.vue'
+import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
+import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 
 
 type Props = {
@@ -66,6 +66,7 @@ const emit = defineEmits<{
   (event: 'close')
 }>()
 
+const visible = ref(true)
 const expanded = ref(false)
 const color = computed(() => {
   switch (props.type) {
@@ -226,13 +227,13 @@ function onClick(action) {
   transform: rotateZ(180deg);
 }
 
-.flag-enter,
+.flag-enter-from,
 .flag-leave-active {
   opacity: 0;
   transform: translateX(300px);
 }
 
-.flag-left-enter,
+.flag-left-enter-from,
 .flag-left-leave-active {
   opacity: 0;
   transform: translateX(-300px);

@@ -97,17 +97,17 @@
 <script setup lang="ts">
 import KitMenu from '@components/Menu/KitMenu.vue'
 import { computed, ref } from 'vue'
-import KitIconMenu from '../../src/components/Menu/KitIconMenu'
-import KitMenuSection from '../../src/components/Menu/KitMenuSection'
-import KitMenuSeparator from '../../src/components/Menu/KitMenuSeparator'
-import KitIcon from '../../src/components/Icon/KitIcon'
-import MenuItem from '@/components/Menu/MenuItem'
-import MenuSection from '@/components/Menu/MenuSection'
-import EditorAddIcon from '@/components/Icon/aui/EditorAddIcon'
-import KitActionMenu from '@/components/Menu/KitActionMenu'
-import KitMenuItem from '@/components/Menu/KitMenuItem'
-import KitBorderedPanel from '@/components/layout/BorderedPanel/KitBorderedPanel'
-import KitBorderedPanelRow from '@/components/layout/BorderedPanel/KitBorderedPanelRow'
+import KitIconMenu from '../../src/components/Menu/KitIconMenu.vue'
+import KitMenuSection from '../../src/components/Menu/KitMenuSection.vue'
+import KitMenuSeparator from '../../src/components/Menu/KitMenuSeparator.vue'
+import KitIcon from '../../src/components/Icon/KitIcon.vue'
+import MenuItem from '@/components/Menu/MenuItem.vue'
+import MenuSection from '@/components/Menu/MenuSection.vue'
+import EditorAddIcon from '@/components/Icon/aui/EditorAddIcon.vue'
+import KitActionMenu from '@/components/Menu/KitActionMenu.vue'
+import KitMenuItem from '@/components/Menu/KitMenuItem.vue'
+import KitBorderedPanel from '@/components/layout/BorderedPanel/KitBorderedPanel.vue'
+import KitBorderedPanelRow from '@/components/layout/BorderedPanel/KitBorderedPanelRow.vue'
 
 const selected = ref(null)
 

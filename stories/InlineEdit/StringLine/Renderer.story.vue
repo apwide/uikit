@@ -2,28 +2,21 @@
   <div>
     <h5>Full width</h5>
     <p>
-      <StringLineRenderer :value="value" />
+      <KitStringLineRenderer :value="value" />
     </p>
     <h5>100px width</h5>
     <p class="limited-width">
-      <StringLineRenderer :value="value" />
+      <KitStringLineRenderer :value="value" />
     </p>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import StringLineRenderer from '@/components/field-renderers/StringLineRenderer'
+import KitStringLineRenderer from '@/components/field-renderers/KitStringLineRenderer.vue'
 
-export default {
-  components: { StringLineRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  }
-}
+faker.seed(1)
+const value = faker.lorem.sentence()
 </script>
 
 <style scoped>

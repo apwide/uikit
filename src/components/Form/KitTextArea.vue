@@ -3,12 +3,11 @@
     <textarea
       ref="textarea"
       v-model="text"
-      v-bind="$attrs"
+      v-bind="forwardedAttrs"
       :rows="rows"
       :disabled="isLoading"
       :style="{ height: currentHeight, width, maxHeight }"
-      :auto="height === 'auto'"
-      v-on="listeners"
+      :auto="height === 'auto' || undefined"
       @keydown="resize"
       @input="resize"
       @focus="onFocus"
@@ -17,13 +16,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, useAttrs, watch } from 'vue'
 import KitTextField from './KitTextField.vue'
 
 const ENTER = 13
 
 type Props = {
-  value?: string
   isFocused?: boolean
   isInvalid?: boolean
   isLoading?: boolean
@@ -46,7 +44,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data?: string)
   (event: 'blur', data: FocusEvent)
   (event: 'focus', data: FocusEvent)
   (event: 'confirm')
@@ -56,20 +53,13 @@ const textarea = ref<HTMLTextAreaElement>()
 const currentHeight = ref(props.height)
 const focused = ref(props.isFocused)
 
-const instance = getCurrentInstance()
-const listeners = computed(() => {
+const attrs = useAttrs()
+const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { input, ...listeners } = instance.proxy.$listeners
-  return listeners
+  const { onInput, ...rest } = attrs
+  return rest
 })
-const text = computed({
-  get() {
-    return props.value
-  },
-  set(value) {
-    emit('input', value)
-  }
-})
+const text = defineModel<string>()
 
 watch(() => props.isFocused, () => {
   focused.value = props.isFocused

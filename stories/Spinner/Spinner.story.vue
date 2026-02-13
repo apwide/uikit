@@ -7,11 +7,6 @@
   </div>
 </template>
 
-<script>
-import KitSpinner from '@components/Spinner/KitSpinner.vue'
-
-export default {
-  name: 'SpinnerStory',
-  components: { Spinner: KitSpinner }
-}
+<script setup lang="ts">
+import Spinner from '@components/Spinner/KitSpinner.vue'
 </script>

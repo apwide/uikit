@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './AsyncCustomSelect.story.vue';
-
-const sourceCode = require(`!!html-loader!./AsyncCustomSelect.story.vue`);
+import sourceCode from './AsyncCustomSelect.story.vue?raw';
 
 export default {
   title: 'Select',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

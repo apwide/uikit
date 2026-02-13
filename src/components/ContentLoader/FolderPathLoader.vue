@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import ContentLoader from './ContentLoader'
+import ContentLoader from './ContentLoader.vue'
 
 type Props = {
   size?: 'normal' | 'small'

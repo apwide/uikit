@@ -1,7 +1,7 @@
 <template>
   <div class="kit-table-wrapper">
     <table ref="table">
-      <thead :sticky-header="stickyHeader">
+      <thead :sticky-header="stickyHeader || undefined">
         <tr class="kit-table-header-row">
           <TableHeaderCell v-if="dragRows" :column="actualColumns[0]" />
           <TableHeaderCell
@@ -59,7 +59,7 @@
         </tr>
       </tfoot>
     </table>
-    <div :busy="busy" class="kit-busy-glass">
+    <div :busy="busy || undefined" class="kit-busy-glass">
       <KitSpinner />
     </div>
   </div>

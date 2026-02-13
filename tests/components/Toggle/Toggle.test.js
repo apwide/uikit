@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Toggle from '@/components/Toggle/KitToggle'
+import Toggle from '@/components/Toggle/KitToggle.vue'
 
 describe('Toggle', () => {
   it('renders correct content for a button', async () => {
@@ -7,6 +7,6 @@ describe('Toggle', () => {
       attachTo: document.body
     })
     await component.trigger('click')
-    expect(component.emitted('input')).toBeTruthy()
+    expect(component.emitted('update:modelValue')).toBeTruthy()
   })
 })

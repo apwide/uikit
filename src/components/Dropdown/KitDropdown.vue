@@ -1,5 +1,5 @@
 <template>
-  <div ref="dropdownContainer" :full-width="fullWidth" class="dropdown-container">
+  <div ref="dropdownContainer" :full-width="fullWidth || undefined" class="dropdown-container">
     <slot v-if="slots.trigger" :is-disabled="isDisabled" :is-open="open" :toggle="onTriggerClick" name="trigger" />
     <KitButton v-else :appearance="appearance" :is-disabled="isDisabled" :is-selected="open" @click="onTriggerClick">
       {{ label }}
@@ -18,7 +18,7 @@
       :target-element="dropdownContainer"
       with-light-shadows
       without-arrow
-      @click.native="onMenuClick">
+      @click="onMenuClick">
       <slot :toggle="onTriggerClick" name="dropdown-menu">
         <div class="dropdown-menu">
           <slot :toggle="onTriggerClick" />
@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref, useSlots, watch } from 'vue'
 import KitButton from '../Button/KitButton.vue'
-import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
+import ChevronDownIcon from '../Icon/aui/ChevronDownIcon.vue'
 import Popup from '../common/Popup.vue'
 
 type Props = {
@@ -146,8 +146,8 @@ onBeforeUnmount(() => {
 }
 
 .dropdown-container[full-width],
-.dropdown-container[full-width] >>> button,
-.dropdown-container[full-width] >>> .kit-button__label {
+.dropdown-container[full-width] :deep(button),
+.dropdown-container[full-width] :deep(.kit-button__label) {
   width: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$scopedSlots.default" class="kit-menu-section">
+  <div v-if="$slots.default" class="kit-menu-section">
     <div v-if="title" class="kit-menu-section__title">
       {{ title }}
     </div>
@@ -36,7 +36,7 @@ defineProps<Props>()
   margin: 18px 0 18px;
 }
 
-.kit-menu-section >>> .kit-menu-item {
+.kit-menu-section :deep(.kit-menu-item) {
   margin: 0 -12px;
 }
 </style>

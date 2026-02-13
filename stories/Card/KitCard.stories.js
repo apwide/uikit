@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './KitCard.story.vue';
-
-const sourceCode = require(`!!html-loader!./KitCard.story.vue`);
+import sourceCode from './KitCard.story.vue?raw';
 
 export default {
   title: 'Card',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

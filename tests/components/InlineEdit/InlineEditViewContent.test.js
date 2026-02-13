@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import InlineEditViewContent from '@/components/Form/InlineEditViewContent'
+import InlineEditViewContent from '@/components/Form/InlineEditViewContent.vue'
 
 describe('InlineEditViewContent', () => {
   it('should emit event on enter', () => {

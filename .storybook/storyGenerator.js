@@ -15,14 +15,10 @@ files.forEach(file => {
   const title = group || name;
   const outFile = path.join(path.dirname(file), `${name}.stories.js`);
 
-  // const sourceCode = fs.readFileSync(file, 'utf8');
-  // const sourceCode = require(`!!html-loader!../stories/${group}/${name}.story`);
-
   const content = `
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './${name}.story.vue';
-
-const sourceCode = require(\`!!html-loader!./${name}.story.vue\`);
+import sourceCode from './${name}.story.vue?raw';
 
 export default {
   title: '${title}',
@@ -30,7 +26,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: \`\${sourceCode}\`
+        code: sourceCode
       }
     }
   }

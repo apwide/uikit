@@ -1,6 +1,6 @@
 <template>
   <KitSelect
-    :value="value"
+    v-model="modelValue"
     :options="users"
     :async="true"
     :multi="multi"
@@ -8,22 +8,21 @@
     :is-fetching="isFetching"
     :placeholder="placeholder"
     :normalizer="normalizer"
-    v-on="$listeners"
     @open="loadInitialOptions"
     @search-change="debouncedGetUsers">
     <template #option="{ option }">
       <div class="label">
-        <UserRenderer tag="span" :user="option" />
+        <KitUserRenderer tag="span" :user="option" />
       </div>
     </template>
     <template #selected="{ selected }">
       <div class="label">
-        <UserRenderer tag="span" :user="selected" />
+        <KitUserRenderer tag="span" :user="selected" />
       </div>
     </template>
     <template #tag="{ tag }">
       <div class="user-tag">
-        <UserRenderer appearance="micro" tag="span" :user="tag.value" />
+        <KitUserRenderer appearance="micro" tag="span" :user="tag.value" />
       </div>
     </template>
   </KitSelect>
@@ -32,7 +31,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { debounce } from '@components/utils'
-import UserRenderer from '../field-renderers/UserRenderer.vue'
+import KitUserRenderer from '../field-renderers/KitUserRenderer.vue'
 import KitSelect from './KitSelect.vue'
 
 type User = { key: string; name: string; disabled: boolean }
@@ -41,7 +40,6 @@ type Mapper = (input: User[]) => User[]
 
 type Props = {
   getUsers: GetUsers
-  value?: string | User | User[]
   multi?: boolean
   isFocused?: boolean
 
@@ -52,12 +50,13 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: '',
   mapper: (list) => list,
   placeholder: 'Type to search...',
   searchPromptText: 'Type to search...',
   initialOptions: () => []
 })
+
+const modelValue = defineModel<string | User | User[]>({ default: '' })
 
 const users = ref<User[]>([])
 const isFetching = ref(false)

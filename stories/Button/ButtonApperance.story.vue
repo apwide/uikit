@@ -70,7 +70,7 @@ function capitalize(str) {
   align-items: normal;
 }
 
-.buttons >>> button {
+.buttons :deep(button) {
   margin-bottom: 10px;
 }
 

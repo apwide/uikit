@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Tabs.story.vue';
-
-const sourceCode = require(`!!html-loader!./Tabs.story.vue`);
+import sourceCode from './Tabs.story.vue?raw';
 
 export default {
   title: 'Tabs',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

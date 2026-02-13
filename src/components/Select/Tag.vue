@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from 'vue'
-import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
+import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 
 type Props = {
   tag?: {

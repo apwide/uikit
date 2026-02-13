@@ -14,11 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import KitTextField from './KitTextField.vue'
 
 type Props = {
-  value?: string | number
   maxlength?: number
   placeholder?: string
   autoFocus?: boolean
@@ -39,20 +38,12 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (event: 'focus', data: FocusEvent)
   (event: 'blur', data: FocusEvent)
-  (event: 'input', data?: string | number)
 }>()
 
 const isFocused = ref(false)
 const inputField = ref<HTMLInputElement>()
 
-const input = computed({
-  get() {
-    return props.value
-  },
-  set(val) {
-    emit('input', val)
-  }
-})
+const input = defineModel<string | number>()
 
 watch(input, () => {
   if (props.allowedValues) {

@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Tag.story.vue';
-
-const sourceCode = require(`!!html-loader!./Tag.story.vue`);
+import sourceCode from './Tag.story.vue?raw';
 
 export default {
   title: 'Tag',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }
