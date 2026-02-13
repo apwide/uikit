@@ -6,7 +6,7 @@
           <span :title="headerFloatingTitle" class="kit-bordered-panel__title">{{ title }}</span>
         </slot>
       </div>
-      <div v-if="$scopedSlots.actions" class="kit-bordered-panel__header-actions">
+      <div v-if="$slots.actions" class="kit-bordered-panel__header-actions">
         <slot name="actions" />
       </div>
     </div>
@@ -70,7 +70,7 @@ withDefaults(defineProps<Props>(), {
   /*margin-bottom: -5px;*/
 }
 
-.kit-bordered-panel__body >>> .kit-bordered-panel__row:last-child {
+.kit-bordered-panel__body :deep(.kit-bordered-panel__row:last-child) {
   margin-bottom: 6px;
 }
 </style>

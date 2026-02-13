@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './ModalDanger.story.vue';
-
-const sourceCode = require(`!!html-loader!./ModalDanger.story.vue`);
+import sourceCode from './ModalDanger.story.vue?raw';
 
 export default {
   title: 'Modal',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

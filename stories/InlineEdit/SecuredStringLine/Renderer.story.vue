@@ -11,19 +11,12 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import SecureStringLineRenderer from '../../../src/components/field-renderers/SecureStringLineRenderer'
+import SecureStringLineRenderer from '@components/field-renderers/SecureStringLineRenderer.vue'
 
-export default {
-  components: { SecureStringLineRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  }
-}
+faker.seed(1)
+const value = faker.lorem.sentence()
 </script>
 
 <style scoped>

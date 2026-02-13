@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './ProgressBar.story.vue';
-
-const sourceCode = require(`!!html-loader!./ProgressBar.story.vue`);
+import sourceCode from './ProgressBar.story.vue?raw';
 
 export default {
   title: 'ProgressBar',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

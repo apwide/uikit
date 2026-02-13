@@ -2,23 +2,23 @@
   <div>
     <h5>Editable:</h5>
     <p>
-      <MultiLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
+      <KitMultiLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <MultiLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
+      <KitMultiLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
     </p>
     <h5>Limited width:</h5>
     <p class="limited-width">
-      <MultiLineEditableRenderer :value="value" @save-requested="onSave" />
+      <KitMultiLineEditableRenderer :value="value" @save-requested="onSave" />
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <MultiLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
+      <KitMultiLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
     </p>
     <h5>Without confirmation:</h5>
     <p>
-      <MultiLineEditableRenderer
+      <KitMultiLineEditableRenderer
         :value="value"
         :confirm="false"
         align="end"
@@ -29,28 +29,21 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { faker } from '@faker-js/faker'
-import MultiLineEditableRenderer from '@/components/field-renderers/MultiLineEditableRenderer'
+import KitMultiLineEditableRenderer from '@/components/field-renderers/KitMultiLineEditableRenderer.vue'
 
-export default {
-  components: { MultiLineEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.value = value
-      callback()
-    },
+faker.seed(1)
+const value = ref(faker.lorem.sentence())
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+function onSave(newValue, callback) {
+  value.value = newValue
+  callback()
+}
+
+function onSaveError(newValue, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>
 

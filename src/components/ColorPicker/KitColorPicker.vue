@@ -22,7 +22,6 @@ import Popup from '../common/Popup.vue'
 import KitColorCard from './KitColorCard.vue'
 
 type Props = {
-  value?: string
   // list of color codes
   colors?: string[]
   editable?: boolean
@@ -31,26 +30,15 @@ type Props = {
 
 const props = withDefaults(defineProps<Props>(), {
   editable: true,
-  value: '#DFE1E1',
   columns: 8,
   colors: () => ['#000', '#0052CC', '#172B4D', '#FF5630', '#FFAB00', '#36B37E', '#00B8D9', '#6554C0']
 })
 
-const emit = defineEmits<{
-  (event: 'input', newColor: string)
-}>()
+const selected = defineModel<string>({ default: '#DFE1E1' })
 
 const open = ref(false)
 const containerRef = ref<HTMLDivElement>()
 
-const selected = computed({
-  get() {
-    return props.value
-  },
-  set(color: string) {
-    emit('input', color)
-  }
-})
 const style = computed(() => ({
   backgroundColor: selected.value
 }))

@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Renderer.story.vue';
-
-const sourceCode = require(`!!html-loader!./Renderer.story.vue`);
+import sourceCode from './Renderer.story.vue?raw';
 
 export default {
   title: 'InlineEdit/Date',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

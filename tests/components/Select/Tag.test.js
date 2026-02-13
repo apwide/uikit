@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import Tag from '@/components/Select/Tag';
+import Tag from '@/components/Select/Tag.vue';
 
 const normalizer = option => ({ id: option.id, label: option.id, value: option });
 
@@ -11,7 +11,7 @@ describe('Tag', () => {
                 tag, index: 1, count: 2, min: 0
             }
         });
-        const remove = component.findComponent({ ref: 'remove' });
+        const remove = component.find({ ref: 'remove' });
 
         expect(remove.exists()).toBeTruthy();
     });
@@ -23,7 +23,7 @@ describe('Tag', () => {
                 tag, index: 1, count: 1, min: 1
             }
         });
-        const remove = component.findComponent({ ref: 'remove' });
+        const remove = component.find({ ref: 'remove' });
 
         expect(remove.exists()).toBeFalsy();
     });
@@ -35,7 +35,7 @@ describe('Tag', () => {
                 tag, index: 1, count: 2, min: 0
             }
         });
-        const remove = component.findComponent({ ref: 'remove' });
+        const remove = component.find({ ref: 'remove' });
 
         expect(remove.exists()).toBeFalsy();
     });

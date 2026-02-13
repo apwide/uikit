@@ -2,13 +2,8 @@
   <ContentLoader />
 </template>
 
-<script>
-import ContentLoader from '@/components/ContentLoader/ContentLoader'
-
-export default {
-  name: 'BasicStory',
-  components: { ContentLoader }
-}
+<script setup lang="ts">
+import ContentLoader from '@/components/ContentLoader/ContentLoader.vue'
 </script>
 
 <style scoped></style>

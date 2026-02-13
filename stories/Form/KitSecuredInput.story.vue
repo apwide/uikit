@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { ref } from 'vue'
-import KitSecuredInput from '@/components/Form/KitSecuredInput'
+import KitSecuredInput from '@/components/Form/KitSecuredInput.vue'
 
 const message = ref('')
 </script>

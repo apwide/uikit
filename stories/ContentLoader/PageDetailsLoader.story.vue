@@ -4,11 +4,6 @@
   </div>
 </template>
 
-<script>
-import PageDetailsLoader from '@/components/ContentLoader/PageDetailsLoader'
-
-export default {
-  name: 'PageDetailsLoaderLoaderStory',
-  components: { PageDetailsLoader }
-}
+<script setup lang="ts">
+import PageDetailsLoader from '@/components/ContentLoader/PageDetailsLoader.vue'
 </script>

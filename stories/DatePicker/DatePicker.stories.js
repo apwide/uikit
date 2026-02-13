@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './DatePicker.story.vue';
-
-const sourceCode = require(`!!html-loader!./DatePicker.story.vue`);
+import sourceCode from './DatePicker.story.vue?raw';
 
 export default {
   title: 'DatePicker',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

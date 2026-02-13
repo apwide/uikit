@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Avatar.story.vue';
-
-const sourceCode = require(`!!html-loader!./Avatar.story.vue`);
+import sourceCode from './Avatar.story.vue?raw';
 
 export default {
   title: 'Avatar',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

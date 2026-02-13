@@ -19,8 +19,8 @@
 <script setup lang="ts">
 import { addMonths, addYears, subMonths, subYears } from 'date-fns'
 import { computed, ref } from 'vue'
-import KitIconButton from '../Button/KitIconButton'
-import KitIcon from '../Icon/KitIcon'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitIcon from '../Icon/KitIcon.vue'
 
 const DECADE = 10
 
@@ -133,7 +133,7 @@ strong {
   transition: all 0.4s;
 }
 
-.slide-right-enter {
+.slide-right-enter-from {
   opacity: 0;
   transform: translate(300px, -50%);
 }
@@ -143,7 +143,7 @@ strong {
   transform: translate(-300px, -50%);
 }
 
-.slide-left-enter {
+.slide-left-enter-from {
   opacity: 0;
   transform: translate(-300px, -50%);
 }
@@ -153,7 +153,7 @@ strong {
   transform: translate(300px, -50%);
 }
 
-.slide-top-enter {
+.slide-top-enter-from {
   opacity: 0;
   transform: translate(-50%, -100%);
 }

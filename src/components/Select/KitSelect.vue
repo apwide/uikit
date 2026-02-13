@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" :disabled="isDisabled" class="kit-select">
+  <div ref="containerRef" :data-disabled="isDisabled" class="kit-select">
     <KitTextField
       :is-focused="focused"
       :is-invalid="isInvalid"
@@ -8,7 +8,7 @@
       class="kit-select-wrapper"
       tabindex="-1"
       @click="click">
-      <div ref="listRef" :gap="multi && !!selected.length" class="kit-select__flex-wrapper" @dragover.prevent>
+      <div ref="listRef" :data-gap="multi && !!selected.length" class="kit-select__flex-wrapper" @dragover.prevent>
         <template v-if="multi && Array.isArray(selected)">
           <Tag
             v-for="(tag, i) in selected"
@@ -44,10 +44,10 @@
       </div>
       <div v-if="!selected.length" class="kit-select__text">
         <slot
-          v-if="!search && selected.value && $scopedSlots['selected'] && !multi"
+          v-if="!search && selected.value && $slots['selected'] && !multi"
           :selected="selected.value"
           name="selected" />
-        <span v-else :placeholder="!search && !selected.label">
+        <span v-else :placeholder="(!search && !selected.label) || undefined">
           {{ input }}
         </span>
       </div>
@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, unref, watch } from 'vue'
-import { FilterPredicate, Normalizer, Value } from '@components/Select/types'
+import { Value } from '@components/Select/types'
 import KitTextField from '../Form/KitTextField.vue'
 import Popper from '../Popper/Popper.vue'
 import KitSelectMenu from './KitSelectMenu.vue'
@@ -102,13 +102,12 @@ import Icons from './Icons.vue'
 const INPUT_WIDTH = '5px'
 
 type Props = {
-  value?: string | number | string[] | number[] | object | object[]
   options?: unknown[]
   placeholder?: string
   searchPromptText?: string
   multi?: boolean
-  filterPredicate?: FilterPredicate
-  normalizer?: Normalizer<unknown>
+  filterPredicate?: (label: string, input: string) => boolean
+  normalizer?: (value: unknown) => Value<unknown>
   isLoading?: boolean
   isFetching?: boolean
   isFocused?: boolean
@@ -139,11 +138,9 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Type to search...',
   searchPromptText: 'Type to search...',
   multi: false,
-  filterPredicate:
-    () =>
-    (label = '', input = '') =>
-      label.toString().toLowerCase().includes(input.toLowerCase().trim()),
-  normalizer: () => (value) => ({
+  filterPredicate: (label = '', input = '') =>
+    label.toString().toLowerCase().includes(input.toLowerCase().trim()),
+  normalizer: (value) => ({
     id: value,
     label: value,
     value,
@@ -181,8 +178,9 @@ const emit = defineEmits<{
   (event: 'error')
   (event: 'focus', e: FocusEvent)
   (event: 'blur', e: FocusEvent)
-  (event: 'input', e: string | number | object | string[] | number[] | object[])
 }>()
+
+const modelValue = defineModel<string | number | string[] | number[] | object | object[]>()
 
 const isOpen = ref(false)
 const search = ref('')
@@ -196,7 +194,7 @@ const dragging = ref(false)
 const prevIndex = ref<number>()
 
 const selected = computed<Value<unknown> | Value<unknown>[]>(() =>
-  props.multi ? (props.value as unknown[]).map((e) => props.normalizer(e)) : props.normalizer(props.value)
+  props.multi ? (modelValue.value as unknown[]).map((e) => props.normalizer(e)) : props.normalizer(modelValue.value)
 )
 const normalizedOptions = computed(() => props.options.map((e) => props.normalizer(e)))
 const input = computed(() => (search.value ? '' : selected.value?.label || props.placeholder))
@@ -268,7 +266,7 @@ function onFocus(e: FocusEvent) {
 function createTag() {
   const s = props.multi ? [...selected.value.map((o) => o.value), search.value] : search.value
   search.value = ''
-  emit('input', s)
+  modelValue.value = s
 }
 
 function closeOptions() {
@@ -299,7 +297,7 @@ function onEsc() {
 
 async function onClear() {
   search.value = ''
-  emit('input', nonClearableOptions.value)
+  modelValue.value = nonClearableOptions.value
   isOpen.value = false
   await nextTick()
   inputRef.value?.focus()
@@ -312,7 +310,7 @@ async function onOptionSelected(option: Value<unknown>) {
   isOpen.value = props.keepOpenOnSelect || false
   focused.value = true
   const s = props.multi ? [...selected.value.map((e) => e.value), option.value] : option.value
-  emit('input', s)
+  modelValue.value = s
   if (!props.confirm && inputRef.value) {
     await nextTick()
     inputRef.value?.blur()
@@ -340,7 +338,7 @@ async function onRemove(id: string) {
   const s = selectedValues
     .filter((option: Value<unknown>) => option.id !== id || option.disabled)
     .map((option: Value<unknown>) => option.value)
-  emit('input', s)
+  modelValue.value = s
   await nextTick()
 }
 
@@ -354,7 +352,7 @@ function removeOption() {
     const { id } = selected.value[selectedValues.length - 1]
     onRemove(id)
   } else if (canClearSelectedOption.value) {
-    emit('input', undefined)
+    modelValue.value = undefined
   }
 }
 
@@ -409,7 +407,7 @@ function onTab(e) {
       const option = suggestions.value[currentSuggestionIndex.value]
       const s = props.multi ? [...(selected.value as Value<unknown>[]).map((e) => e.value), option.value] : option.value
       // `this.confirm` is bypassed
-      emit('input', s)
+      modelValue.value = s
       e.preventDefault()
 
       if (!props.keepFilterOnSelect) {
@@ -474,10 +472,7 @@ function onDragEnd() {
   const list = [...selected.value]
   const [item] = list.splice(prevIndex.value, 1)
   list.splice(nextIndex, 0, item)
-  emit(
-    'input',
-    list.map((e) => e.value)
-  )
+  modelValue.value = list.map((e) => e.value)
   inputRef.value?.focus()
 }
 
@@ -590,7 +585,7 @@ watch(suggestions, async () => {
   flex-wrap: wrap;
 }
 
-.kit-select__flex-wrapper[gap] {
+.kit-select__flex-wrapper[data-gap="true"] {
   margin-top: -4px;
 }
 
@@ -604,7 +599,7 @@ watch(suggestions, async () => {
   z-index: 3;
 }
 
-[gap] .kit-select__search {
+[data-gap="true"] .kit-select__search {
   margin-top: 4px;
 }
 
@@ -614,12 +609,12 @@ watch(suggestions, async () => {
   pointer-events: none;
 }
 
-.kit-select[disabled] {
+.kit-select[data-disabled="true"] {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.kit-select[disabled] .kit-select-wrapper {
+.kit-select[data-disabled="true"] .kit-select-wrapper {
   pointer-events: none;
 }
 

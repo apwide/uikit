@@ -23,7 +23,7 @@
       <template #after>
         <KitInlineDialog placement="right">
           <template v-slot:trigger="{ toggle }">
-            <EditorInfoIcon class="icon" size="small" @click.native="toggle" />
+            <EditorInfoIcon class="icon" size="small" @click="toggle" />
           </template>
           <div class="content">
             <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
@@ -52,7 +52,7 @@ import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import { computed, ref } from 'vue'
 import KitToggle from '@components/Toggle/KitToggle.vue'
-import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon'
+import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon.vue'
 
 const message = ref('')
 const number = ref('')

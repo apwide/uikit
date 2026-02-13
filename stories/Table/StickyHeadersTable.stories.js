@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './StickyHeadersTable.story.vue';
-
-const sourceCode = require(`!!html-loader!./StickyHeadersTable.story.vue`);
+import sourceCode from './StickyHeadersTable.story.vue?raw';
 
 export default {
   title: 'Table',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

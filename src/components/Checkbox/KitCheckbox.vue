@@ -1,12 +1,12 @@
 <template>
-  <label ref="checkbox" class="kit-checkbox__wrapper" :for="id" tabindex="-1" :disabled="disabled">
+  <label ref="checkboxRef" class="kit-checkbox__wrapper" :for="id" tabindex="-1" :disabled="disabled || undefined">
     <input
       :id="id"
-      ref="input"
-      v-model="isChecked"
+      ref="inputRef"
+      v-model="checked"
       :value="value"
       type="checkbox"
-      :is-invalid="isInvalid"
+      :is-invalid="isInvalid || undefined"
       :disabled="disabled"
       @focus="onFocus"
       @blur="onBlur" />
@@ -16,84 +16,56 @@
   </label>
 </template>
 
-<script>
-/**
- * Cannot be moved to vue 2 setup as requires defineModel.
- * It declares v-model to be bound to checked prop.
- */
-import CheckboxIndeterminateIcon from '../Icon/aui/CheckboxIndeterminateIcon'
-import CheckboxIcon from '../Icon/aui/CheckboxIcon'
+<script setup lang="ts">
+import { nextTick, ref, watch } from 'vue'
+import CheckboxIndeterminateIcon from '../Icon/aui/CheckboxIndeterminateIcon.vue'
+import CheckboxIcon from '../Icon/aui/CheckboxIcon.vue'
 
-export default {
-  name: 'KitCheckbox',
-  components: { CheckboxIcon, CheckboxIndeterminateIcon },
-  model: {
-    prop: 'checked',
-    event: 'input'
-  },
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    value: {
-      type: [String, Object, Number],
-      default: undefined
-    },
-    checked: {
-      type: [Boolean, Array],
-      required: true
-    },
-    isFocused: {
-      type: Boolean,
-      default: false
-    },
-    isInvalid: {
-      type: Boolean,
-      default: false
-    },
-    indeterminate: {
-      type: Boolean,
-      default: false
+type Props = {
+  disabled?: boolean
+  value?: string | Record<string, unknown> | number
+  isFocused?: boolean
+  isInvalid?: boolean
+  indeterminate?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+  value: undefined,
+  isFocused: false,
+  isInvalid: false,
+  indeterminate: false
+})
+
+const emit = defineEmits<{
+  (event: 'focus', payload: FocusEvent): void
+  (event: 'blur', payload: FocusEvent): void
+}>()
+
+const checked = defineModel<boolean | unknown[]>({ required: true })
+
+const id = ref<string>()
+const checkboxRef = ref<HTMLLabelElement>()
+const inputRef = ref<HTMLInputElement>()
+
+watch(
+  () => props.isFocused,
+  (isFocused) => {
+    if (isFocused) {
+      nextTick(() => inputRef.value?.focus())
     }
   },
-  data() {
-    return { id: undefined }
-  },
-  computed: {
-    isChecked: {
-      get() {
-        return this.checked
-      },
-      set(value) {
-        this.$emit('input', value)
-      }
-    }
-  },
-  watch: {
-    isFocused: {
-      handler(isFocused) {
-        if (isFocused) {
-          this.$nextTick(() => this.$refs.input.focus())
-        }
-      },
-      immediate: true
-    }
-  },
-  created() {
-    // eslint-disable-next-line
-    this.id = this._uuid
-  },
-  methods: {
-    onBlur(e) {
-      if (!this.$refs.checkbox.contains(e.relatedTarget)) {
-        this.$emit('blur', e)
-      }
-    },
-    onFocus(e) {
-      this.$emit('focus', e)
-    }
+  { immediate: true }
+)
+
+function onBlur(e: FocusEvent) {
+  if (!checkboxRef.value?.contains(e.relatedTarget as Node)) {
+    emit('blur', e)
   }
+}
+
+function onFocus(e: FocusEvent) {
+  emit('focus', e)
 }
 </script>
 
@@ -151,51 +123,51 @@ input[type='checkbox'] {
   min-width: 0;
 }
 
-input:checked + .kit-checkbox__icon >>> rect {
+input:checked + .kit-checkbox__icon :deep(rect) {
   color: var(--kit-checkbox-checked-color);
   stroke: var(--kit-checkbox-checked-color);
 }
 
-input + .kit-checkbox__icon >>> rect {
+input + .kit-checkbox__icon :deep(rect) {
   color: var(--kit-checkbox-fill-color);
   stroke: var(--kit-checkbox-border-color);
 }
 
-label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> rect {
+label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon :deep(rect) {
   fill: var(--kit-checkbox-hover-color);
 }
 
-label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon >>> path {
+label:hover input:not(:checked):not(:disabled) + .kit-checkbox__icon :deep(path) {
   fill: var(--kit-checkbox-hover-color);
 }
 
-label:hover input:checked:not(:disabled) + .kit-checkbox__icon >>> rect {
+label:hover input:checked:not(:disabled) + .kit-checkbox__icon :deep(rect) {
   color: var(--kit-checkbox-checked-hover-color);
   stroke: var(--kit-checkbox-checked-hover-color);
 }
 
-input + .kit-checkbox__icon >>> path {
+input + .kit-checkbox__icon :deep(path) {
   fill: var(--kit-checkbox-checked-tick-color);
 }
 
-input:not([is-invalid]):focus + .kit-checkbox__icon >>> rect {
+input:not([is-invalid]):focus + .kit-checkbox__icon :deep(rect) {
   stroke: var(--kit-checkbox-focus-color);
 }
 
-input[is-invalid] + .kit-checkbox__icon >>> rect {
+input[is-invalid] + .kit-checkbox__icon :deep(rect) {
   stroke: #ff5630;
 }
 
-input[disabled] + .kit-checkbox__icon >>> rect {
+input[disabled] + .kit-checkbox__icon :deep(rect) {
   stroke: var(--kit-checkbox-disabled-border-color);
   color: var(--kit-checkbox-disabled-color);
 }
 
-input[disabled] + .kit-checkbox__icon >>> path {
+input[disabled] + .kit-checkbox__icon :deep(path) {
   fill: var(--kit-checkbox-disabled-border-color);
 }
 
-input:checked[disabled] + .kit-checkbox__icon >>> path {
+input:checked[disabled] + .kit-checkbox__icon :deep(path) {
   fill: #a5adba;
 }
 
@@ -205,12 +177,12 @@ label[disabled] input {
   color: #97a0af;
 }
 
-:not(.kit-checkbox__indeterminate) >>> rect {
+:not(.kit-checkbox__indeterminate) :deep(rect) {
   transition: 0.2s ease-in-out;
   stroke-width: 2px;
 }
 
->>> path {
+:deep(path) {
   transition: 0.2s ease-in-out;
 }
 </style>

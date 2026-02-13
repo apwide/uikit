@@ -41,7 +41,7 @@
 import { ref } from 'vue'
 import KitSelect from '@components/Select/KitSelect.vue'
 import KitButton from '@components/Button/KitButton.vue'
-import SearchIcon from '@components/Icon/aui/SearchIcon'
+import SearchIcon from '@components/Icon/aui/SearchIcon.vue'
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { cities } from '../api-mocks/fake-data'
 import KitIcon from '../../src/components/Icon/KitIcon.vue'
@@ -60,7 +60,7 @@ const value = ref()
   border-top: 1px solid #f6f9fc;
 }
 
-.create >>> span {
+.create :deep(span) {
   justify-content: flex-start;
 }
 </style>

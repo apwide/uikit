@@ -3,19 +3,20 @@
     <div ref="target" class="target" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
       <slot />
     </div>
-    <TooltipContent
-      v-if="show"
-      ref="popper"
-      :target-element="target"
-      :boundaries-element="boundariesElement"
-      :placement="placement"
-      :offset="offset"
-      :label="label" />
+    <Teleport to="body" :disabled="!appendToBody">
+      <TooltipContent
+        v-if="show"
+        :target-element="target"
+        :boundaries-element="boundariesElement"
+        :placement="placement"
+        :offset="offset"
+        :label="label" />
+    </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { ref } from 'vue'
 import TooltipContent from './TooltipContent.vue'
 
 type Props = {
@@ -36,7 +37,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const target = ref<HTMLDivElement>()
-const popper = ref<InstanceType<TooltipContent>>()
 const show = ref(false)
 
 function onMouseEnter() {
@@ -44,28 +44,11 @@ function onMouseEnter() {
     return
   }
   show.value = true
-  if (props.appendToBody) {
-    nextTick(() => {
-      append()
-    })
-  }
 }
 
 function onMouseLeave() {
-  if (props.appendToBody) {
-    if (popper.value) {
-      document.body.removeChild(popper.value.$el)
-    }
-  }
   show.value = false
 }
-
-function append() {
-  if (popper.value) {
-    document.body.appendChild(popper.value.$el)
-  }
-}
-
 </script>
 
 <style scoped>

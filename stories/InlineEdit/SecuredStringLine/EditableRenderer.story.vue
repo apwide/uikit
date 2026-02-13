@@ -2,23 +2,23 @@
   <div style="max-width: 600px">
     <h5>Editable:</h5>
     <p>
-      <SecureSingleLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
+      <KitSecureStringLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <SecureSingleLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
+      <KitSecureStringLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
     </p>
     <h5>Limited width:</h5>
     <p class="limited-width">
-      <SecureSingleLineEditableRenderer :value="value" @save-requested="onSave" />
+      <KitSecureStringLineEditableRenderer :value="value" @save-requested="onSave" />
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <SecureSingleLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
+      <KitSecureStringLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
     </p>
     <h5>Without confirmation:</h5>
     <p>
-      <SecureSingleLineEditableRenderer
+      <KitSecureStringLineEditableRenderer
         :value="value"
         :confirm="false"
         align="end"
@@ -29,28 +29,21 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { faker } from '@faker-js/faker'
-import SecureSingleLineEditableRenderer from '../../../src/components/field-renderers/SecureStringLineEditableRenderer'
+import KitSecureStringLineEditableRenderer from '@components/field-renderers/KitSecureStringLineEditableRenderer.vue'
 
-export default {
-  components: { SecureSingleLineEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.value = value
-      callback()
-    },
+faker.seed(1)
+const value = ref(faker.lorem.sentence())
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+function onSave(newValue, callback) {
+  value.value = newValue
+  callback()
+}
+
+function onSaveError(newValue, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>
 

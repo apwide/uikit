@@ -2,13 +2,8 @@
   <AvatarNameLoader />
 </template>
 
-<script>
-import AvatarNameLoader from '@/components/ContentLoader/AvatarNameLoader'
-
-export default {
-  name: 'AvatarNameLoaderStory',
-  components: { AvatarNameLoader }
-}
+<script setup lang="ts">
+import AvatarNameLoader from '@/components/ContentLoader/AvatarNameLoader.vue'
 </script>
 
 <style scoped></style>

@@ -1,5 +1,5 @@
 <template>
-  <label :for="id" :disabled="disabled">
+  <label :for="id" :disabled="disabled || undefined">
     <input
       :id="id"
       :disabled="disabled"
@@ -9,7 +9,7 @@
       @change="toggle" />
     <div class="kit-toggle__slide" :size="size">
       <div class="kit-toggle__slide-inner">
-        <EditorDoneIcon v-if="value" data-cy="done" :size="iconSize" :primary-color="color" class="kit-toggle__done" />
+        <EditorDoneIcon v-if="modelValue" data-cy="done" :size="iconSize" :primary-color="color" class="kit-toggle__done" />
         <EditorCloseIcon v-else data-cy="cross" :size="iconSize" :primary-color="color" class="kit-toggle__close" />
       </div>
     </div>
@@ -18,12 +18,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import EditorDoneIcon from '../Icon/aui/EditorDoneIcon'
-import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
+import EditorDoneIcon from '../Icon/aui/EditorDoneIcon.vue'
+import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 import { uniqueId } from '@/utils/dom'
 
 type Props = {
-  value?: number | string | boolean
   disabled?: boolean
   size?: 'regular' | 'large' | 'small' | 'xsmall'
   appearance?: 'default' | 'primary'
@@ -34,11 +33,10 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'regular',
   appearance: 'default'
 })
-const emit = defineEmits<{
-  (event: 'input', isChecked: boolean)
-}>()
 
-const isChecked = computed(() => Boolean(props.value))
+const modelValue = defineModel<number | string | boolean>()
+
+const isChecked = computed(() => Boolean(modelValue.value))
 const iconSize = computed(() => (props.size === 'large' ? 'small' : 'xsmall'))
 const color = computed(() => (props.disabled ? 'rgb(165,173,183)' : 'white'))
 
@@ -46,7 +44,7 @@ const id = uniqueId()
 
 function toggle() {
   if (!props.disabled) {
-    emit('input', !props.value)
+    modelValue.value = !modelValue.value
   }
 }
 </script>

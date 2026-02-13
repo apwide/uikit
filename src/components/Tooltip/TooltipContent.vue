@@ -6,7 +6,7 @@
       :target-element="targetElement"
       :placement="placement"
       :offset="offset"
-      :with-delay="withDelay">
+      :with-delay="withDelay || undefined">
       <span class="label">
         {{ label }}
       </span>
@@ -61,7 +61,7 @@ withDefaults(defineProps<Props>(), {
   transition-delay: 0.5s;
 }
 
-.fade-enter,
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }

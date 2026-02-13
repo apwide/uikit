@@ -11,7 +11,6 @@
     :close-on-outside-click="closeOnOutsideClick"
     :width="modalWidth"
     v-bind="$attrs"
-    v-on="$listeners"
     no-padding>
     <template #header>
       <div class="kit-modal__header-pre-title">
@@ -22,7 +21,7 @@
             class="kit-modal__close"
             title="close"
             @click="
-              emit('cancel')
+              emit('cancel');
               emit('close')
             ">
             <KitIcon type="times" style="font-size: 1.2rem" />
@@ -114,7 +113,7 @@ onBeforeUnmount(() => {
   padding: 0 10px 0 20px;
 }
 
-.kit-modal >>> header {
+.kit-modal :deep(header) {
   display: block;
 }
 </style>

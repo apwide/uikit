@@ -17,7 +17,7 @@
           :placeholder="displayedFromPlaceholder"
           :disabled="isLoading"
           :readonly="disabledTyping"
-          v-on="listeners"
+          v-bind="forwardedAttrs"
           @keydown.enter="onEnter"
           @input="onInputFrom"
           @keyup.esc="onEsc"
@@ -33,7 +33,7 @@
         :placeholder="displayedToPlaceholder"
         :disabled="isLoading"
         :readonly="disabledTyping"
-        v-on="listeners"
+        v-bind="forwardedAttrs"
         @keydown.enter="onEnter"
         @input="onInputTo"
         @keyup.esc="onEsc"
@@ -86,19 +86,18 @@ import {
   subWeeks,
   subYears
 } from 'date-fns'
-import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, useAttrs, watch } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
-import Popup from '../common/Popup'
+import Popup from '../common/Popup.vue'
 import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
 import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'
-import KitIcon from '../Icon/KitIcon'
-import Calendar from './Calendar'
+import KitIcon from '../Icon/KitIcon.vue'
+import Calendar from './Calendar.vue'
 
 const MILISECONDS_IN_SECOND = 1000
 
 type Props = {
-  value?: DateRange
   isFocused?: boolean
   isLoading?: boolean
   isInvalid?: boolean
@@ -112,7 +111,6 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: () => ({ from: undefined, to: undefined }),
   isFocused: false,
   isLoading: false,
   isInvalid: false,
@@ -123,11 +121,12 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data: DateRange)
   (event: 'confirm', data: KeyboardEvent)
   (event: 'focus', data: FocusEvent)
   (event: 'blur', data: FocusEvent)
 }>()
+
+const modelValue = defineModel<DateRange>({ default: () => ({ from: undefined, to: undefined }) })
 
 const datePicker = ref<HTMLDivElement>()
 const inputFrom = ref<HTMLInputElement>()
@@ -139,17 +138,17 @@ const firstDateSelected = ref(false)
 const visibleDate = ref()
 
 const isValidFrom = computed(() => {
-  return props.value.from && isValid(props.value.from)
+  return modelValue.value.from && isValid(modelValue.value.from)
 })
 
 const isValidTo = computed(() => {
-  return props.value.to && isValid(props.value.to)
+  return modelValue.value.to && isValid(modelValue.value.to)
 })
 
 function input(range: DateRange) {
   const from = typeof range.from !== 'undefined' ? new Date(range.from).getTime() : undefined
   const to = typeof range.to !== 'undefined' ? new Date(range.to).getTime() : undefined
-  emit('input', { from, to })
+  modelValue.value = { from, to }
 }
 
 const selectedDateFrom = computed<Date | number | undefined>({
@@ -157,13 +156,13 @@ const selectedDateFrom = computed<Date | number | undefined>({
     if (!isValidFrom.value) {
       return undefined
     }
-    return fromUnixTime(props.value.from / MILISECONDS_IN_SECOND)
+    return fromUnixTime(modelValue.value.from / MILISECONDS_IN_SECOND)
   },
   set(date) {
-    if (props.value.to && isAfter(date, props.value.to)) {
-      input({ from: props.value.to, to: date })
+    if (modelValue.value.to && isAfter(date, modelValue.value.to)) {
+      input({ from: modelValue.value.to, to: date })
     } else {
-      input({ from: date, to: props.value.to })
+      input({ from: date, to: modelValue.value.to })
     }
   }
 })
@@ -173,13 +172,13 @@ const selectedDateTo = computed<Date | number | undefined>({
     if (!isValidTo.value) {
       return undefined
     }
-    return fromUnixTime(props.value.to / MILISECONDS_IN_SECOND)
+    return fromUnixTime(modelValue.value.to / MILISECONDS_IN_SECOND)
   },
   set(date) {
-    if (props.value.from && isBefore(date, props.value.from)) {
-      input({ from: date, to: props.value.from })
+    if (modelValue.value.from && isBefore(date, modelValue.value.from)) {
+      input({ from: date, to: modelValue.value.from })
     } else {
-      input({ from: props.value.from, to: date })
+      input({ from: modelValue.value.from, to: date })
     }
   }
 })
@@ -188,14 +187,14 @@ const formattedDateFrom = computed(() => {
   if (!isValidFrom.value) {
     return ''
   }
-  return format(props.value.from, props.dateFormat)
+  return format(modelValue.value.from, props.dateFormat)
 })
 
 const formattedDateTo = computed(() => {
   if (!isValidTo.value) {
     return ''
   }
-  return format(props.value.to, props.dateFormat)
+  return format(modelValue.value.to, props.dateFormat)
 })
 
 const dateRange = computed(() => {
@@ -205,11 +204,11 @@ const dateRange = computed(() => {
   }
 })
 
-const instance = getCurrentInstance()
-const listeners = computed(() => {
+const attrs = useAttrs()
+const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { focus, blur, input, ...listeners } = instance.proxy.$listeners
-  return listeners
+  const { onFocus, onBlur, onInput, ...rest } = attrs
+  return rest
 })
 
 const placeholderDate = computed(() => {

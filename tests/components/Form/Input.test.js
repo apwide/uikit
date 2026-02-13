@@ -6,7 +6,7 @@ describe('Input', () => {
     const component = shallowMount(KitInput, {
       attachTo: document.body
     })
-    component.findComponent('input').trigger('focus')
+    component.find('input').trigger('focus')
     expect(component.emitted('focus')).toBeTruthy()
   })
 
@@ -18,10 +18,10 @@ describe('Input', () => {
 
   it('emits input event on input', () => {
     const component = shallowMount(KitInput)
-    component.findComponent('input').element.value = 'Typed value'
-    component.findComponent('input').trigger('input')
+    component.find('input').element.value = 'Typed value'
+    component.find('input').trigger('input')
 
-    const [value] = component.emitted('input')
+    const [value] = component.emitted('update:modelValue')
 
     expect(value).toEqual(['Typed value'])
   })

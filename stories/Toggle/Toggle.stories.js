@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Toggle.story.vue';
-
-const sourceCode = require(`!!html-loader!./Toggle.story.vue`);
+import sourceCode from './Toggle.story.vue?raw';
 
 export default {
   title: 'Toggle',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

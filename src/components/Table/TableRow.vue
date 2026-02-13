@@ -6,7 +6,7 @@
     @dblclick="emit('dblclick', $event)"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave">
-    <TableRowCell v-for="column in columns" :key="column.id" :value="row[column.id]">
+    <TableRowCell v-for="column in columns" :key="column.id" :value="row[column.id]" :is-active-row="isActiveRow">
       <template #default="p">
         <slot :name="column.id" :row="row" :is-active-row="isActiveRow" v-bind="p">
           <span class="table-row-cell__value">

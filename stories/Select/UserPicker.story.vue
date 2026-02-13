@@ -15,7 +15,7 @@
 import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import { ref } from 'vue'
 import { createPersonsList } from '../api-mocks/people'
-import UserPicker from '@/components/Select/UserPicker'
+import UserPicker from '@/components/Select/UserPicker.vue'
 
 const list = createPersonsList({}, 50)
 const [initialOptions] = list

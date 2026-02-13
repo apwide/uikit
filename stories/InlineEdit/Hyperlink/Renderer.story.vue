@@ -1,22 +1,15 @@
 <template>
   <div>
     <p>
-      <HyperlinkRenderer :link="link" />
+      <KitHyperlinkRenderer :link="link" />
     </p>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import HyperlinkRenderer from '@/components/field-renderers/HyperlinkRenderer'
+import KitHyperlinkRenderer from '@/components/field-renderers/KitHyperlinkRenderer.vue'
 
-export default {
-  components: { HyperlinkRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      link: 'https://www.spartez.com'
-    }
-  }
-}
+faker.seed(1)
+const link = 'https://www.spartez.com'
 </script>

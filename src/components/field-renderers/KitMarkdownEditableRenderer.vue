@@ -18,12 +18,12 @@
             <KitMarkdownEditor
               auto-focus
               :placeholder="placeholder"
-              :value="editProps.value"
+              :model-value="editProps.value"
               :size-limit="sizeLimit"
               :toolbar="toolbar"
               :min-height="minHeight"
               @ctrl-enter="onCtrlEnter(editProps.confirm)"
-              @input="onInput(editProps.input, $event)"
+              @update:model-value="onInput(editProps.input, $event)"
               @focus="editProps.focus"
               @blur="onBlur(editProps.blur, $event)" />
           </div>
@@ -32,14 +32,14 @@
       <template #default>
         <span ref="placeholderRef" @click="contentClicked">
           <slot>
-            <KitMarkdownEditor :value="value" readonly />
+            <KitMarkdownEditor :model-value="value" readonly />
           </slot>
         </span>
       </template>
     </KitInlineEdit>
     <template v-else>
       <slot>
-        <KitMarkdownEditor :value="value" readonly />
+        <KitMarkdownEditor :model-value="value" readonly />
       </slot>
     </template>
   </div>
@@ -182,10 +182,14 @@ const intersectionObserver = new IntersectionObserver(
   }
 )
 
+let isUnmounted = false
+
 async function positionEditor() {
   if (!markdownEditorRef.value) {
     await nextTick()
-    positionEditor()
+    if (!isUnmounted) {
+      positionEditor()
+    }
   } else {
     if (markdownEditorRef.value.parentElement !== document.body) {
       document.body.appendChild(markdownEditorRef.value)
@@ -312,6 +316,7 @@ function onSaveRequested(value: string, callback) {
 }
 
 onBeforeUnmount(() => {
+  isUnmounted = true
   if (markdownEditorRef.value) {
     markdownEditorRef.value.remove()
   }
@@ -324,7 +329,7 @@ onBeforeUnmount(() => {
   position: relative;
   padding: 10px 0;
 }
-.kit-markdown-editable-renderer[data-disabled-ok='true'] >>> .kit-buttons-wrapper__ok {
+.kit-markdown-editable-renderer[data-disabled-ok='true'] :deep(.kit-buttons-wrapper__ok) {
   visibility: hidden;
 }
 .kit-markdown-editable-renderer__editor-container {

@@ -7,8 +7,8 @@
         v-for="option in options"
         style="margin-left: 0px"
         appearance="subtle"
-        :data-highlight="isHighlighted(option)"
-        @mousemove.native="mouseOver"
+        :data-highlight="isHighlighted(option) || undefined"
+        @mousemove="mouseOver"
         @click="onTimeSelected(option)">
         {{ option }}
       </KitButton>
@@ -176,10 +176,10 @@ function onTimeSelected(value) {
   border-color: var(--kit-time-picker-selected-color);
 }
 
-.kit-time-picker-menu >>> button[appearance='subtle']:not([disabled]):not([selected]):not([data-highlight]):hover {
+.kit-time-picker-menu :deep(button[appearance='subtle']:not([disabled]):not([selected]):not([data-highlight]):hover) {
   background-color: unset;
 }
-.kit-time-picker-menu >>> button[data-highlight] {
+.kit-time-picker-menu :deep(button[data-highlight]) {
   background-color: var(--kit-time-picker-selected-color);
   border-color: var(--kit-time-picker-selected-color);
 }

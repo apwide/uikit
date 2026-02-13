@@ -1,5 +1,5 @@
 <template>
-  <th :sortable="column.sortable" :style="style" class="kit-table-header-cell" @click="onClick">
+  <th :sortable="column.sortable || undefined" :style="style" class="kit-table-header-cell" @click="onClick">
     <span class="kit-table-header-cell__label-wrapper">
       <slot v-if="slots.header" name="header" :column="column" />
       <span v-else>
@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { Column } from '@components/Table/types'
 import { computed, useSlots } from 'vue'
-import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
-import ChevronUpIcon from '../Icon/aui/ChevronUpIcon'
+import ChevronDownIcon from '../Icon/aui/ChevronDownIcon.vue'
+import ChevronUpIcon from '../Icon/aui/ChevronUpIcon.vue'
 
 type Props = {
   column: Column

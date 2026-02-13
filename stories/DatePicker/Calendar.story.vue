@@ -34,48 +34,34 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, watch } from 'vue'
 import { addDays, subDays } from 'date-fns'
 import { format, toZonedTime } from 'date-fns-tz'
-import Calendar from '@/components/Calendar/Calendar'
+import Calendar from '@/components/Calendar/Calendar.vue'
 
-export default {
-  name: 'CalendarStory',
-  components: { Calendar },
-  data() {
-    return {
-      date: new Date(),
-      dates: [new Date(), addDays(new Date(), 3)],
-      noFutureRange: {
-        from: addDays(new Date(), 1)
-      },
-      noPastRange: {
-        to: subDays(new Date(), 1)
-      },
-      dateRange: {
-        from: addDays(new Date(), 7),
-        to: addDays(new Date(), 21)
-      }
-    }
-  },
-  watch: {
-    date() {
-      console.log(this.date)
-    }
-  },
-  methods: {
-    onDateRangeSelected(value) {
-      this.dateRange = value
-    },
+const date = ref(new Date())
+const noFutureRange = {
+  from: addDays(new Date(), 1)
+}
+const noPastRange = {
+  to: subDays(new Date(), 1)
+}
+const dateRange = ref({
+  from: addDays(new Date(), 7),
+  to: addDays(new Date(), 21)
+})
 
-    onDateSelected(value) {
-      this.date = value
-    },
+watch(date, () => {
+  console.log(date.value)
+})
 
-    formatDate(date, timeZone) {
-      return date && format(toZonedTime(date, timeZone), 'yyyy-MM-dd HH:mm')
-    }
-  }
+function onDateSelected(value) {
+  date.value = value
+}
+
+function formatDate(dateToFormat, timeZone) {
+  return dateToFormat && format(toZonedTime(dateToFormat, timeZone), 'yyyy-MM-dd HH:mm')
 }
 </script>
 
