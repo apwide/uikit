@@ -60,7 +60,7 @@
     "babel-loader": "^10.1.1",
     "babel-preset-typescript-vue": "1.1.1",
     "babel-preset-vue": "2.0.2",
-    "concurrently": "9.2.1",
+    "concurrently": "^10.0.4",
     "core-js": "^3.49.0",
     "css-loader": "^7.1.4",
     "cypress": "^15.19.0",
