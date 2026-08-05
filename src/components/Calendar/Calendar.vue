@@ -103,7 +103,7 @@ const daysOfMonth = computed(() => {
 })
 const yearsOfDecade = computed(() => {
   const start = startOfDecade(currentDate.value).getFullYear()
-  const end = endOfDecade(currentDate).getFullYear()
+  const end = endOfDecade(currentDate.value).getFullYear()
   return Array(end - start + 1)
     .fill()
     .map((_, idx) => start + idx)

@@ -1,17 +1,17 @@
 # @apwide/uikit - Testing & Migration Status
 **Last Updated**: 2026-08-05
-**Current Phase**: Phase 1 - Test Coverage Expansion (58% Complete)
+**Current Phase**: Phase 1 - Test Coverage Expansion (63% Complete)
 
 ---
 
 ## 📊 Current Test Coverage Status
 
 ### Test Statistics
-- **Total Passing Tests**: 703 ✅ (10 skipped, pre-existing InlineEdit `xdescribe`)
-- **Test Files**: 81
+- **Total Passing Tests**: 763 ✅ (10 skipped, pre-existing InlineEdit `xdescribe`)
+- **Test Files**: 89
 - **E2E Test Files**: 20
-- **Components Tested**: 87+ out of 149
-- **Coverage**: 58%+ (Target: 80% before Vue 3 migration)
+- **Components Tested**: 95+ out of 149
+- **Coverage**: 63%+ (Target: 80% before Vue 3 migration)
 - **Test Success Rate**: 100%
 
 ### Progress Over Time
@@ -20,7 +20,8 @@
 - **After Session 2**: 467 tests, 45 files, 33% coverage
 - **After Session 3**: 513 tests, 47 files, 35% coverage
 - **After Session 4**: 675 tests, 76 files, 55% coverage — Field Renderers wave complete
-- **Current (Session 5)**: 703 tests, 81 files, 58% coverage — Form Components wave complete
+- **After Session 5**: 703 tests, 81 files, 58% coverage — Form Components wave complete
+- **Current (Session 6)**: 763 tests, 89 files, 63% coverage — Calendar system wave complete
 
 ---
 
@@ -104,20 +105,18 @@ Editable renderers (12): StringLineEditableRenderer, CheckboxEditableRenderer, N
 
 KitTextField, KitSecuredInput, InlineEditButtons, InlineErrorMessage, GeneralError (plain TS error class). `KitInput`, `KitTextArea`, `KitFieldGroup`, `KitInlineEdit`, `InlineEditViewContent` already had tests from earlier sessions — the Form directory is now fully covered.
 
+### Wave 8 - Calendar System (8)
+**Location**: `src/components/Calendar/` — `tests/components/Calendar/`
+
+Calendar (orchestrator), CalendarHeader, Day, Weeks, Months, Years, TimePickerMenu, KitDateRangePicker. `KitDatePicker` and `KitTimePicker` already had tests — the Calendar directory is now fully covered.
+
+**Bugs found and fixed while testing**: `Calendar.vue`'s `yearsOfDecade` computed called `endOfDecade(currentDate)` (the ref itself) instead of `endOfDecade(currentDate.value)`, producing `NaN` and crashing with `RangeError: Invalid array length` every time a user switched to the year-picker view.
+
+**jsdom caveat**: `TimePickerMenu.vue` relies on `element.innerText`, which jsdom doesn't implement (it requires layout). The test file polyfills it locally via `HTMLElement.prototype.innerText` for the highlight-matching tests.
+
 ---
 
 ## 🚧 Components Needing Tests (Priority Order)
-
-### MEDIUM PRIORITY - Calendar System (~7 components)
-**Location**: `src/components/Calendar/`
-- [ ] Calendar.vue
-- [ ] CalendarHeader.vue
-- [ ] Day.vue
-- [ ] Months.vue
-- [ ] Weeks.vue
-- [ ] Years.vue
-- [ ] TimePickerMenu.vue
-- [ ] KitDateRangePicker.vue
 
 ### MEDIUM PRIORITY - Select Variations (~3 components)
 **Location**: `src/components/Select/`
@@ -220,21 +219,16 @@ describe('ComponentName', () => {
 ## 🎯 Next Steps (Recommended Order)
 
 ### Immediate Next Session
-1. **Calendar System** (7-8 components)
-   - Complete the calendar component family
-   - CalendarHeader, Day, Months, Weeks, Years
-   - Estimated: 4-5 hours
-
-2. **Select Variations** (~5 components)
+1. **Select Variations** (~5 components)
    - UserPicker, KitSelectMenu, TreeSelect family
    - Estimated: 4-5 hours
 
-3. **Utility Components** (10 components)
+2. **Utility Components** (10 components)
    - InfiniteScroll, Popup, Popper
    - Supporting components
    - Estimated: 4-5 hours
 
-4. **Content Loaders** (~7 components)
+3. **Content Loaders** (~7 components)
    - Estimated: 2-3 hours
 
 ### After 80% Coverage
@@ -255,7 +249,7 @@ describe('ComponentName', () => {
 - `CURRENT_STATUS.md` - This file (current state snapshot)
 
 ### Test Directories
-- `tests/components/` - Unit tests (81 files)
+- `tests/components/` - Unit tests (89 files)
 - `cypress/integration/` - E2E tests (20 files)
 - `stories/` - Storybook stories (used by E2E tests)
 
@@ -301,25 +295,26 @@ npm run lint-fix
 ## 📊 Success Metrics
 
 ### Current Achievements ✅
-- ✅ 703 passing tests (from 67) - **+949% increase**
-- ✅ 81 test files (from 11) - **+636% increase**
-- ✅ 58% coverage (from 14%) - **+314% increase**
+- ✅ 763 passing tests (from 67) - **+1039% increase**
+- ✅ 89 test files (from 11) - **+709% increase**
+- ✅ 63% coverage (from 14%) - **+350% increase**
 - ✅ 100% test success rate
 - ✅ All critical components tested
 - ✅ Field Renderers wave complete (29/30, MarkdownEditableRenderer skipped)
 - ✅ Form Components wave complete (5/5 remaining, whole Form/ directory now covered)
-- ✅ 2 production bugs found & fixed via testing (IssueRenderer, IssueStatusRenderer crashed on every render)
+- ✅ Calendar System wave complete (8/8 remaining, whole Calendar/ directory now covered)
+- ✅ 3 production bugs found & fixed via testing (IssueRenderer, IssueStatusRenderer, Calendar.vue's yearsOfDecade)
 - ✅ Migration plan documented
 - ✅ Testing patterns established
 
 ### Phase 1 Goals 🎯
 - Target: 80% coverage (120/149 components)
-- Current: 73% complete (87/120 components)
-- Remaining: 33 components (~13-15 hours)
+- Current: 79% complete (95/120 components)
+- Remaining: 25 components (~10-12 hours)
 
 ### Migration Readiness 🚀
 - **Phase 0**: ✅ Complete - Planning done
-- **Phase 1**: 🔄 73% - Test coverage expansion
+- **Phase 1**: 🔄 79% - Test coverage expansion
 - **Phase 2**: ⏳ Pending - Compatibility layer
 - **Phase 3**: ⏳ Pending - Component migration
 - **Phase 4**: ⏳ Pending - Integration testing
