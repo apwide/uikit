@@ -1,17 +1,17 @@
 # @apwide/uikit - Testing & Migration Status
 **Last Updated**: 2026-08-05
-**Current Phase**: Phase 1 - Test Coverage Expansion (55% Complete)
+**Current Phase**: Phase 1 - Test Coverage Expansion (58% Complete)
 
 ---
 
 ## 📊 Current Test Coverage Status
 
 ### Test Statistics
-- **Total Passing Tests**: 675 ✅ (10 skipped, pre-existing InlineEdit `xdescribe`)
-- **Test Files**: 76
+- **Total Passing Tests**: 703 ✅ (10 skipped, pre-existing InlineEdit `xdescribe`)
+- **Test Files**: 81
 - **E2E Test Files**: 20
-- **Components Tested**: 82+ out of 149
-- **Coverage**: 55%+ (Target: 80% before Vue 3 migration)
+- **Components Tested**: 87+ out of 149
+- **Coverage**: 58%+ (Target: 80% before Vue 3 migration)
 - **Test Success Rate**: 100%
 
 ### Progress Over Time
@@ -19,7 +19,8 @@
 - **After Session 1**: 294 tests, 33 files, 27% coverage
 - **After Session 2**: 467 tests, 45 files, 33% coverage
 - **After Session 3**: 513 tests, 47 files, 35% coverage
-- **Current (Session 4)**: 675 tests, 76 files, 55% coverage — Field Renderers wave complete
+- **After Session 4**: 675 tests, 76 files, 55% coverage — Field Renderers wave complete
+- **Current (Session 5)**: 703 tests, 81 files, 58% coverage — Form Components wave complete
 
 ---
 
@@ -98,6 +99,11 @@ Editable renderers (12): StringLineEditableRenderer, CheckboxEditableRenderer, N
 
 **Skipped**: `KitMarkdownEditableRenderer.vue` — same reason as MarkdownEditor below (EasyMDE + ResizeObserver/IntersectionObserver, not worth mocking for unit tests).
 
+### Wave 7 - Form Components (5)
+**Location**: `src/components/Form/` — `tests/components/Form/`
+
+KitTextField, KitSecuredInput, InlineEditButtons, InlineErrorMessage, GeneralError (plain TS error class). `KitInput`, `KitTextArea`, `KitFieldGroup`, `KitInlineEdit`, `InlineEditViewContent` already had tests from earlier sessions — the Form directory is now fully covered.
+
 ---
 
 ## 🚧 Components Needing Tests (Priority Order)
@@ -112,18 +118,6 @@ Editable renderers (12): StringLineEditableRenderer, CheckboxEditableRenderer, N
 - [ ] Years.vue
 - [ ] TimePickerMenu.vue
 - [ ] KitDateRangePicker.vue
-
-### MEDIUM PRIORITY - Form Components (~5 components)
-**Location**: `src/components/Form/`
-- [ ] KitFieldGroup.vue (may have tests)
-- [ ] KitInput.vue (may have tests)
-- [ ] KitTextArea.vue (may have tests)
-- [ ] KitTextField.vue
-- [ ] KitSecuredInput.vue
-- [ ] InlineEditButtons.vue
-- [ ] InlineEditViewContent.vue (may have tests)
-- [ ] InlineErrorMessage.vue
-- [ ] GeneralError.ts
 
 ### MEDIUM PRIORITY - Select Variations (~3 components)
 **Location**: `src/components/Select/`
@@ -226,27 +220,21 @@ describe('ComponentName', () => {
 ## 🎯 Next Steps (Recommended Order)
 
 ### Immediate Next Session
-1. **Form Components** (5-8 components)
-   - KitTextField (used everywhere)
-   - KitSecuredInput
-   - Form validation components
-   - Estimated: 3-4 hours
-
-2. **Calendar System** (7-8 components)
+1. **Calendar System** (7-8 components)
    - Complete the calendar component family
    - CalendarHeader, Day, Months, Weeks, Years
    - Estimated: 4-5 hours
 
-3. **Select Variations** (~5 components)
+2. **Select Variations** (~5 components)
    - UserPicker, KitSelectMenu, TreeSelect family
    - Estimated: 4-5 hours
 
-4. **Utility Components** (10 components)
+3. **Utility Components** (10 components)
    - InfiniteScroll, Popup, Popper
    - Supporting components
    - Estimated: 4-5 hours
 
-5. **Content Loaders** (~7 components)
+4. **Content Loaders** (~7 components)
    - Estimated: 2-3 hours
 
 ### After 80% Coverage
@@ -267,7 +255,7 @@ describe('ComponentName', () => {
 - `CURRENT_STATUS.md` - This file (current state snapshot)
 
 ### Test Directories
-- `tests/components/` - Unit tests (76 files)
+- `tests/components/` - Unit tests (81 files)
 - `cypress/integration/` - E2E tests (20 files)
 - `stories/` - Storybook stories (used by E2E tests)
 
@@ -313,24 +301,25 @@ npm run lint-fix
 ## 📊 Success Metrics
 
 ### Current Achievements ✅
-- ✅ 675 passing tests (from 67) - **+907% increase**
-- ✅ 76 test files (from 11) - **+591% increase**
-- ✅ 55% coverage (from 14%) - **+293% increase**
+- ✅ 703 passing tests (from 67) - **+949% increase**
+- ✅ 81 test files (from 11) - **+636% increase**
+- ✅ 58% coverage (from 14%) - **+314% increase**
 - ✅ 100% test success rate
 - ✅ All critical components tested
 - ✅ Field Renderers wave complete (29/30, MarkdownEditableRenderer skipped)
+- ✅ Form Components wave complete (5/5 remaining, whole Form/ directory now covered)
 - ✅ 2 production bugs found & fixed via testing (IssueRenderer, IssueStatusRenderer crashed on every render)
 - ✅ Migration plan documented
 - ✅ Testing patterns established
 
 ### Phase 1 Goals 🎯
 - Target: 80% coverage (120/149 components)
-- Current: 68% complete (82/120 components)
-- Remaining: 38 components (~15-18 hours)
+- Current: 73% complete (87/120 components)
+- Remaining: 33 components (~13-15 hours)
 
 ### Migration Readiness 🚀
 - **Phase 0**: ✅ Complete - Planning done
-- **Phase 1**: 🔄 68% - Test coverage expansion
+- **Phase 1**: 🔄 73% - Test coverage expansion
 - **Phase 2**: ⏳ Pending - Compatibility layer
 - **Phase 3**: ⏳ Pending - Component migration
 - **Phase 4**: ⏳ Pending - Integration testing
