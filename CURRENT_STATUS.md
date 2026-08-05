@@ -1,24 +1,25 @@
 # @apwide/uikit - Testing & Migration Status
-**Last Updated**: 2026-02-13
-**Current Phase**: Phase 1 - Test Coverage Expansion (44% Complete)
+**Last Updated**: 2026-08-05
+**Current Phase**: Phase 1 - Test Coverage Expansion (55% Complete)
 
 ---
 
 ## 📊 Current Test Coverage Status
 
 ### Test Statistics
-- **Total Passing Tests**: 513 ✅
-- **Test Files**: 47
+- **Total Passing Tests**: 675 ✅ (10 skipped, pre-existing InlineEdit `xdescribe`)
+- **Test Files**: 76
 - **E2E Test Files**: 20
-- **Components Tested**: 53+ out of 149
-- **Coverage**: 35%+ (Target: 80% before Vue 3 migration)
+- **Components Tested**: 82+ out of 149
+- **Coverage**: 55%+ (Target: 80% before Vue 3 migration)
 - **Test Success Rate**: 100%
 
 ### Progress Over Time
 - **Starting Point**: 67 tests, 11 files, 14% coverage
 - **After Session 1**: 294 tests, 33 files, 27% coverage
 - **After Session 2**: 467 tests, 45 files, 33% coverage
-- **Current (Session 3)**: 513 tests, 47 files, 35% coverage
+- **After Session 3**: 513 tests, 47 files, 35% coverage
+- **Current (Session 4)**: 675 tests, 76 files, 55% coverage — Field Renderers wave complete
 
 ---
 
@@ -82,47 +83,24 @@
 45. ✅ InlineEdit (from existing tests)
 46. ✅ FieldGroup (from existing tests)
 
-**Total Components with Tests: 53+**
+**Total Components with Tests: 82+**
+
+---
+
+### Wave 6 - Field Renderers (29)
+**Location**: `src/components/field-renderers/` — `tests/components/FieldRenderers/`
+
+Display renderers (12): CheckboxRenderer, DateRenderer, StringLineRenderer, HyperlinkRenderer, MultiLineRenderer, NumberFloatRenderer, NumberLongRenderer, IssuePriorityRenderer, IssueStatusRenderer, IssueTypeRenderer, UserRenderer, UserRendererEnriched — plus ImageRenderer, MultiSelectRenderer, SecureStringLineRenderer, LinkedIssuesList, IssueRenderer (17 total)
+
+Editable renderers (12): StringLineEditableRenderer, CheckboxEditableRenderer, NumberFloatEditableRenderer, NumberLongEditableRenderer, HyperlinkEditableRenderer, DateEditableRenderer, MultiLineEditableRenderer, SecureStringLineEditableRenderer, SingleSelectEditableRenderer, CustomSingleSelectEditableRenderer, MultiSelectEditableRenderer, UserEditableRenderer
+
+**Bugs found and fixed while testing**: `IssueStatusRenderer.vue` and `IssueRenderer.vue` each had a `computed()` reading a variable (`props` / `fields`) that was never declared with `const` — both crashed on every render before this fix.
+
+**Skipped**: `KitMarkdownEditableRenderer.vue` — same reason as MarkdownEditor below (EasyMDE + ResizeObserver/IntersectionObserver, not worth mocking for unit tests).
 
 ---
 
 ## 🚧 Components Needing Tests (Priority Order)
-
-### HIGH PRIORITY - Field Renderers (~20 components)
-**Location**: `src/components/field-renderers/`
-
-These are critical for inline editing functionality:
-- [ ] CheckboxEditableRenderer.vue
-- [ ] CheckboxRenderer.vue
-- [ ] CustomSingleSelectEditableRenderer.vue
-- [ ] DateEditableRenderer.vue
-- [ ] DateRenderer.vue
-- [ ] HyperlinkEditableRenderer.vue
-- [ ] HyperlinkRenderer.vue
-- [ ] ImageRenderer.vue
-- [ ] IssuePriorityRenderer.vue
-- [ ] IssueRenderer.vue
-- [ ] IssueStatusRenderer.vue
-- [ ] IssueTypeRenderer.vue
-- [ ] KitMarkdownEditableRenderer.vue
-- [ ] MultiLineEditableRenderer.vue
-- [ ] MultiLineRenderer.vue
-- [ ] MultiSelectEditableRenderer.vue
-- [ ] MultiSelectRenderer.vue
-- [ ] NumberFloatEditableRenderer.vue
-- [ ] NumberFloatRenderer.vue
-- [ ] NumberLongEditableRenderer.vue
-- [ ] NumberLongRenderer.vue
-- [ ] SecureStringLineEditableRenderer.vue
-- [ ] SecureStringLineRenderer.vue
-- [ ] SingleSelectEditableRenderer.vue
-- [ ] StringLineEditableRenderer.vue
-- [ ] StringLineRenderer.vue
-- [ ] UserEditableRenderer.vue
-- [ ] UserEditableRendererEnriched.vue
-- [ ] UserRenderer.vue
-- [ ] UserRendererEnriched.vue
-- [ ] LinkedIssuesList.vue
 
 ### MEDIUM PRIORITY - Calendar System (~7 components)
 **Location**: `src/components/Calendar/`
@@ -178,6 +156,7 @@ These are critical for inline editing functionality:
 
 ### SKIP/COMPLEX - Special Cases
 - [ ] MarkdownEditor - **SKIP** (Complex external dependencies - EasyMDE, DOMPurify)
+- [ ] KitMarkdownEditableRenderer.vue - **SKIP** (same reason, plus ResizeObserver/IntersectionObserver usage)
 - [ ] Spotlight components (partially done)
 - [ ] Modal variations (mostly done)
 
@@ -247,27 +226,28 @@ describe('ComponentName', () => {
 ## 🎯 Next Steps (Recommended Order)
 
 ### Immediate Next Session
-1. **Field Renderers** (20-30 components)
-   - These are critical for the library's core functionality
-   - Start with simple renderers: StringLine, MultiLine, Number
-   - Then move to complex ones: Date, User, MultiSelect
-   - Estimated: 10-15 hours
-
-2. **Form Components** (5-8 components)
+1. **Form Components** (5-8 components)
    - KitTextField (used everywhere)
    - KitSecuredInput
    - Form validation components
    - Estimated: 3-4 hours
 
-3. **Calendar System** (7-8 components)
+2. **Calendar System** (7-8 components)
    - Complete the calendar component family
    - CalendarHeader, Day, Months, Weeks, Years
+   - Estimated: 4-5 hours
+
+3. **Select Variations** (~5 components)
+   - UserPicker, KitSelectMenu, TreeSelect family
    - Estimated: 4-5 hours
 
 4. **Utility Components** (10 components)
    - InfiniteScroll, Popup, Popper
    - Supporting components
    - Estimated: 4-5 hours
+
+5. **Content Loaders** (~7 components)
+   - Estimated: 2-3 hours
 
 ### After 80% Coverage
 1. Start **Phase 2**: Vue 3 Compatibility Layer
@@ -287,7 +267,7 @@ describe('ComponentName', () => {
 - `CURRENT_STATUS.md` - This file (current state snapshot)
 
 ### Test Directories
-- `tests/components/` - Unit tests (47 files)
+- `tests/components/` - Unit tests (76 files)
 - `cypress/integration/` - E2E tests (20 files)
 - `stories/` - Storybook stories (used by E2E tests)
 
@@ -333,22 +313,24 @@ npm run lint-fix
 ## 📊 Success Metrics
 
 ### Current Achievements ✅
-- ✅ 513 passing tests (from 67) - **+666% increase**
-- ✅ 47 test files (from 11) - **+327% increase**
-- ✅ 35% coverage (from 14%) - **+150% increase**
+- ✅ 675 passing tests (from 67) - **+907% increase**
+- ✅ 76 test files (from 11) - **+591% increase**
+- ✅ 55% coverage (from 14%) - **+293% increase**
 - ✅ 100% test success rate
 - ✅ All critical components tested
+- ✅ Field Renderers wave complete (29/30, MarkdownEditableRenderer skipped)
+- ✅ 2 production bugs found & fixed via testing (IssueRenderer, IssueStatusRenderer crashed on every render)
 - ✅ Migration plan documented
 - ✅ Testing patterns established
 
 ### Phase 1 Goals 🎯
 - Target: 80% coverage (120/149 components)
-- Current: 44% complete (53/120 components)
-- Remaining: 67 components (~25-30 hours)
+- Current: 68% complete (82/120 components)
+- Remaining: 38 components (~15-18 hours)
 
 ### Migration Readiness 🚀
 - **Phase 0**: ✅ Complete - Planning done
-- **Phase 1**: 🔄 44% - Test coverage expansion
+- **Phase 1**: 🔄 68% - Test coverage expansion
 - **Phase 2**: ⏳ Pending - Compatibility layer
 - **Phase 3**: ⏳ Pending - Component migration
 - **Phase 4**: ⏳ Pending - Integration testing

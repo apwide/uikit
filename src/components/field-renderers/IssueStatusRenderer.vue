@@ -13,7 +13,7 @@ type Props = {
   value?: IssueStatus
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const statusName = computed(() => props.value?.name)
 const statusColor = computed(() => props.value?.statusCategory?.colorName)

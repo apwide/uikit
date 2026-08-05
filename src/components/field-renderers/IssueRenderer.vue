@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   appearance: 'normal'
 })
 
-fields = computed(() => {
+const fields = computed(() => {
   return props.issue.fields || {}
 })
 const issueType = computed(() => {
