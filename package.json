@@ -1,6 +1,6 @@
 {
   "name": "@apwide/uikit",
-  "version": "6.7.0",
+  "version": "6.8.0",
   "description": "Apwide ui components",
   "main": "dist/uikit.js",
   "publishConfig": {
