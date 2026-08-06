@@ -13,19 +13,12 @@
   </div>
 </template>
 
-<script>
-import KitDateRangePicker from '@components/Calendar/KitDateRangePicker.vue'
+<script setup lang="ts">
+import { ref } from 'vue'
+import DateRangePicker from '@components/Calendar/KitDateRangePicker.vue'
 
-export default {
-  name: 'DateRangePickerStory',
-  components: { DateRangePicker: KitDateRangePicker },
-  data() {
-    return {
-      range: {
-        from: undefined,
-        to: undefined
-      }
-    }
-  }
-}
+const range = ref({
+  from: undefined,
+  to: undefined
+})
 </script>

@@ -29,28 +29,21 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { faker } from '@faker-js/faker'
 import KitMultiLineEditableRenderer from '@/components/field-renderers/KitMultiLineEditableRenderer.vue'
 
-export default {
-  components: { KitMultiLineEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.value = value
-      callback()
-    },
+faker.seed(1)
+const value = ref(faker.lorem.sentence())
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+function onSave(newValue, callback) {
+  value.value = newValue
+  callback()
+}
+
+function onSaveError(newValue, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>
 

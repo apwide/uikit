@@ -31,40 +31,25 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import GeneralError from '@components/Form/GeneralError'
-import KitStringLineEditableRenderer from '../../src/components/field-renderers/KitStringLineEditableRenderer'
-import KitSecureStringLineEditableRenderer from '../../src/components/field-renderers/KitSecureStringLineEditableRenderer'
-import KitMultiLineEditableRenderer from '../../src/components/field-renderers/KitMultiLineEditableRenderer'
+import KitStringLineEditableRenderer from '@components/field-renderers/KitStringLineEditableRenderer.vue'
+import KitSecureStringLineEditableRenderer from '@components/field-renderers/KitSecureStringLineEditableRenderer.vue'
+import KitMultiLineEditableRenderer from '@components/field-renderers/KitMultiLineEditableRenderer.vue'
 
-export default {
-  components: {
-    KitMultiLineEditableRenderer,
-    KitSecureStringLineEditableRenderer,
-    KitStringLineEditableRenderer
-  },
-  data() {
-    return {
-      value: 'This is the default text, try to edit me.'
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.value = value
-      callback()
-    },
+const value = ref('This is the default text, try to edit me.')
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    },
-    onGeneralError(value, callback) {
-      const error = new GeneralError(
-        'General Error',
-        'Something went wrong, your request was refused by the big boss of the database. ' +
-          'The issue is unrelated to the current edition, make sure to check you entries.'
-      )
-      callback(error)
-    }
-  }
+function onSaveError(newValue, callback) {
+  callback(new Error('Something went wrong'))
+}
+
+function onGeneralError(newValue, callback) {
+  const error = new GeneralError(
+    'General Error',
+    'Something went wrong, your request was refused by the big boss of the database. ' +
+      'The issue is unrelated to the current edition, make sure to check you entries.'
+  )
+  callback(error)
 }
 </script>

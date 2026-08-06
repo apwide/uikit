@@ -11,16 +11,9 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { createPerson } from '../../api-mocks/people'
 import KitUserRenderer from '@/components/field-renderers/KitUserRenderer.vue'
 
-export default {
-  components: { KitUserRenderer },
-  data() {
-    return {
-      user: createPerson()
-    }
-  }
-}
+const user = createPerson()
 </script>

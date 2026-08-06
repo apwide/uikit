@@ -23,18 +23,11 @@
   </div>
 </template>
 
-<script>
-import KitTimePicker from '@components/Calendar/KitTimePicker.vue'
+<script setup lang="ts">
+import { ref } from 'vue'
+import TimePicker from '@components/Calendar/KitTimePicker.vue'
 
-export default {
-  name: 'TimePickerStory',
-  components: { TimePicker: KitTimePicker },
-  data() {
-    return {
-      date: ''
-    }
-  }
-}
+const date = ref('')
 </script>
 
 <style scoped>

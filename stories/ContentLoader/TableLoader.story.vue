@@ -11,46 +11,38 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { faker } from '@faker-js/faker'
-import TableLoader from '../../src/components/ContentLoader/TableLoader'
-import Table from '@/components/Table/KitTable'
+import TableLoader from '@/components/ContentLoader/TableLoader.vue'
+import Table from '@/components/Table/KitTable.vue'
 
-export default {
-  name: 'TableLoaderStory',
-  components: { TableLoader, Table },
-  data() {
-    return {
-      isLoading: true,
-      columns: [
-        {
-          id: 'id',
-          name: 'ID',
-          width: 70
-        },
-        {
-          id: 'name',
-          name: 'Name'
-        },
-        {
-          id: 'job',
-          name: 'Job'
-        }
-      ],
-      rows: Array.from({ length: 10 }).map((_, index) => ({
-        id: index,
-        name: faker.person.firstName(),
-        job: faker.person.jobTitle()
-      }))
-    }
+const isLoading = ref(true)
+const columns = [
+  {
+    id: 'id',
+    name: 'ID',
+    width: 70
   },
-  methods: {
-    resolve() {
-      this.isLoading = false
-    },
-    load() {
-      this.isLoading = true
-    }
+  {
+    id: 'name',
+    name: 'Name'
+  },
+  {
+    id: 'job',
+    name: 'Job'
   }
+]
+const rows = Array.from({ length: 10 }).map((_, index) => ({
+  id: index,
+  name: faker.person.firstName(),
+  job: faker.person.jobTitle()
+}))
+
+function resolve() {
+  isLoading.value = false
+}
+function load() {
+  isLoading.value = true
 }
 </script>

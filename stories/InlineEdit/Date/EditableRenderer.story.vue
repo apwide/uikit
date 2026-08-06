@@ -15,27 +15,20 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { faker } from '@faker-js/faker'
 import KitDateEditableRenderer from '@/components/field-renderers/KitDateEditableRenderer.vue'
 
-export default {
-  components: { KitDateEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      date: faker.date.recent().getTime()
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.date = value
-      callback()
-    },
+faker.seed(1)
+const date = ref(faker.date.recent().getTime())
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+function onSave(value, callback) {
+  date.value = value
+  callback()
+}
+
+function onSaveError(value, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>

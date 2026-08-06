@@ -11,10 +11,6 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import KitCheckboxRenderer from '@/components/field-renderers/KitCheckboxRenderer.vue'
-
-export default {
-  components: { KitCheckboxRenderer }
-}
 </script>

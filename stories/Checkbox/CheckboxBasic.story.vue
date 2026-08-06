@@ -13,17 +13,10 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import KitCheckbox from '@/components/Checkbox/KitCheckbox.vue'
 
-export default {
-  name: 'CheckboxBasic',
-  components: { KitCheckbox },
-  data() {
-    return {
-      checked: true,
-      checkedValues: []
-    }
-  }
-}
+const checked = ref(true)
+const checkedValues = ref([])
 </script>

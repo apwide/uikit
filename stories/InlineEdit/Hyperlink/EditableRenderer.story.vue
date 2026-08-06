@@ -15,25 +15,18 @@
   </div>
 </template>
 
-<script>
-import KitHyperlinkEditableRenderer from '@/components/field-renderers/KitHyperlinkEditableRenderer'
+<script setup lang="ts">
+import { ref } from 'vue'
+import KitHyperlinkEditableRenderer from '@/components/field-renderers/KitHyperlinkEditableRenderer.vue'
 
-export default {
-  components: { KitHyperlinkEditableRenderer },
-  data() {
-    return {
-      link: 'https://www.spartez.com'
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.link = value
-      callback()
-    },
+const link = ref('https://www.spartez.com')
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+function onSave(value, callback) {
+  link.value = value
+  callback()
+}
+
+function onSaveError(value, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>

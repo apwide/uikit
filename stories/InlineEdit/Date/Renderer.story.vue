@@ -7,17 +7,10 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { faker } from '@faker-js/faker'
 import KitDateRenderer from '@/components/field-renderers/KitDateRenderer.vue'
 
-export default {
-  components: { KitDateRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      date: faker.date.recent().getTime()
-    }
-  }
-}
+faker.seed(1)
+const date = faker.date.recent().getTime()
 </script>

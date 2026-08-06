@@ -11,19 +11,12 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import KitStringLineRenderer from '@/components/field-renderers/KitStringLineRenderer'
+import KitStringLineRenderer from '@/components/field-renderers/KitStringLineRenderer.vue'
 
-export default {
-  components: { KitStringLineRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  }
-}
+faker.seed(1)
+const value = faker.lorem.sentence()
 </script>
 
 <style scoped>

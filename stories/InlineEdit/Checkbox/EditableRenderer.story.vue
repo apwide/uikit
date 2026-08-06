@@ -15,27 +15,18 @@
   </div>
 </template>
 
-<script>
-import { faker } from '@faker-js/faker'
+<script setup lang="ts">
+import { ref } from 'vue'
 import KitCheckboxEditableRenderer from '@/components/field-renderers/KitCheckboxEditableRenderer.vue'
 
-export default {
-  components: { KitCheckboxEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: true
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.value = value
-      callback()
-    },
+const value = ref(true)
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+function onSave(newValue, callback) {
+  value.value = newValue
+  callback()
+}
+
+function onSaveError(newValue, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>

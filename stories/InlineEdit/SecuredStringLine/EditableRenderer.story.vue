@@ -29,28 +29,21 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { faker } from '@faker-js/faker'
-import KitSecureStringLineEditableRenderer from '../../../src/components/field-renderers/KitSecureStringLineEditableRenderer'
+import KitSecureStringLineEditableRenderer from '@components/field-renderers/KitSecureStringLineEditableRenderer.vue'
 
-export default {
-  components: { KitSecureStringLineEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      value: faker.lorem.sentence()
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      this.value = value
-      callback()
-    },
+faker.seed(1)
+const value = ref(faker.lorem.sentence())
 
-    onSaveError(value, callback) {
-      callback(new Error('Something went wrong'))
-    }
-  }
+function onSave(newValue, callback) {
+  value.value = newValue
+  callback()
+}
+
+function onSaveError(newValue, callback) {
+  callback(new Error('Something went wrong'))
 }
 </script>
 

@@ -39,49 +39,43 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { faker } from '@faker-js/faker'
 import KitSingleSelectEditableRenderer from '@/components/field-renderers/KitSingleSelectEditableRenderer.vue'
 
+faker.seed(1)
+
 const allowedValues = Array.from({ length: 10 }, () => faker.lorem.word())
 const [selected] = allowedValues
+const selectedValue = ref(selected)
 
 const complexAllowedValues = allowedValues.map((value, key) => ({ key, value }))
-const [complexSelectedValue] = complexAllowedValues
+const [firstComplexValue] = complexAllowedValues
+const complexSelectedValue = ref(firstComplexValue)
 
-export default {
-  components: { KitSingleSelectEditableRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      selectedValue: selected,
-      allowedValues,
-      complexAllowedValues,
-      complexSelectedValue
-    }
-  },
-  methods: {
-    normalizer(valueToNormalize) {
-      return {
-        id: valueToNormalize.key,
-        label: valueToNormalize.value,
-        value: valueToNormalize
-      }
-    },
-    onSave(value, callback) {
-      this.selectedValue = value
-      callback()
-    },
-    saveComplexSelection(value, callback) {
-      this.complexSelectedValue = value
-      setTimeout(() => {
-        callback()
-      }, 1000)
-    },
-    onSaveError(value, callback) {
-      setTimeout(() => callback(new Error('Something went wrong')), 100)
-    }
+function normalizer(valueToNormalize) {
+  return {
+    id: valueToNormalize.key,
+    label: valueToNormalize.value,
+    value: valueToNormalize
   }
+}
+
+function onSave(value, callback) {
+  selectedValue.value = value
+  callback()
+}
+
+function saveComplexSelection(value, callback) {
+  complexSelectedValue.value = value
+  setTimeout(() => {
+    callback()
+  }, 1000)
+}
+
+function onSaveError(value, callback) {
+  setTimeout(() => callback(new Error('Something went wrong')), 100)
 }
 </script>
 

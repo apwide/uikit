@@ -21,20 +21,9 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import KitCollapsible from '../../src/components/Collapsible/KitCollapsible'
+import KitCollapsible from '@components/Collapsible/KitCollapsible.vue'
 
-const paragraphs = Array.from({ length: 4 }).map(() => faker.lorem.paragraph(10))
-
-export default {
-  components: {
-    KitCollapsible
-  },
-  computed: {
-    texts() {
-      return paragraphs
-    }
-  }
-}
+const texts = Array.from({ length: 4 }).map(() => faker.lorem.paragraph(10))
 </script>

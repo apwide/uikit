@@ -6,17 +6,10 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import KitHyperlinkRenderer from '@/components/field-renderers/KitHyperlinkRenderer'
+import KitHyperlinkRenderer from '@/components/field-renderers/KitHyperlinkRenderer.vue'
 
-export default {
-  components: { KitHyperlinkRenderer },
-  data() {
-    faker.seed(1)
-    return {
-      link: 'https://www.spartez.com'
-    }
-  }
-}
+faker.seed(1)
+const link = 'https://www.spartez.com'
 </script>

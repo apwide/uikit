@@ -2,11 +2,6 @@
   <AvatarDetailsLoader />
 </template>
 
-<script>
-import AvatarDetailsLoader from '@/components/ContentLoader/AvatarDetailsLoader'
-
-export default {
-  name: 'AvatarDetailsLoaderLoaderStory',
-  components: { AvatarDetailsLoader }
-}
+<script setup lang="ts">
+import AvatarDetailsLoader from '@/components/ContentLoader/AvatarDetailsLoader.vue'
 </script>

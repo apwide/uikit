@@ -23,7 +23,8 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { debounce } from '@components/utils'
 import { createPersonsList } from '../../api-mocks/people'
 import KitUserEditableRenderer from '@/components/field-renderers/KitUserEditableRenderer.vue'
@@ -40,28 +41,15 @@ const getUsers = (query) =>
   })
 const debouncedUsers = debounce(getUsers, 100)
 
-export default {
-  components: { KitUserEditableRenderer },
-  data() {
-    return {
-      user: undefined,
-      baseUrl: '',
-      loadOptions: (query) => debouncedUsers(query)
-    }
-  },
-  methods: {
-    onSave(value, callback) {
-      if (value) {
-        this.user = value
-      } else {
-        this.user = undefined
-      }
-      callback()
-    },
+const user = ref(undefined)
+const loadOptions = (query) => debouncedUsers(query)
 
-    onSaveError(value, callback) {
-      setTimeout(() => callback(new Error('Something went wrong')), 100)
-    }
-  }
+function onSave(value, callback) {
+  user.value = value || undefined
+  callback()
+}
+
+function onSaveError(value, callback) {
+  setTimeout(() => callback(new Error('Something went wrong')), 100)
 }
 </script>
