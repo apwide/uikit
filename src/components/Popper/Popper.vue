@@ -54,10 +54,9 @@ onBeforeUnmount(() => {
 const instance = getCurrentInstance()
 
 function initPopper() {
-  const [defaultSlot] = instance.proxy.$slots.default
   // const boundariesElement =
   //   typeof props.boundariesElement === 'function' ? props.boundariesElement() : props.boundariesElement
-  const elm: HTMLElement = defaultSlot.elm
+  const elm: HTMLElement = instance.proxy.$el
   const arrowElm: HTMLElement | null = elm.querySelector('[data-popper-arrow]')
 
   popper.value = autoUpdate(props.targetElement, elm, async () => {
@@ -103,7 +102,7 @@ function initPopper() {
 <script lang="ts">
 export default {
   render() {
-    const [defaultSlot] = this.$slots.default
+    const [defaultSlot] = this.$slots.default()
     return defaultSlot
   }
 }

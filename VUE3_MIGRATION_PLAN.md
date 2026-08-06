@@ -293,9 +293,9 @@ Vue 3's inline event-handler expression parser is stricter than Vue 2's: multipl
 `Modal/KitBigModal.vue`, `field-renderers/KitMultiSelectEditableRenderer.vue`,
 `field-renderers/KitSingleSelectEditableRenderer.vue`.
 
-### Jest failure inventory (922 passed / 90 failed / 10 skipped of 1022, 84/114 suites green — up from
+### Jest failure inventory (930 passed / 82 failed / 10 skipped of 1022, 85/114 suites green — up from
 709/303/10 and 60/114 at the start of this pass; Bucket A complete, boolean-attribute-coercion bug fixed,
-shallow-stub slot rendering fixed globally, `$listeners` fixed in all 12 files)
+shallow-stub slot rendering fixed globally, `$listeners` fixed in all 12 files, `Popper.vue` fixed)
 
 **Bucket A — test-file-only, mechanical, `@vue/test-utils` v1→v2 API renames (no component behavior
 changes) — DONE, applied across the whole suite:**
@@ -312,9 +312,19 @@ changes) — DONE, applied across the whole suite:**
 
 **Bucket B — genuine Vue 3 runtime/API differences in component source or test-infra behavior changes
 that need a per-component decision, not a mechanical rename (Phase 3 territory):**
-- `Popper/Popper.vue`'s custom `render()` does `this.$slots.default[0].elm` — in Vue 3, `$slots.default`
-  is a **function** (call it: `this.$slots.default()`), not a live array, and a vnode's DOM node is
-  `.el`, not `.elm`. (`TypeError: Cannot read properties of undefined (reading 'elm')`, `'default'`)
+- ~~`Popper/Popper.vue`'s custom `render()` does `this.$slots.default[0].elm`~~ — **FIXED.** Two separate
+  issues stacked here. First, the easy one: in Vue 3 `$slots.default` is a **function** (call it:
+  `this.$slots.default()`), not a live array, and a vnode's DOM node is `.el`, not `.elm`
+  (`TypeError: Cannot read properties of undefined (reading 'elm')`). Fixing just that surfaced a second,
+  subtler bug: `initPopper()` (in the `<script setup>` half of this dual-script SFC) was calling
+  `instance.proxy.$slots.default()` *again*, separately from the actual `render()` (in the SFC's second,
+  Options-API `<script>` block) — since slots are functions in Vue 3, each call produces a **new**,
+  unmounted vnode (`.el === null`), not the one actually inserted into the DOM. `TypeError: Cannot read
+  properties of null (reading 'querySelector')` on the very next line. Since Popper is a transparent
+  wrapper (no wrapper element — its own render root *is* the slot's root element, by design, per its own
+  test "renders the default slot content without an extra wrapper element"), the correct fix is
+  `instance.proxy.$el` — the component instance's actual rendered root DOM node — instead of re-deriving
+  it from the slot function a second time. All 9 Popper tests pass now (0 → 9), zero regressions.
 - ~~`Icon/IconWrapper.vue`'s Options API `render(h)`~~ — **FIXED** as part of the `$listeners` pass (see
   above; the file was rewritten to a `<template>`). Vue 3's Options API `render()` no longer receives
   `h` as an argument; must `import { h } from 'vue'` explicitly, and the vnode data object shape
