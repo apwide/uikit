@@ -53,13 +53,34 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 > baseline and are stale — the codebase has since been cleaned up (renaming, removal of unused
 > components). Re-verified counts as of this branch:
 
-1. **`$listeners` Usage** (~~19~~ **12 files**)
-   - Used in: `KitButton`, `KitIconButton`, `KitDatePicker`, `KitDateRangePicker`, `KitTimePicker`,
-     `KitDropdownItem`, `KitTextArea`, `KitTextField`, `IconWrapper`, `MenuItem`, `KitBigModal`,
-     `UserPicker`
-   - **Vue 3 Change**: `$listeners` removed, merged into `$attrs`
-   - **Migration approach**: handled directly per-component in Phase 3 (swap `v-on="$listeners"` for
-     relying on `$attrs`/`useAttrs()` fallthrough) — no shared abstraction needed, see note below.
+1. ~~**`$listeners` Usage**~~ — **FIXED**, all 12 files (`KitButton`, `KitIconButton`, `KitDatePicker`,
+   `KitDateRangePicker`, `KitTimePicker`, `KitDropdownItem`, `KitTextArea`, `KitTextField`,
+   `IconWrapper`, `MenuItem`, `KitBigModal`, `UserPicker`). Two distinct patterns found:
+   - **Full forward** (`v-on="$listeners"` alone, no filtering) — `KitButton`, `KitIconButton`,
+     `KitDropdownItem`, `MenuItem`, `KitBigModal`, `UserPicker`, `KitTextField`: simply removed. Vue 3
+     merges listeners into `$attrs`, and default attrs fallthrough (or the component's existing
+     `v-bind="$attrs"`) already forwards them — the explicit `v-on="$listeners"` was pure dead weight,
+     not needed at all once `$attrs` carries `onXxx` keys.
+   - **Filtered forward** (destructure specific events out before forwarding the rest to a *nested*
+     element, not the component root) — `KitDatePicker`, `KitTimePicker`, `KitDateRangePicker`,
+     `KitTextArea`: these intentionally intercept `focus`/`blur`/`input` themselves (custom
+     open/close/validation logic) and only forward the remaining listeners down to an inner `<input>`/
+     `<textarea>`. Replaced `instance.proxy.$listeners` destructuring with `useAttrs()` + a computed that
+     omits `onFocus`/`onBlur`/`onInput`, bound via `v-bind="forwardedAttrs"` (not `v-on`, since the
+     result now contains ordinary attrs too, not just handlers).
+   - `IconWrapper.vue` was entangled with the `render(h)` issue below (couldn't fix one without the
+     other) — rewritten from an Options-API `render(h)` function to a normal `<template>`, which also
+     resolves the `render(h)` breakage for this one file "for free" and lets default attrs/listener
+     fallthrough handle forwarding with zero extra code.
+   - Also fixed the 3 test files that were deliberately left broken earlier (`KitIconButton.test.js`,
+     `KitTextField.test.js`, `MenuItemPlain.test.js`) — they used VTU v1's `listeners: {...}` mount
+     option, which doesn't exist in v2; converted to `attrs: { onClick: fn }`, now meaningful since the
+     underlying dead code is fixed.
+   - **Newly discovered while fixing `IconWrapper`**: the same broken `render(h)` Options-API pattern
+     (missing `h` import, Vue 2 vnode-data shape) exists in **38 files**, not just `IconWrapper.vue` —
+     almost entirely `src/components/Icon/aui/*.js` icon components. Not fixed here (out of scope for
+     the `$listeners` pass); flagged as its own Phase 3 item, larger than the single-file note below
+     suggested.
 
 2. ~~**Event Bus Pattern**~~ — **resolved, no longer applicable.** `src/components/event-bus.js` and
    its only consumers (`Tree`, `TreeSelect`, `Tree/Label`, `Tree/Node`) were deleted entirely in the
@@ -272,9 +293,9 @@ Vue 3's inline event-handler expression parser is stricter than Vue 2's: multipl
 `Modal/KitBigModal.vue`, `field-renderers/KitMultiSelectEditableRenderer.vue`,
 `field-renderers/KitSingleSelectEditableRenderer.vue`.
 
-### Jest failure inventory (862 passed / 150 failed / 10 skipped of 1022, 77/114 suites green — up from
+### Jest failure inventory (922 passed / 90 failed / 10 skipped of 1022, 84/114 suites green — up from
 709/303/10 and 60/114 at the start of this pass; Bucket A complete, boolean-attribute-coercion bug fixed,
-shallow-stub slot rendering fixed globally)
+shallow-stub slot rendering fixed globally, `$listeners` fixed in all 12 files)
 
 **Bucket A — test-file-only, mechanical, `@vue/test-utils` v1→v2 API renames (no component behavior
 changes) — DONE, applied across the whole suite:**
@@ -294,14 +315,14 @@ that need a per-component decision, not a mechanical rename (Phase 3 territory):
 - `Popper/Popper.vue`'s custom `render()` does `this.$slots.default[0].elm` — in Vue 3, `$slots.default`
   is a **function** (call it: `this.$slots.default()`), not a live array, and a vnode's DOM node is
   `.el`, not `.elm`. (`TypeError: Cannot read properties of undefined (reading 'elm')`, `'default'`)
-- `Icon/IconWrapper.vue`'s Options API `render(h)` — Vue 3's Options API `render()` no longer receives
+- ~~`Icon/IconWrapper.vue`'s Options API `render(h)`~~ — **FIXED** as part of the `$listeners` pass (see
+  above; the file was rewritten to a `<template>`). Vue 3's Options API `render()` no longer receives
   `h` as an argument; must `import { h } from 'vue'` explicitly, and the vnode data object shape
   changes (`{ attrs: {...}, on: {...} }` → flat props + `onXxx` handlers). (`TypeError: h is not a
-  function`)
-- The 12 `$listeners` files and 2 `model`-option files already catalogued earlier in this document
-  (3 of the `$listeners` test files — `KitIconButton`, `KitTextField`, `MenuItemPlain` — still have a
-  top-level `listeners:` mount option left untouched on purpose: fixing the test alone can't pass while
-  `v-on="$listeners"` is dead code under Vue 3).
+  function`) — **the same broken pattern was found in 38 files while fixing this one**, almost all
+  `Icon/aui/*.js`; not fixed, this is now its own sizeable Phase 3 item (see `$listeners` section above).
+- ~~The 12 `$listeners` files~~ — **FIXED**, see above. The 2 `model`-option files (`KitDropdownCheckboxItem.vue`,
+  `KitCheckbox.vue`) are still open.
 - ~~Systemic: Vue 3 always renders a stringified value (`"true"`/`"false"`) for boolean/custom attrs
   instead of omitting the attribute when falsy~~ — **FIXED.** Root cause: Vue 3's boolean-attribute
   whitelist (`specialBooleanAttrs`, used by `patchAttr`) is narrow (`readonly`, `itemscope`,

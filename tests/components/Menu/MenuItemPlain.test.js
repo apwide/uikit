@@ -45,10 +45,10 @@ describe('MenuItem (plain, non-Kit variant)', () => {
     expect(iconWrapper.find('.my-icon').exists()).toBe(true)
   })
 
-  it('forwards click events via $listeners', async () => {
+  it('forwards click events bound on the root element', async () => {
     const clickHandler = jest.fn()
     const component = shallowMount(MenuItem, {
-      listeners: { click: clickHandler }
+      attrs: { onClick: clickHandler }
     })
     await component.trigger('click')
     expect(clickHandler).toHaveBeenCalled()

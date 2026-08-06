@@ -4,8 +4,7 @@
     :spacing="spacing"
     class="kit-icon-button"
     v-bind="$attrs"
-    :title="title"
-    v-on="$listeners">
+    :title="title">
     <template #icon-before>
       <slot />
       <span class="kit-screen-reader">{{ title }}</span>

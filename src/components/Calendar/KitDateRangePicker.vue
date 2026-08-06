@@ -17,7 +17,7 @@
           :placeholder="displayedFromPlaceholder"
           :disabled="isLoading"
           :readonly="disabledTyping"
-          v-on="listeners"
+          v-bind="forwardedAttrs"
           @keydown.enter="onEnter"
           @input="onInputFrom"
           @keyup.esc="onEsc"
@@ -33,7 +33,7 @@
         :placeholder="displayedToPlaceholder"
         :disabled="isLoading"
         :readonly="disabledTyping"
-        v-on="listeners"
+        v-bind="forwardedAttrs"
         @keydown.enter="onEnter"
         @input="onInputTo"
         @keyup.esc="onEsc"
@@ -86,7 +86,7 @@ import {
   subWeeks,
   subYears
 } from 'date-fns'
-import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, useAttrs, watch } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup'
@@ -198,11 +198,11 @@ const dateRange = computed(() => {
   }
 })
 
-const instance = getCurrentInstance()
-const listeners = computed(() => {
+const attrs = useAttrs()
+const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { focus, blur, input, ...listeners } = instance.proxy.$listeners
-  return listeners
+  const { onFocus, onBlur, onInput, ...rest } = attrs
+  return rest
 })
 
 const placeholderDate = computed(() => {

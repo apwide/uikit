@@ -1,5 +1,5 @@
 <template>
-  <div class="kit-text-field" data-cy="input-wrapper" v-bind="normalizedAttrs" v-on="$listeners">
+  <div class="kit-text-field" data-cy="input-wrapper" v-bind="normalizedAttrs">
     <slot />
   </div>
 </template>

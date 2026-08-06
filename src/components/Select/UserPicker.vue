@@ -8,7 +8,6 @@
     :is-fetching="isFetching"
     :placeholder="placeholder"
     :normalizer="normalizer"
-    v-on="$listeners"
     @open="loadInitialOptions"
     @search-change="debouncedGetUsers">
     <template #option="{ option }">

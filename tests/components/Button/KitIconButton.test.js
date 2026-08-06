@@ -78,7 +78,7 @@ describe('KitIconButton', () => {
     const clickHandler = jest.fn()
     const component = mount(KitIconButton, {
       propsData: { title: 'Delete' },
-      listeners: { click: clickHandler }
+      attrs: { onClick: clickHandler }
     })
     await component.find('button').trigger('click')
     expect(clickHandler).toHaveBeenCalled()

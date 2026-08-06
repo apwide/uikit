@@ -3,12 +3,11 @@
     <textarea
       ref="textarea"
       v-model="text"
-      v-bind="$attrs"
+      v-bind="forwardedAttrs"
       :rows="rows"
       :disabled="isLoading"
       :style="{ height: currentHeight, width, maxHeight }"
       :auto="height === 'auto' || undefined"
-      v-on="listeners"
       @keydown="resize"
       @input="resize"
       @focus="onFocus"
@@ -17,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, useAttrs, watch } from 'vue'
 import KitTextField from './KitTextField.vue'
 
 const ENTER = 13
@@ -56,11 +55,11 @@ const textarea = ref<HTMLTextAreaElement>()
 const currentHeight = ref(props.height)
 const focused = ref(props.isFocused)
 
-const instance = getCurrentInstance()
-const listeners = computed(() => {
+const attrs = useAttrs()
+const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { input, ...listeners } = instance.proxy.$listeners
-  return listeners
+  const { onInput, ...rest } = attrs
+  return rest
 })
 const text = computed({
   get() {

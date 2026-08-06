@@ -7,8 +7,7 @@
     :selected="isSelected || undefined"
     :loading="isLoading || undefined"
     :spacing="spacing"
-    :round="round || undefined"
-    v-on="listeners">
+    :round="round || undefined">
     <span class="kit-button__wrapper" tabindex="-1" :icon-is-only-child="iconIsOnlyChild || undefined">
       <slot v-if="!isLoading" name="icon-before" />
       <span v-if="$slots.default" ref="label" class="kit-button__label"><slot /></span>
@@ -51,7 +50,6 @@ const iconIsOnlyChild = computed(() => {
     (!me.$slots['icon-after'] && me.$slots['icon-before'] && !me.$slots.default)
   )
 })
-const listeners = computed(() => instance.proxy.$listeners)
 const button = ref<HTMLButtonElement>()
 
 onMounted(async () => {

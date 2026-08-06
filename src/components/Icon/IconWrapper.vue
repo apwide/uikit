@@ -1,32 +1,21 @@
-<script>
-export default {
-  name: 'KitIconWrapper',
-  props: {
-    size: {
-      type: String,
-      default: 'medium'
-    },
-    primaryColor: {
-      type: String,
-      default: 'currentcolor'
-    },
-    secondaryColor: {
-      type: String,
-      default: '#fff'
-    }
-  },
-  render(h) {
-    return h(
-      'span',
-      {
-        style: { color: this.primaryColor, fill: this.secondaryColor },
-        attrs: { size: this.size },
-        on: { ...this.$listeners }
-      },
-      [this.$slots.default]
-    )
-  }
+<template>
+  <span :size="size" :style="{ color: primaryColor, fill: secondaryColor }">
+    <slot />
+  </span>
+</template>
+
+<script setup lang="ts">
+type Props = {
+  size?: string
+  primaryColor?: string
+  secondaryColor?: string
 }
+
+withDefaults(defineProps<Props>(), {
+  size: 'medium',
+  primaryColor: 'currentcolor',
+  secondaryColor: '#fff'
+})
 </script>
 
 <style scoped>

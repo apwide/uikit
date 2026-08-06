@@ -11,7 +11,6 @@
     :close-on-outside-click="closeOnOutsideClick"
     :width="modalWidth"
     v-bind="$attrs"
-    v-on="$listeners"
     no-padding>
     <template #header>
       <div class="kit-modal__header-pre-title">

@@ -15,7 +15,7 @@
         width="50%"
         :placeholder="placeholder"
         :disabled="disabled || isLoading"
-        v-on="listeners"
+        v-bind="forwardedAttrs"
         @input="onInput"
         @keyup.esc="onEsc"
         @focus="onFocus"
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, useAttrs, watch } from 'vue'
 import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup'
 import TimePickerMenu from './TimePickerMenu'
@@ -60,13 +60,13 @@ const focused = ref(false)
 const isOpen= ref(false)
 const me = ref<HTMLDivElement>()
 const input = ref<HTMLInputElement>()
-const instance = getCurrentInstance()
 const tempValue = ref()
 
-const listeners = computed(() => {
+const attrs = useAttrs()
+const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { focus, blur, input, ...listeners } = instance.proxy.$listeners
-  return listeners
+  const { onFocus, onBlur, onInput, ...rest } = attrs
+  return rest
 })
 
 const isValid = computed(() => props.value)

@@ -27,7 +27,7 @@ describe('KitTextField', () => {
   it('forwards listeners bound on the root element', () => {
     const onClick = jest.fn()
     const component = shallowMount(KitTextField, {
-      listeners: { click: onClick }
+      attrs: { onClick }
     })
     component.trigger('click')
     expect(onClick).toHaveBeenCalled()
