@@ -36,7 +36,7 @@ defineProps<Props>()
   margin: 18px 0 18px;
 }
 
-.kit-menu-section >>> .kit-menu-item {
+.kit-menu-section ::v-deep .kit-menu-item {
   margin: 0 -12px;
 }
 </style>

@@ -146,8 +146,8 @@ onBeforeUnmount(() => {
 }
 
 .dropdown-container[full-width],
-.dropdown-container[full-width] >>> button,
-.dropdown-container[full-width] >>> .kit-button__label {
+.dropdown-container[full-width] ::v-deep button,
+.dropdown-container[full-width] ::v-deep .kit-button__label {
   width: 100%;
 }
 </style>
