@@ -22,6 +22,13 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 > mocking, full-`mount()` for `<transition>`/deeply-nested-slot components, `easymde`
 > module-interop mocking, `IntersectionObserver`/`ResizeObserver` mocking) — useful for testing any new
 > component going forward, or for Phase 2's Vue 3 compatibility work.
+>
+> **Further update (`chore/claude-vue3` branch, 2026-08-06)**: the "149 total components" figure below
+> is now stale too — a subsequent cleanup pass (`chore/rovo2`) deleted `Tree`/`TreeSelect` and several
+> other unused components/renderers entirely (not just excluded from test tracking), and renamed many
+> field renderers with a `Kit` prefix. The component count and the 129-component tracked pool above
+> both predate that cleanup. Don't use the raw counts in this document for current-state decisions —
+> re-verify against `src/components/**/*.vue` first.
 
 - **Unit Tests**: 9 test files covering 6 component categories *(2026-02-13 baseline)*
   - Button, Checkbox, Form (Input, TextArea, FieldGroup)
@@ -41,26 +48,49 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 ### Vue 2 Patterns Identified
 
 #### Breaking Changes to Address:
-1. **`$listeners` Usage** (19 occurrences)
-   - Used in: Button, Input, TextArea, DatePicker, Dropdown items, Modal, etc.
+
+> **Updated 2026-08-06** (branch `chore/claude-vue3`): the counts below are the original 2026-02-13
+> baseline and are stale — the codebase has since been cleaned up (renaming, removal of unused
+> components). Re-verified counts as of this branch:
+
+1. **`$listeners` Usage** (~~19~~ **12 files**)
+   - Used in: `KitButton`, `KitIconButton`, `KitDatePicker`, `KitDateRangePicker`, `KitTimePicker`,
+     `KitDropdownItem`, `KitTextArea`, `KitTextField`, `IconWrapper`, `MenuItem`, `KitBigModal`,
+     `UserPicker`
    - **Vue 3 Change**: `$listeners` removed, merged into `$attrs`
+   - **Migration approach**: handled directly per-component in Phase 3 (swap `v-on="$listeners"` for
+     relying on `$attrs`/`useAttrs()` fallthrough) — no shared abstraction needed, see note below.
 
-2. **Event Bus Pattern** (3 components)
-   - `src/components/event-bus.js`: `new Vue()` as event bus
-   - Used in: Tree, TreeSelect components
-   - **Vue 3 Change**: Cannot use `new Vue()`, need mitt/tiny-emitter or provide/inject
+2. ~~**Event Bus Pattern**~~ — **resolved, no longer applicable.** `src/components/event-bus.js` and
+   its only consumers (`Tree`, `TreeSelect`, `Tree/Label`, `Tree/Node`) were deleted entirely in the
+   `chore/rovo2` cleanup (unused components). There is no `new Vue()` event bus left anywhere in the
+   codebase — this breaking-change item and its Phase 3/Wave 3 "Event Bus Refactoring" work are moot.
 
-3. **`model` Option** (1 occurrence)
-   - `KitDropdownCheckboxItem.vue`: Uses Vue 2 `model` option
-   - **Vue 3 Change**: Replaced by `defineModel()` (not available in Vue 2.7)
+3. **`model` Option** (~~1~~ **2 files**: `KitDropdownCheckboxItem.vue` and `KitCheckbox.vue`)
+   - Both use the Vue 2 Options API `model: { prop, event }` option
+   - **Vue 3 Change**: Replaced by `defineModel()` (not available in Vue 2.7) — handled directly when
+     each component is migrated in Phase 3
 
-4. **Deep Selectors** (`>>>`)
-   - Used throughout for scoped style penetration
+4. **Deep Selectors** (`>>>`) — **16 files** currently use it for scoped style penetration
    - **Vue 3 Change**: Use `:deep()` instead
 
 5. **`$attrs` Behavior**
    - Currently excludes class/style
    - **Vue 3 Change**: Includes class/style by default
+
+#### Decision: no `vue3-compat.ts` compatibility layer
+
+The original Phase 2 plan (below) proposed a shared `utils/vue3-compat.ts` with `useListeners()`,
+`useEventBus()`, and `useModelValue()` helpers meant to work under both Vue 2 and Vue 3. **This was
+abandoned (2026-08-06)** — it doesn't fit how this library is actually shipping the migration:
+- The plan is two separate major versions (`v6.x` stays Vue 2, `v7.x` becomes Vue 3), never one
+  codebase running under both at runtime. So there's nothing to abstract across versions — once a
+  component is migrated, it only ever runs under Vue 3, and can just call `useAttrs()`/`defineModel()`
+  directly instead of through an indirection layer that would need to runtime-detect which Vue version
+  is installed.
+- `useEventBus()` is now dead on arrival — its only consumers (`Tree`/`TreeSelect`) are gone.
+- `$listeners`/`model` fixes are one-line, permanent changes made at the point each component is
+  migrated in Phase 3 — not something worth routing through a shared utility.
 
 ---
 
@@ -74,7 +104,8 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 2. ✅ Document Vue 2 specific patterns
 3. ✅ Create migration plan
 4. 🔲 Set up Vue 3 testing environment (parallel to Vue 2)
-5. 🔲 Create compatibility layer/utilities
+5. ❌ ~~Create compatibility layer/utilities~~ — decided against, see "Decision: no `vue3-compat.ts`
+   compatibility layer" above
 6. 🔲 Establish migration testing protocol
 
 **Deliverables**:
@@ -108,7 +139,8 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    - ✅ Card, Collapsible
 
 3. **Complex Components** (need thorough tests):
-   - ✅ Tree, TreeSelect
+   - ❌ ~~Tree, TreeSelect~~ — components deleted entirely (unused, removed in `chore/rovo2`), tests
+     removed along with them; no longer applicable
    - ✅ Calendar components
    - ✅ MarkdownEditor
    - ✅ ColorPicker
@@ -135,36 +167,26 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
 
 ---
 
-### 🔧 Phase 2: Compatibility Layer & Infrastructure
+### 🔧 Phase 2: Infrastructure
 **Goal**: Build tooling and patterns for smooth migration
+
+> **Updated 2026-08-06**: the "Create Compatibility Utilities" task below (a shared `vue3-compat.ts`)
+> was dropped — see "Decision: no `vue3-compat.ts` compatibility layer" earlier in this document.
+> Phase 2 is now just build configuration, migration tooling, and documentation.
 
 **Tasks**:
 
-1. **Create Compatibility Utilities**
-   ```typescript
-   // utils/vue3-compat.ts
-   
-   // Replace $listeners with attrs-based approach
-   export function useListeners() {
-     // Vue 2.7 & Vue 3 compatible
-   }
-   
-   // Event bus replacement
-   export function useEventBus() {
-     // mitt or provide/inject based
-   }
-   
-   // Model binding helpers
-   export function useModelValue(props, emit) {
-     // Compatible model binding
-   }
-   ```
+1. ~~Create Compatibility Utilities~~ — **dropped**, see decision note above.
 
 2. **Update Build Configuration**
-   - Create `vue3` branch
+   - Working on this on the `chore/claude-vue3` branch (created 2026-08-06)
    - Configure webpack for Vue 3
-   - Update `package.json` dependencies
-   - Set up parallel testing (Vue 2 main, Vue 3 branch)
+   - Update `package.json` dependencies (`vue`, `vue-loader`, `vue-template-compiler`,
+     `@vue/test-utils`, `@vue/vue2-jest` → `@vue/vue3-jest`, etc.)
+   - This is the highest-risk item in Phase 2: it will very likely break a large share of the 1122
+     unit tests written against `@vue/test-utils` v1 semantics (documented extensively in
+     `SESSION_SUMMARY.md`), since v2 changes stub behavior, `WrapperArray`, and mount options. Needs
+     its own dedicated pass with test fixes budgeted in, not a drive-by dependency bump.
 
 3. **Migration Checklist Template**
    - Per-component migration checklist
@@ -177,7 +199,7 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
    - Deprecation notices
 
 **Deliverables**:
-- Compatibility utilities library
+- ~~Compatibility utilities library~~ (dropped)
 - Vue 3 build configuration
 - Migration tooling and checklists
 - Consumer migration guide (draft)
@@ -243,10 +265,13 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
    - Focus management
 
 #### Wave 3: Complex Components (High Risk)
-**Characteristics**: Event bus, complex state, multiple dependencies
+**Characteristics**: complex state, multiple dependencies
+
+> **Updated 2026-08-06**: Tree/TreeSelect (and their Event Bus dependency) are removed from this wave
+> — those components were deleted entirely (unused). The "Event Bus Refactoring" task below is no
+> longer needed.
 
 1. **Components** (~4-5 weeks)
-   - Tree, TreeSelect ⚠️ (Event Bus dependency)
    - Table (complex state, slots)
    - Tabs system (TabProvider, TabHeaders, etc.)
    - Menu system (ActionMenu, IconMenu, MenuItem)
@@ -256,19 +281,8 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
    - Spotlight (onboarding system)
    - Layout components (BorderedPanel, etc.)
 
-2. **Event Bus Refactoring**:
-   ```typescript
-   // Replace: new Vue() event bus
-   // With: mitt or provide/inject pattern
-   
-   // Option A: mitt
-   import mitt from 'mitt'
-   export const eventBus = mitt()
-   
-   // Option B: provide/inject
-   const TreeEventBus = Symbol('TreeEventBus')
-   provide(TreeEventBus, { emit, on, off })
-   ```
+2. ~~**Event Bus Refactoring**~~ — **no longer needed**, its only consumers (Tree, TreeSelect) were
+   deleted.
 
 3. **High-Risk Mitigations**:
    - Feature flags for gradual rollout
@@ -368,7 +382,7 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| **Event Bus breaking** | Tree components unusable | Create drop-in replacement with mitt, thorough testing |
+| **@vue/test-utils v1→v2 breakage** | Large share of the 1122 unit tests likely fail on Vue 3 build config bump | Dedicated pass with test fixes budgeted in, not a drive-by dependency update |
 | **$listeners removal** | Event handling breaks | Automated migration, comprehensive tests |
 | **Consumer breaking changes** | Adoption resistance | Clear migration guide, backward compat where possible |
 | **Bundle size increase** | Performance regression | Tree-shaking optimization, bundle analysis |
@@ -424,7 +438,6 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
 - Avatar, Badge, Lozenge
 
 ### Priority: MEDIUM (Migrate Wave 2-3)
-- Tree, TreeSelect
 - Field renderers
 - Tooltip, InlineDialog
 - Card, Collapsible
@@ -444,7 +457,7 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
 ### Week 1-2: Setup & Planning
 1. ✅ Create this migration plan
 2. 🔲 Get stakeholder approval
-3. 🔲 Create `vue3-migration` branch
+3. ✅ Create Vue 3 migration branch (`chore/claude-vue3`, 2026-08-06)
 4. 🔲 Set up Vue 3 build configuration
 5. 🔲 Install Vue 3 dependencies in dev
 
@@ -456,7 +469,7 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
 5. ✅ Write tests for Modal
 
 ### Week 5-6: First Migration Wave
-1. 🔲 Create compatibility utilities
+1. ❌ ~~Create compatibility utilities~~ — dropped, see decision note earlier in this document
 2. 🔲 Migrate Badge, Lozenge, Tag (simple components)
 3. 🔲 Update Storybook stories
 4. 🔲 Validate with manual testing
@@ -495,7 +508,12 @@ Before proceeding, please confirm:
 ---
 
 **Status**: 🏁 Phase 1 (Test Coverage Expansion) complete — 100% of the tracked component pool
-(129/129) now has unit tests, well past the original 80% goal. See `SESSION_SUMMARY.md` for details
-and next-step recommendations (Phase 2: compatibility layer, Vue 3 build config).
+(129/129) now has unit tests, well past the original 80% goal. 🔧 Phase 2 (Infrastructure) is
+underway on the `chore/claude-vue3` branch: the `vue3-compat.ts` compatibility-utilities task was
+evaluated and dropped (see decision note above — it doesn't fit a two-major-versions migration
+strategy, and its main driver, Tree/TreeSelect's event bus, no longer exists). Remaining Phase 2 work:
+Vue 3 build configuration (highest-risk item — will likely require fixing a large share of the 1122
+unit tests against `@vue/test-utils` v2 semantics), the migration checklist template, and consumer
+documentation.
 
 **Last Updated**: 2026-08-06 (originally 2026-02-13)
