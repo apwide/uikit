@@ -1,4 +1,4 @@
-export default async function KitSetToClipboard(text) {
+export default async function KitSetToClipboard(text: string): Promise<void> {
   if (navigator.clipboard) {
     try {
       await navigator.clipboard.writeText(text)
