@@ -1,6 +1,17 @@
 # Testing Strategy for @apwide/uikit
 
-## Current Test Coverage Analysis
+## ⚠️ 2026-08-06 Update
+
+This document's "Current Test Coverage Analysis" and "Success Metrics" sections below describe the
+**2026-02-13 baseline** and are now stale — several unrecorded sessions since then brought coverage
+to **114/149 components (~76.5%)**, with **115 unit test files / 956 passing tests**. See
+`SESSION_SUMMARY.md` for the verified current state and the up-to-date list of the 35 remaining
+untested components (Popper.vue and common/Popup.vue are the top priority — the original "❌
+Components WITHOUT Tests" list below already flagged Popper as high priority, and it's still the
+biggest gap). The Wave priority matrix and test templates further down in this document are still
+accurate and reusable.
+
+## Current Test Coverage Analysis (historical baseline, 2026-02-13)
 
 ### ✅ Components with Tests (9 unit tests, 12 E2E tests)
 
@@ -416,10 +427,15 @@ describe('ComponentName', () => {
 
 **Target**: 80% component test coverage
 
-**Current Status**:
+**Current Status (2026-02-13 baseline, historical)**:
 - Components with tests: 21/149 (14%)
 - Components with unit tests: 9/149 (6%)
 - Components with E2E tests: 12/149 (8%)
+
+**Current Status (verified 2026-08-06)**:
+- Components with unit tests: 114/149 (~76.5%)
+- Unit test files: 115, unit tests: 956 passing (10 skipped)
+- Remaining to reach 80% target: 6 components (35 total remain untested — see `SESSION_SUMMARY.md`)
 
 **Target After Phase 1**:
 - Components with tests: 120/149 (80%+)
@@ -428,6 +444,6 @@ describe('ComponentName', () => {
 
 ---
 
-**Status**: 📋 Strategy Complete - Ready to Begin Testing
+**Status**: 🚧 Phase 1 nearly complete — ~76.5% component coverage, 6 components short of the 80% goal
 
-**Last Updated**: 2026-02-13
+**Last Updated**: 2026-08-06

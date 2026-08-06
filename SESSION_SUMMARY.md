@@ -1,146 +1,103 @@
-# Test Coverage Session Summary - 2026-02-13
+# Test Coverage Session Summary
 
-## 🎯 Final Results
+**Last Updated**: 2026-08-06
+
+> Note: earlier versions of this document (dated 2026-02-13) were left unupdated while multiple
+> testing sessions continued in the background (Calendar, Form, field renderers, Select variations,
+> Tabs/Modal/Menu/Tooltip/Table/Dropdown system completions, etc.). The numbers below reflect the
+> actual current state of the repository, verified directly against `tests/` and `src/components/`.
+
+## 🎯 Current Results
 
 ### Test Statistics
-- **Unit Tests**: 294 passing (was 67 at start)
-- **Test Files**: 33 files (was 11 at start)
-- **E2E Tests**: 20 Cypress specs (was 12 at start)
-- **Components Tested**: 40+ components (was 21 at start)
-- **Success Rate**: 100% ✅
+- **Unit Tests**: 956 passing, 10 skipped (966 total)
+- **Test Files**: 115 files
+- **Components Tested**: 114/149 (~76.5%)
+- **Success Rate**: 100% of active tests ✅
+- **Lint**: All new test files pass `eslint` cleanly
 
-### New Tests Added
-- **+227 new unit tests**
-- **+22 new test files**
-- **+8 new E2E test files**
+### 2026-08-06 Session — Completed Partial Component Systems
 
----
+This session focused on finishing component "families" that already had partial coverage, per
+`TESTING_STRATEGY.md`'s Wave 3 priorities. 20 new test files / ~126 new tests were added:
 
-## 📦 Components Tested This Session
+1. ✅ **Tabs system** — KitTabHeaders, KitTabHeader, KitTabPanels (18 tests)
+2. ✅ **Modal system** — Blanket, Footer, Header, PositionerAbsolute (23 tests)
+3. ✅ **Menu system** — KitActionMenu, KitIconMenu, KitMenuSection, KitMenuSeparator, MenuSection (30 tests)
+4. ✅ **Tooltip system** — KitBigTooltip, KitBigTooltipContent, TooltipContent (21 tests)
+5. ✅ **Table sub-components** — TableHeaderCell, TableRowCell, TableRow (24 tests)
+6. ✅ **Dropdown remainder** — KitDropdownCheckboxItem, KitDropdownSeparator (13 tests)
 
-### Wave 1 - Foundation Components (8 components)
-1. ✅ Avatar (22 tests)
-2. ✅ Badge (7 tests)
-3. ✅ Lozenge (19 tests)
-4. ✅ Card (10 tests)
-5. ✅ Spinner (15 tests)
-6. ✅ ProgressBar (13 tests)
-7. ✅ Breadcrumbs (9 tests) + BreadcrumbItem (13 tests)
-8. ✅ Collapsible (12 tests)
+Notably, `KitDropdownCheckboxItem` uses the Vue 2 `model` option (documented breaking change for
+Vue 3 in `VUE3_MIGRATION_PLAN.md`) — its v-model contract (`checked`/`input`) is now covered by tests,
+which will make that migration safer to verify.
 
-### Wave 2 - Interactive Components (6 components)
-9. ✅ Radio (11 tests) + RadioGroup (8 tests)
-10. ✅ Tooltip (11 tests)
-11. ✅ InlineDialog (10 tests)
-12. ✅ Flag (11 tests)
-13. ✅ SectionMessage (16 tests)
-14. ✅ Tag (12 tests)
-15. ✅ Menu (5 tests) + MenuItem (5 tests)
-16. ✅ CopyToClipboard (12 tests)
-
-### Wave 3 - Complex Components (2 component systems)
-17. ✅ Tabs System - TabProvider (6 tests) + TabButton (11 tests) + TabPanel (7 tests)
-18. ✅ Modal System - KitModal (18 tests) + KitBigModal (16 tests)
+### Notable test-writing gotchas found this session (useful for future sessions)
+- This repo uses **`@vue/test-utils` v1** (Vue 2 compatible). `wrapper.findAll(...)` and
+  `findAllComponents(...)` return a `WrapperArray`, which does **not** support `array[i]` bracket
+  access — use `.at(i)` instead.
+- `shallowMount` stubs for `<script setup>` components often render as `<anonymous-stub>` (name
+  inference fails), so `findComponent({ name: 'X' })` frequently doesn't match. Prefer
+  `findComponent(ActualImportedComponent)`.
+- Boolean prop bindings like `:disabled="true"` or `:sortable="true"` render as
+  `attribute="attribute"` (e.g. `disabled="disabled"`), not `attribute="true"`, for non-standard
+  HTML attribute names.
+- Stubbed child components do **not** render their default slot content by default in this project's
+  VTU v1 setup — assert on props passed to the stub instead of rendered slot text when the slot
+  content lives inside a shallow-stubbed child.
 
 ---
 
-## 📈 Progress Metrics
+## 📈 Progress Metrics (cumulative, all sessions)
 
-| Metric | Start | End | Change |
+| Metric | Original baseline | Current | Change |
 |--------|-------|-----|--------|
-| Unit Tests | 67 | 294 | +227 (+339%) |
-| Test Files | 11 | 33 | +22 (+200%) |
-| E2E Specs | 12 | 20 | +8 (+67%) |
-| Components Covered | ~21 | ~40 | +19 (+90%) |
-| Coverage % | 14% | 27% | +13% |
+| Unit Tests | 67 | 956 | +889 |
+| Test Files | 11 | 115 | +104 |
+| Components Covered | ~21 | ~114 | +93 |
+| Coverage % | 14% | ~76.5% | +62.5% |
 
 ---
 
-## 🗂️ New Test Files Created
+## 🎯 Remaining Work (35 components without dedicated unit tests)
 
-### Unit Tests (22 new files)
-- Avatar, Badge, Lozenge
-- Card, Spinner, ProgressBar
-- Breadcrumbs, BreadcrumbItem, Collapsible
-- Radio, RadioGroup
-- Tooltip, InlineDialog
-- Flag, SectionMessage
-- Tag
-- Menu, MenuItem
-- CopyToClipboard
-- TabProvider, TabButton, TabPanel
-- Modal, BigModal
+Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-06:
 
-### E2E Tests (8 new files)
-- Avatar, Badge, Lozenge
-- Card, Spinner, ProgressBar
-- Collapsible, Breadcrumbs
-
----
-
-## ✅ Key Achievements
-
-1. ✅ **294 passing tests** - all tests green
-2. ✅ **339% increase** in unit test coverage
-3. ✅ **Wave 1 Complete** - All foundation components tested
-4. ✅ **Wave 2 Complete** - All interactive components tested
-5. ✅ **Wave 3 Started** - Complex components (Tabs, Modal) tested
-6. ✅ **Vue 3 Ready** - All tests use patterns compatible with Vue 3
-7. ✅ **High Quality** - Comprehensive coverage including props, slots, events, edge cases
-
----
-
-## 📚 Documentation Created
-
-1. **VUE3_MIGRATION_PLAN.md** - Complete 5-phase migration strategy
-2. **TESTING_STRATEGY.md** - Testing approach and templates
-3. **EXPERT_PROMPT.md** - Context for future collaboration
-4. **TEST_COVERAGE_PROGRESS.md** - Detailed progress tracking
-
----
-
-## 🎯 Remaining Work
-
-### Components Still Need Tests (~109 remaining)
-- **Complex Components**: Table, Tree, TreeSelect
-- **Field Renderers**: 20+ inline edit renderers
-- **Calendar Components**: DatePicker variants
-- **Other**: MarkdownEditor, ColorPicker, Spotlight, etc.
+| Group | Components |
+|---|---|
+| Positioning core | `Popper/Popper.vue`, `common/Popup.vue` |
+| Button | `KitButtonGroup`, `KitIconButton` |
+| ColorPicker | `KitColorCard` |
+| Common utilities | `InfiniteScroll`, `KitTransitionExpand`, `PromisedContentLoader` |
+| ContentLoader (8 files) | `AvatarDetailsLoader`, `AvatarNameLoader`, `BulletListLoader`, `ContentLoader`, `FolderPathLoader`, `ListWithImageLoader`, `PageDetailsLoader`, `TableLoader` |
+| Field renderers | `KitMarkdownEditableRenderer`, `UserEditableRendererEnriched` |
+| Icon | `MagicStick` |
+| Layout | `KitBorderedPanel`, `KitBorderedPanelRow` |
+| MarkdownEditor | `KitMarkdownEditor` |
+| Menu | `MenuItem.vue` (plain, non-Kit variant) |
+| Spotlight | `KitSpotlight`, `KitSpotlightHintContainer`, `KitSpotlightMask` |
+| Toggle | `LockSwitch` |
+| Tree | `Label` |
+| Avatar icons (low priority) | `Approved`, `Busy`, `Declined`, `Focus`, `Offline`, `Online`, `PresenceWrapper` (trivial SVG wrappers, indirectly exercised by `Avatar.test.js`) |
 
 ### Target
 - **80% Coverage Goal**: 120/149 components
-- **Current**: 40/149 (27%)
-- **Remaining**: 80 components to test
-
-### Estimated Time to 80%
-- Wave 3 completion: ~20 hours
-- Wave 4 (Field renderers): ~26 hours
-- **Total**: ~46 hours remaining
+- **Current**: 114/149 (~76.5%)
+- **Remaining to reach 80%**: 6 more components
 
 ---
 
 ## 💪 Next Session Recommendations
 
-1. **Continue Wave 3** - Table, Tree, TreeSelect components
-2. **Field Renderers** - Start systematic testing of inline edit renderers
-3. **Calendar Components** - DatePicker, TimePicker variations
-4. **Advanced Components** - MarkdownEditor, ColorPicker, Spotlight
+1. **Popper.vue** — still the highest-value gap: it's the core positioning primitive used by
+   Tooltip, BigTooltip, Dropdown, and Menu. A dedicated test file de-risks all of them ahead of
+   Vue 3 migration.
+2. **common/Popup.vue** — same rationale, underlies BigTooltip.
+3. **MarkdownEditor / ColorPicker / Spotlight** — remaining "complex" components from Wave 3.
+4. **ContentLoader family** — 8 small, low-risk presentational components; good for closing the
+   gap to 80%+ quickly.
 
 ---
 
-## 🚀 Impact
-
-This test coverage expansion provides:
-- ✅ **Safety net** for Vue 3 migration
-- ✅ **Regression detection** for future changes
-- ✅ **Documentation** through test examples
-- ✅ **Confidence** in refactoring
-- ✅ **Quality assurance** for library consumers
-
----
-
-**Status**: Excellent progress! Library is well-positioned for Vue 3 migration.
-
-**Date**: 2026-02-13
-**Tests**: 294 passing ✅
-**Coverage**: 27% (40/149 components)
+**Status**: Library is at ~76.5% component test coverage, within reach of the 80% Phase 1 goal from
+`VUE3_MIGRATION_PLAN.md`.

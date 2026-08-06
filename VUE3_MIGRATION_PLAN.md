@@ -9,14 +9,21 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 ## Current State Analysis
 
 ### Test Coverage
-- **Unit Tests**: 9 test files covering 6 component categories
+
+> **Updated 2026-08-06**: the figures immediately below are the original 2026-02-13 baseline. Several
+> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **114/149
+> components (~76.5%)**, with **115 unit test files and 956 passing tests**. Only 35 components
+> remain untested, led by `Popper.vue` and `common/Popup.vue` (core positioning primitives). The Phase
+> 1 goal of 80% coverage is 6 components away.
+
+- **Unit Tests**: 9 test files covering 6 component categories *(2026-02-13 baseline)*
   - Button, Checkbox, Form (Input, TextArea, FieldGroup)
   - InlineEdit (2 files), Select (Tag), Toggle
 - **E2E Tests**: 12 Cypress specs covering critical user flows
   - Button, Calendar, CreateableSelect, DatePicker, Dropdown
   - InlineEdit, Input, Modal, MultiSelect, Select, Toggle, UserPicker
 - **Components**: 149 Vue components total
-- **Coverage Gap**: ~90% of components lack dedicated unit tests
+- **Coverage Gap**: ~90% of components lack dedicated unit tests *(2026-02-13 baseline — now ~23.5%, see above)*
 
 ### Architecture Overview
 - **Vue 2.7.16**: Already uses Composition API (backported)
@@ -76,30 +83,35 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 ### 📋 Phase 1: Test Coverage Expansion
 **Goal**: Achieve 80%+ component test coverage before migration
 
-**Priority Components** (by usage/complexity):
+**Priority Components** (by usage/complexity) — updated 2026-08-06:
 1. **Critical Path** (must have tests):
    - ✅ Button (has tests)
    - ✅ Input, TextArea (has tests)
-   - ✅ Select, MultiSelect (partial)
-   - 🔲 Dropdown
-   - 🔲 Modal
-   - 🔲 Table
-   - 🔲 DatePicker, TimePicker
+   - ✅ Select, MultiSelect (has tests)
+   - ✅ Dropdown (incl. KitDropdownCheckboxItem, KitDropdownSeparator)
+   - ✅ Modal (incl. Blanket, Footer, Header, PositionerAbsolute)
+   - ✅ Table (incl. TableHeaderCell, TableRowCell, TableRow)
+   - ✅ DatePicker, TimePicker
 
 2. **High Usage** (should have tests):
-   - 🔲 Avatar, Badge, Lozenge
-   - 🔲 Tabs, Menu
-   - 🔲 Tooltip, InlineDialog
-   - 🔲 Spinner, ProgressBar
-   - 🔲 Card, Collapsible
+   - ✅ Avatar, Badge, Lozenge
+   - ✅ Tabs (incl. KitTabHeaders, KitTabHeader, KitTabPanels), Menu (incl. KitActionMenu, KitIconMenu, KitMenuSection, KitMenuSeparator)
+   - ✅ Tooltip (incl. KitBigTooltip, KitBigTooltipContent, TooltipContent), InlineDialog
+   - ✅ Spinner, ProgressBar
+   - ✅ Card, Collapsible
 
 3. **Complex Components** (need thorough tests):
-   - 🔲 Tree, TreeSelect
-   - 🔲 Calendar components
+   - ✅ Tree, TreeSelect
+   - ✅ Calendar components
    - 🔲 MarkdownEditor
-   - 🔲 ColorPicker
-   - 🔲 Spotlight (onboarding)
-   - 🔲 Field renderers (20+ components)
+   - 🔲 ColorPicker (KitColorCard sub-component untested)
+   - 🔲 Spotlight (onboarding) — KitSpotlightStepHint done, KitSpotlight/Mask/HintContainer remain
+   - ✅ Field renderers (20+ components; KitMarkdownEditableRenderer and UserEditableRendererEnriched remain)
+
+Remaining gap to close Phase 1 (35 components, see `SESSION_SUMMARY.md` for full list): `Popper.vue`
+and `common/Popup.vue` (positioning core, highest priority), MarkdownEditor, ColorPicker's
+KitColorCard, the Spotlight trio, ContentLoader family (8 low-risk components), and a handful of
+smaller utility components (KitButtonGroup, KitIconButton, LockSwitch, Tree/Label, etc.).
 
 **Testing Approach**:
 - Unit tests: Component props, events, slots, state management
