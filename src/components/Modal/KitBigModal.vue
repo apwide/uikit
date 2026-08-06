@@ -22,7 +22,7 @@
             class="kit-modal__close"
             title="close"
             @click="
-              emit('cancel')
+              emit('cancel');
               emit('close')
             ">
             <KitIcon type="times" style="font-size: 1.2rem" />

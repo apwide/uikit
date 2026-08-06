@@ -31,12 +31,12 @@
           :confirm="confirm"
           :keep-open-on-select="keepOpenOnSelect"
           @input="
-            props.input($event)
+            props.input($event);
             emit('input', $event)
           "
           @search-change="emit('search-change', $event)"
           @blur="
-            props.blur($event)
+            props.blur($event);
             emit('blur', $event)
           "
           @confirm="props.confirm"

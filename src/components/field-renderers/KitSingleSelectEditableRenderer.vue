@@ -29,12 +29,12 @@
         :fixed-select-width="fixedSelectWidth"
         :confirm="confirm"
         @input="
-          props.input($event)
+          props.input($event);
           emit('input', $event)
         "
         @search-change="emit('search-change', $event)"
         @blur="
-          props.blur($event)
+          props.blur($event);
           emit('blur', $event)
         "
         @confirm="props.confirm"

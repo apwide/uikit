@@ -11,7 +11,7 @@ module.exports = {
     '@components/(.*)$': '<rootDir>/src/components/$1'
   },
   transform: {
-    '^.+\\.vue$': '@vue/vue2-jest',
+    '^.+\\.vue$': '@vue/vue3-jest',
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.ts$': '<rootDir>/node_modules/ts-jest'
   },

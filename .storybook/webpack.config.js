@@ -5,8 +5,7 @@ const resolve = {
   symlinks: false,
   alias: {
     '@': path.resolve(__dirname, '../src'),
-    '@components': path.resolve(__dirname, '../src/components'),
-    'vue$': 'vue/dist/vue.esm.js'
+    '@components': path.resolve(__dirname, '../src/components')
   }
 }
 
@@ -34,13 +33,18 @@ module.exports = async ({ config }) => {
 
   config.module.rules.push({
     test: /\.svg$/,
-    loader: 'vue-svg-loader',
     exclude: [path.resolve(__dirname, './stories/assets/images/')],
-    options: {
-      svgo: {
-        plugins: [{ removeDimensions: true }, { removeViewBox: false }]
+    use: [
+      'vue-loader',
+      {
+        loader: 'vue-svg-loader',
+        options: {
+          svgo: {
+            plugins: [{ removeDimensions: true }, { removeViewBox: false }]
+          }
+        }
       }
-    }
+    ]
   })
   config.module.rules.push({
     test: /\.(png|jpg|gif|svg)$/,

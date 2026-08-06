@@ -1,10 +1,10 @@
 const fs = require('fs')
-const compiler = require('vue-template-compiler')
+const { parse } = require('@vue/compiler-sfc')
 
 module.exports = (filePath) => {
   if (/\.vue$/.test(filePath)) {
-    // console.log(compiler.parseComponent(fs.readFileSync(filePath, { encoding: 'utf8' })))
-    const { script, scriptSetup } = compiler.parseComponent(fs.readFileSync(filePath, { encoding: 'utf8' }))
+    const { descriptor } = parse(fs.readFileSync(filePath, { encoding: 'utf8' }), { filename: filePath })
+    const { script, scriptSetup } = descriptor
 
     let s = script
     if (scriptSetup && !script) {

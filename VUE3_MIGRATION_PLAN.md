@@ -178,33 +178,128 @@ MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRe
 
 1. ~~Create Compatibility Utilities~~ — **dropped**, see decision note above.
 
-2. **Update Build Configuration**
-   - Working on this on the `chore/claude-vue3` branch (created 2026-08-06)
-   - Configure webpack for Vue 3
-   - Update `package.json` dependencies (`vue`, `vue-loader`, `vue-template-compiler`,
-     `@vue/test-utils`, `@vue/vue2-jest` → `@vue/vue3-jest`, etc.)
-   - This is the highest-risk item in Phase 2: it will very likely break a large share of the 1122
-     unit tests written against `@vue/test-utils` v1 semantics (documented extensively in
-     `SESSION_SUMMARY.md`), since v2 changes stub behavior, `WrapperArray`, and mount options. Needs
-     its own dedicated pass with test fixes budgeted in, not a drive-by dependency bump.
+2. ✅ **Update Build Configuration** — **done, 2026-08-06, on `chore/claude-vue3`**. See the full
+   writeup below ("Build configuration: what changed, and the current jest failure inventory").
 
-3. **Migration Checklist Template**
+3. **Migration Checklist Template** — not started.
    - Per-component migration checklist
    - Automated lint rules for Vue 3 patterns
    - Pre-migration and post-migration test scripts
 
-4. **Documentation Updates**
+4. **Documentation Updates** — not started.
    - Migration guide for library consumers
    - Component API changes documentation
    - Deprecation notices
 
 **Deliverables**:
 - ~~Compatibility utilities library~~ (dropped)
-- Vue 3 build configuration
-- Migration tooling and checklists
-- Consumer migration guide (draft)
+- ✅ Vue 3 build configuration
+- Migration tooling and checklists — not started
+- Consumer migration guide (draft) — not started
 
 **Timeline**: 2 weeks
+
+---
+
+## Build configuration: what changed, and the current jest failure inventory
+
+**Done 2026-08-06, branch `chore/claude-vue3`.** The webpack build compiles cleanly under Vue 3, the
+Jest suite runs end-to-end (not blocked by transform/config errors), and Storybook boots
+(`HTTP 200`, 0 compile errors). Component-level Vue 3 behavior fixes were deliberately **not**
+attempted here — that's Phase 3. What follows is the exact dependency/config diff and a categorized
+map of the ~303 test failures Phase 3 will need to work through.
+
+### Dependency changes (`package.json`)
+
+| Package | Before | After |
+|---|---|---|
+| `vue` | `2.7.16` | `3.5.41` |
+| `vue-loader` | `15.11.1` | `17.4.2` |
+| `vue-template-compiler` | `2.7.16` | **removed** (superseded by `@vue/compiler-sfc`) |
+| `@vue/compiler-sfc` | *(transitive only)* | `3.5.41` **(added as an explicit devDependency — see below, our own code imports it directly)** |
+| `@vue/test-utils` | `1.3.6` | `2.4.11` |
+| `@vue/vue2-jest` | `29.2.6` | **removed** → `@vue/vue3-jest@29.2.6` |
+| `@storybook/vue-webpack5` | `7.6.20` | **removed** → `@storybook/vue3-webpack5@7.6.20` |
+| `jest` | `^30.4.2` | `^29.7.0` — **downgraded**: `@vue/vue3-jest@29.2.6` peer-requires `jest: 29.x` exactly, no 30.x support published yet |
+| `jest-environment-jsdom` | `^30.4.1` | `^29.7.0` — kept in lockstep with `jest` |
+| `vue-svg-loader` | `0.16.0` | `0.17.0-beta.2` — the only version line with real Vue 3 support (`peerDependencies: vue: '^2.5.0 \|\| ^3.0.0-0'`); usage changed, see below |
+| `peerDependencies.vue` | `2.7.x` | `^3.0.0` |
+| `babel-preset-typescript-vue`, `babel-preset-vue`, `storybook-addon-vue-info` | present | **removed** — confirmed unused (not referenced by any active config), and were dragging in a stale `vue-template-compiler@2.7.16` transitively that crashed the Vue 3 webpack build via its own internal version-mismatch guard |
+| `vue-docgen-api` | *(implicit/phantom)* | `4.79.2` **(added as an explicit devDependency — see below)** |
+| `packageManager` | `yarn@1.22.22+...` | `npm@11.12.1` |
+
+**Package manager: switched from yarn to npm** (project decision, 2026-08-06). Install via
+`npm install`. The repo's git-tracked `package-lock.json` is now up to date with the Vue 3 dependency
+set; the `yarn.lock` generated mid-session was deleted (never committed).
+
+One real breakage surfaced by the yarn→npm switch itself, unrelated to Vue 3: `vue-docgen-loader`
+(used by `@storybook/preset-vue3-webpack` for prop-table docs) does `require('vue-docgen-api')` at
+runtime but doesn't declare it in its own `package.json` dependencies — a "phantom dependency" that
+only worked before because yarn's classic hoisting happened to place a resolvable copy where Node's
+module resolution could find it. npm's arborist nested `vue-docgen-api` deeper
+(`@storybook/preset-vue3-webpack/node_modules/vue-docgen-api`), which `vue-docgen-loader` (hoisted to
+top-level `node_modules/`) can't see via normal directory-walking resolution — Storybook failed with
+`Cannot find module 'vue-docgen-api'` across every story. Fixed by declaring `vue-docgen-api@4.79.2`
+explicitly ourselves, forcing it to the top level where `vue-docgen-loader` can resolve it too.
+
+### Config file changes
+
+- **`jest.config.js`**: `transform['^.+\\.vue$']` → `@vue/vue3-jest`.
+- **`.storybook/main.js`**: `framework.name` → `@storybook/vue3-webpack5`.
+- **`webpack.config.js`** (main library build): no changes needed — `VueLoaderPlugin` import/usage is
+  API-stable across v15→v17.
+- **`.storybook/webpack.config.js`**: two real fixes were needed here (not just version bumps):
+  1. Removed the `vue$: 'vue/dist/vue.esm.js'` resolve alias — that exact subpath doesn't exist in
+     Vue 3's package (`exports` map rejects it); Vue 3's default resolution already picks the right
+     ESM build without a manual alias. This one alias was the root cause of ~421 of the ~422 initial
+     Storybook compile errors (every story bundled together, one broken resolve poisons the whole
+     preview build).
+  2. `vue-svg-loader@0.17.0-beta.2` changed its expected wiring versus `0.16.0`: it now **outputs a
+     synthetic `.vue` SFC string** that must be chained through `vue-loader` afterward, rather than
+     compiling SVG straight to JS itself. Fixed the `.svg` rule from `loader: 'vue-svg-loader'` to
+     `use: ['vue-loader', { loader: 'vue-svg-loader', options: {...} }]` (per the beta's own README).
+- **`modules/babel-preset-typescript/fileTest.js`**: our own code, not a config file, but infra-level
+  — it used `vue-template-compiler`'s `parseComponent()` to sniff whether a `.vue` file's
+  `<script>`/`<script setup>` block is TypeScript. Swapped for `@vue/compiler-sfc`'s `parse()`, which
+  returns an equivalent `descriptor.script`/`descriptor.scriptSetup.lang` shape.
+
+### Real component-code fixes required just to get the build compiling (done)
+
+Vue 3's inline event-handler expression parser is stricter than Vue 2's: multiple statements inside
+`@event="..."` **must** be semicolon-separated — Vue 2 tolerated bare newline-separated statements
+(relying on JS ASI inside the generated function body), Vue 3's expression parser does not. Fixed in
+3 files, 5 call sites, by adding the missing `;` (behavior-neutral, valid under both Vue versions):
+`Modal/KitBigModal.vue`, `field-renderers/KitMultiSelectEditableRenderer.vue`,
+`field-renderers/KitSingleSelectEditableRenderer.vue`.
+
+### Jest failure inventory (709 passed / 303 failed / 10 skipped of 1022, 74/114 suites red)
+
+Not fixed here — this is Phase 3's starting checklist. Two buckets:
+
+**Bucket A — test-file-only, mechanical, `@vue/test-utils` v1→v2 API renames (no component behavior
+changes, safe to batch-fix independent of any single component's actual Vue 3 migration):**
+- `wrapper.destroy()` → `wrapper.unmount()` (renamed in v2) — **~96 occurrences**
+- `provide` / custom `stubs` / `listeners` **top-level mount options moved under a `global: {...}`
+  key** in v2 (e.g. `mount(C, { provide: {...} })` → `mount(C, { global: { provide: {...} } })`) — hit
+  the Tabs system tests hardest (`inject('state')` silently gets `undefined`, cascades into
+  `TypeError: Object.defineProperty called on non-object` / `reading 'activeTab'`, ~40+ failures)
+- Shallow-stub tag names changed from a generic `anonymous-stub` to the real component's kebab-case
+  name + `-stub` (e.g. `kit-button-stub`), confirmed empirically this session — **134 occurrences** of
+  `'anonymous-stub'` lookups need to target the actual stub name, or (better, and already the
+  established pattern in most of this session's later tests) use `findComponent(ActualImportedComponent)`
+  instead of a tag-name string, which is unaffected by this rename
+
+**Bucket B — genuine Vue 3 runtime/API differences in component source (real Phase 3 migration work):**
+- `Popper/Popper.vue`'s custom `render()` does `this.$slots.default[0].elm` — in Vue 3, `$slots.default`
+  is a **function** (call it: `this.$slots.default()`), not a live array, and a vnode's DOM node is
+  `.el`, not `.elm`. (`TypeError: Cannot read properties of undefined (reading 'elm')`, `'default'`)
+- `Icon/IconWrapper.vue`'s Options API `render(h)` — Vue 3's Options API `render()` no longer receives
+  `h` as an argument; must `import { h } from 'vue'` explicitly, and the vnode data object shape
+  changes (`{ attrs: {...}, on: {...} }` → flat props + `onXxx` handlers). (`TypeError: h is not a
+  function`)
+- The 12 `$listeners` files and 2 `model`-option files already catalogued earlier in this document.
+- Whatever else surfaces once Bucket A's mechanical fixes stop masking real component issues behind
+  test-infra noise — re-run the full suite after Bucket A is cleared to get an accurate Bucket B count.
 
 ---
 
@@ -508,12 +603,14 @@ Before proceeding, please confirm:
 ---
 
 **Status**: 🏁 Phase 1 (Test Coverage Expansion) complete — 100% of the tracked component pool
-(129/129) now has unit tests, well past the original 80% goal. 🔧 Phase 2 (Infrastructure) is
-underway on the `chore/claude-vue3` branch: the `vue3-compat.ts` compatibility-utilities task was
-evaluated and dropped (see decision note above — it doesn't fit a two-major-versions migration
-strategy, and its main driver, Tree/TreeSelect's event bus, no longer exists). Remaining Phase 2 work:
-Vue 3 build configuration (highest-risk item — will likely require fixing a large share of the 1122
-unit tests against `@vue/test-utils` v2 semantics), the migration checklist template, and consumer
-documentation.
+(129/129) now has unit tests, well past the original 80% goal. 🔧 Phase 2 (Infrastructure): the
+`vue3-compat.ts` compatibility-utilities task was evaluated and dropped (doesn't fit a
+two-major-versions migration strategy). **Build configuration is done** (2026-08-06, branch
+`chore/claude-vue3`): webpack compiles under Vue 3, Jest runs end-to-end, Storybook boots — see "Build
+configuration: what changed, and the current jest failure inventory" above for the full diff and the
+categorized Phase 3 starting checklist (709/1022 tests currently pass; the rest split into mechanical
+`@vue/test-utils` v1→v2 API renames vs. genuine Vue 3 component-code fixes). Remaining Phase 2 work:
+the migration checklist template and consumer documentation. Package manager switched from yarn to
+npm mid-session (project decision) — `package-lock.json` is up to date, no lingering `yarn.lock`.
 
 **Last Updated**: 2026-08-06 (originally 2026-02-13)
