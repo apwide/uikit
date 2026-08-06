@@ -10,17 +10,34 @@
 ## 🎯 Current Results
 
 ### Test Statistics
-- **Unit Tests**: 979 passing, 10 skipped (989 total)
-- **Test Files**: 117 files
-- **Components Tested**: 116/149 (~77.9%)
+- **Unit Tests**: 988 passing, 10 skipped (998 total)
+- **Test Files**: 118 files
+- **Components Tested**: 117/149 raw (~78.5%) — **117/141 (~83.0%) against the tracked pool**, see below
 - **Success Rate**: 100% of active tests ✅
 - **Lint**: All new test files pass `eslint` cleanly
 
-### 2026-08-06 Session — Completed Partial Component Systems + Positioning Core
+### ⚠️ ContentLoader family excluded from the coverage goal (per project owner decision, 2026-08-06)
+
+The 8 components under `src/components/ContentLoader/` (`AvatarDetailsLoader`, `AvatarNameLoader`,
+`BulletListLoader`, `ContentLoader`, `FolderPathLoader`, `ListWithImageLoader`, `PageDetailsLoader`,
+`TableLoader`) are **not used** by consuming applications and have been excluded from the tracked
+component pool for the 80% coverage goal. This drops the denominator from 149 to **141 components**.
+
+Caveat for transparency: `ContentLoader.vue` itself (the base skeleton primitive, not the 7 preset
+variants) is technically still referenced internally by `common/PromisedContentLoader.vue`, which in
+turn is used by `field-renderers/UserEditableRendererEnriched.vue`. The exclusion decision was made at
+the project level (these presets aren't used downstream), so the whole family is being treated as
+out-of-scope rather than re-litigated here — if `PromisedContentLoader` or `UserEditableRendererEnriched`
+get tested later, that will exercise `ContentLoader.vue` indirectly anyway.
+
+With this pool of 149 - 8 = **141 trackable components**, coverage is already **117/141 (~83.0%)** —
+past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`.
+
+### 2026-08-06 Session — Completed Partial Component Systems + Positioning Core + ColorPicker
 
 This session focused on finishing component "families" that already had partial coverage, per
-`TESTING_STRATEGY.md`'s Wave 3 priorities, then tackled the last high-priority gap: the positioning
-primitives. 22 new test files / ~135 new tests were added:
+`TESTING_STRATEGY.md`'s Wave 3 priorities, then tackled the positioning primitives and ColorPicker's
+remaining sub-component. 23 new test files / ~144 new tests were added:
 
 1. ✅ **Tabs system** — KitTabHeaders, KitTabHeader, KitTabPanels (18 tests)
 2. ✅ **Modal system** — Blanket, Footer, Header, PositionerAbsolute (23 tests)
@@ -31,6 +48,9 @@ primitives. 22 new test files / ~135 new tests were added:
 7. ✅ **common/Popup.vue** (14 tests) — shallow-mounted with a stubbed `Popper`, standard pattern
 8. ✅ **Popper/Popper.vue** (9 tests) — the core positioning primitive used by Tooltip, BigTooltip,
    Dropdown, Menu and Popup. This one needed a different approach — see below.
+9. ✅ **ColorPicker/KitColorCard.vue** (9 tests) — background-color style, `data-cy-color` attribute,
+   check-icon visibility logic (note: `color` and `selected` share the same default `#000000`, so the
+   check icon *is* visible with fully default props — worth remembering if extending this test file).
 
 Notably, `KitDropdownCheckboxItem` uses the Vue 2 `model` option (documented breaking change for
 Vue 3 in `VUE3_MIGRATION_PLAN.md`) — its v-model contract (`checked`/`input`) is now covered by tests,
@@ -80,6 +100,9 @@ floating-ui directly rather than going through `Popper`/`Popup`.
   library rather than mounting against jsdom's zeroed-out layout — jsdom has no real layout engine, so
   asserting on real pixel output is meaningless and `ResizeObserver`/`IntersectionObserver` may not
   exist at all.
+- Watch for props that share the same default value (e.g. `KitColorCard`'s `color` and `selected` both
+  default to `#000000`) — a "not shown by default" assertion can be wrong if two defaults happen to
+  match; verify actual default behavior before asserting on it.
 
 ---
 
@@ -87,23 +110,22 @@ floating-ui directly rather than going through `Popper`/`Popup`.
 
 | Metric | Original baseline | Current | Change |
 |--------|-------|-----|--------|
-| Unit Tests | 67 | 979 | +912 |
-| Test Files | 11 | 117 | +106 |
-| Components Covered | ~21 | ~116 | +95 |
-| Coverage % | 14% | ~77.9% | +63.9% |
+| Unit Tests | 67 | 988 | +921 |
+| Test Files | 11 | 118 | +107 |
+| Components Covered | ~21 | ~117 | +96 |
+| Coverage % (of 141 tracked) | 14% | ~83.0% | +69.0% |
 
 ---
 
-## 🎯 Remaining Work (33 components without dedicated unit tests)
+## 🎯 Remaining Work (24 components without dedicated unit tests, tracked pool)
 
-Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-06:
+Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-06. Excludes the
+8-component ContentLoader family (see exclusion note above).
 
 | Group | Components |
 |---|---|
 | Button | `KitButtonGroup`, `KitIconButton` |
-| ColorPicker | `KitColorCard` |
 | Common utilities | `InfiniteScroll`, `KitTransitionExpand`, `PromisedContentLoader` |
-| ContentLoader (8 files) | `AvatarDetailsLoader`, `AvatarNameLoader`, `BulletListLoader`, `ContentLoader`, `FolderPathLoader`, `ListWithImageLoader`, `PageDetailsLoader`, `TableLoader` |
 | Field renderers | `KitMarkdownEditableRenderer`, `UserEditableRendererEnriched` |
 | Icon | `MagicStick` |
 | Layout | `KitBorderedPanel`, `KitBorderedPanelRow` |
@@ -115,22 +137,23 @@ Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-
 | Avatar icons (low priority) | `Approved`, `Busy`, `Declined`, `Focus`, `Offline`, `Online`, `PresenceWrapper` (trivial SVG wrappers, indirectly exercised by `Avatar.test.js`) |
 
 ### Target
-- **80% Coverage Goal**: 120/149 components
-- **Current**: 116/149 (~77.9%)
-- **Remaining to reach 80%**: 4 more components
+- **80% Coverage Goal**: 113/141 tracked components (after excluding ContentLoader)
+- **Current**: 117/141 (~83.0%) — **goal already met**
+- Remaining gap is now about closing out full coverage, not hitting the Phase 1 threshold
 
 ---
 
 ## 💪 Next Session Recommendations
 
-1. **ContentLoader family** (8 components) — small, low-risk presentational skeleton loaders; the
-   fastest path to closing the remaining 4-component gap to hit 80%.
-2. **MarkdownEditor / ColorPicker (KitColorCard) / Spotlight trio** — remaining "complex" components
-   from Wave 3.
-3. **Button (KitButtonGroup, KitIconButton) / Toggle (LockSwitch) / Tree/Label** — small, well-isolated
-   remaining gaps.
+1. **MarkdownEditor / Spotlight trio** — remaining "complex" components from Wave 3.
+2. **Button (KitButtonGroup, KitIconButton) / Toggle (LockSwitch) / Tree/Label / Icon/MagicStick** —
+   small, well-isolated remaining gaps.
+3. **Layout (KitBorderedPanel, KitBorderedPanelRow) / common (InfiniteScroll, KitTransitionExpand,
+   PromisedContentLoader)** — round out the utility/layout components.
+4. **Field renderers** (KitMarkdownEditableRenderer, UserEditableRendererEnriched) — the last two
+   untested renderers.
 
 ---
 
-**Status**: Library is at ~77.9% component test coverage — 4 components away from the 80% Phase 1
-goal from `VUE3_MIGRATION_PLAN.md`.
+**Status**: Library is at ~83.0% component test coverage against the tracked (141-component) pool —
+the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md` has been reached.

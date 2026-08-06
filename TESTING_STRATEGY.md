@@ -4,13 +4,15 @@
 
 This document's "Current Test Coverage Analysis" and "Success Metrics" sections below describe the
 **2026-02-13 baseline** and are now stale — several unrecorded sessions since then brought coverage
-to **116/149 components (~77.9%)**, with **117 unit test files / 979 passing tests**. See
-`SESSION_SUMMARY.md` for the verified current state and the up-to-date list of the 33 remaining
-untested components. `Popper.vue` and `common/Popup.vue` — flagged as the top priority in the
-original "❌ Components WITHOUT Tests" list below — are now covered as of 2026-08-06; the remaining
-gap is mostly small, low-risk presentational components (ContentLoader family, MarkdownEditor,
-ColorPicker, Spotlight). The Wave priority matrix and test templates further down in this document are
-still accurate and reusable.
+to **117/149 components raw**. The 8-component `ContentLoader` family is unused by consuming apps and
+was excluded from the tracked coverage pool per project owner decision (2026-08-06), giving a
+141-component pool at **117/141 (~83.0%)** — past the 80% Phase 1 goal. **117 unit test files / 988
+passing tests**. See `SESSION_SUMMARY.md` for the verified current state and the up-to-date list of
+the 24 remaining untested components. `Popper.vue`, `common/Popup.vue`, and `ColorPicker/KitColorCard`
+— flagged as top priorities in the original "❌ Components WITHOUT Tests" list below — are now covered
+as of 2026-08-06; the remaining gap is mostly small, well-isolated components (MarkdownEditor,
+Spotlight trio, Button/Toggle/Tree odds and ends). The Wave priority matrix and test templates further
+down in this document are still accurate and reusable.
 
 ## Current Test Coverage Analysis (historical baseline, 2026-02-13)
 
@@ -434,17 +436,18 @@ describe('ComponentName', () => {
 - Components with E2E tests: 12/149 (8%)
 
 **Current Status (verified 2026-08-06)**:
-- Components with unit tests: 116/149 (~77.9%)
-- Unit test files: 117, unit tests: 979 passing (10 skipped)
-- Remaining to reach 80% target: 4 components (33 total remain untested — see `SESSION_SUMMARY.md`)
+- Components with unit tests: 117/149 raw (~78.5%); 117/141 (~83.0%) against the tracked pool
+  (ContentLoader's 8 unused components excluded — see `SESSION_SUMMARY.md`)
+- Unit test files: 118, unit tests: 988 passing (10 skipped)
+- Remaining in the tracked pool: 24 components — see `SESSION_SUMMARY.md`
 
 **Target After Phase 1**:
-- Components with tests: 120/149 (80%+)
+- Components with tests: 113/141 tracked (80%+) — **met**
 - All critical components: 100% coverage
 - All Vue 2 breaking-change components: 100% coverage
 
 ---
 
-**Status**: 🚧 Phase 1 nearly complete — ~77.9% component coverage, 4 components short of the 80% goal
+**Status**: ✅ Phase 1 goal reached — ~83.0% coverage against the tracked component pool
 
 **Last Updated**: 2026-08-06

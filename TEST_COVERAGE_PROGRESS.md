@@ -7,14 +7,16 @@ additions (Calendar, Form, field renderers, Select variations, and a system-comp
 Tabs/Modal/Menu/Tooltip/Table/Dropdown). This document's numbers below are historical and were
 **not** kept up to date — see `SESSION_SUMMARY.md` for the verified, current state:
 
-- **117 test files**, **979 passing tests** (10 skipped), 100% pass rate
-- **116/149 components** covered (~77.9%), up from the 24/149 (16%) recorded at the bottom of this
-  document
-- Only **33 components** remain without a dedicated unit test — see `SESSION_SUMMARY.md` → "Remaining
-  Work" for the exact list and priority order. `Popper.vue` and `common/Popup.vue` (the positioning
-  core, previously the top gap) are now covered — see `SESSION_SUMMARY.md` for the `@floating-ui/dom`
-  mocking approach used, since it's a reusable pattern for any component depending on real DOM
-  geometry.
+- **118 test files**, **988 passing tests** (10 skipped), 100% pass rate
+- **117/149 components** covered raw, but the 8-component `ContentLoader` family is unused by
+  consuming apps and has been excluded from the tracked pool per project owner decision (2026-08-06) —
+  against the resulting **141-component pool, coverage is 117/141 (~83.0%)**, already past the 80%
+  Phase 1 goal
+- Only **24 components** remain without a dedicated unit test in the tracked pool — see
+  `SESSION_SUMMARY.md` → "Remaining Work" for the exact list. `Popper.vue`, `common/Popup.vue` and
+  `ColorPicker/KitColorCard.vue` (previously the top gaps) are now covered — see `SESSION_SUMMARY.md`
+  for the `@floating-ui/dom` mocking approach used for Popper, a reusable pattern for any component
+  depending on real DOM geometry.
 
 The session-by-session detail below is kept for historical reference on test patterns and templates
 used, but the coverage percentages and "Next Steps" sections are outdated.
