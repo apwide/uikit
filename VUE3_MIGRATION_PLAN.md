@@ -11,15 +11,16 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 ### Test Coverage
 
 > **Updated 2026-08-06**: the figures immediately below are the original 2026-02-13 baseline. Several
-> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **117/149
-> components raw**, with **118 unit test files and 988 passing tests**. `Popper.vue`, `common/Popup.vue`
-> (core positioning primitives) and `ColorPicker/KitColorCard.vue` are now covered — see
-> `SESSION_SUMMARY.md` for the `@floating-ui/dom` mocking approach used for Popper, reusable for similar
-> DOM-geometry-dependent components. The 8-component `ContentLoader` family was excluded from the
-> tracked coverage pool per project owner decision (unused by consuming apps), giving a 141-component
-> pool at **117/141 (~83.0%)** — **the Phase 1 80% coverage goal has been reached**. 24 components
-> remain untested, mostly small, well-isolated ones (MarkdownEditor, Spotlight trio, Button/Toggle/Tree
-> odds and ends).
+> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **122/149
+> components raw**, with **123 unit test files and 1043 passing tests**. `Popper.vue`, `common/Popup.vue`
+> (core positioning primitives), `ColorPicker/KitColorCard.vue`, the full Spotlight onboarding system,
+> and `KitButtonGroup`/`KitIconButton` are now covered — see `SESSION_SUMMARY.md` for the
+> `@floating-ui/dom` mocking approach used for Popper and the full-`mount()` approach needed for
+> Spotlight, both reusable for similar components. The 8-component `ContentLoader` family was excluded
+> from the tracked coverage pool per project owner decision (unused by consuming apps), giving a
+> 141-component pool at **122/141 (~86.5%)** — **the Phase 1 80% coverage goal has been reached**. 19
+> components remain untested, all small, well-isolated ones (MarkdownEditor, Toggle/Tree/Icon odds and
+> ends, layout/common utilities).
 
 - **Unit Tests**: 9 test files covering 6 component categories *(2026-02-13 baseline)*
   - Button, Checkbox, Form (Input, TextArea, FieldGroup)
@@ -110,14 +111,14 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    - ✅ Calendar components
    - 🔲 MarkdownEditor
    - ✅ ColorPicker
-   - 🔲 Spotlight (onboarding) — KitSpotlightStepHint done, KitSpotlight/Mask/HintContainer remain
+   - ✅ Spotlight (onboarding)
    - ✅ Field renderers (20+ components; KitMarkdownEditableRenderer and UserEditableRendererEnriched remain)
 
-Phase 1's 80% goal has been reached (117/141 tracked components, ContentLoader family excluded as
-unused — see `SESSION_SUMMARY.md`). `Popper.vue`, `common/Popup.vue`, and `ColorPicker/KitColorCard`
-are now tested. Remaining gap (24 components, see `SESSION_SUMMARY.md` for full list): MarkdownEditor,
-the Spotlight trio, and a handful of smaller utility components (KitButtonGroup, KitIconButton,
-LockSwitch, Tree/Label, MagicStick, KitBorderedPanel(Row), etc.).
+Phase 1's 80% goal has been reached (122/141 tracked components, ContentLoader family excluded as
+unused — see `SESSION_SUMMARY.md`). `Popper.vue`, `common/Popup.vue`, `ColorPicker/KitColorCard`, the
+Spotlight system, and `KitButtonGroup`/`KitIconButton` are now tested. Remaining gap (19 components,
+see `SESSION_SUMMARY.md` for full list): MarkdownEditor and a handful of smaller utility components
+(LockSwitch, Tree/Label, MagicStick, KitBorderedPanel(Row), etc.).
 
 **Testing Approach**:
 - Unit tests: Component props, events, slots, state management
