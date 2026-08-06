@@ -5,6 +5,7 @@ module.exports = {
   testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
   moduleFileExtensions: ['ts', 'js', 'vue'],
   moduleNameMapper: {
+    '\\.(css|less|scss)$': '<rootDir>/tests/mocks/styleMock.js',
     '@/(.*)$': '<rootDir>/src/$1',
     '@/components/(.*)$': '<rootDir>/src/components/$1',
     '@components/(.*)$': '<rootDir>/src/components/$1'

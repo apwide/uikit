@@ -10,15 +10,15 @@
 ## 🎯 Current Results
 
 ### Test Statistics
-- **Unit Tests**: 1072 passing, 10 skipped (1082 total)
-- **Test Files**: 126 files
-- **Components Tested**: 125/149 raw (~83.9%) — **125/130 (~96.2%) against the tracked pool**, see below
+- **Unit Tests**: 1104 passing, 10 skipped (1114 total)
+- **Test Files**: 128 files
+- **Components Tested**: 127/149 raw (~85.2%) — **127/129 (~98.4%) against the tracked pool**, see below
 - **Success Rate**: 100% of active tests ✅
 - **Lint**: All new test files pass `eslint` cleanly
 
 ### ⚠️ Components excluded from the coverage goal (per project owner decisions, 2026-08-06)
 
-Three rounds of exclusions were made this session, all because the components aren't used by consuming
+Four rounds of exclusions were made this session, all because the components aren't used by consuming
 applications:
 
 1. **ContentLoader family** (8 components: `AvatarDetailsLoader`, `AvatarNameLoader`, `BulletListLoader`,
@@ -37,9 +37,13 @@ applications:
    `PromisedContentLoader` is the sole internal consumer of `ContentLoader.vue` (see point 1's caveat),
    so excluding it removes that last internal tie entirely. The Avatar icons remain indirectly exercised
    by `Avatar.test.js` even though they have no dedicated test file of their own.
+4. **`field-renderers/UserEditableRendererEnriched.vue`** — 1 more component. This was the last internal
+   consumer of `PromisedContentLoader.vue` (see point 3), so the whole `ContentLoader` →
+   `PromisedContentLoader` → `UserEditableRendererEnriched` chain is now excluded end-to-end, no
+   remaining internal ties to re-litigate.
 
-This drops the denominator from 149 to **149 - 8 - 3 - 1 - 7 = 130 tracked components**. Coverage is
-**125/130 (~96.2%)** — well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`.
+This drops the denominator from 149 to **149 - 8 - 3 - 1 - 7 - 1 = 129 tracked components**. Coverage is
+**127/129 (~98.4%)** — well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`.
 
 ### 2026-08-06 Session — Completed Partial Component Systems + Positioning Core + ColorPicker + Spotlight + Button
 
@@ -80,6 +84,11 @@ Button components. 28 new test files / ~180 new tests were added across the sess
     (`stories/Menu/Menu.story.vue`), not used elsewhere in `src/`, but was kept in scope (not excluded)
     per explicit instruction. Test file named `MenuItemPlain.test.js` to avoid a filename clash with
     the existing `KitMenuItem` test file.
+18. ✅ **MarkdownEditor/KitMarkdownEditor.vue** (22 tests) — the last "complex" component from Wave 3.
+    Required mocking the `easymde` third-party library and, before that, a `jest.config.js` fix — see
+    below.
+19. ✅ **field-renderers/KitMarkdownEditableRenderer.vue** (10 tests) — shallow-mounted; uncovered a real
+    bug in `findTableParent()` — see below.
 
 Notably, `KitDropdownCheckboxItem` uses the Vue 2 `model` option (documented breaking change for
 Vue 3 in `VUE3_MIGRATION_PLAN.md`) — its v-model contract (`checked`/`input`) is now covered by tests,
@@ -139,6 +148,47 @@ findings from testing this:
   test) — otherwise its `document.body.style.position = 'fixed'`, `document` keydown listener, and
   reparented DOM node leak into subsequent tests in the same file.
 
+### Testing KitMarkdownEditor.vue: a jest.config.js fix plus a module-interop mock
+
+`KitMarkdownEditor.vue` couldn't be imported in Jest **at all** before this session — it does
+`import 'easymde/dist/easymde.min.css'`, and there was no CSS handling configured in `jest.config.js`
+(no other component imports a raw CSS file; everything else uses scoped `<style>` blocks). This threw
+`SyntaxError: Unexpected token '.'` trying to parse the CSS as JS. Fixed by adding a `moduleNameMapper`
+entry (`'\\.(css|less|scss)$': '<rootDir>/tests/mocks/styleMock.js'`, a new file exporting `{}`) —
+this is a project-wide, purely additive change with no effect on other tests, standard practice for
+Jest + raw CSS imports.
+
+With that fixed, mounting still failed with `TypeError: easymde_1.default is not a constructor`. Root
+cause: `easymde`'s real CommonJS export is `module.exports = EasyMDE` (no `.default`), but the
+`<script setup lang="ts">` block compiles `import EasyMDE from 'easymde'` down to `easymde_1.default`
+access unconditionally (relying on webpack's automatic CJS interop, which production builds get but
+Jest's plain `require()` does not — confirmed real `require('easymde')` under Jest also has no
+`.default`). **The fix**: `jest.mock('easymde', factory)` must return `{ __esModule: true, default:
+MockEasyMDE }`, not the constructor directly — that satisfies both the SFC's raw `.default` access
+*and* the test file's own Babel-interop'd `import EasyMDE from 'easymde'`.
+
+One more mock pitfall: for a `jest.fn().mockImplementation(function (options) { this.foo = ... })`
+used as a constructor via `new`, **`EasyMDE.mock.results[i].value` is `undefined`** — the wrapped
+implementation function itself returns `undefined` (no explicit `return this`), and Jest records the
+implementation's own return value, not what `new` actually produces. Use **`EasyMDE.mock.instances[i]`**
+instead to get the real constructed instance.
+
+Testing `KitMarkdownEditableRenderer.vue` (which wraps `KitMarkdownEditor`/`KitInlineEdit`) was done
+with plain `shallowMount` — this sidesteps `easymde` entirely since `KitMarkdownEditor` gets stubbed.
+It surfaced a real, previously-untested bug: `onStopEditing()` calls `findTableParent(containerRef.value)`
+(`src/utils/dom.ts`), which does `while (walk !== document.body) { ...; walk = walk.parentElement }`
+with **no null-guard** — on a `shallowMount`ed component not attached to `document.body` (the default),
+`walk` eventually becomes `null` and `null.tagName` throws, silently swallowing the `emit('stop-editing')`
+call after it (Vue logs the error to console but the parent test doesn't fail loudly unless you assert
+on the resulting emit, as this session's test did). Fixed on the test side with `attachTo:
+document.body` + `component.destroy()`; the underlying `findTableParent` null-guard gap in
+`src/utils/dom.ts` was **not** fixed (out of scope — flagging it here since it's a legitimate small bug
+worth a follow-up fix independent of test coverage work). Separately, triggering `start-editing` (not
+tested) would hit an **infinite retry loop** in `positionEditor()` — it `await`s `nextTick()` and
+recurses forever if `markdownEditorRef.value` never becomes defined, which is exactly the case under
+`shallowMount` since that ref lives inside `KitInlineEdit`'s stubbed-out `#editor` slot. Don't try to
+test `start-editing` under `shallowMount` for this component.
+
 ### Notable test-writing gotchas found this session (useful for future sessions)
 - This repo uses **`@vue/test-utils` v1** (Vue 2 compatible). `wrapper.findAll(...)` and
   `findAllComponents(...)` return a `WrapperArray`, which does **not** support `array[i]` bracket
@@ -173,6 +223,18 @@ findings from testing this:
   `.closest('span')` from a `<span>` returns that same span, not an ancestor. Use `.parentElement`
   (or a more specific ancestor selector) when you actually want the wrapping element, as with
   `KitBorderedPanelRow`'s `v-show`-toggled wrapper around its `after-label` slot content.
+- Any component that walks `element.parentElement` up toward `document.body` (like
+  `findTableParent()` in `src/utils/dom.ts`, used by `KitMarkdownEditableRenderer`) needs
+  `attachTo: document.body` when mounted — on a detached tree the walk never reaches `document.body`
+  and can throw or loop depending on the guard (or lack thereof) in the source.
+- For a mocked constructor (`jest.fn().mockImplementation(function () { this.x = ... })` used via
+  `new`), read the created instance from **`mock.instances[i]`**, not `mock.results[i].value` — the
+  latter reflects the wrapped function's own (often `undefined`) return value, not what `new` actually
+  produced.
+- When a `<script setup lang="ts">` component's compiled output accesses a dependency's `.default`
+  directly (an interop assumption normally satisfied by webpack, not by Jest's plain `require()`),
+  shape the `jest.mock(...)` factory's return value as `{ __esModule: true, default: TheMock }` rather
+  than returning the mock directly.
 
 ---
 
@@ -180,41 +242,37 @@ findings from testing this:
 
 | Metric | Original baseline | Current | Change |
 |--------|-------|-----|--------|
-| Unit Tests | 67 | 1072 | +1005 |
-| Test Files | 11 | 126 | +115 |
-| Components Covered | ~21 | ~125 | +104 |
-| Coverage % (of 130 tracked) | 14% | ~96.2% | +82.2% |
+| Unit Tests | 67 | 1104 | +1037 |
+| Test Files | 11 | 128 | +117 |
+| Components Covered | ~21 | ~127 | +106 |
+| Coverage % (of 129 tracked) | 14% | ~98.4% | +84.4% |
 
 ---
 
-## 🎯 Remaining Work (5 components without dedicated unit tests, tracked pool)
+## 🎯 Remaining Work (2 components without dedicated unit tests, tracked pool)
 
 Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-06. Excludes the
-8-component ContentLoader family, MagicStick/Label/LockSwitch, PromisedContentLoader, and the 7 Avatar
-icon subcomponents (see exclusion note above).
+8-component ContentLoader family, MagicStick/Label/LockSwitch, PromisedContentLoader, the 7 Avatar
+icon subcomponents, and UserEditableRendererEnriched (see exclusion note above).
 
 | Group | Components |
 |---|---|
 | Common utilities | `InfiniteScroll`, `KitTransitionExpand` |
-| Field renderers | `KitMarkdownEditableRenderer`, `UserEditableRendererEnriched` |
-| MarkdownEditor | `KitMarkdownEditor` |
 
 ### Target
-- **80% Coverage Goal**: 104/130 tracked components (after exclusions) — **met**
-- **Current**: 125/130 (~96.2%)
-- Remaining gap is now about closing out full coverage, not hitting the Phase 1 threshold
+- **80% Coverage Goal**: 104/129 tracked components (after exclusions) — **met**
+- **Current**: 127/129 (~98.4%)
+- Only 2 components short of 100% coverage of the tracked pool
 
 ---
 
 ## 💪 Next Session Recommendations
 
-1. **MarkdownEditor/KitMarkdownEditor** — the last "complex" component from Wave 3.
-2. **common/InfiniteScroll.vue, common/KitTransitionExpand.vue** — round out the utility components.
-3. **Field renderers** (KitMarkdownEditableRenderer, UserEditableRendererEnriched) — the last two
-   untested renderers; these would be the natural finish line for 100% of the tracked pool.
+1. **common/InfiniteScroll.vue, common/KitTransitionExpand.vue** — the last 2 components in the tracked
+   pool. Closing these out reaches 100% (129/129) of the tracked pool.
 
 ---
 
-**Status**: Library is at ~96.2% component test coverage against the tracked (130-component) pool —
-well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`. Only 5 components remain for full
-coverage of the tracked pool.
+**Status**: Library is at ~98.4% component test coverage against the tracked (129-component) pool —
+well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`. Only `InfiniteScroll` and
+`KitTransitionExpand` remain for full coverage of the tracked pool.
