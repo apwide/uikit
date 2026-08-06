@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-item" :active="active" v-on="$listeners">
+  <div class="menu-item" :active="active || undefined" v-on="$listeners">
     <span v-if="$slots['icon-before']" class="menu-item-icon-before">
       <slot name="icon-before" />
     </span>

@@ -1,11 +1,15 @@
 <template>
-  <td class="kit-calendar-day" :highlighted="isHighlighted" :range-start="isRangeStart" :range-end="isRangeEnd">
+  <td
+    class="kit-calendar-day"
+    :highlighted="isHighlighted || undefined"
+    :range-start="isRangeStart || undefined"
+    :range-end="isRangeEnd || undefined">
     <KitButton
       appearance="subtle"
       class="kit-calendar-day__date"
-      :today="day.isToday"
+      :today="day.isToday || undefined"
       :disabled="isDisabled"
-      :is-not-same-month="day.isNotSameMonth"
+      :is-not-same-month="day.isNotSameMonth || undefined"
       :is-selected="day.isSelected"
       @click.stop="onDateSelected">
       {{ date }}

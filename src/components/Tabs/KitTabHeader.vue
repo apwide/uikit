@@ -1,5 +1,9 @@
 <template>
-  <div class="kit-tab-header" :class="{ 'kit-is-reorderable': isReorderable }" :active="active" :disabled="disabled">
+  <div
+    class="kit-tab-header"
+    :class="{ 'kit-is-reorderable': isReorderable }"
+    :active="active || undefined"
+    :disabled="disabled || undefined">
     <template v-if="isReorderable">
       <KitIcon class="kit-drag-handle" type="grip-vertical" />
     </template>

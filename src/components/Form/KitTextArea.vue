@@ -7,7 +7,7 @@
       :rows="rows"
       :disabled="isLoading"
       :style="{ height: currentHeight, width, maxHeight }"
-      :auto="height === 'auto'"
+      :auto="height === 'auto' || undefined"
       v-on="listeners"
       @keydown="resize"
       @input="resize"

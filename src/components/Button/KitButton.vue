@@ -3,13 +3,13 @@
     ref="button"
     type="button"
     :appearance="appearance"
-    :disabled="isDisabled"
-    :selected="isSelected"
-    :loading="isLoading"
+    :disabled="isDisabled || undefined"
+    :selected="isSelected || undefined"
+    :loading="isLoading || undefined"
     :spacing="spacing"
-    :round="round"
+    :round="round || undefined"
     v-on="listeners">
-    <span class="kit-button__wrapper" tabindex="-1" :icon-is-only-child="iconIsOnlyChild">
+    <span class="kit-button__wrapper" tabindex="-1" :icon-is-only-child="iconIsOnlyChild || undefined">
       <slot v-if="!isLoading" name="icon-before" />
       <span v-if="$slots.default" ref="label" class="kit-button__label"><slot /></span>
       <slot v-if="!isLoading" name="icon-after" />

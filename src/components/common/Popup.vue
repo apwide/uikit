@@ -7,7 +7,7 @@
     :boundaries-element="boundariesElement"
     :position-fixed="positionFixed"
     spotlight-skip>
-    <div class="kit-popup" role="tooltip" :data-light-shadows="withLightShadows">
+    <div class="kit-popup" role="tooltip" :data-light-shadows="withLightShadows || undefined">
       <slot />
       <div v-if="!withoutArrow" class="kit-popup-arrow" data-popper-arrow />
     </div>

@@ -1,6 +1,6 @@
 <template>
   <span class="kit-lozenge-wrapper">
-    <span class="kit-lozenge" :appearance="appearance" :subtle="subtle">
+    <span class="kit-lozenge" :appearance="appearance" :subtle="subtle || undefined">
       <slot />
     </span>
   </span>

@@ -1,5 +1,5 @@
 <template>
-  <label :for="id" :disabled="disabled">
+  <label :for="id" :disabled="disabled || undefined">
     <input
       :id="id"
       :disabled="disabled"

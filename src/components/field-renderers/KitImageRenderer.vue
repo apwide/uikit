@@ -1,5 +1,5 @@
 <template>
-  <div class="image-container" :loading="isLoading">
+  <div class="image-container" :loading="isLoading || undefined">
     <img v-if="url" class="image" :src="url" alt="attached image" :height="height" :width="width" />
     <div v-else class="placeholder" :style="{ width: `${placeholderSize}px`, height: `${placeholderSize}px` }" />
     <div v-if="showActions && (url || $slots.actions)" class="actions">

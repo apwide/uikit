@@ -47,7 +47,7 @@ describe('KitTabHeader', () => {
     const component = shallowMount(KitTabHeader, {
       propsData: { id: 'tab1', disabled: true }
     })
-    expect(component.attributes('disabled')).toBe('disabled')
+    expect(component.attributes('disabled')).toBe('true')
   })
 
   it('shows drag handle icon when reorderable is enabled globally and locally', () => {

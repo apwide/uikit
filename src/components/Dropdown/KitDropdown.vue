@@ -1,5 +1,5 @@
 <template>
-  <div ref="dropdownContainer" :full-width="fullWidth" class="dropdown-container">
+  <div ref="dropdownContainer" :full-width="fullWidth || undefined" class="dropdown-container">
     <slot v-if="slots.trigger" :is-disabled="isDisabled" :is-open="open" :toggle="onTriggerClick" name="trigger" />
     <KitButton v-else :appearance="appearance" :is-disabled="isDisabled" :is-selected="open" @click="onTriggerClick">
       {{ label }}

@@ -1,10 +1,26 @@
 <template>
-  <div class="kit-text-field" data-cy="input-wrapper" v-on="$listeners">
+  <div class="kit-text-field" data-cy="input-wrapper" v-bind="normalizedAttrs" v-on="$listeners">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, useAttrs } from 'vue'
+
+defineOptions({ inheritAttrs: false })
+
+const BOOLEAN_ATTRS = ['compact', 'select', 'editable', 'should-fit-container', 'is-loading', 'is-focused', 'is-invalid', 'disabled']
+
+const attrs = useAttrs()
+const normalizedAttrs = computed(() => {
+  const result = { ...attrs }
+  for (const key of BOOLEAN_ATTRS) {
+    if (result[key] === false) {
+      delete result[key]
+    }
+  }
+  return result
+})
 </script>
 
 <style scoped>

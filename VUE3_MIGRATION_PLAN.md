@@ -301,11 +301,42 @@ that need a per-component decision, not a mechanical rename (Phase 3 territory):
   (3 of the `$listeners` test files — `KitIconButton`, `KitTextField`, `MenuItemPlain` — still have a
   top-level `listeners:` mount option left untouched on purpose: fixing the test alone can't pass while
   `v-on="$listeners"` is dead code under Vue 3).
-- **Systemic: Vue 3 always renders a stringified value (`"true"`/`"false"`) for boolean/custom attrs
-  instead of omitting the attribute when falsy** — Vue 2 omitted the attribute entirely for false values,
-  including on genuine native HTML boolean attributes like `disabled`. Breaks any
-  `expect(wrapper.attributes('x')).toBeUndefined()` assertion for a false boolean. First seen on
-  `KitTabHeader`, confirmed to recur elsewhere; needs a scope decision (see below) before a fix pass.
+- ~~Systemic: Vue 3 always renders a stringified value (`"true"`/`"false"`) for boolean/custom attrs
+  instead of omitting the attribute when falsy~~ — **FIXED.** Root cause: Vue 3's boolean-attribute
+  whitelist (`specialBooleanAttrs`, used by `patchAttr`) is narrow (`readonly`, `itemscope`,
+  `allowfullscreen`, `formnovalidate`, `ismap`, `nomodule`, `novalidate`) — real native boolean DOM
+  attributes like `disabled`/`checked`/`selected` are normally handled via **DOM property assignment**
+  instead (the browser's IDL boolean coercion omits the attribute for `false`), but that path only
+  applies to *real* native elements/properties. Any custom attribute name (`subtle`, `highlighted`,
+  `active`, `sortable`, `is-focused`, `full-width`, …) — and any attribute landing on a **stub** during
+  `shallowMount` (stubs are fake custom elements, so even `disabled` loses the property-assignment
+  path) — falls through to `patchAttr`, which now stringifies `false` instead of omitting it (a
+  documented Vue 3 breaking change: https://v3-migration.vuejs.org/breaking-changes/attribute-coercion.html).
+  This turned out to be a **real production CSS bug**, not just a test-assertion issue: this codebase
+  relies heavily on presence-only attribute selectors (`.kit-lozenge[subtle]`, `[highlighted]`,
+  `[active]:after`, `th[sortable]:hover`, `[loading]`, `[busy]`, etc.) that would incorrectly match
+  `attr="false"` under Vue 3. Fixed by auditing every `[attr]` presence selector in every component's
+  `<style>` block (~40 selectors across ~25 files) against its template bindings, then applying
+  `:attr="expr || undefined"` (an `undefined`-bound attribute is still correctly omitted in both Vue 2
+  and Vue 3 — the fix is a no-op for the `true` case) to every binding that actually feeds a live
+  selector. Fixed in: `KitButton.vue` (disabled/selected/loading/round/icon-is-only-child),
+  `Day.vue` (highlighted/range-start/range-end/today/is-not-same-month), `TimePickerMenu.vue`
+  (data-highlight), `KitCheckbox.vue` (disabled/is-invalid), `Popup.vue` (data-light-shadows),
+  `KitDropdown.vue` (full-width), `KitImageRenderer.vue` (loading), `KitInlineEdit.vue` (compact),
+  `KitTextArea.vue` (auto), `KitToggle.vue` (label disabled), `KitTable.vue` (sticky-header/busy),
+  `KitSelectOption.vue` (selected/current), `KitLozenge.vue` (subtle), `MenuItem.vue` (active),
+  `KitTabHeader.vue` (active/disabled), `TableHeaderCell.vue` (sortable). `KitTextField.vue` needed a
+  different approach — it has no declared props at all, so every boolean-ish attr (`compact`, `select`,
+  `editable`, `should-fit-container`, `is-loading`, `is-focused`, `is-invalid`, `disabled`) arrives as a
+  raw fallthrough attr from 9 different caller components; fixed centrally with `inheritAttrs: false` +
+  a `useAttrs()`-based normalizer instead of touching all 9 callers. Along the way, found **dead CSS**
+  (presence selectors with no corresponding binding anywhere in the codebase, so already inert
+  pre-migration, left alone as out-of-scope cleanup): `KitTabButton.vue` (`[stretch]`, `[active]`,
+  `[inactive]`), `KitDropdownItem.vue` (`[disabled]`, `[non-link]`), `KitRadio.vue` (`[disabled]`),
+  `KitFieldGroup.vue` (`[required]`), `InlineEditViewContent.vue` (`[icon]` — selector also targets a
+  `.view-content` class that doesn't exist in the template, a second independent reason it's dead).
+  Full jest suite re-run after the fix: 834 passed / 178 failed / 10 skipped (up from 828/184/10), zero
+  regressions (diffed the complete before/after failure list).
 - **Shallow stubs no longer auto-render default slot content.** VTU v1 rendered a stub's default slot
   content; v2 does not unless the slot is explicitly re-provided. Breaks tests that read `.text()` off a
   stubbed child expecting its slot content to show (e.g. `Years.test.js` expecting KitButton stub text

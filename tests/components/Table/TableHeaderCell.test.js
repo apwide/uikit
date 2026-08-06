@@ -45,7 +45,7 @@ describe('TableHeaderCell', () => {
     const component = shallowMount(TableHeaderCell, {
       propsData: { column: sortableColumn }
     })
-    expect(component.attributes('sortable')).toBe('sortable')
+    expect(component.attributes('sortable')).toBe('true')
   })
 
   it('applies column width as style when provided', () => {

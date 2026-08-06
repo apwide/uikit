@@ -7,7 +7,7 @@
         v-for="option in options"
         style="margin-left: 0px"
         appearance="subtle"
-        :data-highlight="isHighlighted(option)"
+        :data-highlight="isHighlighted(option) || undefined"
         @mousemove.native="mouseOver"
         @click="onTimeSelected(option)">
         {{ option }}

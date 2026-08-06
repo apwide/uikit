@@ -1,12 +1,12 @@
 <template>
-  <label ref="checkbox" class="kit-checkbox__wrapper" :for="id" tabindex="-1" :disabled="disabled">
+  <label ref="checkbox" class="kit-checkbox__wrapper" :for="id" tabindex="-1" :disabled="disabled || undefined">
     <input
       :id="id"
       ref="input"
       v-model="isChecked"
       :value="value"
       type="checkbox"
-      :is-invalid="isInvalid"
+      :is-invalid="isInvalid || undefined"
       :disabled="disabled"
       @focus="onFocus"
       @blur="onBlur" />
