@@ -1,7 +1,7 @@
 <template>
   <div class="secure-string-line__view" style="">
     <div v-if="!obfuscated" class="string-line-wrapper" style="flex: 1" v-html="htmlValue || value" />
-    <StringLineRenderer
+    <KitStringLineRenderer
       v-else
       :value="
         Array.from({ length: Math.min(value.length, 8) })
@@ -36,7 +36,7 @@ import KitIconButton from '../Button/KitIconButton'
 import KitButtonGroup from '../Button/KitButtonGroup'
 import KitIcon from '../Icon/KitIcon'
 import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
-import StringLineRenderer from './StringLineRenderer'
+import KitStringLineRenderer from './KitStringLineRenderer'
 
 type Props = {
   value?: string

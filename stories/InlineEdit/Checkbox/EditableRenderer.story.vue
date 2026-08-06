@@ -2,25 +2,25 @@
   <div>
     <h5>Editable:</h5>
     <p>
-      <CheckboxEditableRenderer :value="value" @save-requested="onSave" />
+      <KitCheckboxEditableRenderer :value="value" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <CheckboxEditableRenderer :value="value" @save-requested="onSaveError" />
+      <KitCheckboxEditableRenderer :value="value" @save-requested="onSaveError" />
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <CheckboxEditableRenderer :value="value" :editable="false" />
+      <KitCheckboxEditableRenderer :value="value" :editable="false" />
     </p>
   </div>
 </template>
 
 <script>
 import { faker } from '@faker-js/faker'
-import CheckboxEditableRenderer from '@/components/field-renderers/CheckboxEditableRenderer'
+import KitCheckboxEditableRenderer from '@/components/field-renderers/KitCheckboxEditableRenderer.vue'
 
 export default {
-  components: { CheckboxEditableRenderer },
+  components: { KitCheckboxEditableRenderer },
   data() {
     faker.seed(1)
     return {

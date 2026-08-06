@@ -2,23 +2,23 @@
   <div>
     <h5>Editable:</h5>
     <p>
-      <StringLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
+      <KitStringLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <StringLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
+      <KitStringLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
     </p>
     <h5>Limited width:</h5>
     <p class="limited-width">
-      <StringLineEditableRenderer :value="value" @save-requested="onSave" />
+      <KitStringLineEditableRenderer :value="value" @save-requested="onSave" />
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <StringLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
+      <KitStringLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
     </p>
     <h5>Without confirmation:</h5>
     <p>
-      <StringLineEditableRenderer
+      <KitStringLineEditableRenderer
         :value="value"
         :confirm="false"
         align="end"
@@ -29,21 +29,21 @@
     <h5>Custom renderer</h5>
     <p>Useful when value is to be presented differently than just text</p>
     <p>
-      <StringLineEditableRenderer :value="value" @save-requested="onSave">
+      <KitStringLineEditableRenderer :value="value" @save-requested="onSave">
         <KitLozenge>{{ value }}</KitLozenge>
-      </StringLineEditableRenderer>
+      </KitStringLineEditableRenderer>
     </p>
     <h5>Custom renderer (when none-editable)</h5>
     <p>
-      <StringLineEditableRenderer :editable="false" @save-requested="onSave">
+      <KitStringLineEditableRenderer :editable="false" @save-requested="onSave">
         <KitLozenge>{{ value }}</KitLozenge>
-      </StringLineEditableRenderer>
+      </KitStringLineEditableRenderer>
     </p>
     <h5>In a bigger parent element</h5>
     <div style="font-weight: 500; font-size: 20px">
-      <StringLineEditableRenderer :value="value" @save-requested="onSave">
+      <KitStringLineEditableRenderer :value="value" @save-requested="onSave">
         {{ value }}
-      </StringLineEditableRenderer>
+      </KitStringLineEditableRenderer>
     </div>
   </div>
 </template>
@@ -52,7 +52,7 @@
 import { faker } from '@faker-js/faker'
 import KitLozenge from '@components/Lozenge/KitLozenge.vue'
 import { ref } from 'vue'
-import StringLineEditableRenderer from '@/components/field-renderers/StringLineEditableRenderer.vue'
+import KitStringLineEditableRenderer from '@/components/field-renderers/KitStringLineEditableRenderer.vue'
 
 faker.seed(1)
 

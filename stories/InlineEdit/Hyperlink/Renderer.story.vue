@@ -1,17 +1,17 @@
 <template>
   <div>
     <p>
-      <HyperlinkRenderer :link="link" />
+      <KitHyperlinkRenderer :link="link" />
     </p>
   </div>
 </template>
 
 <script>
 import { faker } from '@faker-js/faker'
-import HyperlinkRenderer from '@/components/field-renderers/HyperlinkRenderer'
+import KitHyperlinkRenderer from '@/components/field-renderers/KitHyperlinkRenderer'
 
 export default {
-  components: { HyperlinkRenderer },
+  components: { KitHyperlinkRenderer },
   data() {
     faker.seed(1)
     return {

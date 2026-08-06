@@ -2,23 +2,23 @@
   <div style="max-width: 600px">
     <h5>Editable:</h5>
     <p>
-      <SecureSingleLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
+      <KitSecureStringLineEditableRenderer data-cy="editable" :value="value" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <SecureSingleLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
+      <KitSecureStringLineEditableRenderer data-cy="editable-error" :value="value" @save-requested="onSaveError" />
     </p>
     <h5>Limited width:</h5>
     <p class="limited-width">
-      <SecureSingleLineEditableRenderer :value="value" @save-requested="onSave" />
+      <KitSecureStringLineEditableRenderer :value="value" @save-requested="onSave" />
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <SecureSingleLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
+      <KitSecureStringLineEditableRenderer data-cy="non-editable" :value="value" :editable="false" />
     </p>
     <h5>Without confirmation:</h5>
     <p>
-      <SecureSingleLineEditableRenderer
+      <KitSecureStringLineEditableRenderer
         :value="value"
         :confirm="false"
         align="end"
@@ -31,10 +31,10 @@
 
 <script>
 import { faker } from '@faker-js/faker'
-import SecureSingleLineEditableRenderer from '../../../src/components/field-renderers/SecureStringLineEditableRenderer'
+import KitSecureStringLineEditableRenderer from '../../../src/components/field-renderers/KitSecureStringLineEditableRenderer'
 
 export default {
-  components: { SecureSingleLineEditableRenderer },
+  components: { KitSecureStringLineEditableRenderer },
   data() {
     faker.seed(1)
     return {

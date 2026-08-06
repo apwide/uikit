@@ -13,17 +13,17 @@
     @search-change="debouncedGetUsers">
     <template #option="{ option }">
       <div class="label">
-        <UserRenderer tag="span" :user="option" />
+        <KitUserRenderer tag="span" :user="option" />
       </div>
     </template>
     <template #selected="{ selected }">
       <div class="label">
-        <UserRenderer tag="span" :user="selected" />
+        <KitUserRenderer tag="span" :user="selected" />
       </div>
     </template>
     <template #tag="{ tag }">
       <div class="user-tag">
-        <UserRenderer appearance="micro" tag="span" :user="tag.value" />
+        <KitUserRenderer appearance="micro" tag="span" :user="tag.value" />
       </div>
     </template>
   </KitSelect>
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { debounce } from '@components/utils'
-import UserRenderer from '../field-renderers/UserRenderer.vue'
+import KitUserRenderer from '../field-renderers/KitUserRenderer.vue'
 import KitSelect from './KitSelect.vue'
 
 type User = { key: string; name: string; disabled: boolean }

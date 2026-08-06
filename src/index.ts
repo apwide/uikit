@@ -35,20 +35,11 @@ import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue
 import KitTable from './components/Table/KitTable.vue'
 import KitProgress from './components/Progress/progress'
 import KitAvatar from './components/Avatar/KitAvatar.vue'
-import {
-  KitTabButton,
-  KitTabHeaders,
-  KitTabPanel,
-  KitTabProvider,
-  KitTabHeader,
-  KitTabPanels
-} from './components/Tabs/index'
-import tooltip from './directives/tooltip'
 import KitBigModal from './components/Modal/KitBigModal.vue'
 import KitButtonGroup from './components/Button/KitButtonGroup.vue'
 import KitIconButton from './components/Button/KitIconButton.vue'
 import KitIcon from './components/Icon/KitIcon.vue'
-import KitSetToClipboard from './components/CopyToClipboard/SetToClipboard'
+import KitSetToClipboard from '@components/CopyToClipboard/KitSetToClipboard'
 import KitToggle from './components/Toggle/KitToggle.vue'
 import KitCheckbox from './components/Checkbox/KitCheckbox.vue'
 import KitSecuredInput from './components/Form/KitSecuredInput.vue'
@@ -56,6 +47,32 @@ import KitCard from './components/Card/KitCard.vue'
 import KitRadioGroup from './components/Radio/KitRadioGroup.vue'
 import KitRadio from './components/Radio/KitRadio.vue'
 import KitCollapsible from './components/Collapsible/KitCollapsible.vue'
+import KitBorderedPanel from './components/layout/BorderedPanel/KitBorderedPanel.vue'
+import KitBorderedPanelRow from './components/layout/BorderedPanel/KitBorderedPanelRow.vue'
+import KitMenuSeparator from './components/Dropdown/KitDropdownSeparator.vue'
+import KitActionMenu from './components/Menu/KitActionMenu.vue'
+import KitIconMenu from './components/Menu/KitIconMenu.vue'
+import KitMenuItem from './components/Menu/KitMenuItem.vue'
+import KitMenuSection from './components/Menu/KitMenuSection.vue'
+import KitTabProvider from './components/Tabs/KitTabProvider.vue'
+import KitTabButton from './components/Tabs/KitTabButton.vue'
+import KitTabHeaders from './components/Tabs/KitTabHeaders.vue'
+import KitTabPanel from './components/Tabs/KitTabPanel.vue'
+import KitTabHeader from './components/Tabs/KitTabHeader.vue'
+import KitTabPanels from './components/Tabs/KitTabPanels.vue'
+import KitCheckboxEditableRenderer from './components/field-renderers/KitCheckboxEditableRenderer.vue'
+import KitCheckboxRenderer from './components/field-renderers/KitCheckboxRenderer.vue'
+import KitMultiSelectEditableRenderer from './components/field-renderers/KitMultiSelectEditableRenderer.vue'
+import KitMultiSelectRenderer from './components/field-renderers/KitMultiSelectRenderer.vue'
+import KitSingleSelectEditableRenderer from './components/field-renderers/KitSingleSelectEditableRenderer.vue'
+import KitSecureStringLineEditableRenderer from './components/field-renderers/KitSecureStringLineEditableRenderer.vue'
+import KitStringLineEditableRenderer from './components/field-renderers/KitStringLineEditableRenderer.vue'
+import KitStringLineRenderer from './components/field-renderers/KitStringLineRenderer.vue'
+import KitDateEditableRenderer from './components/field-renderers/KitDateEditableRenderer.vue'
+import KitDateRenderer from './components/field-renderers/KitDateRenderer.vue'
+import KitMarkdownEditableRenderer from './components/field-renderers/KitMarkdownEditableRenderer.vue'
+import KitMultiLineEditableRenderer from './components/field-renderers/KitMultiLineEditableRenderer.vue'
+import KitMultiLineRenderer from './components/field-renderers/KitMultiLineRenderer.vue'
 
 import './style.css'
 
@@ -93,12 +110,6 @@ export {
   KitBigModal,
   KitInlineEdit,
   KitMenu,
-  KitTabHeaders,
-  KitTabProvider,
-  KitTabPanel,
-  KitTabButton,
-  KitTabHeader,
-  KitTabPanels,
   KitBreadcrumbItem,
   KitBreadcrumbs,
   KitFlag,
@@ -108,15 +119,41 @@ export {
   KitIconButton,
   KitInlineDialog,
   KitTable,
-  tooltip,
   KitDraggable,
   KitMarkdownEditor,
   KitSpotlight,
   KitSpotlightStep,
   KitColorPicker,
   KitBigTooltip,
-  KitPopup
+  KitPopup,
+
+  KitBorderedPanelRow,
+  KitBorderedPanel,
+
+  KitIconMenu,
+  KitMenuSeparator,
+  KitActionMenu,
+  KitMenuItem,
+  KitMenuSection,
+
+  KitTabPanel,
+  KitTabHeaders,
+  KitTabButton,
+  KitTabProvider,
+  KitTabHeader,
+  KitTabPanels,
+
+  KitCheckboxEditableRenderer,
+  KitCheckboxRenderer,
+  KitMultiSelectEditableRenderer,
+  KitMultiSelectRenderer,
+  KitSingleSelectEditableRenderer,
+  KitSecureStringLineEditableRenderer,
+  KitStringLineEditableRenderer,
+  KitStringLineRenderer,
+  KitDateEditableRenderer,
+  KitDateRenderer,
+  KitMarkdownEditableRenderer,
+  KitMultiLineEditableRenderer,
+  KitMultiLineRenderer
 }
-export * from './components/layout/index'
-export * from './components/Menu/index'
-export * from './components/field-renderers/index'

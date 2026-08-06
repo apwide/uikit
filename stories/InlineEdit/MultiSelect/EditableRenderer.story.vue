@@ -2,7 +2,7 @@
   <div>
     <h5>Editable:</h5>
     <p>
-      <MultiSelectEditableRenderer
+      <KitMultiSelectEditableRenderer
         :selected-values="selectedValues"
         :allowed-values="allowedValues"
         :normalizer="normalizer"
@@ -10,7 +10,7 @@
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <MultiSelectEditableRenderer
+      <KitMultiSelectEditableRenderer
         :selected-values="selectedValues"
         :allowed-values="allowedValues"
         :normalizer="normalizer"
@@ -18,7 +18,7 @@
     </p>
     <h5>Limited width:</h5>
     <p class="limited-width">
-      <MultiSelectEditableRenderer
+      <KitMultiSelectEditableRenderer
         :selected-values="selectedValues"
         :allowed-values="allowedValues"
         :normalizer="normalizer"
@@ -26,7 +26,7 @@
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <MultiSelectEditableRenderer
+      <KitMultiSelectEditableRenderer
         :selected-values="selectedValues"
         :allowed-values="allowedValues"
         :normalizer="normalizer"
@@ -34,7 +34,7 @@
     </p>
     <h5>Custom rendering/style:</h5>
     <p>
-      <MultiSelectEditableRenderer
+      <KitMultiSelectEditableRenderer
           :selected-values="selectedValues"
           :allowed-values="allowedValues"
           :normalizer="normalizer"
@@ -53,7 +53,7 @@
         <template #option="{ option }">
           <KitLozenge appearance="new">{{ option.label }}</KitLozenge>
         </template>
-      </MultiSelectEditableRenderer>
+      </KitMultiSelectEditableRenderer>
     </p>
   </div>
 </template>
@@ -63,7 +63,7 @@ import { faker } from '@faker-js/faker'
 import KitLozenge from '@components/Lozenge/KitLozenge.vue'
 import { ref } from 'vue'
 import {options} from '../../api-mocks/options'
-import MultiSelectEditableRenderer from '@/components/field-renderers/MultiSelectEditableRenderer'
+import KitMultiSelectEditableRenderer from '@/components/field-renderers/KitMultiSelectEditableRenderer.vue'
 
 const allowedValues = options
 

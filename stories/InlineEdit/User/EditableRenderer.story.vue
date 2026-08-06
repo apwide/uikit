@@ -2,23 +2,23 @@
   <div>
     <h5>Editable:</h5>
     <p>
-      <UserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" />
+      <KitUserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" />
     </p>
     <h5>Confirm false:</h5>
     <p>
-      <UserEditableRenderer :user="user" :load-options="loadOptions" :confirm="false" @save-requested="onSave" />
+      <KitUserEditableRenderer :user="user" :load-options="loadOptions" :confirm="false" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <UserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSaveError" />
+      <KitUserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSaveError" />
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <UserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" :editable="false" />
+      <KitUserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" :editable="false" />
     </p>
     <h5>Avatar only:</h5>
     <p>
-      <UserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" :avatar-only="true" />
+      <KitUserEditableRenderer :user="user" :load-options="loadOptions" @save-requested="onSave" :avatar-only="true" />
     </p>
   </div>
 </template>
@@ -26,7 +26,7 @@
 <script>
 import { debounce } from '@components/utils'
 import { createPersonsList } from '../../api-mocks/people'
-import UserEditableRenderer from '@/components/field-renderers/UserEditableRenderer'
+import KitUserEditableRenderer from '@/components/field-renderers/KitUserEditableRenderer.vue'
 
 const list = createPersonsList({}, 50)
 const getUsers = (query) =>
@@ -41,7 +41,7 @@ const getUsers = (query) =>
 const debouncedUsers = debounce(getUsers, 100)
 
 export default {
-  components: { UserEditableRenderer },
+  components: { KitUserEditableRenderer },
   data() {
     return {
       user: undefined,

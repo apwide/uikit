@@ -2,22 +2,22 @@
   <div class="wrapper">
     <h5>Editable:</h5>
     <p>
-      <SingleSelectEditableRenderer :value="selectedValue" :allowed-values="allowedValues" @save-requested="onSave" />
+      <KitSingleSelectEditableRenderer :value="selectedValue" :allowed-values="allowedValues" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <SingleSelectEditableRenderer
+      <KitSingleSelectEditableRenderer
         :value="selectedValue"
         :allowed-values="allowedValues"
         @save-requested="onSaveError" />
     </p>
     <h5>Limited width:</h5>
     <p class="limited-width">
-      <SingleSelectEditableRenderer :value="selectedValue" :allowed-values="allowedValues" @save-requested="onSave" />
+      <KitSingleSelectEditableRenderer :value="selectedValue" :allowed-values="allowedValues" @save-requested="onSave" />
     </p>
     <h5>No Confirm:</h5>
     <p>
-      <SingleSelectEditableRenderer
+      <KitSingleSelectEditableRenderer
         :value="selectedValue"
         :allowed-values="allowedValues"
         @save-requested="onSave"
@@ -25,11 +25,11 @@
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <SingleSelectEditableRenderer :value="selectedValue" :allowed-values="allowedValues" :editable="false" />
+      <KitSingleSelectEditableRenderer :value="selectedValue" :allowed-values="allowedValues" :editable="false" />
     </p>
     <h5>With complex objects</h5>
     <p>
-      <SingleSelectEditableRenderer
+      <KitSingleSelectEditableRenderer
         :normalizer="normalizer"
         :value="complexSelectedValue"
         :allowed-values="complexAllowedValues"
@@ -41,7 +41,7 @@
 
 <script>
 import { faker } from '@faker-js/faker'
-import SingleSelectEditableRenderer from '@/components/field-renderers/SingleSelectEditableRenderer'
+import KitSingleSelectEditableRenderer from '@/components/field-renderers/KitSingleSelectEditableRenderer.vue'
 
 const allowedValues = Array.from({ length: 10 }, () => faker.lorem.word())
 const [selected] = allowedValues
@@ -50,7 +50,7 @@ const complexAllowedValues = allowedValues.map((value, key) => ({ key, value }))
 const [complexSelectedValue] = complexAllowedValues
 
 export default {
-  components: { SingleSelectEditableRenderer },
+  components: { KitSingleSelectEditableRenderer },
   data() {
     faker.seed(1)
     return {

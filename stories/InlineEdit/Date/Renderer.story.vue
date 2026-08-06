@@ -2,17 +2,17 @@
   <div>
     <h5>Date</h5>
     <p>
-      <DateRenderer :date="date" />
+      <KitDateRenderer :date="date" />
     </p>
   </div>
 </template>
 
 <script>
 import { faker } from '@faker-js/faker'
-import DateRenderer from '@/components/field-renderers/DateRenderer'
+import KitDateRenderer from '@/components/field-renderers/KitDateRenderer.vue'
 
 export default {
-  components: { DateRenderer },
+  components: { KitDateRenderer },
   data() {
     faker.seed(1)
     return {

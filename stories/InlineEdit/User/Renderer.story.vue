@@ -2,21 +2,21 @@
   <div>
     <h5>Normal state:</h5>
     <p>
-      <UserRenderer :user="user" />
+      <KitUserRenderer :user="user" />
     </p>
     <h5>Avatar only:</h5>
     <p>
-      <UserRenderer :user="user" :avatar-only="true" />
+      <KitUserRenderer :user="user" :avatar-only="true" />
     </p>
   </div>
 </template>
 
 <script>
 import { createPerson } from '../../api-mocks/people'
-import UserRenderer from '@/components/field-renderers/UserRenderer'
+import KitUserRenderer from '@/components/field-renderers/KitUserRenderer.vue'
 
 export default {
-  components: { UserRenderer },
+  components: { KitUserRenderer },
   data() {
     return {
       user: createPerson()

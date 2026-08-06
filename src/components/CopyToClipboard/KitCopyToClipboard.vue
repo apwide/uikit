@@ -16,7 +16,7 @@ import { computed, onBeforeUnmount, ref } from 'vue'
 import KitButton from '../Button/KitButton.vue'
 import KitIcon from '../Icon/KitIcon'
 import Tooltip from '../Tooltip/Tooltip'
-import SetToClipboard from './SetToClipboard'
+import KitSetToClipboard from './KitSetToClipboard'
 
 type Props = {
   appearance?: string
@@ -48,7 +48,7 @@ const displayedTitle = computed(() => copied.value ? 'Copied' : props.title)
 const tooltip = computed(() => copied.value ? 'Copied' : props.label)
 
 function onClick() {
-  SetToClipboard(props.text)
+  KitSetToClipboard(props.text)
   copied.value = true
   timeout.value = setTimeout(() => {
     copied.value = false

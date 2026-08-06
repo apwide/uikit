@@ -2,25 +2,25 @@
   <div>
     <h5>Editable:</h5>
     <p>
-      <DateEditableRenderer :date="date" @save-requested="onSave" />
+      <KitDateEditableRenderer :date="date" @save-requested="onSave" />
     </p>
     <h5>Editable - callback with error:</h5>
     <p>
-      <DateEditableRenderer :date="date" @save-requested="onSaveError" />
+      <KitDateEditableRenderer :date="date" @save-requested="onSaveError" />
     </p>
     <h5>Non-editable:</h5>
     <p>
-      <DateEditableRenderer :date="date" :editable="false" />
+      <KitDateEditableRenderer :date="date" :editable="false" />
     </p>
   </div>
 </template>
 
 <script>
 import { faker } from '@faker-js/faker'
-import DateEditableRenderer from '@/components/field-renderers/DateEditableRenderer'
+import KitDateEditableRenderer from '@/components/field-renderers/KitDateEditableRenderer.vue'
 
 export default {
-  components: { DateEditableRenderer },
+  components: { KitDateEditableRenderer },
   data() {
     faker.seed(1)
     return {
