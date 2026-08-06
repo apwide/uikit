@@ -114,7 +114,7 @@ onBeforeUnmount(() => {
   padding: 0 10px 0 20px;
 }
 
-.kit-modal ::v-deep header {
+.kit-modal :deep(header) {
   display: block;
 }
 </style>

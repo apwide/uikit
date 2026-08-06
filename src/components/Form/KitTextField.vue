@@ -24,8 +24,8 @@ const normalizedAttrs = computed(() => {
 </script>
 
 <style scoped>
-::v-deep textarea,
-::v-deep input {
+:deep(textarea),
+:deep(input) {
   background: transparent;
   border: 0;
   color: inherit;

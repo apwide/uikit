@@ -117,19 +117,19 @@ const placeholderSize = computed(() => {
   display: none;
 }
 
-.actions ::v-deep button[appearance='subtle'] {
+.actions :deep(button[appearance='subtle']) {
   color: white;
 }
 
-.actions ::v-deep button[appearance='subtle']:not([selected]):not([disabled]):active {
+.actions :deep(button[appearance='subtle']:not([selected]):not([disabled]):active) {
   color: white;
 }
 
-.actions ::v-deep button[appearance='subtle'] {
+.actions :deep(button[appearance='subtle']) {
   height: 36px;
 }
 
-.actions ::v-deep button[appearance='subtle'] .wrapper {
+.actions :deep(button[appearance='subtle'] .wrapper) {
   padding: 0 2px;
 }
 

@@ -84,7 +84,7 @@ export default {
   text-decoration: none;
 }
 
-.kit-dropdown-checkbox-item ::v-deep .label {
+.kit-dropdown-checkbox-item :deep(.label) {
   overflow: hidden;
   display: flex;
   width: 100%;

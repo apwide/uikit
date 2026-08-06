@@ -58,7 +58,7 @@ withDefaults(defineProps<Props>(), {
   align-items: center;
 }
 
-.kit-item ::v-deep a {
+.kit-item :deep(a) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -67,7 +67,7 @@ withDefaults(defineProps<Props>(), {
   display: block;
 }
 
-[with-icon] ::v-deep a {
+[with-icon] :deep(a) {
   margin-left: 5px;
 }
 
