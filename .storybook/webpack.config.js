@@ -5,7 +5,11 @@ const resolve = {
   symlinks: false,
   alias: {
     '@': path.resolve(__dirname, '../src'),
-    '@components': path.resolve(__dirname, '../src/components')
+    '@components': path.resolve(__dirname, '../src/components'),
+    // Auto-generated *.stories.js files use a raw string `template:` option (not precompiled .vue
+    // SFCs), which needs Vue's runtime template compiler. The default "vue" resolution is the
+    // runtime-only build (no compiler) - alias to the full build for Storybook's dev preview only.
+    vue$: require.resolve('vue/dist/vue.esm-bundler.js')
   }
 }
 
