@@ -4,18 +4,19 @@
 
 This document's "Current Test Coverage Analysis" and "Success Metrics" sections below describe the
 **2026-02-13 baseline** and are now stale — several unrecorded sessions since then brought coverage
-to **127/149 components raw**. The 8-component `ContentLoader` family, `Icon/MagicStick`,
+to **128/149 components raw**. The 8-component `ContentLoader` family, `Icon/MagicStick`,
 `Tree/Label`, `Toggle/LockSwitch`, `common/PromisedContentLoader`, the 7 Avatar icon subcomponents,
 and `UserEditableRendererEnriched` (20 components total) are unused by consuming apps and were
 excluded from the tracked coverage pool per project owner decisions (2026-08-06), giving a
-129-component pool at **127/129 (~98.4%)** — well past the 80% Phase 1 goal. **128 unit test files /
-1104 passing tests**. See `SESSION_SUMMARY.md` for the verified current state; only 2 components
-remain untested in the tracked pool (`common/InfiniteScroll.vue`, `common/KitTransitionExpand.vue`).
-`Popper.vue`, `common/Popup.vue`, `ColorPicker/KitColorCard`, the full Spotlight onboarding system,
-`KitButtonGroup`/`KitIconButton`, `KitBorderedPanel`/`KitBorderedPanelRow`, the plain
-`Menu/MenuItem.vue`, and `MarkdownEditor/KitMarkdownEditor.vue` — flagged as top priorities in the
-original "❌ Components WITHOUT Tests" list below — are now covered as of 2026-08-06. The Wave
-priority matrix and test templates further down in this document are still accurate and reusable.
+129-component pool at **128/129 (~99.2%)** — well past the 80% Phase 1 goal. **129 unit test files /
+1112 passing tests**. See `SESSION_SUMMARY.md` for the verified current state; only 1 component
+remains untested in the tracked pool (`common/InfiniteScroll.vue`). `Popper.vue`, `common/Popup.vue`,
+`ColorPicker/KitColorCard`, the full Spotlight onboarding system, `KitButtonGroup`/`KitIconButton`,
+`KitBorderedPanel`/`KitBorderedPanelRow`, the plain `Menu/MenuItem.vue`,
+`MarkdownEditor/KitMarkdownEditor.vue`, and `common/KitTransitionExpand.vue` — flagged as top
+priorities in the original "❌ Components WITHOUT Tests" list below — are now covered as of
+2026-08-06. The Wave priority matrix and test templates further down in this document are still
+accurate and reusable.
 
 ## Current Test Coverage Analysis (historical baseline, 2026-02-13)
 
@@ -439,12 +440,11 @@ describe('ComponentName', () => {
 - Components with E2E tests: 12/149 (8%)
 
 **Current Status (verified 2026-08-06)**:
-- Components with unit tests: 127/149 raw (~85.2%); 127/129 (~98.4%) against the tracked pool
+- Components with unit tests: 128/149 raw (~85.9%); 128/129 (~99.2%) against the tracked pool
   (ContentLoader's 8 components, MagicStick/Label/LockSwitch, PromisedContentLoader, the 7 Avatar
   icons, and UserEditableRendererEnriched excluded — see `SESSION_SUMMARY.md`)
-- Unit test files: 128, unit tests: 1104 passing (10 skipped)
-- Remaining in the tracked pool: 2 components (`InfiniteScroll`, `KitTransitionExpand`) — see
-  `SESSION_SUMMARY.md`
+- Unit test files: 129, unit tests: 1112 passing (10 skipped)
+- Remaining in the tracked pool: 1 component (`InfiniteScroll`) — see `SESSION_SUMMARY.md`
 
 **Target After Phase 1**:
 - Components with tests: 104/129 tracked (80%+) — **met**
@@ -453,6 +453,6 @@ describe('ComponentName', () => {
 
 ---
 
-**Status**: ✅ Phase 1 goal reached — ~98.4% coverage against the tracked component pool
+**Status**: ✅ Phase 1 goal reached — ~99.2% coverage against the tracked component pool
 
 **Last Updated**: 2026-08-06

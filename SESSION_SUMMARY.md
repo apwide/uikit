@@ -10,9 +10,9 @@
 ## 🎯 Current Results
 
 ### Test Statistics
-- **Unit Tests**: 1104 passing, 10 skipped (1114 total)
-- **Test Files**: 128 files
-- **Components Tested**: 127/149 raw (~85.2%) — **127/129 (~98.4%) against the tracked pool**, see below
+- **Unit Tests**: 1112 passing, 10 skipped (1122 total)
+- **Test Files**: 129 files
+- **Components Tested**: 128/149 raw (~85.9%) — **128/129 (~99.2%) against the tracked pool**, see below
 - **Success Rate**: 100% of active tests ✅
 - **Lint**: All new test files pass `eslint` cleanly
 
@@ -89,6 +89,8 @@ Button components. 28 new test files / ~180 new tests were added across the sess
     below.
 19. ✅ **field-renderers/KitMarkdownEditableRenderer.vue** (10 tests) — shallow-mounted; uncovered a real
     bug in `findTableParent()` — see below.
+20. ✅ **common/KitTransitionExpand.vue** (8 tests) — the last "complex" component; needed a small host
+    wrapper component plus disabling VTU v1's default `<transition>` auto-stubbing — see below.
 
 Notably, `KitDropdownCheckboxItem` uses the Vue 2 `model` option (documented breaking change for
 Vue 3 in `VUE3_MIGRATION_PLAN.md`) — its v-model contract (`checked`/`input`) is now covered by tests,
@@ -189,6 +191,33 @@ recurses forever if `markdownEditorRef.value` never becomes defined, which is ex
 `shallowMount` since that ref lives inside `KitInlineEdit`'s stubbed-out `#editor` slot. Don't try to
 test `start-editing` under `shallowMount` for this component.
 
+### Testing KitTransitionExpand.vue: VTU v1's default `<transition>` stub, and what jsdom can't show you
+
+`@vue/test-utils` v1 auto-stubs Vue's built-in `<transition>`/`<transition-group>` **by default, even
+under full `mount()`** — the stub renders children directly without ever calling the `enter`/`leave`/
+`after-enter` JS hooks. To actually exercise them, mount with `stubs: { transition: false }`.
+
+The component's `enter`/`leave` hooks only fire when the slotted element is *inserted or removed via
+`v-if`* — not on the host component's own initial mount — so a tiny local host component
+(`{ template: '<KitTransitionExpand><div v-if="show">...</div></KitTransitionExpand>' }`) is needed to
+toggle `show` and observe the transition.
+
+What *is* reliably observable in jsdom: `afterEnter()` sets `element.style.height = 'auto'` once
+entering finishes, and this **is** deterministic to test (`await setProps({ show: true }); await
+$nextTick(); await` a short `setTimeout` flush; then assert `.style.height === 'auto'`), including the
+negative case (`enterTransition: false` → height stays `''`).
+
+What is **not** reliably observable: the `leave()` hook's `requestAnimationFrame`-scheduled
+`height = '0'` step. Because this project's `<style scoped>` blocks aren't actually injected into the
+jsdom document during unit tests, Vue detects no real CSS transition duration and — since our `leave(el)`
+hook only takes one argument (not `(el, done)`, so Vue doesn't think it's under explicit hook control) —
+removes the leaving element from the DOM **synchronously**, before even one `requestAnimationFrame`
+cycle elapses. Don't try to catch `leave()`'s intermediate style mutations mid-flight; instead assert
+the *outcome* (the element is eventually removed from the DOM) and, importantly, spy on `console.error`
+across the whole file (`jest.spyOn(console, 'error')`, asserted `not.toHaveBeenCalled()` in `afterEach`)
+so a thrown error inside a transition hook (which Vue logs but doesn't otherwise surface as a failed
+assertion) still fails the test.
+
 ### Notable test-writing gotchas found this session (useful for future sessions)
 - This repo uses **`@vue/test-utils` v1** (Vue 2 compatible). `wrapper.findAll(...)` and
   `findAllComponents(...)` return a `WrapperArray`, which does **not** support `array[i]` bracket
@@ -235,6 +264,12 @@ test `start-editing` under `shallowMount` for this component.
   directly (an interop assumption normally satisfied by webpack, not by Jest's plain `require()`),
   shape the `jest.mock(...)` factory's return value as `{ __esModule: true, default: TheMock }` rather
   than returning the mock directly.
+- VTU v1 auto-stubs `<transition>`/`<transition-group>` by default even under full `mount()` — pass
+  `stubs: { transition: false }` to actually exercise `enter`/`leave`/`after-enter` JS hooks.
+- `jest.spyOn(console, 'error').mockImplementation(() => {})` in `beforeEach`, asserted
+  `not.toHaveBeenCalled()` in `afterEach`, is a cheap, reusable safety net that turns Vue's
+  silently-logged internal errors (e.g. an exception thrown inside an event/transition hook) into an
+  actual failing assertion instead of an easy-to-miss console line.
 
 ---
 
@@ -242,14 +277,14 @@ test `start-editing` under `shallowMount` for this component.
 
 | Metric | Original baseline | Current | Change |
 |--------|-------|-----|--------|
-| Unit Tests | 67 | 1104 | +1037 |
-| Test Files | 11 | 128 | +117 |
-| Components Covered | ~21 | ~127 | +106 |
-| Coverage % (of 129 tracked) | 14% | ~98.4% | +84.4% |
+| Unit Tests | 67 | 1112 | +1045 |
+| Test Files | 11 | 129 | +118 |
+| Components Covered | ~21 | ~128 | +107 |
+| Coverage % (of 129 tracked) | 14% | ~99.2% | +85.2% |
 
 ---
 
-## 🎯 Remaining Work (2 components without dedicated unit tests, tracked pool)
+## 🎯 Remaining Work (1 component without dedicated unit tests, tracked pool)
 
 Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-06. Excludes the
 8-component ContentLoader family, MagicStick/Label/LockSwitch, PromisedContentLoader, the 7 Avatar
@@ -257,22 +292,22 @@ icon subcomponents, and UserEditableRendererEnriched (see exclusion note above).
 
 | Group | Components |
 |---|---|
-| Common utilities | `InfiniteScroll`, `KitTransitionExpand` |
+| Common utilities | `InfiniteScroll` |
 
 ### Target
 - **80% Coverage Goal**: 104/129 tracked components (after exclusions) — **met**
-- **Current**: 127/129 (~98.4%)
-- Only 2 components short of 100% coverage of the tracked pool
+- **Current**: 128/129 (~99.2%)
+- Only 1 component short of 100% coverage of the tracked pool
 
 ---
 
 ## 💪 Next Session Recommendations
 
-1. **common/InfiniteScroll.vue, common/KitTransitionExpand.vue** — the last 2 components in the tracked
-   pool. Closing these out reaches 100% (129/129) of the tracked pool.
+1. **common/InfiniteScroll.vue** — the last component in the tracked pool. Closing this out reaches
+   100% (129/129).
 
 ---
 
-**Status**: Library is at ~98.4% component test coverage against the tracked (129-component) pool —
-well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`. Only `InfiniteScroll` and
-`KitTransitionExpand` remain for full coverage of the tracked pool.
+**Status**: Library is at ~99.2% component test coverage against the tracked (129-component) pool —
+well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`. Only `InfiniteScroll` remains for full
+coverage of the tracked pool.

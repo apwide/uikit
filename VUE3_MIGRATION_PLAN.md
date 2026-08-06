@@ -11,20 +11,22 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 ### Test Coverage
 
 > **Updated 2026-08-06**: the figures immediately below are the original 2026-02-13 baseline. Several
-> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **127/149
-> components raw**, with **128 unit test files and 1104 passing tests**. `Popper.vue`, `common/Popup.vue`
+> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **128/149
+> components raw**, with **129 unit test files and 1112 passing tests**. `Popper.vue`, `common/Popup.vue`
 > (core positioning primitives), `ColorPicker/KitColorCard.vue`, the full Spotlight onboarding system,
 > `KitButtonGroup`/`KitIconButton`, `KitBorderedPanel`/`KitBorderedPanelRow`, the plain
-> `Menu/MenuItem.vue`, and `MarkdownEditor/KitMarkdownEditor.vue` +
-> `field-renderers/KitMarkdownEditableRenderer.vue` are now covered — see `SESSION_SUMMARY.md` for the
-> `@floating-ui/dom` mocking approach used for Popper, the full-`mount()` approach needed for
-> Spotlight, and the `easymde` module-interop mock (plus a `jest.config.js` CSS `moduleNameMapper` fix)
-> needed for `KitMarkdownEditor` — all reusable for similar components. The 8-component `ContentLoader`
-> family, `Icon/MagicStick`, `Tree/Label`, `Toggle/LockSwitch`, `common/PromisedContentLoader`, the 7
-> Avatar icon subcomponents, and `UserEditableRendererEnriched` (20 components total) were excluded
-> from the tracked coverage pool per project owner decisions (unused by consuming apps), giving a
-> 129-component pool at **127/129 (~98.4%)** — **the Phase 1 80% coverage goal has been reached**. Only
-> 2 components remain untested: `common/InfiniteScroll.vue` and `common/KitTransitionExpand.vue`.
+> `Menu/MenuItem.vue`, `MarkdownEditor/KitMarkdownEditor.vue` +
+> `field-renderers/KitMarkdownEditableRenderer.vue`, and `common/KitTransitionExpand.vue` are now
+> covered — see `SESSION_SUMMARY.md` for the `@floating-ui/dom` mocking approach used for Popper, the
+> full-`mount()` approach needed for Spotlight, the `easymde` module-interop mock (plus a
+> `jest.config.js` CSS `moduleNameMapper` fix) needed for `KitMarkdownEditor`, and the `stubs: {
+> transition: false }` technique needed to exercise `KitTransitionExpand`'s hooks — all reusable for
+> similar components. The 8-component `ContentLoader` family, `Icon/MagicStick`, `Tree/Label`,
+> `Toggle/LockSwitch`, `common/PromisedContentLoader`, the 7 Avatar icon subcomponents, and
+> `UserEditableRendererEnriched` (20 components total) were excluded from the tracked coverage pool per
+> project owner decisions (unused by consuming apps), giving a 129-component pool at **128/129
+> (~99.2%)** — **the Phase 1 80% coverage goal has been reached**. Only `common/InfiniteScroll.vue`
+> remains untested.
 
 - **Unit Tests**: 9 test files covering 6 component categories *(2026-02-13 baseline)*
   - Button, Checkbox, Form (Input, TextArea, FieldGroup)
@@ -118,13 +120,13 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    - ✅ Spotlight (onboarding)
    - ✅ Field renderers (UserEditableRendererEnriched excluded as unused, see `SESSION_SUMMARY.md`)
 
-Phase 1's 80% goal has been reached (127/129 tracked components, ContentLoader family plus
+Phase 1's 80% goal has been reached (128/129 tracked components, ContentLoader family plus
 MagicStick/Label/LockSwitch/PromisedContentLoader/Avatar icons/UserEditableRendererEnriched excluded
 as unused — see `SESSION_SUMMARY.md`). `Popper.vue`, `common/Popup.vue`, `ColorPicker/KitColorCard`,
 the Spotlight system, `KitButtonGroup`/`KitIconButton`, `KitBorderedPanel`/`KitBorderedPanelRow`, the
-plain `Menu/MenuItem.vue`, `MarkdownEditor/KitMarkdownEditor`, and
-`field-renderers/KitMarkdownEditableRenderer` are now tested. Remaining gap (2 components, see
-`SESSION_SUMMARY.md`): `common/InfiniteScroll.vue` and `common/KitTransitionExpand.vue`.
+plain `Menu/MenuItem.vue`, `MarkdownEditor/KitMarkdownEditor`,
+`field-renderers/KitMarkdownEditableRenderer`, and `common/KitTransitionExpand.vue` are now tested.
+Remaining gap (1 component, see `SESSION_SUMMARY.md`): `common/InfiniteScroll.vue`.
 
 **Testing Approach**:
 - Unit tests: Component props, events, slots, state management
