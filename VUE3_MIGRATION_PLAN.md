@@ -10,23 +10,18 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 
 ### Test Coverage
 
-> **Updated 2026-08-06**: the figures immediately below are the original 2026-02-13 baseline. Several
-> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **128/149
-> components raw**, with **129 unit test files and 1112 passing tests**. `Popper.vue`, `common/Popup.vue`
-> (core positioning primitives), `ColorPicker/KitColorCard.vue`, the full Spotlight onboarding system,
-> `KitButtonGroup`/`KitIconButton`, `KitBorderedPanel`/`KitBorderedPanelRow`, the plain
-> `Menu/MenuItem.vue`, `MarkdownEditor/KitMarkdownEditor.vue` +
-> `field-renderers/KitMarkdownEditableRenderer.vue`, and `common/KitTransitionExpand.vue` are now
-> covered — see `SESSION_SUMMARY.md` for the `@floating-ui/dom` mocking approach used for Popper, the
-> full-`mount()` approach needed for Spotlight, the `easymde` module-interop mock (plus a
-> `jest.config.js` CSS `moduleNameMapper` fix) needed for `KitMarkdownEditor`, and the `stubs: {
-> transition: false }` technique needed to exercise `KitTransitionExpand`'s hooks — all reusable for
-> similar components. The 8-component `ContentLoader` family, `Icon/MagicStick`, `Tree/Label`,
-> `Toggle/LockSwitch`, `common/PromisedContentLoader`, the 7 Avatar icon subcomponents, and
-> `UserEditableRendererEnriched` (20 components total) were excluded from the tracked coverage pool per
-> project owner decisions (unused by consuming apps), giving a 129-component pool at **128/129
-> (~99.2%)** — **the Phase 1 80% coverage goal has been reached**. Only `common/InfiniteScroll.vue`
-> remains untested.
+> **Updated 2026-08-06**: the figures immediately below are the original 2026-02-13 baseline and are
+> now fully superseded. Several testing sessions since then (documented in `SESSION_SUMMARY.md`)
+> brought coverage to **129/149 components raw**, with **130 unit test files and 1122 passing tests**.
+> The 8-component `ContentLoader` family, `Icon/MagicStick`, `Tree/Label`, `Toggle/LockSwitch`,
+> `common/PromisedContentLoader`, the 7 Avatar icon subcomponents, and `UserEditableRendererEnriched`
+> (20 components total) were excluded from the tracked coverage pool per project owner decisions
+> (unused by consuming apps), giving a 129-component pool — and **every one of those 129 components now
+> has a dedicated unit test (100%)**. 🏁 **Phase 1 is complete.** See `SESSION_SUMMARY.md` for the full
+> list of what was covered and the reusable test patterns discovered along the way (`@floating-ui/dom`
+> mocking, full-`mount()` for `<transition>`/deeply-nested-slot components, `easymde`
+> module-interop mocking, `IntersectionObserver`/`ResizeObserver` mocking) — useful for testing any new
+> component going forward, or for Phase 2's Vue 3 compatibility work.
 
 - **Unit Tests**: 9 test files covering 6 component categories *(2026-02-13 baseline)*
   - Button, Checkbox, Form (Input, TextArea, FieldGroup)
@@ -92,8 +87,8 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 
 ---
 
-### 📋 Phase 1: Test Coverage Expansion
-**Goal**: Achieve 80%+ component test coverage before migration
+### 🏁 Phase 1: Test Coverage Expansion — COMPLETE
+**Goal**: Achieve 80%+ component test coverage before migration (exceeded: 100% of tracked pool)
 
 **Priority Components** (by usage/complexity) — updated 2026-08-06:
 1. **Critical Path** (must have tests):
@@ -119,14 +114,12 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    - ✅ ColorPicker
    - ✅ Spotlight (onboarding)
    - ✅ Field renderers (UserEditableRendererEnriched excluded as unused, see `SESSION_SUMMARY.md`)
+   - ✅ common utilities (InfiniteScroll, KitTransitionExpand; PromisedContentLoader excluded as unused)
 
-Phase 1's 80% goal has been reached (128/129 tracked components, ContentLoader family plus
-MagicStick/Label/LockSwitch/PromisedContentLoader/Avatar icons/UserEditableRendererEnriched excluded
-as unused — see `SESSION_SUMMARY.md`). `Popper.vue`, `common/Popup.vue`, `ColorPicker/KitColorCard`,
-the Spotlight system, `KitButtonGroup`/`KitIconButton`, `KitBorderedPanel`/`KitBorderedPanelRow`, the
-plain `Menu/MenuItem.vue`, `MarkdownEditor/KitMarkdownEditor`,
-`field-renderers/KitMarkdownEditableRenderer`, and `common/KitTransitionExpand.vue` are now tested.
-Remaining gap (1 component, see `SESSION_SUMMARY.md`): `common/InfiniteScroll.vue`.
+**Phase 1 is complete: 129/129 (100%) of the tracked component pool now has a dedicated unit test**
+(149 raw components minus 20 excluded as unused by consuming apps — ContentLoader family,
+MagicStick/Label/LockSwitch, PromisedContentLoader, Avatar icons, UserEditableRendererEnriched — see
+`SESSION_SUMMARY.md`). See `SESSION_SUMMARY.md` → "Next Session Recommendations" for what comes next.
 
 **Testing Approach**:
 - Unit tests: Component props, events, slots, state management
@@ -455,12 +448,12 @@ Remaining gap (1 component, see `SESSION_SUMMARY.md`): `common/InfiniteScroll.vu
 4. 🔲 Set up Vue 3 build configuration
 5. 🔲 Install Vue 3 dependencies in dev
 
-### Week 3-4: Test Infrastructure
-1. 🔲 Write tests for Button component (if gaps exist)
-2. 🔲 Write tests for Input/TextArea components
-3. 🔲 Write tests for Select/MultiSelect
-4. 🔲 Write tests for Dropdown
-5. 🔲 Write tests for Modal
+### Week 3-4: Test Infrastructure — ✅ complete (and expanded well beyond this list, see `SESSION_SUMMARY.md`)
+1. ✅ Write tests for Button component (if gaps exist)
+2. ✅ Write tests for Input/TextArea components
+3. ✅ Write tests for Select/MultiSelect
+4. ✅ Write tests for Dropdown
+5. ✅ Write tests for Modal
 
 ### Week 5-6: First Migration Wave
 1. 🔲 Create compatibility utilities
@@ -501,6 +494,8 @@ Before proceeding, please confirm:
 
 ---
 
-**Status**: 📋 Plan Complete - Awaiting Approval to Begin Phase 1
+**Status**: 🏁 Phase 1 (Test Coverage Expansion) complete — 100% of the tracked component pool
+(129/129) now has unit tests, well past the original 80% goal. See `SESSION_SUMMARY.md` for details
+and next-step recommendations (Phase 2: compatibility layer, Vue 3 build config).
 
-**Last Updated**: 2026-02-13
+**Last Updated**: 2026-08-06 (originally 2026-02-13)

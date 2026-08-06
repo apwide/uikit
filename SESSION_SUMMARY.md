@@ -2,6 +2,15 @@
 
 **Last Updated**: 2026-08-06
 
+## 🏁 100% of the tracked component pool is now covered (129/129)
+
+`common/InfiniteScroll.vue` was the last untested component in the tracked pool (see the exclusion
+note below for what's out of scope and why). With it done, every component in the 129-component
+tracked pool now has a dedicated unit test file. See "Next Session Recommendations" at the bottom for
+where to go from here — this doesn't mean the job is fully done (raw coverage is 129/149 = ~86.6%, the
+20 excluded components are a deliberate scope decision, not a gap), but the Phase 1 test-coverage
+mandate from `VUE3_MIGRATION_PLAN.md` is complete.
+
 > Note: earlier versions of this document (dated 2026-02-13) were left unupdated while multiple
 > testing sessions continued in the background (Calendar, Form, field renderers, Select variations,
 > Tabs/Modal/Menu/Tooltip/Table/Dropdown system completions, etc.). The numbers below reflect the
@@ -10,9 +19,9 @@
 ## 🎯 Current Results
 
 ### Test Statistics
-- **Unit Tests**: 1112 passing, 10 skipped (1122 total)
-- **Test Files**: 129 files
-- **Components Tested**: 128/149 raw (~85.9%) — **128/129 (~99.2%) against the tracked pool**, see below
+- **Unit Tests**: 1122 passing, 10 skipped (1132 total)
+- **Test Files**: 130 files
+- **Components Tested**: 129/149 raw (~86.6%) — **129/129 (100%) against the tracked pool**, see below
 - **Success Rate**: 100% of active tests ✅
 - **Lint**: All new test files pass `eslint` cleanly
 
@@ -42,8 +51,8 @@ applications:
    `PromisedContentLoader` → `UserEditableRendererEnriched` chain is now excluded end-to-end, no
    remaining internal ties to re-litigate.
 
-This drops the denominator from 149 to **149 - 8 - 3 - 1 - 7 - 1 = 129 tracked components**. Coverage is
-**127/129 (~98.4%)** — well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`.
+This drops the denominator from 149 to **149 - 8 - 3 - 1 - 7 - 1 = 129 tracked components**. Coverage
+is **129/129 (100%)** — every tracked component now has a dedicated unit test.
 
 ### 2026-08-06 Session — Completed Partial Component Systems + Positioning Core + ColorPicker + Spotlight + Button
 
@@ -91,6 +100,10 @@ Button components. 28 new test files / ~180 new tests were added across the sess
     bug in `findTableParent()` — see below.
 20. ✅ **common/KitTransitionExpand.vue** (8 tests) — the last "complex" component; needed a small host
     wrapper component plus disabling VTU v1's default `<transition>` auto-stubbing — see below.
+21. ✅ **common/InfiniteScroll.vue** (10 tests) — the final component in the tracked pool, reaching
+    100% coverage. Straightforward `IntersectionObserver` mock (same pattern as `Table.test.js`,
+    capturing the callback to invoke it manually), plus verifying the re-observe callback passed along
+    with the `table-bottom-reached` emit actually calls `disconnect()` + `observe()` again.
 
 Notably, `KitDropdownCheckboxItem` uses the Vue 2 `model` option (documented breaking change for
 Vue 3 in `VUE3_MIGRATION_PLAN.md`) — its v-model contract (`checked`/`input`) is now covered by tests,
@@ -277,37 +290,45 @@ assertion) still fails the test.
 
 | Metric | Original baseline | Current | Change |
 |--------|-------|-----|--------|
-| Unit Tests | 67 | 1112 | +1045 |
-| Test Files | 11 | 129 | +118 |
-| Components Covered | ~21 | ~128 | +107 |
-| Coverage % (of 129 tracked) | 14% | ~99.2% | +85.2% |
+| Unit Tests | 67 | 1122 | +1055 |
+| Test Files | 11 | 130 | +119 |
+| Components Covered | ~21 | 129 | +108 |
+| Coverage % (of 129 tracked) | 14% | 100% | +86% |
 
 ---
 
-## 🎯 Remaining Work (1 component without dedicated unit tests, tracked pool)
+## 🎯 Remaining Work: none in the tracked pool
 
-Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-06. Excludes the
-8-component ContentLoader family, MagicStick/Label/LockSwitch, PromisedContentLoader, the 7 Avatar
-icon subcomponents, and UserEditableRendererEnriched (see exclusion note above).
-
-| Group | Components |
-|---|---|
-| Common utilities | `InfiniteScroll` |
+Every component in the 129-component tracked pool (149 raw, minus the 20 excluded components listed
+above) now has a dedicated unit test file, verified directly against `src/components/**/*.vue` vs.
+test imports on 2026-08-06.
 
 ### Target
 - **80% Coverage Goal**: 104/129 tracked components (after exclusions) — **met**
-- **Current**: 128/129 (~99.2%)
-- Only 1 component short of 100% coverage of the tracked pool
+- **Full tracked-pool coverage**: 129/129 (100%) — **met**
 
 ---
 
 ## 💪 Next Session Recommendations
 
-1. **common/InfiniteScroll.vue** — the last component in the tracked pool. Closing this out reaches
-   100% (129/129).
+With the tracked pool at 100%, there's no more "which component is untested" work left. Worthwhile
+next steps, roughly in priority order:
+
+1. **Re-evaluate the 20 excluded components** periodically — "not used by consuming apps" can change.
+   If `PromisedContentLoader`/`UserEditableRendererEnriched`/`MagicStick`/`Label`/`LockSwitch` ever
+   become live again, they'll need tests like everything else.
+2. **Fix the `findTableParent()` null-guard bug** found while testing `KitMarkdownEditableRenderer`
+   (`src/utils/dom.ts`) — a real, if narrow, latent bug independent of test coverage.
+3. **Move into `VUE3_MIGRATION_PLAN.md` Phase 2** (Compatibility Layer & Infrastructure) — the test
+   suite built across this and prior sessions is exactly the safety net that phase assumes is in
+   place. Phase 2 tasks: Vue 3 build configuration, compatibility utilities for `$listeners` removal
+   and the Event Bus (`Tree`/`TreeSelect`), and the `KitDropdownCheckboxItem` `model` option migration.
+4. **E2E/Cypress coverage** was out of scope for this unit-testing effort and is comparatively thin
+   (~20 specs vs. 130 unit test files) — worth a separate pass if end-to-end confidence is also
+   wanted before the Vue 3 cutover.
 
 ---
 
-**Status**: Library is at ~99.2% component test coverage against the tracked (129-component) pool —
-well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`. Only `InfiniteScroll` remains for full
-coverage of the tracked pool.
+**Status**: 🏁 **100% unit test coverage of the tracked (129-component) pool.** The 80% Phase 1 goal
+from `VUE3_MIGRATION_PLAN.md` was exceeded and the tracked pool is now fully covered — see
+"Next Session Recommendations" above for what comes after this milestone.
