@@ -31,7 +31,13 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Online, Busy, Offline, Focus, Approved, Declined } from './Icons'
+import Online from './Icons/Online.vue'
+import Busy from './Icons/Busy.vue'
+import Offline from './Icons/Offline.vue'
+import Focus from './Icons/Focus.vue'
+import Approved from './Icons/Approved.vue'
+import Declined from './Icons/Declined.vue'
+
 
 type Props = {
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
