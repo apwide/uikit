@@ -10,28 +10,31 @@
 ## 🎯 Current Results
 
 ### Test Statistics
-- **Unit Tests**: 1043 passing, 10 skipped (1053 total)
-- **Test Files**: 123 files
-- **Components Tested**: 122/149 raw (~81.9%) — **122/141 (~86.5%) against the tracked pool**, see below
+- **Unit Tests**: 1064 passing, 10 skipped (1074 total)
+- **Test Files**: 125 files
+- **Components Tested**: 124/149 raw (~83.2%) — **124/138 (~89.9%) against the tracked pool**, see below
 - **Success Rate**: 100% of active tests ✅
 - **Lint**: All new test files pass `eslint` cleanly
 
-### ⚠️ ContentLoader family excluded from the coverage goal (per project owner decision, 2026-08-06)
+### ⚠️ Components excluded from the coverage goal (per project owner decisions, 2026-08-06)
 
-The 8 components under `src/components/ContentLoader/` (`AvatarDetailsLoader`, `AvatarNameLoader`,
-`BulletListLoader`, `ContentLoader`, `FolderPathLoader`, `ListWithImageLoader`, `PageDetailsLoader`,
-`TableLoader`) are **not used** by consuming applications and have been excluded from the tracked
-component pool for the 80% coverage goal. This drops the denominator from 149 to **141 components**.
+Two rounds of exclusions were made this session, both because the components aren't used by consuming
+applications:
 
-Caveat for transparency: `ContentLoader.vue` itself (the base skeleton primitive, not the 7 preset
-variants) is technically still referenced internally by `common/PromisedContentLoader.vue`, which in
-turn is used by `field-renderers/UserEditableRendererEnriched.vue`. The exclusion decision was made at
-the project level (these presets aren't used downstream), so the whole family is being treated as
-out-of-scope rather than re-litigated here — if `PromisedContentLoader` or `UserEditableRendererEnriched`
-get tested later, that will exercise `ContentLoader.vue` indirectly anyway.
+1. **ContentLoader family** (8 components: `AvatarDetailsLoader`, `AvatarNameLoader`, `BulletListLoader`,
+   `ContentLoader`, `FolderPathLoader`, `ListWithImageLoader`, `PageDetailsLoader`, `TableLoader`).
+   Caveat: `ContentLoader.vue` itself (not the 7 presets) is still referenced internally by
+   `common/PromisedContentLoader.vue` → `field-renderers/UserEditableRendererEnriched.vue`; the
+   exclusion is treated as project-level scope, not re-litigated here.
+2. **`Icon/MagicStick.vue`, `Tree/Label.vue`, `Toggle/LockSwitch.vue`** (3 components). Caveat: unlike
+   `LockSwitch` (genuinely unreferenced anywhere), `MagicStick` is still used internally by
+   `SectionMessage/KitSectionMessage.vue`, and `Label` is still used internally by `Tree/Node.vue`
+   (already tested) — both exclusions were still applied per explicit instruction, consistent with
+   treating "not used by consuming apps" as the criterion rather than "not referenced internally
+   anywhere in this repo."
 
-With this pool of 149 - 8 = **141 trackable components**, coverage is **122/141 (~86.5%)** — well past
-the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`.
+This drops the denominator from 149 to **149 - 8 - 3 = 138 tracked components**. Coverage is
+**124/138 (~89.9%)** — well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`.
 
 ### 2026-08-06 Session — Completed Partial Component Systems + Positioning Core + ColorPicker + Spotlight + Button
 
@@ -62,6 +65,10 @@ Button components. 28 new test files / ~180 new tests were added across the sess
 14. ✅ **Spotlight/KitSpotlight.vue** (17 tests) — the onboarding orchestrator: `document.body` mutation
     on mount/unmount, keyboard navigation (ArrowRight/Left/Enter/Escape, Ctrl-guard), custom step slots
     vs. the default hint, and margin normalization. Full-mounted (not shallow) — see below.
+15. ✅ **layout/BorderedPanel/KitBorderedPanel.vue** (12 tests) — header/body conditional rendering,
+    title/actions slots, `noHeader` prop.
+16. ✅ **layout/BorderedPanel/KitBorderedPanelRow.vue** (9 tests) — label/value slots vs. props, and the
+    hover-triggered `after-label` `v-show` behavior (`forceShowAfter` override).
 
 Notably, `KitDropdownCheckboxItem` uses the Vue 2 `model` option (documented breaking change for
 Vue 3 in `VUE3_MIGRATION_PLAN.md`) — its v-model contract (`checked`/`input`) is now covered by tests,
@@ -151,6 +158,10 @@ findings from testing this:
 - Components that mutate global DOM state (`document.body.style`, `document`/`window` event listeners,
   reparenting themselves into `document.body`) need explicit `wrapper.destroy()` cleanup between tests
   to avoid cross-test leakage within the same file.
+- `Element.prototype.closest(selector)` includes the element itself if it matches — calling
+  `.closest('span')` from a `<span>` returns that same span, not an ancestor. Use `.parentElement`
+  (or a more specific ancestor selector) when you actually want the wrapping element, as with
+  `KitBorderedPanelRow`'s `v-show`-toggled wrapper around its `after-label` slot content.
 
 ---
 
@@ -158,33 +169,29 @@ findings from testing this:
 
 | Metric | Original baseline | Current | Change |
 |--------|-------|-----|--------|
-| Unit Tests | 67 | 1043 | +976 |
-| Test Files | 11 | 123 | +112 |
-| Components Covered | ~21 | ~122 | +101 |
-| Coverage % (of 141 tracked) | 14% | ~86.5% | +72.5% |
+| Unit Tests | 67 | 1064 | +997 |
+| Test Files | 11 | 125 | +114 |
+| Components Covered | ~21 | ~124 | +103 |
+| Coverage % (of 138 tracked) | 14% | ~89.9% | +75.9% |
 
 ---
 
-## 🎯 Remaining Work (19 components without dedicated unit tests, tracked pool)
+## 🎯 Remaining Work (14 components without dedicated unit tests, tracked pool)
 
 Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-06. Excludes the
-8-component ContentLoader family (see exclusion note above).
+8-component ContentLoader family and MagicStick/Label/LockSwitch (see exclusion note above).
 
 | Group | Components |
 |---|---|
 | Common utilities | `InfiniteScroll`, `KitTransitionExpand`, `PromisedContentLoader` |
 | Field renderers | `KitMarkdownEditableRenderer`, `UserEditableRendererEnriched` |
-| Icon | `MagicStick` |
-| Layout | `KitBorderedPanel`, `KitBorderedPanelRow` |
 | MarkdownEditor | `KitMarkdownEditor` |
 | Menu | `MenuItem.vue` (plain, non-Kit variant) |
-| Toggle | `LockSwitch` |
-| Tree | `Label` |
 | Avatar icons (low priority) | `Approved`, `Busy`, `Declined`, `Focus`, `Offline`, `Online`, `PresenceWrapper` (trivial SVG wrappers, indirectly exercised by `Avatar.test.js`) |
 
 ### Target
-- **80% Coverage Goal**: 113/141 tracked components (after excluding ContentLoader) — **met**
-- **Current**: 122/141 (~86.5%)
+- **80% Coverage Goal**: 111/138 tracked components (after exclusions) — **met**
+- **Current**: 124/138 (~89.9%)
 - Remaining gap is now about closing out full coverage, not hitting the Phase 1 threshold
 
 ---
@@ -192,15 +199,16 @@ Verified directly against `src/components/**/*.vue` vs. test imports on 2026-08-
 ## 💪 Next Session Recommendations
 
 1. **MarkdownEditor/KitMarkdownEditor** — the last "complex" component from Wave 3.
-2. **Toggle/LockSwitch, Tree/Label, Icon/MagicStick** — small, well-isolated remaining gaps.
-3. **Layout (KitBorderedPanel, KitBorderedPanelRow) / common (InfiniteScroll, KitTransitionExpand,
-   PromisedContentLoader)** — round out the utility/layout components.
-4. **Field renderers** (KitMarkdownEditableRenderer, UserEditableRendererEnriched) — the last two
+2. **common/ (InfiniteScroll, KitTransitionExpand, PromisedContentLoader)** — round out the utility
+   components.
+3. **Field renderers** (KitMarkdownEditableRenderer, UserEditableRendererEnriched) — the last two
    untested renderers.
-5. **Menu/MenuItem.vue** (plain, non-Kit variant) — check first whether it's actually still used
-   anywhere or a legacy leftover, similar to the ContentLoader situation.
+4. **Menu/MenuItem.vue** (plain, non-Kit variant) — check first whether it's actually still used
+   anywhere or a legacy leftover, similar to the ContentLoader/MagicStick/Label/LockSwitch situation.
+5. **Avatar icon subcomponents** (7 trivial SVG wrappers) — lowest priority, already indirectly
+   exercised by `Avatar.test.js`.
 
 ---
 
-**Status**: Library is at ~86.5% component test coverage against the tracked (141-component) pool —
-well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`. 19 components remain for full coverage.
+**Status**: Library is at ~89.9% component test coverage against the tracked (138-component) pool —
+well past the 80% Phase 1 goal from `VUE3_MIGRATION_PLAN.md`. 14 components remain for full coverage.

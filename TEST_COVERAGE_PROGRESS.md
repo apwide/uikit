@@ -7,17 +7,18 @@ additions (Calendar, Form, field renderers, Select variations, and a system-comp
 Tabs/Modal/Menu/Tooltip/Table/Dropdown). This document's numbers below are historical and were
 **not** kept up to date — see `SESSION_SUMMARY.md` for the verified, current state:
 
-- **123 test files**, **1043 passing tests** (10 skipped), 100% pass rate
-- **122/149 components** covered raw, but the 8-component `ContentLoader` family is unused by
-  consuming apps and has been excluded from the tracked pool per project owner decision (2026-08-06) —
-  against the resulting **141-component pool, coverage is 122/141 (~86.5%)**, well past the 80%
-  Phase 1 goal
-- Only **19 components** remain without a dedicated unit test in the tracked pool — see
+- **125 test files**, **1064 passing tests** (10 skipped), 100% pass rate
+- **124/149 components** covered raw. The 8-component `ContentLoader` family plus `Icon/MagicStick`,
+  `Tree/Label`, and `Toggle/LockSwitch` (11 components total) are unused by consuming apps and have
+  been excluded from the tracked pool per project owner decisions (2026-08-06) — against the
+  resulting **138-component pool, coverage is 124/138 (~89.9%)**, well past the 80% Phase 1 goal
+- Only **14 components** remain without a dedicated unit test in the tracked pool — see
   `SESSION_SUMMARY.md` → "Remaining Work" for the exact list. `Popper.vue`, `common/Popup.vue`,
-  `ColorPicker/KitColorCard.vue`, the entire Spotlight onboarding system, and `KitButtonGroup`/
-  `KitIconButton` (previously the top gaps) are now covered — see `SESSION_SUMMARY.md` for the
-  `@floating-ui/dom` mocking approach used for Popper and the full-`mount()` approach needed for the
-  Spotlight system, both reusable patterns for similar components.
+  `ColorPicker/KitColorCard.vue`, the entire Spotlight onboarding system, `KitButtonGroup`/
+  `KitIconButton`, and `KitBorderedPanel`/`KitBorderedPanelRow` (previously the top gaps) are now
+  covered — see `SESSION_SUMMARY.md` for the `@floating-ui/dom` mocking approach used for Popper and
+  the full-`mount()` approach needed for the Spotlight system, both reusable patterns for similar
+  components.
 
 The session-by-session detail below is kept for historical reference on test patterns and templates
 used, but the coverage percentages and "Next Steps" sections are outdated.

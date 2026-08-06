@@ -4,16 +4,17 @@
 
 This document's "Current Test Coverage Analysis" and "Success Metrics" sections below describe the
 **2026-02-13 baseline** and are now stale — several unrecorded sessions since then brought coverage
-to **122/149 components raw**. The 8-component `ContentLoader` family is unused by consuming apps and
-was excluded from the tracked coverage pool per project owner decision (2026-08-06), giving a
-141-component pool at **122/141 (~86.5%)** — well past the 80% Phase 1 goal. **123 unit test files /
-1043 passing tests**. See `SESSION_SUMMARY.md` for the verified current state and the up-to-date list
-of the 19 remaining untested components. `Popper.vue`, `common/Popup.vue`, `ColorPicker/KitColorCard`,
-the full Spotlight onboarding system, and `KitButtonGroup`/`KitIconButton` — flagged as top priorities
-in the original "❌ Components WITHOUT Tests" list below — are now covered as of 2026-08-06; the
-remaining gap is small, well-isolated components (MarkdownEditor, Toggle/Tree/Icon odds and ends,
-layout/common utilities). The Wave priority matrix and test templates further down in this document
-are still accurate and reusable.
+to **124/149 components raw**. The 8-component `ContentLoader` family plus `Icon/MagicStick`,
+`Tree/Label`, and `Toggle/LockSwitch` (11 components total) are unused by consuming apps and were
+excluded from the tracked coverage pool per project owner decisions (2026-08-06), giving a
+138-component pool at **124/138 (~89.9%)** — well past the 80% Phase 1 goal. **125 unit test files /
+1064 passing tests**. See `SESSION_SUMMARY.md` for the verified current state and the up-to-date list
+of the 14 remaining untested components. `Popper.vue`, `common/Popup.vue`, `ColorPicker/KitColorCard`,
+the full Spotlight onboarding system, `KitButtonGroup`/`KitIconButton`, and `KitBorderedPanel`/
+`KitBorderedPanelRow` — flagged as top priorities in the original "❌ Components WITHOUT Tests" list
+below — are now covered as of 2026-08-06; the remaining gap is small, well-isolated components
+(MarkdownEditor, common utilities, the last two field renderers). The Wave priority matrix and test
+templates further down in this document are still accurate and reusable.
 
 ## Current Test Coverage Analysis (historical baseline, 2026-02-13)
 
@@ -437,18 +438,18 @@ describe('ComponentName', () => {
 - Components with E2E tests: 12/149 (8%)
 
 **Current Status (verified 2026-08-06)**:
-- Components with unit tests: 122/149 raw (~81.9%); 122/141 (~86.5%) against the tracked pool
-  (ContentLoader's 8 unused components excluded — see `SESSION_SUMMARY.md`)
-- Unit test files: 123, unit tests: 1043 passing (10 skipped)
-- Remaining in the tracked pool: 19 components — see `SESSION_SUMMARY.md`
+- Components with unit tests: 124/149 raw (~83.2%); 124/138 (~89.9%) against the tracked pool
+  (ContentLoader's 8 components plus MagicStick/Label/LockSwitch excluded — see `SESSION_SUMMARY.md`)
+- Unit test files: 125, unit tests: 1064 passing (10 skipped)
+- Remaining in the tracked pool: 14 components — see `SESSION_SUMMARY.md`
 
 **Target After Phase 1**:
-- Components with tests: 113/141 tracked (80%+) — **met**
+- Components with tests: 111/138 tracked (80%+) — **met**
 - All critical components: 100% coverage
 - All Vue 2 breaking-change components: 100% coverage
 
 ---
 
-**Status**: ✅ Phase 1 goal reached — ~86.5% coverage against the tracked component pool
+**Status**: ✅ Phase 1 goal reached — ~89.9% coverage against the tracked component pool
 
 **Last Updated**: 2026-08-06
