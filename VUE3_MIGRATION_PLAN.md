@@ -11,17 +11,18 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 ### Test Coverage
 
 > **Updated 2026-08-06**: the figures immediately below are the original 2026-02-13 baseline. Several
-> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **124/149
-> components raw**, with **125 unit test files and 1064 passing tests**. `Popper.vue`, `common/Popup.vue`
+> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **125/149
+> components raw**, with **126 unit test files and 1072 passing tests**. `Popper.vue`, `common/Popup.vue`
 > (core positioning primitives), `ColorPicker/KitColorCard.vue`, the full Spotlight onboarding system,
-> `KitButtonGroup`/`KitIconButton`, and `KitBorderedPanel`/`KitBorderedPanelRow` are now covered — see
-> `SESSION_SUMMARY.md` for the `@floating-ui/dom` mocking approach used for Popper and the
-> full-`mount()` approach needed for Spotlight, both reusable for similar components. The 8-component
-> `ContentLoader` family plus `Icon/MagicStick`, `Tree/Label`, and `Toggle/LockSwitch` (11 components
-> total) were excluded from the tracked coverage pool per project owner decisions (unused by consuming
-> apps), giving a 138-component pool at **124/138 (~89.9%)** — **the Phase 1 80% coverage goal has been
-> reached**. 14 components remain untested, all small and well-isolated (MarkdownEditor, common
-> utilities, the last two field renderers).
+> `KitButtonGroup`/`KitIconButton`, `KitBorderedPanel`/`KitBorderedPanelRow`, and the plain
+> `Menu/MenuItem.vue` are now covered — see `SESSION_SUMMARY.md` for the `@floating-ui/dom` mocking
+> approach used for Popper and the full-`mount()` approach needed for Spotlight, both reusable for
+> similar components. The 8-component `ContentLoader` family, `Icon/MagicStick`, `Tree/Label`,
+> `Toggle/LockSwitch`, `common/PromisedContentLoader`, and the 7 Avatar icon subcomponents (19
+> components total) were excluded from the tracked coverage pool per project owner decisions (unused
+> by consuming apps), giving a 130-component pool at **125/130 (~96.2%)** — **the Phase 1 80% coverage
+> goal has been reached**. Only 5 components remain untested: `KitMarkdownEditor`, `InfiniteScroll`,
+> `KitTransitionExpand`, and the last two field renderers.
 
 - **Unit Tests**: 9 test files covering 6 component categories *(2026-02-13 baseline)*
   - Button, Checkbox, Form (Input, TextArea, FieldGroup)
@@ -115,12 +116,13 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    - ✅ Spotlight (onboarding)
    - ✅ Field renderers (20+ components; KitMarkdownEditableRenderer and UserEditableRendererEnriched remain)
 
-Phase 1's 80% goal has been reached (124/138 tracked components, ContentLoader family plus
-MagicStick/Label/LockSwitch excluded as unused — see `SESSION_SUMMARY.md`). `Popper.vue`,
-`common/Popup.vue`, `ColorPicker/KitColorCard`, the Spotlight system, `KitButtonGroup`/`KitIconButton`,
-and `KitBorderedPanel`/`KitBorderedPanelRow` are now tested. Remaining gap (14 components, see
-`SESSION_SUMMARY.md` for full list): MarkdownEditor, common utilities (InfiniteScroll,
-KitTransitionExpand, PromisedContentLoader), and the last two field renderers.
+Phase 1's 80% goal has been reached (125/130 tracked components, ContentLoader family plus
+MagicStick/Label/LockSwitch/PromisedContentLoader/Avatar icons excluded as unused — see
+`SESSION_SUMMARY.md`). `Popper.vue`, `common/Popup.vue`, `ColorPicker/KitColorCard`, the Spotlight
+system, `KitButtonGroup`/`KitIconButton`, `KitBorderedPanel`/`KitBorderedPanelRow`, and the plain
+`Menu/MenuItem.vue` are now tested. Remaining gap (5 components, see `SESSION_SUMMARY.md` for full
+list): MarkdownEditor, common utilities (InfiniteScroll, KitTransitionExpand), and the last two field
+renderers.
 
 **Testing Approach**:
 - Unit tests: Component props, events, slots, state management
