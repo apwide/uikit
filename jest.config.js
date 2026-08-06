@@ -1,6 +1,7 @@
 module.exports = {
   testEnvironment: 'jsdom',
   clearMocks: true,
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   moduleDirectories: ['node_modules', 'src'],
   testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
   moduleFileExtensions: ['ts', 'js', 'vue'],

@@ -272,8 +272,9 @@ Vue 3's inline event-handler expression parser is stricter than Vue 2's: multipl
 `Modal/KitBigModal.vue`, `field-renderers/KitMultiSelectEditableRenderer.vue`,
 `field-renderers/KitSingleSelectEditableRenderer.vue`.
 
-### Jest failure inventory — Bucket A complete (828 passed / 184 failed / 10 skipped of 1022, 62/114
-suites green, up from 709/303/10 and 60/114 at the start of this pass)
+### Jest failure inventory (862 passed / 150 failed / 10 skipped of 1022, 77/114 suites green — up from
+709/303/10 and 60/114 at the start of this pass; Bucket A complete, boolean-attribute-coercion bug fixed,
+shallow-stub slot rendering fixed globally)
 
 **Bucket A — test-file-only, mechanical, `@vue/test-utils` v1→v2 API renames (no component behavior
 changes) — DONE, applied across the whole suite:**
@@ -337,13 +338,22 @@ that need a per-component decision, not a mechanical rename (Phase 3 territory):
   `.view-content` class that doesn't exist in the template, a second independent reason it's dead).
   Full jest suite re-run after the fix: 834 passed / 178 failed / 10 skipped (up from 828/184/10), zero
   regressions (diffed the complete before/after failure list).
-- **Shallow stubs no longer auto-render default slot content.** VTU v1 rendered a stub's default slot
-  content; v2 does not unless the slot is explicitly re-provided. Breaks tests that read `.text()` off a
-  stubbed child expecting its slot content to show (e.g. `Years.test.js` expecting KitButton stub text
-  `'2020'`, gets `''`; `KitTabHeaders` "renders slot content" through a stubbed `KitDraggable`). This is
-  the single largest remaining failure category and needs a Phase 3 decision: fix test-by-test (pass
-  `slots`/`scopedSlots` explicitly per stub) vs. a shared test helper vs. accepting `mount()` instead of
-  `shallowMount()` in the affected suites.
+- ~~Shallow stubs no longer auto-render default slot content~~ — **FIXED globally.** Verified empirically
+  side-by-side (real Vue 2.7.16 + VTU v1.3.6 vs. this project's Vue 3.5.41 + VTU v2.4.11, same component,
+  same slot syntax): VTU v1 rendered `<child-stub>Hello via template</child-stub>`; VTU v2 rendered
+  `<child-stub></child-stub>` — slot content silently dropped. VTU v2 ships a config flag that restores
+  the v1 behavior exactly: `config.global.renderStubDefaultSlot = true` (documented, not a hack —
+  https://test-utils.vuejs.org/api/#global-renderstubdefaultslot). Added `tests/setup.js` setting this
+  flag and wired it via `setupFilesAfterEnv` in `jest.config.js`, instead of touching every affected test
+  file individually. Result: 862 passed / 150 failed / 10 skipped (up from 834/178/10) — fixed 50 tests
+  outright. It also **newly exposed 22 tests** in the `KitDatePicker`/`KitTimePicker`/`KitDateRangePicker`/
+  `KitSelect` family that were passing only because their real bug was hidden inside a stub's
+  never-rendered slot: leftover Vue 2-only APIs (`instance.proxy.$listeners`, `this.$scopedSlots`) that
+  are `undefined` under Vue 3, throwing `TypeError` once that code path actually executes. These aren't
+  regressions caused by the flag — they're the same already-catalogued `$listeners` dead-code problem
+  (see below), just previously masked by the slot-rendering bug instead of caught by it. Net effect is a
+  more honest failure count, not a new problem; left the flag on and logged these 22 as part of the
+  `$listeners`/`$scopedSlots` Phase 3 cleanup rather than reverting.
 - Whatever else surfaces once Bucket A's mechanical fixes stop masking real component issues — the
   184-failure count above is the accurate Bucket B starting point now that Bucket A is cleared.
 
