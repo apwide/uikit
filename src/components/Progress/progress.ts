@@ -1,10 +1,23 @@
+type ProgressBarOptions = {
+  backgroundColor?: string
+  transition?: string
+  zIndex?: string
+  height?: string
+}
+
 export default class ProgressBar {
+  el: HTMLDivElement | null
+  timer: ReturnType<typeof setInterval> | null
+  progress: number
+  props: Required<ProgressBarOptions>
+  max: number
+
   constructor({
     backgroundColor = 'var(--kit-progress-top-color)',
     transition = 'all 0.5s ease-out',
     zIndex = '999999',
     height = '3px'
-  } = {}) {
+  }: ProgressBarOptions = {}) {
     this.el = null
     this.timer = null
     this.progress = 0
@@ -17,18 +30,18 @@ export default class ProgressBar {
     this.max = 0.95
   }
 
-  applyCss() {
+  applyCss(): void {
     // eslint-disable-next-line no-restricted-syntax
     for (const [prop, value] of Object.entries(this.props)) {
       this.el.style[prop] = value
     }
   }
 
-  clamp(n) {
+  clamp(n: number): number {
     return n > this.max ? this.max : n
   }
 
-  createElement() {
+  createElement(): void {
     this.el = document.createElement('div')
     this.el.style.position = 'fixed'
     this.el.style.top = '0'
@@ -37,7 +50,7 @@ export default class ProgressBar {
     document.body.appendChild(this.el)
   }
 
-  start() {
+  start(): void {
     if (!this.el) {
       this.createElement()
       clearInterval(this.timer)
@@ -47,7 +60,7 @@ export default class ProgressBar {
     }
   }
 
-  hide() {
+  hide(): void {
     clearInterval(this.timer)
     setTimeout(() => {
       if (this.el) {
@@ -57,19 +70,19 @@ export default class ProgressBar {
     }, 300)
   }
 
-  reset() {
+  reset(): void {
     this.timer = null
     this.progress = 0
     this.el = null
   }
 
-  setProgress() {
+  setProgress(): void {
     if (this.el) {
       this.el.style.width = `${this.progress * 100}%`
     }
   }
 
-  increase(amount) {
+  increase(amount?: number): void {
     let increment = amount
     if (this.progress > 1) {
       return
@@ -94,7 +107,7 @@ export default class ProgressBar {
     this.setProgress()
   }
 
-  finish() {
+  finish(): void {
     if (this.el) {
       this.progress = 1
       this.setProgress()
