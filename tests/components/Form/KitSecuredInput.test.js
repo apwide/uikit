@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitSecuredInput from '@components/Form/KitSecuredInput.vue'
+import KitIconButton from '@components/Button/KitIconButton.vue'
 
 describe('KitSecuredInput', () => {
   it('renders with default props', () => {
@@ -36,7 +37,7 @@ describe('KitSecuredInput', () => {
     const component = shallowMount(KitSecuredInput)
     expect(component.find('input').attributes('type')).toBe('password')
     const fakeEvent = { stopPropagation: jest.fn(), preventDefault: jest.fn() }
-    await component.find('[title="Reveal"]').vm.$emit('click', fakeEvent)
+    await component.findComponent(KitIconButton).vm.$emit('click', fakeEvent)
     expect(component.find('input').attributes('type')).toBe('text')
   })
 

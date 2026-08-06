@@ -46,12 +46,12 @@ describe('InfiniteScroll', () => {
     const component = shallowMount(InfiniteScroll, { attachTo: document.body })
     expect(global.IntersectionObserver).toHaveBeenCalled()
     expect(observeMock).toHaveBeenCalledWith(component.element)
-    component.destroy()
+    component.unmount()
   })
 
   it('disconnects the observer on unmount', () => {
     const component = shallowMount(InfiniteScroll)
-    component.destroy()
+    component.unmount()
     expect(disconnectMock).toHaveBeenCalled()
   })
 

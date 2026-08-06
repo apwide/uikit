@@ -53,43 +53,43 @@ describe('KitMarkdownEditor', () => {
   it('renders with default props', async () => {
     const { wrapper } = await mountEditor()
     expect(wrapper.exists()).toBe(true)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('renders with kit-markdown-editor class', async () => {
     const { wrapper } = await mountEditor()
     expect(wrapper.classes()).toContain('kit-markdown-editor')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('constructs EasyMDE against the internal textarea', async () => {
     const { wrapper } = await mountEditor()
     expect(EasyMDE.mock.calls[EasyMDE.mock.calls.length - 1][0].element).toBe(wrapper.find('textarea').element)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('sets the initial value on the editor instance', async () => {
     const { wrapper, instance } = await mountEditor({ value: 'hello world' })
     expect(instance.value).toHaveBeenCalledWith('hello world')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('passes the placeholder through to EasyMDE', async () => {
     const { wrapper, instance } = await mountEditor({ placeholder: 'Type here' })
     expect(instance.options.placeholder).toBe('Type here')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('uses the minHeight prop for the editor height when not readonly', async () => {
     const { wrapper, instance } = await mountEditor({ minHeight: 500 })
     expect(instance.options.minHeight).toBe('500px')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('forces a 1em minHeight when readonly', async () => {
     const { wrapper, instance } = await mountEditor({ readonly: true })
     expect(instance.options.minHeight).toBe('1em')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('replaces the heading toolbar entry with a headings dropdown when not readonly', async () => {
@@ -103,13 +103,13 @@ describe('KitMarkdownEditor', () => {
       children: ['heading-1', 'heading-2', 'heading-3']
     })
     expect(toolbar).toContain('bold')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('does not build a toolbar when readonly', async () => {
     const { wrapper, instance } = await mountEditor({ readonly: true })
     expect(instance.options.toolbar).toBeNull()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('registers change/focus/blur/keyup handlers on the codemirror instance when not readonly', async () => {
@@ -118,23 +118,23 @@ describe('KitMarkdownEditor', () => {
     expect(instance.codemirror.on).toHaveBeenCalledWith('focus', expect.any(Function))
     expect(instance.codemirror.on).toHaveBeenCalledWith('blur', expect.any(Function))
     expect(instance.codemirror.on).toHaveBeenCalledWith('keyup', expect.any(Function))
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('sets the codemirror readOnly option to match the readonly prop', async () => {
     const { wrapper: readonlyWrapper, instance: readonlyInstance } = await mountEditor({ readonly: true })
     expect(readonlyInstance.codemirror.setOption).toHaveBeenCalledWith('readOnly', true)
-    readonlyWrapper.destroy()
+    readonlyWrapper.unmount()
 
     const { wrapper: editableWrapper, instance: editableInstance } = await mountEditor({ readonly: false })
     expect(editableInstance.codemirror.setOption).toHaveBeenCalledWith('readOnly', false)
-    editableWrapper.destroy()
+    editableWrapper.unmount()
   })
 
   it('toggles the EasyMDE preview when readonly and not already previewing', async () => {
     const { wrapper } = await mountEditor({ readonly: true })
     expect(EasyMDE.togglePreview).toHaveBeenCalled()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('emits input with the trimmed value when the editor changes', async () => {
@@ -143,28 +143,28 @@ describe('KitMarkdownEditor', () => {
     handlerFor(instance, 'change')()
     expect(wrapper.emitted('input')).toBeTruthy()
     expect(wrapper.emitted('input')[0]).toEqual(['new content'])
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('emits focus when the editor gains focus', async () => {
     const { wrapper, instance } = await mountEditor()
     handlerFor(instance, 'focus')()
     expect(wrapper.emitted('focus')).toBeTruthy()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('emits ctrl-enter when Ctrl+Enter is pressed', async () => {
     const { wrapper, instance } = await mountEditor()
     handlerFor(instance, 'keyup')(null, { ctrlKey: true, code: 'Enter' })
     expect(wrapper.emitted('ctrl-enter')).toBeTruthy()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('does not emit ctrl-enter for a plain Enter without Ctrl', async () => {
     const { wrapper, instance } = await mountEditor()
     handlerFor(instance, 'keyup')(null, { ctrlKey: false, code: 'Enter' })
     expect(wrapper.emitted('ctrl-enter')).toBeFalsy()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('emits blur when clicking outside the editor container', async () => {
@@ -176,14 +176,14 @@ describe('KitMarkdownEditor', () => {
 
     expect(wrapper.emitted('blur')).toBeTruthy()
     document.body.removeChild(outside)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('does not emit blur when clicking inside the editor container', async () => {
     const { wrapper } = await mountEditor()
     wrapper.element.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     expect(wrapper.emitted('blur')).toBeFalsy()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('does not react to outside clicks when readonly', async () => {
@@ -195,7 +195,7 @@ describe('KitMarkdownEditor', () => {
 
     expect(wrapper.emitted('blur')).toBeFalsy()
     document.body.removeChild(outside)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('focuses the codemirror instance after mount when autoFocus is set', async () => {
@@ -205,19 +205,19 @@ describe('KitMarkdownEditor', () => {
     const instance = EasyMDE.mock.instances[EasyMDE.mock.instances.length - 1]
     jest.advanceTimersByTime(250)
     expect(instance.codemirror.focus).toHaveBeenCalled()
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('updates the editor value when the value prop changes externally', async () => {
     const { wrapper, instance } = await mountEditor({ value: 'first' })
     await wrapper.setProps({ value: 'second' })
     expect(instance.value).toHaveBeenCalledWith('second')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('cleans up the editor and click listener on unmount', async () => {
     const { wrapper, instance } = await mountEditor()
-    wrapper.destroy()
+    wrapper.unmount()
     expect(instance.cleanup).toHaveBeenCalled()
     expect(instance.toTextArea).toHaveBeenCalled()
   })

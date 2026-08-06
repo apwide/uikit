@@ -91,7 +91,7 @@ describe('KitSpotlightMask', () => {
     const event = new MouseEvent('click', { bubbles: true, cancelable: true })
     component.find('.mask-content').element.dispatchEvent(event)
     expect(event.defaultPrevented).toBe(true)
-    component.destroy()
+    component.unmount()
   })
 
   it('prevents clicks outside of the mask via the document-level guard', () => {
@@ -102,6 +102,6 @@ describe('KitSpotlightMask', () => {
     const event = new MouseEvent('click', { bubbles: true, cancelable: true })
     document.body.dispatchEvent(event)
     expect(event.defaultPrevented).toBe(true)
-    component.destroy()
+    component.unmount()
   })
 })

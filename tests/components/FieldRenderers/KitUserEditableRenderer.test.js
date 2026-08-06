@@ -1,5 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import KitUserEditableRenderer from '@components/field-renderers/KitUserEditableRenderer.vue'
+import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
+import KitUserRenderer from '@components/field-renderers/KitUserRenderer.vue'
 
 const loadOptions = jest.fn().mockResolvedValue({ data: [] })
 
@@ -13,7 +15,7 @@ describe('KitUserEditableRenderer', () => {
     const component = shallowMount(KitUserEditableRenderer, {
       propsData: { loadOptions, user: { key: 'jdoe', name: 'Jane Doe' } }
     })
-    expect(component.find('anonymous-stub').exists()).toBe(true)
+    expect(component.findComponent(KitInlineEdit).exists()).toBe(true)
   })
 
   it('renders the KitUserRenderer directly when editable is false', () => {
@@ -21,7 +23,7 @@ describe('KitUserEditableRenderer', () => {
       propsData: { loadOptions, user: { key: 'jdoe', name: 'Jane Doe' }, editable: false }
     })
     expect(component.html()).not.toContain('placement=')
-    expect(component.find('anonymous-stub').attributes('user')).toBe('[object Object]')
+    expect(component.findComponent(KitUserRenderer).attributes('user')).toBe('[object Object]')
   })
 
   it('renders the KitUserRenderer directly when avatarOnly is true, even if editable', () => {

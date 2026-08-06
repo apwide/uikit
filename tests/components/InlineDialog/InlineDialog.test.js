@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
+import Popup from '@components/common/Popup'
 
 describe('KitInlineDialog', () => {
   it('renders with default props', () => {
@@ -15,8 +16,7 @@ describe('KitInlineDialog', () => {
 
   it('is closed by default', () => {
     const component = shallowMount(KitInlineDialog)
-    // Dialog should render with anonymous-stub (shallowMount stubs child components)
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(Popup).exists()).toBe(true)
     expect(component.find('.kit-dialog-container').exists()).toBe(true)
   })
 

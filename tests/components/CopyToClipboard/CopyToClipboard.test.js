@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
+import Tooltip from '@components/Tooltip/Tooltip.vue'
 
 describe('KitCopyToClipboard', () => {
   it('renders with default props', () => {
@@ -65,8 +66,7 @@ describe('KitCopyToClipboard', () => {
 
   it('wraps content in Tooltip component', () => {
     const component = shallowMount(KitCopyToClipboard)
-    // Tooltip is stubbed by shallowMount (shows as anonymous-stub)
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(Tooltip).exists()).toBe(true)
     expect(component.html()).toContain('label="Copy to clipboard"')
   })
 

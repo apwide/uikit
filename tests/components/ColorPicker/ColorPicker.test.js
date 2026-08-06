@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitColorPicker from '@components/ColorPicker/KitColorPicker.vue'
+import Popup from '@components/common/Popup.vue'
 
 const defaultColors = ['#000', '#0052CC', '#172B4D', '#FF5630', '#FFAB00', '#36B37E', '#00B8D9', '#6554C0']
 
@@ -100,7 +101,7 @@ describe('KitColorPicker', () => {
 
   it('renders Popup component', () => {
     const component = shallowMount(KitColorPicker)
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(Popup).exists()).toBe(true)
   })
 
   it('has correct CSS class structure', () => {

@@ -272,24 +272,24 @@ Vue 3's inline event-handler expression parser is stricter than Vue 2's: multipl
 `Modal/KitBigModal.vue`, `field-renderers/KitMultiSelectEditableRenderer.vue`,
 `field-renderers/KitSingleSelectEditableRenderer.vue`.
 
-### Jest failure inventory (709 passed / 303 failed / 10 skipped of 1022, 74/114 suites red)
-
-Not fixed here — this is Phase 3's starting checklist. Two buckets:
+### Jest failure inventory — Bucket A complete (828 passed / 184 failed / 10 skipped of 1022, 62/114
+suites green, up from 709/303/10 and 60/114 at the start of this pass)
 
 **Bucket A — test-file-only, mechanical, `@vue/test-utils` v1→v2 API renames (no component behavior
-changes, safe to batch-fix independent of any single component's actual Vue 3 migration):**
-- `wrapper.destroy()` → `wrapper.unmount()` (renamed in v2) — **~96 occurrences**
-- `provide` / custom `stubs` / `listeners` **top-level mount options moved under a `global: {...}`
-  key** in v2 (e.g. `mount(C, { provide: {...} })` → `mount(C, { global: { provide: {...} } })`) — hit
-  the Tabs system tests hardest (`inject('state')` silently gets `undefined`, cascades into
-  `TypeError: Object.defineProperty called on non-object` / `reading 'activeTab'`, ~40+ failures)
+changes) — DONE, applied across the whole suite:**
+- `wrapper.destroy()` → `wrapper.unmount()` (renamed in v2) — ~96 occurrences fixed
+- `provide` / custom `stubs` **top-level mount options moved under a `global: {...}` key** in v2 — hit
+  the Tabs system tests hardest, fixed in 5 files
 - Shallow-stub tag names changed from a generic `anonymous-stub` to the real component's kebab-case
-  name + `-stub` (e.g. `kit-button-stub`), confirmed empirically this session — **134 occurrences** of
-  `'anonymous-stub'` lookups need to target the actual stub name, or (better, and already the
-  established pattern in most of this session's later tests) use `findComponent(ActualImportedComponent)`
-  instead of a tag-name string, which is unaffected by this rename
+  name + `-stub` — 134 occurrences across 25 files converted to `findComponent(ActualImportedComponent)`
+  (unaffected by the tag-name rename)
+- Newly discovered mid-pass: `wrapper.find(cssSelector).vm` no longer works in v2 — `find()` always
+  returns a `DOMWrapper` (no `.vm`), whereas v1 exposed `.vm` even off a CSS-selector match into a stub.
+  Fixed in 5 files (`CalendarHeader`, `SecureStringLineRenderer`, `KitSecuredInput`, `KitSelectMenu`,
+  `InlineEditButtons`) by switching to `findComponent()`/`findAllComponents()`.
 
-**Bucket B — genuine Vue 3 runtime/API differences in component source (real Phase 3 migration work):**
+**Bucket B — genuine Vue 3 runtime/API differences in component source or test-infra behavior changes
+that need a per-component decision, not a mechanical rename (Phase 3 territory):**
 - `Popper/Popper.vue`'s custom `render()` does `this.$slots.default[0].elm` — in Vue 3, `$slots.default`
   is a **function** (call it: `this.$slots.default()`), not a live array, and a vnode's DOM node is
   `.el`, not `.elm`. (`TypeError: Cannot read properties of undefined (reading 'elm')`, `'default'`)
@@ -297,9 +297,24 @@ changes, safe to batch-fix independent of any single component's actual Vue 3 mi
   `h` as an argument; must `import { h } from 'vue'` explicitly, and the vnode data object shape
   changes (`{ attrs: {...}, on: {...} }` → flat props + `onXxx` handlers). (`TypeError: h is not a
   function`)
-- The 12 `$listeners` files and 2 `model`-option files already catalogued earlier in this document.
-- Whatever else surfaces once Bucket A's mechanical fixes stop masking real component issues behind
-  test-infra noise — re-run the full suite after Bucket A is cleared to get an accurate Bucket B count.
+- The 12 `$listeners` files and 2 `model`-option files already catalogued earlier in this document
+  (3 of the `$listeners` test files — `KitIconButton`, `KitTextField`, `MenuItemPlain` — still have a
+  top-level `listeners:` mount option left untouched on purpose: fixing the test alone can't pass while
+  `v-on="$listeners"` is dead code under Vue 3).
+- **Systemic: Vue 3 always renders a stringified value (`"true"`/`"false"`) for boolean/custom attrs
+  instead of omitting the attribute when falsy** — Vue 2 omitted the attribute entirely for false values,
+  including on genuine native HTML boolean attributes like `disabled`. Breaks any
+  `expect(wrapper.attributes('x')).toBeUndefined()` assertion for a false boolean. First seen on
+  `KitTabHeader`, confirmed to recur elsewhere; needs a scope decision (see below) before a fix pass.
+- **Shallow stubs no longer auto-render default slot content.** VTU v1 rendered a stub's default slot
+  content; v2 does not unless the slot is explicitly re-provided. Breaks tests that read `.text()` off a
+  stubbed child expecting its slot content to show (e.g. `Years.test.js` expecting KitButton stub text
+  `'2020'`, gets `''`; `KitTabHeaders` "renders slot content" through a stubbed `KitDraggable`). This is
+  the single largest remaining failure category and needs a Phase 3 decision: fix test-by-test (pass
+  `slots`/`scopedSlots` explicitly per stub) vs. a shared test helper vs. accepting `mount()` instead of
+  `shallowMount()` in the affected suites.
+- Whatever else surfaces once Bucket A's mechanical fixes stop masking real component issues — the
+  184-failure count above is the accurate Bucket B starting point now that Bucket A is cleared.
 
 ---
 

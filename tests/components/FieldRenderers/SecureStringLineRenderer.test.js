@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import SecureStringLineRenderer from '@components/field-renderers/SecureStringLineRenderer.vue'
+import KitIconButton from '@components/Button/KitIconButton.vue'
 
 describe('SecureStringLineRenderer', () => {
   it('renders with required props', () => {
@@ -27,7 +28,7 @@ describe('SecureStringLineRenderer', () => {
   it('reveals the raw value and toggles the title to Hide when clicked', async () => {
     const component = shallowMount(SecureStringLineRenderer, { propsData: { value: 'secret123' } })
     const fakeEvent = { stopPropagation: jest.fn(), preventDefault: jest.fn() }
-    await component.find('[title="Reveal"]').vm.$emit('click', fakeEvent)
+    await component.findComponent(KitIconButton).vm.$emit('click', fakeEvent)
     expect(component.find('.string-line-wrapper').exists()).toBe(true)
     expect(component.find('.string-line-wrapper').html()).toContain('secret123')
     expect(component.html()).toContain('title="Hide"')

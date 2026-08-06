@@ -17,7 +17,7 @@ describe('KitSpotlight', () => {
 
   afterEach(() => {
     if (wrapper) {
-      wrapper.destroy()
+      wrapper.unmount()
       wrapper = null
     }
   })
@@ -155,7 +155,7 @@ describe('KitSpotlight', () => {
     wrapper = mount(KitSpotlight, { propsData: { steps: [makeStep()] } })
     await flushPromises()
     const el = wrapper.element
-    wrapper.destroy()
+    wrapper.unmount()
     wrapper = null
     expect(document.body.style.position).toBe('static')
     expect(el.parentElement).toBeNull()

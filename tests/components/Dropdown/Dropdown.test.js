@@ -1,5 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
+import KitButton from '@components/Button/KitButton.vue'
+import Popup from '@components/common/Popup.vue'
 
 describe('KitDropdown', () => {
   it('renders with default props', () => {
@@ -97,14 +99,12 @@ describe('KitDropdown', () => {
 
   it('renders KitButton when no trigger slot', () => {
     const component = shallowMount(KitDropdown)
-    // KitButton is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(KitButton).exists()).toBe(true)
   })
 
   it('renders Popup component', () => {
     const component = shallowMount(KitDropdown)
-    // Popup is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(Popup).exists()).toBe(true)
   })
 
   it('renders default slot content', () => {

@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import CalendarHeader from '@components/Calendar/CalendarHeader.vue'
+import KitIconButton from '@components/Button/KitIconButton.vue'
 
 describe('CalendarHeader', () => {
   const requiredProps = { month: 'January', year: 2026, decade: '2020 - 2029' }
@@ -48,7 +49,8 @@ describe('CalendarHeader', () => {
 
   it('emits a decrementing move function when the previous month button is clicked', async () => {
     const component = shallowMount(CalendarHeader, { propsData: { ...requiredProps, currentInterval: 'days' } })
-    await component.find('[title="Previous month"]').vm.$emit('click')
+    const prevButton = component.findAllComponents(KitIconButton).find(w => w.attributes('title') === 'Previous month')
+    await prevButton.vm.$emit('click')
     const emittedEvents = component.emitted()
     const moveEvent = emittedEvents.next || emittedEvents.prev
     expect(moveEvent).toBeTruthy()
@@ -59,7 +61,8 @@ describe('CalendarHeader', () => {
 
   it('emits an incrementing move function when the next month button is clicked', async () => {
     const component = shallowMount(CalendarHeader, { propsData: { ...requiredProps, currentInterval: 'days' } })
-    await component.find('[title="Next month"]').vm.$emit('click')
+    const nextButton = component.findAllComponents(KitIconButton).find(w => w.attributes('title') === 'Next month')
+    await nextButton.vm.$emit('click')
     const emittedEvents = component.emitted()
     const moveEvent = emittedEvents.next || emittedEvents.prev
     expect(moveEvent).toBeTruthy()

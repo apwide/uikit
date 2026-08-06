@@ -1,5 +1,6 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import UserPicker from '@components/Select/UserPicker.vue'
+import KitSelect from '@components/Select/KitSelect.vue'
 
 const users = [
   { key: 'jdoe', name: 'Jane Doe', disabled: false },
@@ -15,7 +16,7 @@ describe('UserPicker', () => {
 
   it('forwards the value to the inner KitSelect', () => {
     const component = shallowMount(UserPicker, { propsData: { getUsers, value: users[0] } })
-    expect(component.find('anonymous-stub').attributes('value')).toBe('[object Object]')
+    expect(component.findComponent(KitSelect).attributes('value')).toBe('[object Object]')
   })
 
   it('defaults value to an empty string', () => {
@@ -31,12 +32,12 @@ describe('UserPicker', () => {
 
   it('sets async to true on the inner KitSelect', () => {
     const component = shallowMount(UserPicker, { propsData: { getUsers } })
-    expect(component.find('anonymous-stub').attributes('async')).toBe('true')
+    expect(component.findComponent(KitSelect).attributes('async')).toBe('true')
   })
 
   it('forwards the multi prop to the inner KitSelect', () => {
     const component = shallowMount(UserPicker, { propsData: { getUsers, multi: true } })
-    expect(component.find('anonymous-stub').attributes('multi')).toBe('true')
+    expect(component.findComponent(KitSelect).attributes('multi')).toBe('true')
   })
 
   it('loads initial options when the select is opened', async () => {

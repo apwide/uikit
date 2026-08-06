@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Weeks from '@components/Calendar/Weeks.vue'
+import Day from '@components/Calendar/Day.vue'
 
 function makeDay(date) {
   return {
@@ -45,13 +46,13 @@ describe('Weeks', () => {
 
   it('renders one Day per day in the week', () => {
     const component = shallowMount(Weeks, { propsData: { weeks: [oneWeek] } })
-    expect(component.findAll('anonymous-stub')).toHaveLength(7)
+    expect(component.findAllComponents(Day)).toHaveLength(7)
   })
 
   it('forwards date-selected from a Day', async () => {
     const component = shallowMount(Weeks, { propsData: { weeks: [oneWeek] } })
     const day = oneWeek[0]
-    await component.find('anonymous-stub').vm.$emit('date-selected', day)
+    await component.findComponent(Day).vm.$emit('date-selected', day)
     expect(component.emitted('date-selected')).toEqual([[day]])
   })
 })

@@ -1,5 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import KitTimePicker from '@components/Calendar/KitTimePicker.vue'
+import KitTextField from '@components/Form/KitTextField.vue'
+import Popup from '@components/common/Popup'
 
 describe('KitTimePicker', () => {
   it('renders with default props', () => {
@@ -75,14 +77,12 @@ describe('KitTimePicker', () => {
 
   it('renders TextField component', () => {
     const component = shallowMount(KitTimePicker)
-    // KitTextField is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(KitTextField).exists()).toBe(true)
   })
 
   it('renders Popup component', () => {
     const component = shallowMount(KitTimePicker)
-    // Popup is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(Popup).exists()).toBe(true)
   })
 
   it('displays formatted time value', () => {

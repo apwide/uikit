@@ -1,5 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import KitSelect from '@components/Select/KitSelect.vue'
+import KitTextField from '@components/Form/KitTextField.vue'
+import Icons from '@components/Select/Icons.vue'
 
 const mockOptions = [
   { id: 1, label: 'Option 1', value: 'opt1' },
@@ -204,16 +206,14 @@ describe('KitSelect', () => {
     const component = shallowMount(KitSelect, {
       propsData: { options: [] }
     })
-    // KitTextField is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(KitTextField).exists()).toBe(true)
   })
 
   it('renders Icons component', () => {
     const component = shallowMount(KitSelect, {
       propsData: { options: [] }
     })
-    // Icons is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(Icons).exists()).toBe(true)
   })
 
   it('accepts boundariesElement prop', () => {

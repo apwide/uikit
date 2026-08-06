@@ -2,8 +2,11 @@ import { shallowMount } from '@vue/test-utils'
 import KitTabPanels from '@components/Tabs/KitTabPanels.vue'
 
 const mountWithState = (state, options = {}) => shallowMount(KitTabPanels, {
-  provide: { state },
-  ...options
+  ...options,
+  global: {
+    provide: { state },
+    ...options.global
+  }
 })
 
 describe('KitTabPanels', () => {

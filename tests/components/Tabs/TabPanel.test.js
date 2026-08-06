@@ -4,8 +4,8 @@ import KitTabPanel from '@components/Tabs/KitTabPanel.vue'
 describe('KitTabPanel', () => {
   it('renders with default props', () => {
     const component = shallowMount(KitTabPanel, {
-      provide: {
-        state: { activeTab: 'tab1' }
+      global: {
+        provide: { state: { activeTab: 'tab1' } }
       }
     })
     expect(component.exists()).toBe(true)
@@ -14,8 +14,8 @@ describe('KitTabPanel', () => {
   it('renders slot content when visible', () => {
     const component = shallowMount(KitTabPanel, {
       propsData: { id: 'tab1' },
-      provide: {
-        state: { activeTab: 'tab1' }
+      global: {
+        provide: { state: { activeTab: 'tab1' } }
       },
       slots: { default: '<div class="panel-content">Panel Content</div>' }
     })
@@ -25,8 +25,8 @@ describe('KitTabPanel', () => {
   it('does not render when not active', () => {
     const component = shallowMount(KitTabPanel, {
       propsData: { id: 'tab2' },
-      provide: {
-        state: { activeTab: 'tab1' }
+      global: {
+        provide: { state: { activeTab: 'tab1' } }
       },
       slots: { default: '<div class="panel-content">Panel Content</div>' }
     })
@@ -36,8 +36,8 @@ describe('KitTabPanel', () => {
   it('accepts string id', () => {
     const component = shallowMount(KitTabPanel, {
       propsData: { id: 'tab1' },
-      provide: {
-        state: { activeTab: 'tab1' }
+      global: {
+        provide: { state: { activeTab: 'tab1' } }
       }
     })
     expect(component.vm.$props.id).toBe('tab1')
@@ -46,8 +46,8 @@ describe('KitTabPanel', () => {
   it('accepts numeric id', () => {
     const component = shallowMount(KitTabPanel, {
       propsData: { id: 1 },
-      provide: {
-        state: { activeTab: 1 }
+      global: {
+        provide: { state: { activeTab: 1 } }
       }
     })
     expect(component.vm.$props.id).toBe(1)
@@ -56,8 +56,8 @@ describe('KitTabPanel', () => {
   it('renders as div when visible', () => {
     const component = shallowMount(KitTabPanel, {
       propsData: { id: 'tab1' },
-      provide: {
-        state: { activeTab: 'tab1' }
+      global: {
+        provide: { state: { activeTab: 'tab1' } }
       }
     })
     expect(component.element.tagName).toBe('DIV')
@@ -66,8 +66,8 @@ describe('KitTabPanel', () => {
   it('compares id as string', () => {
     const component = shallowMount(KitTabPanel, {
       propsData: { id: '1' },
-      provide: {
-        state: { activeTab: 1 }
+      global: {
+        provide: { state: { activeTab: 1 } }
       },
       slots: { default: '<div class="content">Content</div>' }
     })

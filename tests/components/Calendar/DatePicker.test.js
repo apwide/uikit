@@ -1,5 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
+import KitTextField from '@components/Form/KitTextField.vue'
+import Popup from '@components/common/Popup'
 
 describe('KitDatePicker', () => {
   it('renders with default props', () => {
@@ -85,13 +87,11 @@ describe('KitDatePicker', () => {
 
   it('renders TextField component', () => {
     const component = shallowMount(KitDatePicker)
-    // KitTextField is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(KitTextField).exists()).toBe(true)
   })
 
   it('renders Popup component', () => {
     const component = shallowMount(KitDatePicker)
-    // Popup is stubbed by shallowMount
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(Popup).exists()).toBe(true)
   })
 })

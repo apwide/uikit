@@ -58,45 +58,45 @@ describe('KitTransitionExpand', () => {
   })
 
   it('sets the element height to auto once it has finished entering', async () => {
-    const wrapper = mount(TestHost, { propsData: { show: false }, stubs: { transition: false } })
+    const wrapper = mount(TestHost, { propsData: { show: false }, global: { stubs: { transition: false } } })
     await wrapper.setProps({ show: true })
     await wrapper.vm.$nextTick()
     await flushPromises()
     expect(wrapper.find('.content').element.style.height).toBe('auto')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('does not touch the element height when enterTransition is false', async () => {
     const wrapper = mount(TestHost, {
       propsData: { show: false, enterTransition: false },
-      stubs: { transition: false }
+      global: { stubs: { transition: false } }
     })
     await wrapper.setProps({ show: true })
     await wrapper.vm.$nextTick()
     await flushPromises()
     expect(wrapper.find('.content').element.style.height).toBe('')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('removes the content from the DOM after leaving', async () => {
-    const wrapper = mount(TestHost, { propsData: { show: true }, stubs: { transition: false } })
+    const wrapper = mount(TestHost, { propsData: { show: true }, global: { stubs: { transition: false } } })
     expect(wrapper.find('.content').exists()).toBe(true)
     await wrapper.setProps({ show: false })
     await wrapper.vm.$nextTick()
     await flushPromises()
     expect(wrapper.find('.content').exists()).toBe(false)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('removes the content from the DOM after leaving even when leaveTransition is false', async () => {
     const wrapper = mount(TestHost, {
       propsData: { show: true, leaveTransition: false },
-      stubs: { transition: false }
+      global: { stubs: { transition: false } }
     })
     await wrapper.setProps({ show: false })
     await wrapper.vm.$nextTick()
     await flushPromises()
     expect(wrapper.find('.content').exists()).toBe(false)
-    wrapper.destroy()
+    wrapper.unmount()
   })
 })

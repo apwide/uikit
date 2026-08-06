@@ -75,7 +75,7 @@ describe('KitDateRangePicker', () => {
     const component = shallowMount(KitDateRangePicker, { attachTo: document.body })
     await component.find('.kit-daterange-picker__input-from').trigger('focus')
     expect(component.emitted('focus')).toBeTruthy()
-    component.destroy()
+    component.unmount()
   })
 
   it('emits input with an undefined "from" when the from input is cleared', async () => {

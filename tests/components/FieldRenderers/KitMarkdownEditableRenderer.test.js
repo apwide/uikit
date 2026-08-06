@@ -97,6 +97,6 @@ describe('KitMarkdownEditableRenderer', () => {
     })
     await component.findComponent(KitInlineEdit).vm.$emit('stop-editing')
     expect(component.emitted('stop-editing')).toBeTruthy()
-    component.destroy()
+    component.unmount()
   })
 })

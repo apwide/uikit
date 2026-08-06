@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitSelectMenu from '@components/Select/KitSelectMenu.vue'
+import KitSelectOption from '@components/Select/KitSelectOption.vue'
 
 const mockOptions = [
   { id: 1, label: 'Option 1', value: 'opt1', disabled: false },
@@ -53,7 +54,7 @@ describe('KitSelectMenu', () => {
     const component = shallowMount(KitSelectMenu, {
       propsData: { options: mockOptions, appendToBody: false, hasSuggestions: true }
     })
-    await component.find('[data-cy="select-option"]').vm.$emit('option-selected', mockOptions[0])
+    await component.findComponent(KitSelectOption).vm.$emit('option-selected', mockOptions[0])
     expect(component.emitted('option-selected')).toEqual([[mockOptions[0]]])
   })
 
@@ -61,7 +62,7 @@ describe('KitSelectMenu', () => {
     const component = shallowMount(KitSelectMenu, {
       propsData: { options: mockOptions, appendToBody: false, hasSuggestions: true }
     })
-    await component.find('[data-cy="select-option"]').vm.$emit('mouseover', 0)
+    await component.findComponent(KitSelectOption).vm.$emit('mouseover', 0)
     expect(component.emitted('mouseover')).toEqual([[0]])
   })
 

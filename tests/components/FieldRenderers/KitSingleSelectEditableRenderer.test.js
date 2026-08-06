@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitSingleSelectEditableRenderer from '@components/field-renderers/KitSingleSelectEditableRenderer.vue'
+import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 
 describe('KitSingleSelectEditableRenderer', () => {
   it('renders with required props', () => {
@@ -11,7 +12,7 @@ describe('KitSingleSelectEditableRenderer', () => {
     const component = shallowMount(KitSingleSelectEditableRenderer, {
       propsData: { allowedValues: ['A', 'B'], value: 'A' }
     })
-    expect(component.find('anonymous-stub').attributes('value')).toBe('A')
+    expect(component.findComponent(KitInlineEdit).attributes('value')).toBe('A')
   })
 
   it('renders a plain wrapper when editable is false', () => {

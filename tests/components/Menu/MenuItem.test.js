@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitMenuItem from '@components/Menu/KitMenuItem.vue'
+import KitDropdownItem from '@components/Dropdown/KitDropdownItem.vue'
 
 describe('KitMenuItem', () => {
   it('renders with default props', () => {
@@ -18,8 +19,7 @@ describe('KitMenuItem', () => {
     const component = shallowMount(KitMenuItem, {
       slots: { default: 'Test' }
     })
-    // Find the stubbed KitDropdownItem and trigger click
-    const dropdownItem = component.find('anonymous-stub')
+    const dropdownItem = component.findComponent(KitDropdownItem)
     await dropdownItem.vm.$emit('click', new MouseEvent('click'))
     expect(component.emitted('click')).toBeTruthy()
   })
@@ -33,8 +33,7 @@ describe('KitMenuItem', () => {
     const component = shallowMount(KitMenuItem, {
       slots: { default: 'Test' }
     })
-    // KitDropdownItem is stubbed by shallowMount (shows as anonymous-stub)
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(KitDropdownItem).exists()).toBe(true)
     expect(component.text()).toContain('Test')
   })
 })

@@ -1,5 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import KitMultiSelectEditableRenderer from '@components/field-renderers/KitMultiSelectEditableRenderer.vue'
+import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
+import KitMultiSelectRenderer from '@components/field-renderers/KitMultiSelectRenderer.vue'
 
 describe('KitMultiSelectEditableRenderer', () => {
   it('renders with default props', () => {
@@ -15,7 +17,7 @@ describe('KitMultiSelectEditableRenderer', () => {
 
   it('is editable by default and renders the inline edit control', () => {
     const component = shallowMount(KitMultiSelectEditableRenderer, { propsData: { value: ['A', 'B'] } })
-    expect(component.find('anonymous-stub').exists()).toBe(true)
+    expect(component.findComponent(KitInlineEdit).exists()).toBe(true)
   })
 
   it('renders a plain wrapper when editable is false', () => {
@@ -29,7 +31,7 @@ describe('KitMultiSelectEditableRenderer', () => {
     const component = shallowMount(KitMultiSelectEditableRenderer, {
       propsData: { value: ['A', 'B'], editable: false }
     })
-    expect(component.find('anonymous-stub').attributes('selectedvalues')).toBe('A,B')
+    expect(component.findComponent(KitMultiSelectRenderer).attributes('selectedvalues')).toBe('A,B')
   })
 
   it('declares save-requested, start-editing and stop-editing as emitted events', () => {

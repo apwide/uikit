@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Tooltip from '@components/Tooltip/Tooltip.vue'
+import TooltipContent from '@components/Tooltip/TooltipContent.vue'
 
 describe('Tooltip', () => {
   it('renders with required label prop', () => {
@@ -42,8 +43,7 @@ describe('Tooltip', () => {
     expect(component.findComponent({ name: 'TooltipContent' }).exists()).toBe(false)
     await target.trigger('mouseenter')
     await component.vm.$nextTick()
-    // TooltipContent should be rendered after mouseenter (shows as anonymous-stub)
-    expect(component.html()).toContain('anonymous-stub')
+    expect(component.findComponent(TooltipContent).exists()).toBe(true)
     expect(component.html()).toContain('label="Tooltip text"')
   })
 

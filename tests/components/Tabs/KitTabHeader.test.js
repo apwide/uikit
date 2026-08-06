@@ -30,7 +30,7 @@ describe('KitTabHeader', () => {
   it('is active when injected state activeTab matches id', () => {
     const component = shallowMount(KitTabHeader, {
       propsData: { id: 'tab1' },
-      provide: { state: { activeTab: 'tab1' } }
+      global: { provide: { state: { activeTab: 'tab1' } } }
     })
     expect(component.attributes('active')).toBe('true')
   })
@@ -38,7 +38,7 @@ describe('KitTabHeader', () => {
   it('is not active when injected state activeTab does not match id', () => {
     const component = shallowMount(KitTabHeader, {
       propsData: { id: 'tab1' },
-      provide: { state: { activeTab: 'tab2' } }
+      global: { provide: { state: { activeTab: 'tab2' } } }
     })
     expect(component.attributes('active')).toBeUndefined()
   })
@@ -53,7 +53,7 @@ describe('KitTabHeader', () => {
   it('shows drag handle icon when reorderable is enabled globally and locally', () => {
     const component = shallowMount(KitTabHeader, {
       propsData: { id: 'tab1', reorderable: true },
-      provide: { state: { reorderable: true } }
+      global: { provide: { state: { reorderable: true } } }
     })
     expect(component.find('.kit-drag-handle').exists()).toBe(true)
     expect(component.classes()).toContain('kit-is-reorderable')
@@ -62,7 +62,7 @@ describe('KitTabHeader', () => {
   it('does not show drag handle icon when component reorderable prop is false', () => {
     const component = shallowMount(KitTabHeader, {
       propsData: { id: 'tab1', reorderable: false },
-      provide: { state: { reorderable: true } }
+      global: { provide: { state: { reorderable: true } } }
     })
     expect(component.find('.kit-drag-handle').exists()).toBe(false)
   })
@@ -71,7 +71,7 @@ describe('KitTabHeader', () => {
     const select = jest.fn()
     const component = shallowMount(KitTabHeader, {
       propsData: { id: 'tab1' },
-      provide: { select }
+      global: { provide: { select } }
     })
     await component.findComponent(KitTabButton).vm.$emit('click')
     expect(select).toHaveBeenCalledWith('tab1')

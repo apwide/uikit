@@ -2,8 +2,11 @@ import { shallowMount } from '@vue/test-utils'
 import KitTabHeaders from '@components/Tabs/KitTabHeaders.vue'
 
 const mountWithState = (options = {}) => shallowMount(KitTabHeaders, {
-  provide: { state: {} },
-  ...options
+  ...options,
+  global: {
+    provide: { state: {} },
+    ...options.global
+  }
 })
 
 describe('KitTabHeaders', () => {
@@ -40,7 +43,7 @@ describe('KitTabHeaders', () => {
     const state = {}
     mountWithState({
       propsData: { reorderable: true },
-      provide: { state }
+      global: { provide: { state } }
     })
     expect(state.reorderable).toBe(true)
   })

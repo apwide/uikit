@@ -104,7 +104,7 @@ describe('KitTable', () => {
       expect(component.emitted('sorted')).toBeTruthy()
     } else {
       // If stubbed, just verify the component renders
-      expect(component.html()).toContain('anonymous-stub')
+      expect(component.html()).toContain('-stub')
     }
   })
 

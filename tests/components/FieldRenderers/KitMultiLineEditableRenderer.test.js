@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitMultiLineEditableRenderer from '@components/field-renderers/KitMultiLineEditableRenderer.vue'
+import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 
 describe('KitMultiLineEditableRenderer', () => {
   it('renders with default props', () => {
@@ -9,7 +10,7 @@ describe('KitMultiLineEditableRenderer', () => {
 
   it('is editable by default and forwards the value to the inline edit control', () => {
     const component = shallowMount(KitMultiLineEditableRenderer, { propsData: { value: 'hello' } })
-    expect(component.find('anonymous-stub').attributes('value')).toBe('hello')
+    expect(component.findComponent(KitInlineEdit).attributes('value')).toBe('hello')
   })
 
   it('renders a plain wrapper when editable is false', () => {
