@@ -11,10 +11,13 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 ### Test Coverage
 
 > **Updated 2026-08-06**: the figures immediately below are the original 2026-02-13 baseline. Several
-> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **114/149
-> components (~76.5%)**, with **115 unit test files and 956 passing tests**. Only 35 components
-> remain untested, led by `Popper.vue` and `common/Popup.vue` (core positioning primitives). The Phase
-> 1 goal of 80% coverage is 6 components away.
+> testing sessions since then (documented in `SESSION_SUMMARY.md`) brought coverage to **116/149
+> components (~77.9%)**, with **117 unit test files and 979 passing tests**. `Popper.vue` and
+> `common/Popup.vue` (core positioning primitives, previously the top gap) are now covered — see
+> `SESSION_SUMMARY.md` for the `@floating-ui/dom` mocking approach used, reusable for similar
+> DOM-geometry-dependent components. Only 33 components remain untested, mostly small presentational
+> ones (ContentLoader family, MarkdownEditor, ColorPicker, Spotlight). The Phase 1 goal of 80%
+> coverage is 4 components away.
 
 - **Unit Tests**: 9 test files covering 6 component categories *(2026-02-13 baseline)*
   - Button, Checkbox, Form (Input, TextArea, FieldGroup)
@@ -108,10 +111,11 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    - 🔲 Spotlight (onboarding) — KitSpotlightStepHint done, KitSpotlight/Mask/HintContainer remain
    - ✅ Field renderers (20+ components; KitMarkdownEditableRenderer and UserEditableRendererEnriched remain)
 
-Remaining gap to close Phase 1 (35 components, see `SESSION_SUMMARY.md` for full list): `Popper.vue`
-and `common/Popup.vue` (positioning core, highest priority), MarkdownEditor, ColorPicker's
-KitColorCard, the Spotlight trio, ContentLoader family (8 low-risk components), and a handful of
-smaller utility components (KitButtonGroup, KitIconButton, LockSwitch, Tree/Label, etc.).
+Remaining gap to close Phase 1 (33 components, see `SESSION_SUMMARY.md` for full list): `Popper.vue`
+and `common/Popup.vue` are now tested. What's left is MarkdownEditor, ColorPicker's KitColorCard, the
+Spotlight trio, the ContentLoader family (8 low-risk components), and a handful of smaller utility
+components (KitButtonGroup, KitIconButton, LockSwitch, Tree/Label, etc.) — only 4 more needed to hit
+the 80% target.
 
 **Testing Approach**:
 - Unit tests: Component props, events, slots, state management

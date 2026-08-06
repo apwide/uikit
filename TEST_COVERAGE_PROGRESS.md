@@ -7,12 +7,14 @@ additions (Calendar, Form, field renderers, Select variations, and a system-comp
 Tabs/Modal/Menu/Tooltip/Table/Dropdown). This document's numbers below are historical and were
 **not** kept up to date — see `SESSION_SUMMARY.md` for the verified, current state:
 
-- **115 test files**, **956 passing tests** (10 skipped), 100% pass rate
-- **114/149 components** covered (~76.5%), up from the 24/149 (16%) recorded at the bottom of this
+- **117 test files**, **979 passing tests** (10 skipped), 100% pass rate
+- **116/149 components** covered (~77.9%), up from the 24/149 (16%) recorded at the bottom of this
   document
-- Only **35 components** remain without a dedicated unit test — see `SESSION_SUMMARY.md` → "Remaining
-  Work" for the exact list and priority order (Popper.vue and Popup.vue are the highest-value gaps
-  left)
+- Only **33 components** remain without a dedicated unit test — see `SESSION_SUMMARY.md` → "Remaining
+  Work" for the exact list and priority order. `Popper.vue` and `common/Popup.vue` (the positioning
+  core, previously the top gap) are now covered — see `SESSION_SUMMARY.md` for the `@floating-ui/dom`
+  mocking approach used, since it's a reusable pattern for any component depending on real DOM
+  geometry.
 
 The session-by-session detail below is kept for historical reference on test patterns and templates
 used, but the coverage percentages and "Next Steps" sections are outdated.

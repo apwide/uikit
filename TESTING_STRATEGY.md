@@ -4,12 +4,13 @@
 
 This document's "Current Test Coverage Analysis" and "Success Metrics" sections below describe the
 **2026-02-13 baseline** and are now stale — several unrecorded sessions since then brought coverage
-to **114/149 components (~76.5%)**, with **115 unit test files / 956 passing tests**. See
-`SESSION_SUMMARY.md` for the verified current state and the up-to-date list of the 35 remaining
-untested components (Popper.vue and common/Popup.vue are the top priority — the original "❌
-Components WITHOUT Tests" list below already flagged Popper as high priority, and it's still the
-biggest gap). The Wave priority matrix and test templates further down in this document are still
-accurate and reusable.
+to **116/149 components (~77.9%)**, with **117 unit test files / 979 passing tests**. See
+`SESSION_SUMMARY.md` for the verified current state and the up-to-date list of the 33 remaining
+untested components. `Popper.vue` and `common/Popup.vue` — flagged as the top priority in the
+original "❌ Components WITHOUT Tests" list below — are now covered as of 2026-08-06; the remaining
+gap is mostly small, low-risk presentational components (ContentLoader family, MarkdownEditor,
+ColorPicker, Spotlight). The Wave priority matrix and test templates further down in this document are
+still accurate and reusable.
 
 ## Current Test Coverage Analysis (historical baseline, 2026-02-13)
 
@@ -433,9 +434,9 @@ describe('ComponentName', () => {
 - Components with E2E tests: 12/149 (8%)
 
 **Current Status (verified 2026-08-06)**:
-- Components with unit tests: 114/149 (~76.5%)
-- Unit test files: 115, unit tests: 956 passing (10 skipped)
-- Remaining to reach 80% target: 6 components (35 total remain untested — see `SESSION_SUMMARY.md`)
+- Components with unit tests: 116/149 (~77.9%)
+- Unit test files: 117, unit tests: 979 passing (10 skipped)
+- Remaining to reach 80% target: 4 components (33 total remain untested — see `SESSION_SUMMARY.md`)
 
 **Target After Phase 1**:
 - Components with tests: 120/149 (80%+)
@@ -444,6 +445,6 @@ describe('ComponentName', () => {
 
 ---
 
-**Status**: 🚧 Phase 1 nearly complete — ~76.5% component coverage, 6 components short of the 80% goal
+**Status**: 🚧 Phase 1 nearly complete — ~77.9% component coverage, 4 components short of the 80% goal
 
 **Last Updated**: 2026-08-06
