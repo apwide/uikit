@@ -293,9 +293,10 @@ Vue 3's inline event-handler expression parser is stricter than Vue 2's: multipl
 `Modal/KitBigModal.vue`, `field-renderers/KitMultiSelectEditableRenderer.vue`,
 `field-renderers/KitSingleSelectEditableRenderer.vue`.
 
-### Jest failure inventory (930 passed / 82 failed / 10 skipped of 1022, 85/114 suites green — up from
+### Jest failure inventory (932 passed / 80 failed / 10 skipped of 1022, 86/114 suites green — up from
 709/303/10 and 60/114 at the start of this pass; Bucket A complete, boolean-attribute-coercion bug fixed,
-shallow-stub slot rendering fixed globally, `$listeners` fixed in all 12 files, `Popper.vue` fixed)
+shallow-stub slot rendering fixed globally, `$listeners` fixed in all 12 files, `Popper.vue` fixed, all
+37 `Icon/aui/*.js` render(h) icons converted to `.vue` SFCs)
 
 **Bucket A — test-file-only, mechanical, `@vue/test-utils` v1→v2 API renames (no component behavior
 changes) — DONE, applied across the whole suite:**
@@ -329,8 +330,28 @@ that need a per-component decision, not a mechanical rename (Phase 3 territory):
   above; the file was rewritten to a `<template>`). Vue 3's Options API `render()` no longer receives
   `h` as an argument; must `import { h } from 'vue'` explicitly, and the vnode data object shape
   changes (`{ attrs: {...}, on: {...} }` → flat props + `onXxx` handlers). (`TypeError: h is not a
-  function`) — **the same broken pattern was found in 38 files while fixing this one**, almost all
-  `Icon/aui/*.js`; not fixed, this is now its own sizeable Phase 3 item (see `$listeners` section above).
+  function`) — the same broken pattern was found in 37 more files, almost all `Icon/aui/*.js`.
+  ~~Not fixed~~ — **FIXED.** All 37 files were generated (by a script no longer present in this repo)
+  and were byte-for-byte identical in structure: `props: { size, primaryColor, secondaryColor }` (all
+  `String`, no defaults) forwarded via `h(IconWrapper, { props: {...this.$props}, domProps: { innerHTML:
+  '<svg>...</svg>' } })`. Rather than patch the `h`/vnode-shape issue in place, converted each to a
+  normal `.vue` SFC (`<script setup lang="ts">`, typed `Props`, inline SVG markup as real template
+  content instead of `v-html`/`innerHTML`) — matches how every other component in this codebase is
+  written, and eliminates the manual low-level render function entirely rather than just patching it to
+  work under Vue 3. Verified the transformation was safe to automate: confirmed uniform structure across
+  all 37 files with a script, confirmed no consumer imports these with an explicit `.js` extension (all
+  plain `import X from '../Icon/aui/XIcon'`, and `.vue` is already in both webpack's and jest's resolved
+  extensions), confirmed nothing relies on the Options-API `name:` field that a `<script setup>` SFC
+  doesn't declare (Vue infers one from the filename for devtools/`findComponent` purposes anyway). Wrote
+  a small Node script to do the mechanical part (extract the SVG string, emit the new SFC, delete the old
+  `.js`), spot-checked one file's rendered output against the original before running it on the rest.
+  932 passing (up from 930), zero regressions — most of the 37 aren't directly hit by current test
+  coverage (nested behind `shallowMount` stubs elsewhere), but this removes a real render-crash landmine
+  from the whole component tree, not just the 2 tests it visibly fixed (`UserPicker`, whose dropdown
+  caret used `HipchatChevronDownIcon`). One more hand-written file with the identical pattern,
+  `Icon/MagicStick.vue` (not part of the generated batch, kept its own filename since callers already
+  imported it with an explicit `.vue` extension), converted the same way — zero regressions, same
+  932/80/10.
 - ~~The 12 `$listeners` files~~ — **FIXED**, see above. The 2 `model`-option files (`KitDropdownCheckboxItem.vue`,
   `KitCheckbox.vue`) are still open.
 - ~~Systemic: Vue 3 always renders a stringified value (`"true"`/`"false"`) for boolean/custom attrs
