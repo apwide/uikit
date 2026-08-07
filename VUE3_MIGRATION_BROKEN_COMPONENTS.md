@@ -81,11 +81,27 @@ Storybook broken components:
   * ✅ Drop down with checkbox, intial state and selection is not applied. — fixed (`defineModel()` on `KitDropdownCheckboxItem`)
   * styles are wrong: background-color, selected element, 
 * Flag:
-  * ✅ animation broken: they should slide to appear, now they just appear. Same for disappearing — the
-    entering half is fixed (`.flag-enter`/`.flag-left-enter` → `-enter-from`); the leaving half was
-    already correctly named (`.flag-leave-active`, unchanged between Vue 2/3) so it should already have
-    been working — re-verify the "disappearing" case specifically in Storybook (click a flag's close
-    button) in case there's a second, separate issue there
+  * ✅ animation broken: they should slide to appear, now they just appear. Same for disappearing —
+    **fully fixed (2026-08-07), two separate bugs stacked here.** First, the CSS class rename
+    (`.flag-enter`/`.flag-left-enter` → `-enter-from`, see the second-pass note above) fixed the
+    entering half. The disappearing half turned out to be a second, structurally different bug, found
+    only after re-verifying in Storybook per this note: `KitFlag.vue`'s *entire template root* was
+    `<transition>`, and the story removed it via `<KitFlag v-if="show" @close="show = false">` — a
+    `v-if` on the ANCESTOR, outside the component. Reproduced in isolation (a minimal component whose
+    whole template is `<transition><div>...</div></transition>`, unmounted via a parent's `v-if`): Vue 3
+    cannot defer/animate a removal that's decided by an ancestor outside the `<Transition>`'s own render
+    scope — it only works when the `v-if`/`v-show` toggling the transitioned element lives *inside* the
+    same component as the `<Transition>`. The leave-active CSS class was correctly named all along; it
+    just never got the chance to apply because the element was already gone from the DOM before Vue's
+    leave-transition logic could run. Fixed by moving visibility inside `KitFlag.vue` itself (`v-if="visible"`
+    on the transitioned div, own local `visible` ref) and deferring the `close` emit to the transition's
+    `@after-leave` hook — so the flag now animates itself out *before* telling the parent it's safe to
+    unmount, with **zero change needed** to existing consumer code (the story's
+    `@close="show = false"` handler still works as-is, it just now fires after the animation instead of
+    instantly). Added a `mount()`-based test (not `shallowMount`, which stubs
+    `<transition>` by default and would hide this class of bug) confirming the element stays in the DOM
+    and `close` hasn't fired yet immediately after clicking the close button — verified this test fails
+    against the pre-fix code and passes against the fix.
 * Form:
   * ✅ input are not able to store state (input/model) — fixed (`defineModel()` on `KitInput`/`KitTextArea`/`KitSecuredInput`)
   * ✅ danger checkbox in story which should show the validation error messages does not display anything. — unrelated to the model bug, still open

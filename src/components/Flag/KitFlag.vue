@@ -1,6 +1,6 @@
 <template>
-  <transition :name="leaveLeft ? 'flag-left' : 'flag'" appear>
-    <div class="kit-flag" :appearance="appearance">
+  <transition :name="leaveLeft ? 'flag-left' : 'flag'" appear @after-leave="emit('close')">
+    <div v-if="visible" class="kit-flag" :appearance="appearance">
       <div class="header">
         <div class="icon">
           <CheckCircleIcon v-if="flag.name === 'success'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
@@ -16,7 +16,7 @@
           size="large"
           :expanded="expanded"
           @click="onExpand" />
-        <EditorCloseIcon v-else class="close" @click="emit('close')" />
+        <EditorCloseIcon v-else class="close" @click="visible = false" />
       </div>
       <slot>
         <div class="content" :expanded="expanded">
@@ -66,6 +66,7 @@ const emit = defineEmits<{
   (event: 'close')
 }>()
 
+const visible = ref(true)
 const expanded = ref(false)
 const color = computed(() => {
   switch (props.type) {

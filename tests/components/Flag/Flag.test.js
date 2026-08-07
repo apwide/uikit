@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import KitFlag from '@components/Flag/KitFlag.vue'
 
 describe('KitFlag', () => {
@@ -88,5 +88,20 @@ describe('KitFlag', () => {
     })
     const flag = component.find('.kit-flag')
     expect(flag.exists()).toBe(true)
+  })
+
+  it('plays the leave transition before emitting close, instead of removing instantly', async () => {
+    // Real <transition> (not VTU's default stub) - the leave animation must actually run so a
+    // parent doing `<KitFlag v-if="show" @close="show = false">` never cuts it short.
+    const component = mount(KitFlag, {
+      propsData: { title: 'Test' },
+      attachTo: document.body,
+      global: { stubs: { transition: false } }
+    })
+    await component.find('.close').trigger('click')
+    // Still present and mid-transition immediately after the click - not removed synchronously.
+    expect(document.body.contains(component.element)).toBe(true)
+    expect(component.emitted('close')).toBeFalsy()
+    component.unmount()
   })
 })
