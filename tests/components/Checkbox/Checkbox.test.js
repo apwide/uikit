@@ -6,10 +6,7 @@ describe('Checkbox', () => {
     const component = shallowMount(Checkbox, { propsData: { checked: false } })
     const input = component.find('input')
     await input.setChecked()
-    // Vue 3 devtools instrumentation also records the native bubbled 'input' DOM event as an
-    // 'emit' (matching event name); the genuine v-model emit is always the last recorded call.
-    const inputEmits = component.emitted('input')
-    const emitted = inputEmits[inputEmits.length - 1]
+    const [emitted] = component.emitted('update:checked')
     expect(emitted).toEqual([true])
   })
 

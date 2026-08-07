@@ -14,7 +14,7 @@
         :is-focused="props.isFocused"
         :is-invalid="props.isInvalid"
         :disabled="props.isLoading"
-        @input="props.input"
+        @update:checked="props.input"
         @focus="props.focus"
         @blur="props.blur"
         @confirm="props.confirm"

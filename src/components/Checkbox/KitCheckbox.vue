@@ -1,9 +1,9 @@
 <template>
-  <label ref="checkbox" class="kit-checkbox__wrapper" :for="id" tabindex="-1" :disabled="disabled || undefined">
+  <label ref="checkboxRef" class="kit-checkbox__wrapper" :for="id" tabindex="-1" :disabled="disabled || undefined">
     <input
       :id="id"
-      ref="input"
-      v-model="isChecked"
+      ref="inputRef"
+      v-model="checked"
       :value="value"
       type="checkbox"
       :is-invalid="isInvalid || undefined"
@@ -16,84 +16,56 @@
   </label>
 </template>
 
-<script>
-/**
- * Cannot be moved to vue 2 setup as requires defineModel.
- * It declares v-model to be bound to checked prop.
- */
-import CheckboxIndeterminateIcon from '../Icon/aui/CheckboxIndeterminateIcon'
-import CheckboxIcon from '../Icon/aui/CheckboxIcon'
+<script setup lang="ts">
+import { nextTick, ref, watch } from 'vue'
+import CheckboxIndeterminateIcon from '../Icon/aui/CheckboxIndeterminateIcon.vue'
+import CheckboxIcon from '../Icon/aui/CheckboxIcon.vue'
 
-export default {
-  name: 'KitCheckbox',
-  components: { CheckboxIcon, CheckboxIndeterminateIcon },
-  model: {
-    prop: 'checked',
-    event: 'input'
-  },
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    value: {
-      type: [String, Object, Number],
-      default: undefined
-    },
-    checked: {
-      type: [Boolean, Array],
-      required: true
-    },
-    isFocused: {
-      type: Boolean,
-      default: false
-    },
-    isInvalid: {
-      type: Boolean,
-      default: false
-    },
-    indeterminate: {
-      type: Boolean,
-      default: false
+type Props = {
+  disabled?: boolean
+  value?: string | Record<string, unknown> | number
+  isFocused?: boolean
+  isInvalid?: boolean
+  indeterminate?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+  value: undefined,
+  isFocused: false,
+  isInvalid: false,
+  indeterminate: false
+})
+
+const emit = defineEmits<{
+  (event: 'focus', payload: FocusEvent): void
+  (event: 'blur', payload: FocusEvent): void
+}>()
+
+const checked = defineModel<boolean | unknown[]>('checked', { required: true })
+
+const id = ref<string>()
+const checkboxRef = ref<HTMLLabelElement>()
+const inputRef = ref<HTMLInputElement>()
+
+watch(
+  () => props.isFocused,
+  (isFocused) => {
+    if (isFocused) {
+      nextTick(() => inputRef.value?.focus())
     }
   },
-  data() {
-    return { id: undefined }
-  },
-  computed: {
-    isChecked: {
-      get() {
-        return this.checked
-      },
-      set(value) {
-        this.$emit('input', value)
-      }
-    }
-  },
-  watch: {
-    isFocused: {
-      handler(isFocused) {
-        if (isFocused) {
-          this.$nextTick(() => this.$refs.input.focus())
-        }
-      },
-      immediate: true
-    }
-  },
-  created() {
-    // eslint-disable-next-line
-    this.id = this._uuid
-  },
-  methods: {
-    onBlur(e) {
-      if (!this.$refs.checkbox.contains(e.relatedTarget)) {
-        this.$emit('blur', e)
-      }
-    },
-    onFocus(e) {
-      this.$emit('focus', e)
-    }
+  { immediate: true }
+)
+
+function onBlur(e: FocusEvent) {
+  if (!checkboxRef.value?.contains(e.relatedTarget as Node)) {
+    emit('blur', e)
   }
+}
+
+function onFocus(e: FocusEvent) {
+  emit('focus', e)
 }
 </script>
 

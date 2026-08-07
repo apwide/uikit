@@ -87,10 +87,42 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    `chore/rovo2` cleanup (unused components). There is no `new Vue()` event bus left anywhere in the
    codebase — this breaking-change item and its Phase 3/Wave 3 "Event Bus Refactoring" work are moot.
 
-3. **`model` Option** (~~1~~ **2 files**: `KitDropdownCheckboxItem.vue` and `KitCheckbox.vue`)
-   - Both use the Vue 2 Options API `model: { prop, event }` option
-   - **Vue 3 Change**: Replaced by `defineModel()` (not available in Vue 2.7) — handled directly when
-     each component is migrated in Phase 3
+3. ~~**`model` Option**~~ — **FIXED (2026-08-07)**, both files (`KitDropdownCheckboxItem.vue`,
+   `KitCheckbox.vue`) converted from Options API `model: { prop: 'checked', event: 'input' }` to
+   `<script setup>` + `defineModel('checked', { required: true })`. Both are public, exported
+   components (`src/index.ts`) with no internal `v-model` shorthand usage on them anywhere in this
+   codebase — internal consumers (`KitCheckboxEditableRenderer.vue`,
+   `KitDropdownCheckboxItem.vue` → `KitCheckbox`) always bound `:checked`/`@input` explicitly, so there
+   was no ambiguity to resolve there. Deliberately used the **named** form (`defineModel('checked', ...)`)
+   rather than the bare/default form (`defineModel()` → prop `modelValue`) — this keeps the public prop
+   name `checked` unchanged (many callers bind `:checked="x"` directly, not via `v-model`), at the cost
+   of the emitted event renaming from `input` to Vue 3's standard `update:checked`. This is an
+   intentional breaking change for v7.0.0: external consumers doing `<KitCheckbox v-model="x">` (relying
+   on the old `model` option's bare-`v-model` mapping) need to switch to `v-model:checked="x"`; consumers
+   doing `@input="handler"` need `@update:checked="handler"`. Updated both call sites
+   (`KitDropdownCheckboxItem.vue`'s own `<KitCheckbox>` usage, `KitCheckboxEditableRenderer.vue`) and
+   both components' test files accordingly — `KitDropdownCheckboxItem.vue` was itself converted the same
+   way (same `model` option, same public/exported status), so its own emitted event also renamed
+   `input` → `update:checked`. Also found `KitCheckbox.vue`'s existing `this.id = this._uuid` (`created()`
+   hook) reads a property that doesn't exist anywhere — not a Vue API, not defined by any mixin/plugin in
+   this repo; the only other reference (`Toggle/LockSwitch.vue`) has an outright syntax typo
+   (`instance. instance.proxy._uuid`) and belongs to a component already flagged unused. Concluded this
+   was always dead code (evaluates to `undefined` either way) rather than a deliberate host-app
+   integration point, so simplified to `ref<string>()` instead of carrying the broken pattern forward
+   into typed `<script setup>` — behaviorally identical, `id`/`for` were already always unset.
+   **Side effect worth flagging**: fixing lint for the new `v-model:checked` syntax required switching
+   `.eslintrc.js` from `plugin:vue/essential` (Vue 2 preset) to `plugin:vue/vue3-essential` — this was
+   still pointing at the Vue 2 ruleset since the Vue 3 migration began, so `vue/no-v-model-argument`
+   (Vue-2-only rule, correctly forbids `v-model:x`) was still active and firing false positives on
+   otherwise-correct Vue 3 code. Switching it is a net improvement (removes a rule that no longer applies
+   to this codebase) but also newly surfaced 7 genuine, pre-existing `vue/no-deprecated-v-on-native-modifier`
+   errors across the codebase (`.native` modifier on `v-on`, removed in Vue 3 since listeners now fall
+   through to a component's root element automatically) — **not fixed as part of this change** (out of
+   scope for the `model` option task), left for a follow-up pass: `TimePickerMenu.vue`, `KitDropdown.vue`,
+   `KitFlag.vue` (×2), `Select/Icons.vue`, `KitBigTooltip.vue`, `stories/Form/Input.story.vue`. Likely
+   low-severity (Vue 3's default attrs/listener fallthrough probably already makes these listeners work
+   without `.native`, unlike a hard functional break), but worth confirming per-component during Phase 3
+   review rather than assuming.
 
 4. **Deep Selectors** (`>>>`) — **16 files** currently use it for scoped style penetration
    - **Vue 3 Change**: Use `:deep()` instead
@@ -352,8 +384,8 @@ that need a per-component decision, not a mechanical rename (Phase 3 territory):
   `Icon/MagicStick.vue` (not part of the generated batch, kept its own filename since callers already
   imported it with an explicit `.vue` extension), converted the same way — zero regressions, same
   932/80/10.
-- ~~The 12 `$listeners` files~~ — **FIXED**, see above. The 2 `model`-option files (`KitDropdownCheckboxItem.vue`,
-  `KitCheckbox.vue`) are still open.
+- ~~The 12 `$listeners` files~~ — **FIXED**, see above. ~~The 2 `model`-option files
+  (`KitDropdownCheckboxItem.vue`, `KitCheckbox.vue`)~~ — **FIXED**, see "`model` Option" above.
 - ~~Systemic: Vue 3 always renders a stringified value (`"true"`/`"false"`) for boolean/custom attrs
   instead of omitting the attribute when falsy~~ — **FIXED.** Root cause: Vue 3's boolean-attribute
   whitelist (`specialBooleanAttrs`, used by `patchAttr`) is narrow (`readonly`, `itemscope`,
@@ -776,10 +808,15 @@ from yarn to npm mid-session (project decision) — `package-lock.json` is up to
 113/114 suites — up from 709/1022 passing when the Vue 3 build first compiled. See "Jest failure
 inventory" above for the full breakdown of what Bucket A (mechanical VTU v1→v2 API renames) and Bucket B
 (genuine Vue 3 component/runtime behavior differences) each covered. This closes out the test-suite
-portion of Phase 2/3 crossover work; what's left for Phase 3 proper is the still-open `model` option
-migration (`KitDropdownCheckboxItem.vue`, `KitCheckbox.vue` — both need `defineModel()`), then the
-per-component Wave 1-3 migration passes described below (largely a formality at this point since the
-components already run correctly under Vue 3 — the waves are about deliberate review/sign-off per
-component, not fixing anything currently broken).
+portion of Phase 2/3 crossover work. 🏁 **`model` option migration is also done** (2026-08-07):
+`KitDropdownCheckboxItem.vue` and `KitCheckbox.vue` both converted to `defineModel('checked')` — see
+"`model` Option" above for the breaking-change details (event renamed `input` → `update:checked`) and
+the incidental `.eslintrc.js` Vue 2→3 preset fix it required. Full jest suite still green after
+(1012/0/10) and `npm run lint`/webpack build both reconfirmed clean (modulo pre-existing, unrelated lint
+debt — 7 `.native` modifier occurrences, the icon-file `max-len` override pattern needing a `.vue`
+update, `src/index.ts` import ordering — none introduced by this change, flagged for a separate pass).
+What's left for Phase 3 proper is the per-component Wave 1-3 migration passes described below (largely a
+formality at this point since the components already run correctly under Vue 3 — the waves are about
+deliberate review/sign-off per component, not fixing anything currently broken).
 
 **Last Updated**: 2026-08-07 (originally 2026-02-13)

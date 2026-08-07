@@ -43,13 +43,13 @@ describe('KitDropdownCheckboxItem', () => {
     expect(checkbox.props('checked')).toEqual(['a', 'b'])
   })
 
-  it('emits input event when KitCheckbox emits input', async () => {
+  it('emits update:checked event when KitCheckbox emits update:checked', async () => {
     const component = shallowMount(KitDropdownCheckboxItem, {
       propsData: { checked: false }
     })
-    await component.findComponent(KitCheckbox).vm.$emit('input', true)
-    expect(component.emitted('input')).toBeTruthy()
-    expect(component.emitted('input')[0]).toEqual([true])
+    await component.findComponent(KitCheckbox).vm.$emit('update:checked', true)
+    expect(component.emitted('update:checked')).toBeTruthy()
+    expect(component.emitted('update:checked')[0]).toEqual([true])
   })
 
   it('does not render the "only" button when checked is a boolean', () => {
@@ -73,12 +73,12 @@ describe('KitDropdownCheckboxItem', () => {
     expect(component.findComponent(KitButton).exists()).toBe(false)
   })
 
-  it('emits input with only this value when the "only" button is clicked', async () => {
+  it('emits update:checked with only this value when the "only" button is clicked', async () => {
     const component = shallowMount(KitDropdownCheckboxItem, {
       propsData: { checked: ['option-1', 'option-2'], value: 'option-1' }
     })
     await component.findComponent(KitButton).vm.$emit('click')
-    expect(component.emitted('input')).toBeTruthy()
-    expect(component.emitted('input')[0]).toEqual([['option-1']])
+    expect(component.emitted('update:checked')).toBeTruthy()
+    expect(component.emitted('update:checked')[0]).toEqual([['option-1']])
   })
 })

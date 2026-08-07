@@ -1,5 +1,5 @@
 <template>
-  <KitCheckbox class="kit-dropdown-checkbox-item" :checked="checked" :value="value" @input="onInput">
+  <KitCheckbox v-model:checked="checked" class="kit-dropdown-checkbox-item" :value="value">
     <span class="label-text">
       <slot />
     </span>
@@ -14,47 +14,27 @@
   </KitCheckbox>
 </template>
 
-<script>
-/**
- * Cannot be moved to vue 2 setup as requires defineModel.
- * It declares v-model to be bound to checked prop.
- */
+<script setup lang="ts">
+import { computed } from 'vue'
 import KitCheckbox from '../Checkbox/KitCheckbox.vue'
 import KitButton from '../Button/KitButton.vue'
 
-export default {
-  components: { KitCheckbox, KitButton },
-  model: {
-    prop: 'checked',
-    event: 'input'
-  },
-  props: {
-    checked: {
-      type: [Boolean, Array],
-      required: true
-    },
-    value: {
-      type: String,
-      default: undefined
-    },
-    showOnlyButton: {
-      type: Boolean,
-      default: true
-    }
-  },
-  computed: {
-    isMulti() {
-      return Array.isArray(this.checked) && this.value
-    }
-  },
-  methods: {
-    onInput(value) {
-      this.$emit('input', value)
-    },
-    onOnlyClicked() {
-      this.$emit('input', [this.value])
-    }
-  }
+type Props = {
+  value?: string
+  showOnlyButton?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  value: undefined,
+  showOnlyButton: true
+})
+
+const checked = defineModel<boolean | unknown[]>('checked', { required: true })
+
+const isMulti = computed(() => Array.isArray(checked.value) && !!props.value)
+
+function onOnlyClicked() {
+  checked.value = [props.value]
 }
 </script>
 

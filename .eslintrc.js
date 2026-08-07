@@ -8,7 +8,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:vue/essential',
+    'plugin:vue/vue3-essential',
     '@vue/standard',
     'standard',
     '@vue/typescript',
