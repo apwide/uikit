@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-item" @click="emit('select', value)" :selected="selected">
+  <div class="dropdown-item" @click="emit('select', value)" :data-selected="selected" :data-disabled="disabled">
     <span class="dropdown-item-label">
       <slot />
     </span>
@@ -9,10 +9,12 @@
 type Props = {
   value?: string | number | boolean | unknown
   selected?: boolean
+  disabled?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
-  selected: false
+  selected: false,
+  disabled: false
 })
 const emit = defineEmits<{
   (event: 'select', data: MouseEvent)
@@ -40,7 +42,7 @@ const emit = defineEmits<{
   text-overflow: ellipsis;
 }
 
-.dropdown-item:not([non-link]):not([disabled]):hover {
+.dropdown-item:not([non-link]):not([data-disabled="true"]):hover {
   cursor: pointer;
   background-color: var(--kit-dropdown-item-hover-bg);
   color: var(--kit-dropdown-item-hover-text);
@@ -48,17 +50,17 @@ const emit = defineEmits<{
   text-decoration: none;
 }
 
-.dropdown-item[disabled] {
+.dropdown-item[data-disabled="true"] {
   cursor: not-allowed;
   color: var(--kit-dropdown-item-disabled-text);
 }
 
-.dropdown-item[selected]:not([disabled]) {
+.dropdown-item[data-selected="true"]:not([data-disabled="true"]) {
   background-color: var(--kit-dropdown-item-selected-bg);
   color: var(--kit-dropdown-item-selected-text);
 }
 
-.dropdown-item[selected]:not([disabled]):hover {
+.dropdown-item[data-selected="true"]:not([data-disabled="true"]):hover {
   background-color: var(--kit-dropdown-item-selected-hover-bg);
   color: var(--kit-dropdown-item-selected-hover-text);
 }

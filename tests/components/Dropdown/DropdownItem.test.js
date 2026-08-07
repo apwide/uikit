@@ -55,7 +55,28 @@ describe('KitDropdownItem', () => {
       propsData: { selected: true }
     })
     const item = component.find('.dropdown-item')
-    expect(item.attributes('selected')).toBeDefined()
+    expect(item.attributes('data-selected')).toBe('true')
+  })
+
+  it('does not mark the item as selected when selected is false', () => {
+    const component = shallowMount(KitDropdownItem, {
+      propsData: { selected: false }
+    })
+    const item = component.find('.dropdown-item')
+    expect(item.attributes('data-selected')).toBe('false')
+  })
+
+  it('is not disabled by default', () => {
+    const component = shallowMount(KitDropdownItem)
+    expect(component.props('disabled')).toBe(false)
+  })
+
+  it('accepts disabled prop', () => {
+    const component = shallowMount(KitDropdownItem, {
+      propsData: { disabled: true }
+    })
+    const item = component.find('.dropdown-item')
+    expect(item.attributes('data-disabled')).toBe('true')
   })
 
   it('emits select event on click', async () => {

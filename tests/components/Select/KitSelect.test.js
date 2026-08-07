@@ -58,7 +58,31 @@ describe('KitSelect', () => {
       propsData: { isDisabled: true }
     })
     const container = component.find('.kit-select')
-    expect(container.attributes('disabled')).toBeDefined()
+    expect(container.attributes('data-disabled')).toBe('true')
+  })
+
+  it('does not mark the container as disabled when isDisabled is false', () => {
+    const component = shallowMount(KitSelect, {
+      propsData: { isDisabled: false }
+    })
+    const container = component.find('.kit-select')
+    expect(container.attributes('data-disabled')).toBe('false')
+  })
+
+  it('marks the flex wrapper with data-gap when multi has selected tags', () => {
+    const component = shallowMount(KitSelect, {
+      propsData: { options: mockOptions, multi: true, modelValue: ['opt1'] }
+    })
+    const wrapper = component.find('.kit-select__flex-wrapper')
+    expect(wrapper.attributes('data-gap')).toBe('true')
+  })
+
+  it('does not mark the flex wrapper with data-gap when not multi', () => {
+    const component = shallowMount(KitSelect, {
+      propsData: { options: mockOptions }
+    })
+    const wrapper = component.find('.kit-select__flex-wrapper')
+    expect(wrapper.attributes('data-gap')).toBe('false')
   })
 
   it('is not invalid by default', () => {

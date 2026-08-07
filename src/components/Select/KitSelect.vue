@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" :disabled="isDisabled" class="kit-select">
+  <div ref="containerRef" :data-disabled="isDisabled" class="kit-select">
     <KitTextField
       :is-focused="focused"
       :is-invalid="isInvalid"
@@ -8,7 +8,7 @@
       class="kit-select-wrapper"
       tabindex="-1"
       @click="click">
-      <div ref="listRef" :gap="multi && !!selected.length" class="kit-select__flex-wrapper" @dragover.prevent>
+      <div ref="listRef" :data-gap="multi && !!selected.length" class="kit-select__flex-wrapper" @dragover.prevent>
         <template v-if="multi && Array.isArray(selected)">
           <Tag
             v-for="(tag, i) in selected"
@@ -587,7 +587,7 @@ watch(suggestions, async () => {
   flex-wrap: wrap;
 }
 
-.kit-select__flex-wrapper[gap] {
+.kit-select__flex-wrapper[data-gap="true"] {
   margin-top: -4px;
 }
 
@@ -601,7 +601,7 @@ watch(suggestions, async () => {
   z-index: 3;
 }
 
-[gap] .kit-select__search {
+[data-gap="true"] .kit-select__search {
   margin-top: 4px;
 }
 
@@ -611,12 +611,12 @@ watch(suggestions, async () => {
   pointer-events: none;
 }
 
-.kit-select[disabled] {
+.kit-select[data-disabled="true"] {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.kit-select[disabled] .kit-select-wrapper {
+.kit-select[data-disabled="true"] .kit-select-wrapper {
   pointer-events: none;
 }
 
