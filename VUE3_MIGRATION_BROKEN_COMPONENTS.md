@@ -39,6 +39,25 @@ Storybook broken components:
 > Marked ✅ below where the *state/model* part of a bullet is fixed; anything else in the same bullet
 > (animations, styling, layout) is still open.
 
+> **2026-08-07 (third pass)**: Root cause found and fixed for the enter-transition animation reports
+> below (Flag, DatePicker's month-switch) — another Vue 2 → Vue 3 CSS class rename that was never
+> updated. Vue 2's transition classes were `<name>-enter` / `<name>-leave` (initial state, one frame
+> before the transition starts); Vue 3 renamed the *enter* one to `<name>-enter-from` (the *leave* one
+> keeps its name, just `<name>-leave-from` — but most of these components never styled that one
+> separately, folding its styles into `<name>-leave-active` instead, which is why leaving still looked
+> fine while entering silently stopped animating). Every affected component had CSS still targeting the
+> old `<name>-enter` selector, which now matches nothing — Vue still applies the correct
+> `<name>-enter-from` class, but no rule in the stylesheet listens for it, so the element just pops in at
+> its final state instead of sliding/fading in. Fixed in **6 files**, found by grepping every
+> `<transition>`/`<Transition>` block's paired CSS in the codebase (not just the 2 reported here):
+> `KitFlag.vue` (`.flag-enter`, `.flag-left-enter`), `CalendarHeader.vue` (`.slide-right-enter`,
+> `.slide-left-enter`, `.slide-top-enter` — this is the DatePicker month-switch animation),
+> `KitModal.vue` (`.kit-modal-transition-enter`), `KitTransitionExpand.vue` (`.expand-enter`),
+> `KitBigTooltipContent.vue` and `TooltipContent.vue` (`.fade-enter` in both). Verified concretely (not
+> just "class name looks right"): mounted `KitFlag` with the real `<Transition>` (not VTU's default
+> stub) and confirmed Vue actually applies `flag-enter-from flag-enter-active` on mount, which now matches
+> the stylesheet. Full jest suite still 1012/0/10, lint and webpack build both clean.
+
 * Breadcrumb:
   * ✅ missing icon in front of element — fixed (fontawesome upgrade)
   * ✅ copy capability + animation broken
@@ -55,14 +74,18 @@ Storybook broken components:
   * ✅ on click new color state not updated — fixed (`defineModel()`)
 * Date picker:
   * ✅ missing icon (eg: chevron) to navigation in year/month... — fixed (fontawesome upgrade)
-  * switch month animation does not work anymore: new value seems to appear immediatly, not swap from the left/or right
+  * ✅ switch month animation does not work anymore: new value seems to appear immediatly, not swap from the left/or right — fixed (`.slide-*-enter` → `.slide-*-enter-from` in `CalendarHeader.vue`)
   * ✅ when clicking date picker or date range picker, same error than for collapsible: can't access property "icon", props is undefined — same root cause, fixed
   * ✅ time picker: time selection is not applied. — fixed (`defineModel()`)
 * Drop down:
   * ✅ Drop down with checkbox, intial state and selection is not applied. — fixed (`defineModel()` on `KitDropdownCheckboxItem`)
   * styles are wrong: background-color, selected element, 
 * Flag:
-  * animation broken: they should slide to appear, now they just appear. Same for disappearing
+  * ✅ animation broken: they should slide to appear, now they just appear. Same for disappearing — the
+    entering half is fixed (`.flag-enter`/`.flag-left-enter` → `-enter-from`); the leaving half was
+    already correctly named (`.flag-leave-active`, unchanged between Vue 2/3) so it should already have
+    been working — re-verify the "disappearing" case specifically in Storybook (click a flag's close
+    button) in case there's a second, separate issue there
 * Form:
   * ✅ input are not able to store state (input/model) — fixed (`defineModel()` on `KitInput`/`KitTextArea`/`KitSecuredInput`)
   * ✅ danger checkbox in story which should show the validation error messages does not display anything. — unrelated to the model bug, still open

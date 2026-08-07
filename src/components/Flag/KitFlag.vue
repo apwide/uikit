@@ -226,13 +226,13 @@ function onClick(action) {
   transform: rotateZ(180deg);
 }
 
-.flag-enter,
+.flag-enter-from,
 .flag-leave-active {
   opacity: 0;
   transform: translateX(300px);
 }
 
-.flag-left-enter,
+.flag-left-enter-from,
 .flag-left-leave-active {
   opacity: 0;
   transform: translateX(-300px);

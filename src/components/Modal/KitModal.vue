@@ -179,7 +179,7 @@ onUnmounted(() => {
   padding: 2px 10px 2px 0;
 }
 
-.kit-modal-transition-enter {
+.kit-modal-transition-enter-from {
   opacity: 0;
 }
 
@@ -187,7 +187,7 @@ onUnmounted(() => {
   opacity: 0;
 }
 
-.kit-modal-transition-enter .kit-positioner {
+.kit-modal-transition-enter-from .kit-positioner {
   opacity: 0;
   transform: translateY(20px);
 }

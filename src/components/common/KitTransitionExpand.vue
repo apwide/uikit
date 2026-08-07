@@ -72,7 +72,7 @@ function leave(element: HTMLElement) {
   transition: all 0.3s ease-in-out;
 }
 
-.expand-enter,
+.expand-enter-from,
 .expand-leave-to {
   height: 0;
 }
