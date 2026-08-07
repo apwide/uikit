@@ -110,6 +110,24 @@ Storybook broken components:
   * lozenge display have loose a bit of margin between them...
 * Markdown:
   * ✅ initial input is not displayed — fixed (`defineModel()`)
+  * ✅ content visually pushed down shortly after the editor mounts (visible on the plain
+    `MarkdownEditor` story, no floating/positioning involved) — root cause was in
+    `KitMarkdownEditor.vue`'s `onMounted`: it constructed EasyMDE against an **empty** textarea, then
+    immediately replaced the whole document via `editor.value.value(modelValue.value)`. CodeMirror 5
+    handles that "construct empty, then full-document replace" sequence by leaving its internal
+    `display.viewOffset` (the `.CodeMirror-sizer`'s inner `mover` div `top` offset, meant to represent
+    the height of virtualized/scrolled-past lines) stale at a non-zero value even though `viewFrom`
+    correctly ends up at `0` — pushing all rendered lines down inside the editor box by roughly the
+    content's own height. Neither `cm.refresh()` nor `cm.setSize()` called afterwards (even from dev
+    tools, well after mount) recomputes it correctly. Confirmed unrelated to `data-has-status-bar`
+    timing or the `KitMarkdownEditableRenderer.vue` positioning logic (both were red herrings from
+    earlier investigation attempts). Fixed by setting the raw `<textarea>` element's native `.value`
+    to the initial content *before* constructing `EasyMDE`/CodeMirror (`CodeMirror.fromTextArea` reads
+    the textarea's existing value as its starting document), so the editor is built once, in a single
+    pass, with its real content — no post-construction document replace, no stale offset. Verified via
+    `cypress run` against the live Storybook `MarkdownEditor` story, inspecting
+    `cm.display.viewOffset`/`viewFrom` directly (jest can't catch this — CSS is mocked and the bug is a
+    real CodeMirror layout/DOM quirk, not a Vue reactivity issue jsdom would surface).
 * Menu:
   * ✅ missing icon — fixed (fontawesome upgrade)
   * wrong background-colors

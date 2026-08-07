@@ -144,6 +144,8 @@ onMounted(() => {
   hasStatusBar.value = status.length > 0
   const minHeight = props.readonly ? '1em' : `${props.minHeight}px`
 
+  me.value.value = modelValue.value
+
   editor.value = new EasyMDE({
     element: me.value,
     minHeight,
@@ -162,8 +164,6 @@ onMounted(() => {
       }
     }
   })
-  editor.value.value(modelValue.value)
-
   updateEditor(true)
 })
 

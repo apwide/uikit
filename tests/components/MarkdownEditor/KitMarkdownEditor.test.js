@@ -68,9 +68,9 @@ describe('KitMarkdownEditor', () => {
     wrapper.unmount()
   })
 
-  it('sets the initial value on the editor instance', async () => {
+  it('sets the initial value on the underlying textarea before EasyMDE is constructed', async () => {
     const { wrapper, instance } = await mountEditor({ modelValue: 'hello world' })
-    expect(instance.value).toHaveBeenCalledWith('hello world')
+    expect(instance.options.element.value).toBe('hello world')
     wrapper.unmount()
   })
 
