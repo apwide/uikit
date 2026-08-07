@@ -72,10 +72,8 @@ describe('KitCopyToClipboard', () => {
 
   it('provides copied state to slot', () => {
     const component = shallowMount(KitCopyToClipboard, {
-      scopedSlots: {
-        default: function (props) {
-          return this.$createElement('div', { class: 'test' }, props.copied.toString())
-        }
+      slots: {
+        default: '<div class="test">{{ params.copied.toString() }}</div>'
       }
     })
     expect(component.find('.test').exists()).toBe(true)

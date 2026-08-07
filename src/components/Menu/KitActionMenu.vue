@@ -1,6 +1,6 @@
 <template>
   <KitIconMenu
-    v-if="$scopedSlots.default"
+    v-if="$slots.default"
     :title="title"
     :icon-size="iconSize"
     :is-disabled="isDisabled"

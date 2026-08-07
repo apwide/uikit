@@ -60,7 +60,7 @@ describe('KitSpotlight', () => {
   it('renders a custom step slot instead of the default hint when provided', async () => {
     wrapper = mount(KitSpotlight, {
       propsData: { steps: [makeStep()] },
-      scopedSlots: { step1: '<div class="custom-step">Custom content</div>' }
+      slots: { step1: '<div class="custom-step">Custom content</div>' }
     })
     await flushPromises()
     expect(wrapper.find('.custom-step').exists()).toBe(true)

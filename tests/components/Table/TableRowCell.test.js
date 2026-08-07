@@ -27,7 +27,7 @@ describe('TableRowCell', () => {
   it('renders custom slot content instead of the default value', () => {
     const component = shallowMount(TableRowCell, {
       propsData: { value: 'John Doe' },
-      scopedSlots: { default: '<span class="custom-cell">Custom</span>' }
+      slots: { default: '<span class="custom-cell">Custom</span>' }
     })
     expect(component.find('.custom-cell').exists()).toBe(true)
     expect(component.text()).not.toContain('John Doe')
@@ -36,8 +36,8 @@ describe('TableRowCell', () => {
   it('exposes value and isActiveRow to the default slot', () => {
     const component = shallowMount(TableRowCell, {
       propsData: { value: 'John Doe', isActiveRow: true },
-      scopedSlots: {
-        default: '<span class="slot-value">{{ props.value }}-{{ props.isActiveRow }}</span>'
+      slots: {
+        default: '<span class="slot-value">{{ params.value }}-{{ params.isActiveRow }}</span>'
       }
     })
     expect(component.find('.slot-value').text()).toBe('John Doe-true')

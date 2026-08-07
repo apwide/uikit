@@ -3,7 +3,7 @@ import KitIconMenu from '@components/Menu/KitIconMenu.vue'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
 
 const mountWithSlots = (options = {}) => shallowMount(KitIconMenu, {
-  scopedSlots: {
+  slots: {
     default: '<div class="menu-item">Item</div>',
     icon: '<span class="menu-icon">Icon</span>'
   },

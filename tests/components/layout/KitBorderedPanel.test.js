@@ -42,7 +42,7 @@ describe('KitBorderedPanel', () => {
   it('renders a custom title slot instead of the default title', () => {
     const component = shallowMount(KitBorderedPanel, {
       propsData: { title: 'Panel Title' },
-      scopedSlots: { title: '<span class="custom-title">Custom</span>' }
+      slots: { title: '<span class="custom-title">Custom</span>' }
     })
     expect(component.find('.custom-title').exists()).toBe(true)
     expect(component.find('.kit-bordered-panel__title').exists()).toBe(false)
@@ -55,7 +55,7 @@ describe('KitBorderedPanel', () => {
 
   it('renders header actions when the actions slot is provided', () => {
     const component = shallowMount(KitBorderedPanel, {
-      scopedSlots: { actions: '<button class="my-action">Action</button>' }
+      slots: { actions: '<button class="my-action">Action</button>' }
     })
     expect(component.find('.kit-bordered-panel__header-actions .my-action').exists()).toBe(true)
   })

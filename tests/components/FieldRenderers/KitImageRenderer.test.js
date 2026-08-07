@@ -57,7 +57,7 @@ describe('KitImageRenderer', () => {
   it('renders the actions slot content', () => {
     const component = shallowMount(KitImageRenderer, {
       propsData: { url: '/img/photo.png', showActions: true },
-      scopedSlots: { actions: '<button class="my-action">Action</button>' }
+      slots: { actions: '<button class="my-action">Action</button>' }
     })
     expect(component.find('.my-action').exists()).toBe(true)
   })

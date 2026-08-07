@@ -44,7 +44,7 @@
       </div>
       <div v-if="!selected.length" class="kit-select__text">
         <slot
-          v-if="!search && selected.value && $scopedSlots['selected'] && !multi"
+          v-if="!search && selected.value && $slots['selected'] && !multi"
           :selected="selected.value"
           name="selected" />
         <span v-else :placeholder="!search && !selected.label">

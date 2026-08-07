@@ -42,7 +42,7 @@
           @confirm="props.confirm"
           @focus="props.focus"
           @cancel="props.cancel">
-        <template v-if="$scopedSlots.tag" #tag="{ tag }">
+        <template v-if="$slots.tag" #tag="{ tag }">
           <slot name="tag" :tag="tag" />
         </template>
         <template #option="{ option, isCurrent }">

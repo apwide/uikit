@@ -3,7 +3,7 @@ import KitActionMenu from '@components/Menu/KitActionMenu.vue'
 import KitIconMenu from '@components/Menu/KitIconMenu.vue'
 
 const mountWithSlot = (options = {}) => shallowMount(KitActionMenu, {
-  scopedSlots: { default: '<div class="action-item">Item</div>' },
+  slots: { default: '<div class="action-item">Item</div>' },
   ...options
 })
 

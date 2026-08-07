@@ -118,7 +118,7 @@ describe('KitSelectOption', () => {
   it('renders option slot content', () => {
     const component = shallowMount(KitSelectOption, {
       propsData: { option: mockOption },
-      scopedSlots: {
+      slots: {
         option: '<div class="custom-option">Custom</div>'
       }
     })

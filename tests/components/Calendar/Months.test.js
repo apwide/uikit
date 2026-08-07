@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Months from '@components/Calendar/Months.vue'
+import KitButton from '@components/Button/KitButton.vue'
 
 describe('Months', () => {
   it('renders with default props', () => {
@@ -23,14 +24,14 @@ describe('Months', () => {
 
   it('emits month-selected with the zero-based month index', async () => {
     const component = shallowMount(Months)
-    const months = component.findAll('[data-cy="month"]')
+    const months = component.findAllComponents(KitButton)
     await months.at(2).vm.$emit('click')
     expect(component.emitted('month-selected')).toEqual([[2]])
   })
 
   it('emits month-selected with 0 for January', async () => {
     const component = shallowMount(Months)
-    await component.findAll('[data-cy="month"]').at(0).vm.$emit('click')
+    await component.findAllComponents(KitButton).at(0).vm.$emit('click')
     expect(component.emitted('month-selected')).toEqual([[0]])
   })
 })

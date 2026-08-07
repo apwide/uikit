@@ -6,7 +6,7 @@
           <span :title="headerFloatingTitle" class="kit-bordered-panel__title">{{ title }}</span>
         </slot>
       </div>
-      <div v-if="$scopedSlots.actions" class="kit-bordered-panel__header-actions">
+      <div v-if="$slots.actions" class="kit-bordered-panel__header-actions">
         <slot name="actions" />
       </div>
     </div>

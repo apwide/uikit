@@ -1,5 +1,5 @@
 <template>
-  <div class="kit-avatar__outer" :style="`zIndex: ${zIndex}`">
+  <div class="kit-avatar__outer" :style="`z-index: ${zIndex}`">
     <slot name="avatar-header" />
     <component :is="tag" :href="link" target="_blank" class="kit-avatar__wrapper" :square="`${square}`" :size="size" :style="style">
       <img v-if="avatar && !error" draggable="false" :src="avatar" alt="avatar" @error="error = true" />

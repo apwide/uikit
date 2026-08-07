@@ -40,7 +40,7 @@
         @confirm="props.confirm"
         @focus="props.focus"
         @cancel="props.cancel">
-        <template v-if="$scopedSlots.selected" #selected="{ selected }">
+        <template v-if="$slots.selected" #selected="{ selected }">
           <slot name="selected" :selected="selected" />
         </template>
         <template #option="{ option, isCurrent }">

@@ -9,7 +9,7 @@ describe('KitMenuSection', () => {
 
   it('renders when a default slot is provided', () => {
     const component = shallowMount(KitMenuSection, {
-      scopedSlots: { default: '<div class="section-item">Item</div>' }
+      slots: { default: '<div class="section-item">Item</div>' }
     })
     expect(component.find('.kit-menu-section').exists()).toBe(true)
     expect(component.find('.section-item').exists()).toBe(true)
@@ -17,7 +17,7 @@ describe('KitMenuSection', () => {
 
   it('does not render a title by default', () => {
     const component = shallowMount(KitMenuSection, {
-      scopedSlots: { default: '<div>Item</div>' }
+      slots: { default: '<div>Item</div>' }
     })
     expect(component.find('.kit-menu-section__title').exists()).toBe(false)
   })
@@ -25,7 +25,7 @@ describe('KitMenuSection', () => {
   it('renders title when provided', () => {
     const component = shallowMount(KitMenuSection, {
       propsData: { title: 'Section Title' },
-      scopedSlots: { default: '<div>Item</div>' }
+      slots: { default: '<div>Item</div>' }
     })
     expect(component.find('.kit-menu-section__title').text()).toBe('Section Title')
   })

@@ -9,12 +9,12 @@ describe('Icons', () => {
 
   it('shows the caret by default', () => {
     const component = shallowMount(Icons)
-    expect(component.html()).toContain('hipchatchevrondownicon-stub')
+    expect(component.html()).toContain('hipchat-chevron-down-icon-stub')
   })
 
   it('hides the caret when createable is true', () => {
     const component = shallowMount(Icons, { propsData: { createable: true } })
-    expect(component.html()).not.toContain('hipchatchevrondownicon-stub')
+    expect(component.html()).not.toContain('hipchat-chevron-down-icon-stub')
   })
 
   it('does not show the spinner by default', () => {

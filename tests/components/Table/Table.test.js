@@ -131,7 +131,10 @@ describe('KitTable', () => {
 
   it('renders grab handle column when dragRows is true', () => {
     const component = shallowMount(KitTable, {
-      propsData: { columns: mockColumns, data: mockData, dragRows: true }
+      propsData: { columns: mockColumns, data: mockData, dragRows: true },
+      // KitTable forwards a #kitDragHandle named slot into TableRow; a stubbed TableRow
+      // wouldn't render it (renderStubDefaultSlot only covers the unnamed default slot).
+      global: { stubs: { TableRow: false } }
     })
     // Should render grab handle when dragRows is enabled
     expect(component.find('.kit-table__grab-handle').exists()).toBe(true)

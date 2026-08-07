@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$scopedSlots.default" class="kit-menu-section">
+  <div v-if="$slots.default" class="kit-menu-section">
     <div v-if="title" class="kit-menu-section__title">
       {{ title }}
     </div>

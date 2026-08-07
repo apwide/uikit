@@ -28,7 +28,8 @@ describe('SecureStringLineRenderer', () => {
   it('reveals the raw value and toggles the title to Hide when clicked', async () => {
     const component = shallowMount(SecureStringLineRenderer, { propsData: { value: 'secret123' } })
     const fakeEvent = { stopPropagation: jest.fn(), preventDefault: jest.fn() }
-    await component.findComponent(KitIconButton).vm.$emit('click', fakeEvent)
+    // Two KitIconButtons render (copy-to-clipboard, then reveal-toggle); target the toggle one.
+    await component.findAllComponents(KitIconButton).at(1).vm.$emit('click', fakeEvent)
     expect(component.find('.string-line-wrapper').exists()).toBe(true)
     expect(component.find('.string-line-wrapper').html()).toContain('secret123')
     expect(component.html()).toContain('title="Hide"')

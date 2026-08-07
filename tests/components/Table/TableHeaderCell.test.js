@@ -29,7 +29,7 @@ describe('TableHeaderCell', () => {
   it('renders header slot content when provided', () => {
     const component = shallowMount(TableHeaderCell, {
       propsData: { column },
-      scopedSlots: { header: '<span class="custom-header">Custom</span>' }
+      slots: { header: '<span class="custom-header">Custom</span>' }
     })
     expect(component.find('.custom-header').exists()).toBe(true)
   })

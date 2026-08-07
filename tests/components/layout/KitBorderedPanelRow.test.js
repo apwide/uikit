@@ -22,7 +22,7 @@ describe('KitBorderedPanelRow', () => {
   it('renders a custom label slot instead of the default label', () => {
     const component = shallowMount(KitBorderedPanelRow, {
       propsData: { label: 'Name' },
-      scopedSlots: { label: '<span class="custom-label">Custom</span>' }
+      slots: { label: '<span class="custom-label">Custom</span>' }
     })
     expect(component.find('.custom-label').exists()).toBe(true)
     expect(component.find('.kit-bordered-panel-row__default-label').exists()).toBe(false)
@@ -46,7 +46,7 @@ describe('KitBorderedPanelRow', () => {
 
   it('hides the after-label slot content by default', () => {
     const component = shallowMount(KitBorderedPanelRow, {
-      scopedSlots: { 'after-label': '<span class="after-label">After</span>' }
+      slots: { 'after-label': '<span class="after-label">After</span>' }
     })
     const wrapper = component.find('.after-label').element.parentElement
     expect(wrapper.style.display).toBe('none')
@@ -54,7 +54,7 @@ describe('KitBorderedPanelRow', () => {
 
   it('shows the after-label slot content on mouseenter', async () => {
     const component = shallowMount(KitBorderedPanelRow, {
-      scopedSlots: { 'after-label': '<span class="after-label">After</span>' }
+      slots: { 'after-label': '<span class="after-label">After</span>' }
     })
     await component.find('.kit-bordered-panel-row__key').trigger('mouseenter')
     const wrapper = component.find('.after-label').element.parentElement
@@ -63,7 +63,7 @@ describe('KitBorderedPanelRow', () => {
 
   it('hides the after-label slot content again on mouseleave', async () => {
     const component = shallowMount(KitBorderedPanelRow, {
-      scopedSlots: { 'after-label': '<span class="after-label">After</span>' }
+      slots: { 'after-label': '<span class="after-label">After</span>' }
     })
     await component.find('.kit-bordered-panel-row__key').trigger('mouseenter')
     await component.find('.kit-bordered-panel-row__key').trigger('mouseleave')
@@ -74,7 +74,7 @@ describe('KitBorderedPanelRow', () => {
   it('always shows the after-label slot content when forceShowAfter is true', () => {
     const component = shallowMount(KitBorderedPanelRow, {
       propsData: { forceShowAfter: true },
-      scopedSlots: { 'after-label': '<span class="after-label">After</span>' }
+      slots: { 'after-label': '<span class="after-label">After</span>' }
     })
     const wrapper = component.find('.after-label').element.parentElement
     expect(wrapper.style.display).not.toBe('none')

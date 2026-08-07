@@ -12,7 +12,7 @@ describe('TextArea', () => {
   it('contains properly configured textarea', () => {
     const component = shallowMount(KitTextArea, { propsData })
 
-    expect(component.findComponent('textarea').attributes()).toEqual({
+    expect(component.find('textarea').attributes()).toEqual({
       auto: 'true',
       maxlength: '5',
       placeholder: 'Placeholder',
@@ -26,13 +26,13 @@ describe('TextArea', () => {
       propsData,
       attachTo: document.body
     })
-    component.findComponent('textarea').trigger('focus')
+    component.find('textarea').trigger('focus')
     expect(component.emitted('focus')).toBeTruthy()
   })
 
   it('emits blur event on textarea blur', () => {
     const component = shallowMount(KitTextArea, { propsData })
-    component.findComponent('textarea').trigger('blur')
+    component.find('textarea').trigger('blur')
     expect(component.emitted('blur')).toBeTruthy()
   })
 })

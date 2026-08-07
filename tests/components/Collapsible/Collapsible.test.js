@@ -66,10 +66,8 @@ describe('KitCollapsible', () => {
   it('provides isCollapsed state to trigger slot', () => {
     const component = shallowMount(KitCollapsible, {
       propsData: { label: 'Test', collapsed: true },
-      scopedSlots: {
-        trigger: function (props) {
-          return this.$createElement('div', props.isCollapsed.toString())
-        }
+      slots: {
+        trigger: '<div>{{ params.isCollapsed.toString() }}</div>'
       }
     })
     expect(component.text()).toContain('true')
@@ -78,12 +76,8 @@ describe('KitCollapsible', () => {
   it('provides toggle function to trigger slot', () => {
     const component = shallowMount(KitCollapsible, {
       propsData: { label: 'Test', collapsed: true },
-      scopedSlots: {
-        trigger: function (props) {
-          return this.$createElement('button', {
-            on: { click: props.toggle }
-          }, 'Toggle')
-        }
+      slots: {
+        trigger: '<button @click="params.toggle">Toggle</button>'
       }
     })
     const button = component.find('button')

@@ -14,7 +14,7 @@ describe('KitCheckboxRenderer', () => {
 
   it('shows the checked icon when value is true', () => {
     const component = shallowMount(KitCheckboxRenderer, { propsData: { value: true } })
-    expect(component.html()).toContain('kiteditordoneicon-stub')
+    expect(component.html()).toContain('editor-done-icon-stub')
     expect(component.find('.icon').exists()).toBe(false)
   })
 
