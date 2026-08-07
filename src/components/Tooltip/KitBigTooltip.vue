@@ -5,29 +5,33 @@
           @mouseleave="requestHide">
       <slot name="trigger"></slot>
     </span>
-    <KitBigTooltipContent
-      v-if="visible"
-      ref="popper"
-      :placement="placement"
-      :target-element="trigger"
-      @mouseleave="requestHide"
-    >
-      <slot :hide="hide"></slot>
-    </KitBigTooltipContent>
+    <Teleport to="body" :disabled="!appendToBody">
+      <KitBigTooltipContent
+        v-if="visible"
+        ref="popper"
+        :placement="placement"
+        :target-element="trigger"
+        @mouseleave="requestHide"
+      >
+        <slot :hide="hide"></slot>
+      </KitBigTooltipContent>
+    </Teleport>
   </div>
 </template>
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { ref } from 'vue'
 import KitBigTooltipContent from '@components/Tooltip/KitBigTooltipContent.vue'
 
 type Props = {
   placement?: string
   disabled?: boolean
+  appendToBody?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placement: 'right',
-  disabled: false
+  disabled: false,
+  appendToBody: false
 })
 
 const trigger = ref<HTMLSpanElement>()
@@ -39,13 +43,6 @@ function show() {
     return
   }
   visible.value = true
-  if (props.appendToBody) {
-    nextTick(() => {
-      if (popper.value) {
-        document.body.appendChild(popper.value.$el)
-      }
-    })
-  }
 }
 
 function isInside(e: MouseEvent, rect: DOMRect) {
@@ -65,11 +62,6 @@ function requestHide(e: MouseEvent) {
 }
 
 function hide() {
-  if (props.appendToBody) {
-    if (popper.value) {
-      document.body.removeChild(popper.value.$el)
-    }
-  }
   visible.value = false
 }
 

@@ -107,12 +107,30 @@ Storybook broken components:
     applied to `KitSelect` and `UserPicker`); re-verify in Storybook since this was a broad statement and may
     have covered more than just the model wiring
 * Tabs:
-  * Broken, no content and error: can't access property "insertBefore", parent is null — `KitTabProvider`
-    also had the same model bug and has been fixed (`defineModel()`), but this specific `insertBefore`
-    crash looks unrelated (likely a DOM/Teleport issue) and needs separate investigation
+  * ✅ Broken, no content and error: can't access property "insertBefore", parent is null — fixed. Root
+    cause: `Tooltip.vue` (used in the story's "With tooltip and badge" tab headers) manually did
+    `document.body.appendChild(popper.value.$el)` on `mouseenter` / `document.body.removeChild(...)` on
+    `mouseleave`, entirely outside Vue's DOM tracking, immediately followed by `show.value = false`
+    toggling the same element's `v-if` off. Vue's own unmount then tried to remove/move that element
+    from its *original* parent, which by then had `parentNode === null` (Firefox's phrasing for a null
+    dereference is "can't access property X, Y is null" — matches exactly). Not new to Vue 3, but Vue 3's
+    rewritten patch/unmount internals appear to hit this dead branch more reliably than Vue 2 did.
+    Reproduced concretely (mouseenter, wait, mouseleave, wait — no crash before the fix would throw here)
+    and fixed by replacing the manual DOM manipulation with `<Teleport to="body" :disabled="!appendToBody">`
+    wrapping the existing `v-if`, Vue's own built-in, fully-tracked mechanism for exactly this
+    "render elsewhere in the DOM" case — eliminates the bug class rather than patching around it.
 * Toggle:
   * ✅ selection is not applied on state — fixed (`defineModel()`)
   * there is a slight different in terms of alignment/margin (more margin on left or right)
 * Tooltip:
-  * on tooltip, I got an error: can't access property "insertBefore", parent is null — likely the same
-    unrelated issue as Tabs' `insertBefore` crash, needs separate investigation
+  * ✅ on tooltip, I got an error: can't access property "insertBefore", parent is null — same root cause
+    and fix as Tabs above. `KitBigTooltip.vue` had the identical manual-DOM-manipulation pattern (fixed
+    the same way with `<Teleport>`), though its `appendToBody` branch was actually **dead code** there —
+    the prop was read (`props.appendToBody`) but never declared in `Props`, so it was always `undefined`/
+    falsy and the manual DOM code never ran in practice. Declared the missing prop as part of this fix so
+    `<Teleport :disabled="!appendToBody">` actually does something when a caller sets it.
+  * **Not yet checked**: `KitModal.vue`, `KitDropdown.vue`, `KitSelectMenu.vue`, `KitSpotlight.vue`, and
+    `KitMarkdownEditableRenderer.vue` (the "position editor" logic) all use the same
+    `document.body.appendChild`/`removeChild` pattern for their own "float/append to body" needs. They
+    weren't reported as broken and weren't touched here, but they carry the same latent risk — worth a
+    dedicated pass to migrate them to `<Teleport>` too rather than waiting for a bug report.
