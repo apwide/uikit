@@ -89,28 +89,24 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
 
 3. ~~**`model` Option**~~ — **FIXED (2026-08-07)**, both files (`KitDropdownCheckboxItem.vue`,
    `KitCheckbox.vue`) converted from Options API `model: { prop: 'checked', event: 'input' }` to
-   `<script setup>` + `defineModel('checked', { required: true })`. Both are public, exported
-   components (`src/index.ts`) with no internal `v-model` shorthand usage on them anywhere in this
-   codebase — internal consumers (`KitCheckboxEditableRenderer.vue`,
-   `KitDropdownCheckboxItem.vue` → `KitCheckbox`) always bound `:checked`/`@input` explicitly, so there
-   was no ambiguity to resolve there. Deliberately used the **named** form (`defineModel('checked', ...)`)
-   rather than the bare/default form (`defineModel()` → prop `modelValue`) — this keeps the public prop
-   name `checked` unchanged (many callers bind `:checked="x"` directly, not via `v-model`), at the cost
-   of the emitted event renaming from `input` to Vue 3's standard `update:checked`. This is an
-   intentional breaking change for v7.0.0: external consumers doing `<KitCheckbox v-model="x">` (relying
-   on the old `model` option's bare-`v-model` mapping) need to switch to `v-model:checked="x"`; consumers
-   doing `@input="handler"` need `@update:checked="handler"`. Updated both call sites
-   (`KitDropdownCheckboxItem.vue`'s own `<KitCheckbox>` usage, `KitCheckboxEditableRenderer.vue`) and
-   both components' test files accordingly — `KitDropdownCheckboxItem.vue` was itself converted the same
-   way (same `model` option, same public/exported status), so its own emitted event also renamed
-   `input` → `update:checked`. Also found `KitCheckbox.vue`'s existing `this.id = this._uuid` (`created()`
+   `<script setup>` + `defineModel()`. First pass used the **named** form (`defineModel('checked', ...)`)
+   to keep the public prop name `checked` unchanged for the internal consumers that bind `:checked="x"`
+   directly (not via `v-model`) — but this was **corrected the same day** once item 3b below surfaced
+   that Storybook's own stories (`CheckboxBasic.story.vue`, `Dropdown.story.vue`) use *bare*
+   `v-model="x"` on both components, which the named form breaks (bare `v-model` only ever targets
+   `modelValue`, never a custom name). Switched to the **bare** form (`defineModel()`, defaults to prop
+   `modelValue` + event `update:modelValue`) instead, matching every other component fixed in item 3b —
+   see that item for the full rationale. The two internal `:checked="x"` bindings
+   (`KitDropdownCheckboxItem.vue`'s own `<KitCheckbox>` usage, `KitCheckboxEditableRenderer.vue`) were
+   updated to `:model-value="x"`/`@update:model-value="x"` (or plain `v-model` where the local variable
+   name already matched). Also found `KitCheckbox.vue`'s existing `this.id = this._uuid` (`created()`
    hook) reads a property that doesn't exist anywhere — not a Vue API, not defined by any mixin/plugin in
    this repo; the only other reference (`Toggle/LockSwitch.vue`) has an outright syntax typo
    (`instance. instance.proxy._uuid`) and belongs to a component already flagged unused. Concluded this
    was always dead code (evaluates to `undefined` either way) rather than a deliberate host-app
    integration point, so simplified to `ref<string>()` instead of carrying the broken pattern forward
    into typed `<script setup>` — behaviorally identical, `id`/`for` were already always unset.
-   **Side effect worth flagging**: fixing lint for the new `v-model:checked` syntax required switching
+   **Side effect worth flagging**: fixing lint for the (later-reverted) `v-model:checked` syntax required switching
    `.eslintrc.js` from `plugin:vue/essential` (Vue 2 preset) to `plugin:vue/vue3-essential` — this was
    still pointing at the Vue 2 ruleset since the Vue 3 migration began, so `vue/no-v-model-argument`
    (Vue-2-only rule, correctly forbids `v-model:x`) was still active and firing false positives on
@@ -145,6 +141,37 @@ fixed, `npm run lint` down from 48 problems to 0 errors / 2 pre-existing warning
   equivalent).
 
 Full jest suite still 1012/0/10 after all of the above, webpack build still compiles clean.
+
+3b. ~~**Implicit `v-model` convention (`value`/`input`)**~~ — **FIXED (2026-08-07)**. This was **not on
+   the original breaking-change list above** — only the 2 components using the Options API's *explicit*
+   `model: {}` option were catalogued (item 3). It turns out that was a false sense of completeness: in
+   Vue 2, a bare `v-model="x"` on *any* custom component maps implicitly to `prop: value` + `event: input`
+   with **zero declaration required** — every component in this library that just declared a `value` prop
+   and emitted `input` "for free" got treated as v-model-able. Vue 3 removed that implicit mapping: bare
+   `v-model` now maps to `prop: modelValue` + `event: update:modelValue`, and there is no fallback to
+   `value`/`input`. Found via manual Storybook testing (`VUE3_MIGRATION_BROKEN_COMPONENTS.md`, logged by
+   the project owner as "Checkbox: initial state wrong / not updated," "Form: input not able to store
+   state," "Toggle/Radio/ColorPicker selection not applied," etc.) — every affected component silently
+   bound to a prop it doesn't have (wrong/missing initial value) and listened for an event never emitted
+   (changes never propagate). **16 components affected**, all converted to `defineModel()` targeting the
+   default `modelValue` name (not a custom name) specifically so every existing bare `v-model="x"` call
+   site — every Storybook story, and by extension any external consumer doing the same — keeps working
+   unchanged, zero consumer-side migration needed: `KitCheckbox`, `KitDropdownCheckboxItem`, `KitInput`,
+   `KitTextArea`, `KitSecuredInput`, `KitToggle`, `KitColorPicker`, `KitRadioGroup`, `KitMarkdownEditor`,
+   `KitDatePicker`, `KitDateRangePicker`, `KitTimePicker`, `KitSelect`, `KitTabProvider`, `UserPicker`
+   (found independently — same bug, but it never itself called `emit('input', ...)`, so it didn't surface
+   in the initial `grep`-based inventory; only caught because its Storybook story also uses bare
+   `v-model`). Internal consumers that bound these components explicitly (not via `v-model`) — mostly the
+   `KitInlineEdit`-based field renderers using a `props.value`/`props.input()` scoped-slot callback
+   protocol — were updated to `:model-value="..."`/`@update:model-value="..."` instead.
+   `KitRadio.vue` (the individual radio button, as opposed to `KitRadioGroup`) and the two
+   `*SelectEditableRenderer.vue` components were deliberately **left untouched**: confirmed via grep that
+   nothing anywhere (source or stories) ever puts bare `v-model` on them directly — they're always wired
+   with explicit prop/event bindings by their parent, which Vue 3 doesn't change the meaning of. Verified
+   end-to-end (not just via prop/emit assertions) with a `mount()`-based reproduction of the exact bug
+   pattern — initial value rendered + a real user interaction (typing, click) propagating the change back
+   to the parent's `ref` — for `KitInput`, `KitCheckbox`, `KitToggle`. Full jest suite unchanged at
+   1012/0/10, `npm run lint` and the webpack build both still clean.
 
 4. **Deep Selectors** (`>>>`) — **16 files** currently use it for scoped style penetration
    - **Vue 3 Change**: Use `:deep()` instead
@@ -831,17 +858,30 @@ from yarn to npm mid-session (project decision) — `package-lock.json` is up to
 inventory" above for the full breakdown of what Bucket A (mechanical VTU v1→v2 API renames) and Bucket B
 (genuine Vue 3 component/runtime behavior differences) each covered. This closes out the test-suite
 portion of Phase 2/3 crossover work. 🏁 **`model` option migration is also done** (2026-08-07):
-`KitDropdownCheckboxItem.vue` and `KitCheckbox.vue` both converted to `defineModel('checked')` — see
-"`model` Option" above for the breaking-change details (event renamed `input` → `update:checked`) and
-the incidental `.eslintrc.js` Vue 2→3 preset fix it required. 🏁 **Lint cleanup is also done**
-(2026-08-07): the 3 items that fix surfaced (7 `.native` modifiers, the icon `max-len` override still
-targeting `.js`, `src/index.ts` import ordering) are all fixed — see "Lint cleanup" above. `npm run lint`
-is now **0 errors** (2 pre-existing, unrelated `any`-type warnings in `src/components/utils.ts` remain).
-Full jest suite still 1012/0/10 and webpack build still compiles clean after all of the above.
+`KitDropdownCheckboxItem.vue` and `KitCheckbox.vue` both converted to `defineModel()` — see "`model`
+Option" above for the breaking-change details and the incidental `.eslintrc.js` Vue 2→3 preset fix it
+required. 🏁 **Lint cleanup is also done** (2026-08-07): the 3 items that fix surfaced (7 `.native`
+modifiers, the icon `max-len` override still targeting `.js`, `src/index.ts` import ordering) are all
+fixed — see "Lint cleanup" above. `npm run lint` is now **0 errors** (2 pre-existing, unrelated
+`any`-type warnings in `src/components/utils.ts` remain). 🏁 **The implicit `value`/`input` v-model
+convention is also fixed** (2026-08-07, see "3b." above) — a much bigger, previously-uncatalogued
+breaking change than the 2-file `model` option item: **16 components** had never been updated for Vue
+3's removal of the implicit bare-`v-model` → `value`/`input` mapping, found via manual Storybook testing
+against `VUE3_MIGRATION_BROKEN_COMPONENTS.md` (initial values not showing, user input not propagating
+back — across Checkbox, Toggle, Radio, ColorPicker, Select, DatePicker family, MarkdownEditor, and
+plain form Input/TextArea). All converted to `defineModel()` targeting the default `modelValue` name so
+every existing bare `v-model` call site keeps working with zero consumer-side changes.
+Full jest suite still **1012 passed / 0 failed / 10 skipped** and webpack build still compiles clean
+after all of the above — none of this work changed the test/lint/build counts, only fixed real runtime
+behavior that the existing test suite wasn't set up to catch (most tests bind props/listen for events
+explicitly rather than through actual `v-model`, so this class of bug was invisible to them; only
+end-to-end `mount()` + real Storybook usage surfaced it).
 What's left for Phase 3 proper is the per-component Wave 1-3 migration passes described below (largely a
 formality at this point since the components already run correctly under Vue 3 — the waves are about
 deliberate review/sign-off per component, not fixing anything currently broken), plus the two lighter
-Phase 2 deliverables that were never started: a migration checklist template and consumer-facing
-migration documentation.
+Phase 2 deliverables that were never started (a migration checklist template and consumer-facing
+migration documentation), plus the two `insertBefore`/`parent is null` crashes on Tabs/Tooltip flagged
+in `VUE3_MIGRATION_BROKEN_COMPONENTS.md` that are still unexplained and look unrelated to both the icon
+and v-model root causes found so far.
 
 **Last Updated**: 2026-08-07 (originally 2026-02-13)

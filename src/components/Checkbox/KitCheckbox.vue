@@ -42,7 +42,7 @@ const emit = defineEmits<{
   (event: 'blur', payload: FocusEvent): void
 }>()
 
-const checked = defineModel<boolean | unknown[]>('checked', { required: true })
+const checked = defineModel<boolean | unknown[]>({ required: true })
 
 const id = ref<string>()
 const checkboxRef = ref<HTMLLabelElement>()

@@ -2,11 +2,11 @@
   <KitInlineEdit v-if="editable" :value="timestamp" type="date" :placement="placement" @save-requested="onSaveRequested">
     <template #editor="{ props }">
       <KitDatePicker
-        :value="props.value"
+        :model-value="props.value"
         :is-invalid="props.isInvalid"
         :is-focused="props.isFocused"
         :is-loading="props.isLoading"
-        @input="props.input"
+        @update:model-value="props.input"
         @blur="props.blur"
         @focus="props.focus"
         @confirm="props.confirm"

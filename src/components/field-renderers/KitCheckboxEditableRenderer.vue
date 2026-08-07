@@ -10,11 +10,11 @@
       <KitCheckbox
         size="large"
         class="checkbox"
-        :checked="props.value"
+        :model-value="props.value"
         :is-focused="props.isFocused"
         :is-invalid="props.isInvalid"
         :disabled="props.isLoading"
-        @update:checked="props.input"
+        @update:model-value="props.input"
         @focus="props.focus"
         @blur="props.blur"
         @confirm="props.confirm"

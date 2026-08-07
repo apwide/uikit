@@ -18,7 +18,7 @@ describe('KitSecuredInput', () => {
     component.find('input').element.value = 'my-secret'
     component.find('input').trigger('input')
 
-    expect(component.emitted('input')[0]).toEqual(['my-secret'])
+    expect(component.emitted('update:modelValue')[0]).toEqual(['my-secret'])
   })
 
   it('emits focus event on input focus', () => {

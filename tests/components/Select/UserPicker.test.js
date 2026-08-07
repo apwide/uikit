@@ -15,13 +15,13 @@ describe('UserPicker', () => {
   })
 
   it('forwards the value to the inner KitSelect', () => {
-    const component = shallowMount(UserPicker, { propsData: { getUsers, value: users[0] } })
-    expect(component.findComponent(KitSelect).attributes('value')).toBe('[object Object]')
+    const component = shallowMount(UserPicker, { propsData: { getUsers, modelValue: users[0] } })
+    expect(component.findComponent(KitSelect).attributes('modelvalue')).toBe('[object Object]')
   })
 
   it('defaults value to an empty string', () => {
     const component = shallowMount(UserPicker, { propsData: { getUsers } })
-    expect(component.vm.$props.value).toBe('')
+    expect(component.vm.$props.modelValue).toBe('')
   })
 
   it('defaults placeholder and searchPromptText to "Type to search..."', () => {

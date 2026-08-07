@@ -34,7 +34,6 @@ import Popup from '../common/Popup'
 import TimePickerMenu from './TimePickerMenu'
 
 type Props = {
-  value?: string
   isLoading?: boolean
   isFocused?: boolean
   isInvalid?: boolean
@@ -52,9 +51,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   (event: 'focus'),
-  (event: 'blur'),
-  (event: 'input', data?: string)
+  (event: 'blur')
 }>()
+
+const modelValue = defineModel<string>()
 
 const focused = ref(false)
 const isOpen= ref(false)
@@ -69,21 +69,21 @@ const forwardedAttrs = computed(() => {
   return rest
 })
 
-const isValid = computed(() => props.value)
+const isValid = computed(() => modelValue.value)
 const selectedTime = computed({
   get() {
     if (!isValid.value) {
       return undefined
     }
-    return props.value
+    return modelValue.value
   },
   set(date) {
-    emit('input', date)
+    modelValue.value = date
   }
 })
-const formattedTime = computed(() => !isValid.value ? '' : props.value)
+const formattedTime = computed(() => !isValid.value ? '' : modelValue.value)
 
-watch (() => props.value, value => {
+watch (modelValue, value => {
   tempValue.value = value
 }, {
   immediate: true
@@ -117,7 +117,7 @@ function toggle() {
 
 function onEsc() {
   isOpen.value = false
-  tempValue.value = props.value
+  tempValue.value = modelValue.value
 }
 
 function onFocus(e: FocusEvent) {
@@ -132,7 +132,7 @@ function onBlur(e) {
   if (!me.value.contains(e.relatedTarget)) {
     focused.value = false
     isOpen.value = false
-    if (props.value !== tempValue.value) {
+    if (modelValue.value !== tempValue.value) {
       selectedTime.value = tempValue.value
     }
     emit('blur', e)

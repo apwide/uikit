@@ -45,7 +45,6 @@ import Calendar from './Calendar'
 const MILISECONDS_IN_SECOND = 1000
 
 type Props = {
-  value?: number | string
   isFocused?: boolean
   isLoading?: boolean
   isInvalid?: boolean
@@ -65,24 +64,25 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data: Date)
   (event: 'confirm', data: KeyboardEvent)
   (event: 'focus', data: FocusEvent)
   (event: 'blur', data: FocusEvent)
 }>()
+
+const modelValue = defineModel<number | string>()
 
 const datePicker = ref<HTMLDivElement>()
 const input = ref<HTMLInputElement>()
 const focused = ref(false)
 const isOpen = ref(false)
 
-const valid = computed(() => props.value && isValid(props.value))
+const valid = computed(() => modelValue.value && isValid(modelValue.value))
 
 const formattedDate = computed(() => {
   if (!valid.value) {
     return ''
   }
-  const date = toZonedTime(props.value, props.timeZone)
+  const date = toZonedTime(modelValue.value, props.timeZone)
   return format(date, props.dateFormat)
 })
 
@@ -98,10 +98,10 @@ const selectedDate = computed({
     if (!valid.value) {
       return undefined
     }
-    return fromUnixTime(props.value / MILISECONDS_IN_SECOND)
+    return fromUnixTime(modelValue.value / MILISECONDS_IN_SECOND)
   },
   set(date) {
-    emit('input', date)
+    modelValue.value = date
   }
 })
 

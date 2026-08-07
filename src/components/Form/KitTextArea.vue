@@ -22,7 +22,6 @@ import KitTextField from './KitTextField.vue'
 const ENTER = 13
 
 type Props = {
-  value?: string
   isFocused?: boolean
   isInvalid?: boolean
   isLoading?: boolean
@@ -45,7 +44,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data?: string)
   (event: 'blur', data: FocusEvent)
   (event: 'focus', data: FocusEvent)
   (event: 'confirm')
@@ -61,14 +59,7 @@ const forwardedAttrs = computed(() => {
   const { onInput, ...rest } = attrs
   return rest
 })
-const text = computed({
-  get() {
-    return props.value
-  },
-  set(value) {
-    emit('input', value)
-  }
-})
+const text = defineModel<string>()
 
 watch(() => props.isFocused, () => {
   focused.value = props.isFocused

@@ -7,24 +7,17 @@
 <script setup lang="ts">
 import { provide } from 'vue'
 
-type Props = {
-  value: string | number
-}
-
-const props = defineProps<Props>()
-const emit = defineEmits<{
-  (event: 'input', data: string | number)
-}>()
+const modelValue = defineModel<string | number>({ required: true })
 
 function onSelectTab(value) {
-  emit('input', value)
+  modelValue.value = value
 }
 
 const state = {}
 Object.defineProperty(state, 'activeTab', {
   enumerable: true,
   get: () => {
-    return props.value
+    return modelValue.value
   }
 })
 

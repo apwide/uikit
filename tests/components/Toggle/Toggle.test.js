@@ -7,6 +7,6 @@ describe('Toggle', () => {
       attachTo: document.body
     })
     await component.trigger('click')
-    expect(component.emitted('input')).toBeTruthy()
+    expect(component.emitted('update:modelValue')).toBeTruthy()
   })
 })

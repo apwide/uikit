@@ -102,7 +102,6 @@ import Icons from './Icons.vue'
 const INPUT_WIDTH = '5px'
 
 type Props = {
-  value?: string | number | string[] | number[] | object | object[]
   options?: unknown[]
   placeholder?: string
   searchPromptText?: string
@@ -181,8 +180,9 @@ const emit = defineEmits<{
   (event: 'error')
   (event: 'focus', e: FocusEvent)
   (event: 'blur', e: FocusEvent)
-  (event: 'input', e: string | number | object | string[] | number[] | object[])
 }>()
+
+const modelValue = defineModel<string | number | string[] | number[] | object | object[]>()
 
 const isOpen = ref(false)
 const search = ref('')
@@ -196,7 +196,7 @@ const dragging = ref(false)
 const prevIndex = ref<number>()
 
 const selected = computed<Value<unknown> | Value<unknown>[]>(() =>
-  props.multi ? (props.value as unknown[]).map((e) => props.normalizer(e)) : props.normalizer(props.value)
+  props.multi ? (modelValue.value as unknown[]).map((e) => props.normalizer(e)) : props.normalizer(modelValue.value)
 )
 const normalizedOptions = computed(() => props.options.map((e) => props.normalizer(e)))
 const input = computed(() => (search.value ? '' : selected.value?.label || props.placeholder))
@@ -268,7 +268,7 @@ function onFocus(e: FocusEvent) {
 function createTag() {
   const s = props.multi ? [...selected.value.map((o) => o.value), search.value] : search.value
   search.value = ''
-  emit('input', s)
+  modelValue.value = s
 }
 
 function closeOptions() {
@@ -299,7 +299,7 @@ function onEsc() {
 
 async function onClear() {
   search.value = ''
-  emit('input', nonClearableOptions.value)
+  modelValue.value = nonClearableOptions.value
   isOpen.value = false
   await nextTick()
   inputRef.value?.focus()
@@ -312,7 +312,7 @@ async function onOptionSelected(option: Value<unknown>) {
   isOpen.value = props.keepOpenOnSelect || false
   focused.value = true
   const s = props.multi ? [...selected.value.map((e) => e.value), option.value] : option.value
-  emit('input', s)
+  modelValue.value = s
   if (!props.confirm && inputRef.value) {
     await nextTick()
     inputRef.value?.blur()
@@ -340,7 +340,7 @@ async function onRemove(id: string) {
   const s = selectedValues
     .filter((option: Value<unknown>) => option.id !== id || option.disabled)
     .map((option: Value<unknown>) => option.value)
-  emit('input', s)
+  modelValue.value = s
   await nextTick()
 }
 
@@ -354,7 +354,7 @@ function removeOption() {
     const { id } = selected.value[selectedValues.length - 1]
     onRemove(id)
   } else if (canClearSelectedOption.value) {
-    emit('input', undefined)
+    modelValue.value = undefined
   }
 }
 
@@ -409,7 +409,7 @@ function onTab(e) {
       const option = suggestions.value[currentSuggestionIndex.value]
       const s = props.multi ? [...(selected.value as Value<unknown>[]).map((e) => e.value), option.value] : option.value
       // `this.confirm` is bypassed
-      emit('input', s)
+      modelValue.value = s
       e.preventDefault()
 
       if (!props.keepFilterOnSelect) {
@@ -474,10 +474,7 @@ function onDragEnd() {
   const list = [...selected.value]
   const [item] = list.splice(prevIndex.value, 1)
   list.splice(nextIndex, 0, item)
-  emit(
-    'input',
-    list.map((e) => e.value)
-  )
+  modelValue.value = list.map((e) => e.value)
   inputRef.value?.focus()
 }
 

@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import KitTextArea from '@components/Form/KitTextArea.vue'
 
 const propsData = {
-  value: 'ABC',
+  modelValue: 'ABC',
   maxlength: 5,
   rows: '10',
   placeholder: 'Placeholder'

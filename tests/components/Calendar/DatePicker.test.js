@@ -34,9 +34,9 @@ describe('KitDatePicker', () => {
   it('accepts value prop as timestamp', () => {
     const timestamp = new Date('2024-01-15').getTime()
     const component = shallowMount(KitDatePicker, {
-      propsData: { value: timestamp }
+      propsData: { modelValue: timestamp }
     })
-    expect(component.props('value')).toBe(timestamp)
+    expect(component.props('modelValue')).toBe(timestamp)
   })
 
   it('accepts disabled prop', () => {

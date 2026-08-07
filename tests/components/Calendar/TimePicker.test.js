@@ -41,9 +41,9 @@ describe('KitTimePicker', () => {
 
   it('accepts value prop as string', () => {
     const component = shallowMount(KitTimePicker, {
-      propsData: { value: '14:30' }
+      propsData: { modelValue: '14:30' }
     })
-    expect(component.props('value')).toBe('14:30')
+    expect(component.props('modelValue')).toBe('14:30')
   })
 
   it('accepts disabled prop', () => {
@@ -87,7 +87,7 @@ describe('KitTimePicker', () => {
 
   it('displays formatted time value', () => {
     const component = shallowMount(KitTimePicker, {
-      propsData: { value: '09:45' }
+      propsData: { modelValue: '09:45' }
     })
     const input = component.find('input')
     expect(input.element.value).toBe('09:45')

@@ -1,5 +1,5 @@
 <template>
-  <KitCheckbox v-model:checked="checked" class="kit-dropdown-checkbox-item" :value="value">
+  <KitCheckbox v-model="checked" class="kit-dropdown-checkbox-item" :value="value">
     <span class="label-text">
       <slot />
     </span>
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
   showOnlyButton: true
 })
 
-const checked = defineModel<boolean | unknown[]>('checked', { required: true })
+const checked = defineModel<boolean | unknown[]>({ required: true })
 
 const isMulti = computed(() => Array.isArray(checked.value) && !!props.value)
 

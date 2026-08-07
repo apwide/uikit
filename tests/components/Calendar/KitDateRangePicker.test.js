@@ -32,7 +32,7 @@ describe('KitDateRangePicker', () => {
     const from = new Date(2026, 1, 1).getTime()
     const to = new Date(2026, 1, 28).getTime()
     const component = shallowMount(KitDateRangePicker, {
-      propsData: { value: { from, to }, dateFormat: 'yyyy-MM-dd' }
+      propsData: { modelValue: { from, to }, dateFormat: 'yyyy-MM-dd' }
     })
     expect(component.find('.kit-daterange-picker__input-from').element.value).toBe('2026-02-01')
     expect(component.find('.kit-daterange-picker__input-to').element.value).toBe('2026-02-28')
@@ -80,11 +80,11 @@ describe('KitDateRangePicker', () => {
 
   it('emits input with an undefined "from" when the from input is cleared', async () => {
     const component = shallowMount(KitDateRangePicker, {
-      propsData: { value: { from: new Date(2026, 1, 1).getTime(), to: new Date(2026, 1, 28).getTime() } }
+      propsData: { modelValue: { from: new Date(2026, 1, 1).getTime(), to: new Date(2026, 1, 28).getTime() } }
     })
     const input = component.find('.kit-daterange-picker__input-from')
     input.element.value = ''
     await input.trigger('input')
-    expect(component.emitted('input')[0]).toEqual([{ from: undefined, to: expect.any(Number) }])
+    expect(component.emitted('update:modelValue')[0]).toEqual([{ from: undefined, to: expect.any(Number) }])
   })
 })

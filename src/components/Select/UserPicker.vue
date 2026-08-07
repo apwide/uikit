@@ -1,6 +1,6 @@
 <template>
   <KitSelect
-    :value="value"
+    v-model="modelValue"
     :options="users"
     :async="true"
     :multi="multi"
@@ -40,7 +40,6 @@ type Mapper = (input: User[]) => User[]
 
 type Props = {
   getUsers: GetUsers
-  value?: string | User | User[]
   multi?: boolean
   isFocused?: boolean
 
@@ -51,12 +50,13 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: '',
   mapper: (list) => list,
   placeholder: 'Type to search...',
   searchPromptText: 'Type to search...',
   initialOptions: () => []
 })
+
+const modelValue = defineModel<string | User | User[]>({ default: '' })
 
 const users = ref<User[]>([])
 const isFetching = ref(false)

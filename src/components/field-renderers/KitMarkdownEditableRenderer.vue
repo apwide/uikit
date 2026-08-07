@@ -18,12 +18,12 @@
             <KitMarkdownEditor
               auto-focus
               :placeholder="placeholder"
-              :value="editProps.value"
+              :model-value="editProps.value"
               :size-limit="sizeLimit"
               :toolbar="toolbar"
               :min-height="minHeight"
               @ctrl-enter="onCtrlEnter(editProps.confirm)"
-              @input="onInput(editProps.input, $event)"
+              @update:model-value="onInput(editProps.input, $event)"
               @focus="editProps.focus"
               @blur="onBlur(editProps.blur, $event)" />
           </div>
@@ -32,14 +32,14 @@
       <template #default>
         <span ref="placeholderRef" @click="contentClicked">
           <slot>
-            <KitMarkdownEditor :value="value" readonly />
+            <KitMarkdownEditor :model-value="value" readonly />
           </slot>
         </span>
       </template>
     </KitInlineEdit>
     <template v-else>
       <slot>
-        <KitMarkdownEditor :value="value" readonly />
+        <KitMarkdownEditor :model-value="value" readonly />
       </slot>
     </template>
   </div>

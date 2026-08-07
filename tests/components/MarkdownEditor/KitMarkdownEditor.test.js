@@ -69,7 +69,7 @@ describe('KitMarkdownEditor', () => {
   })
 
   it('sets the initial value on the editor instance', async () => {
-    const { wrapper, instance } = await mountEditor({ value: 'hello world' })
+    const { wrapper, instance } = await mountEditor({ modelValue: 'hello world' })
     expect(instance.value).toHaveBeenCalledWith('hello world')
     wrapper.unmount()
   })
@@ -141,8 +141,8 @@ describe('KitMarkdownEditor', () => {
     const { wrapper, instance } = await mountEditor()
     instance.value = jest.fn(() => '  new content  ')
     handlerFor(instance, 'change')()
-    expect(wrapper.emitted('input')).toBeTruthy()
-    expect(wrapper.emitted('input')[0]).toEqual(['new content'])
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['new content'])
     wrapper.unmount()
   })
 
@@ -209,8 +209,8 @@ describe('KitMarkdownEditor', () => {
   })
 
   it('updates the editor value when the value prop changes externally', async () => {
-    const { wrapper, instance } = await mountEditor({ value: 'first' })
-    await wrapper.setProps({ value: 'second' })
+    const { wrapper, instance } = await mountEditor({ modelValue: 'first' })
+    await wrapper.setProps({ modelValue: 'second' })
     expect(instance.value).toHaveBeenCalledWith('second')
     wrapper.unmount()
   })

@@ -54,7 +54,7 @@ describe('KitMarkdownEditableRenderer', () => {
     expect(component.findComponent(KitInlineEdit).exists()).toBe(false)
     const editor = component.findComponent(KitMarkdownEditor)
     expect(editor.exists()).toBe(true)
-    expect(editor.props('value')).toBe('hello')
+    expect(editor.props('modelValue')).toBe('hello')
     expect(editor.props('readonly')).toBe(true)
   })
 

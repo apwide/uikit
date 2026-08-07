@@ -15,7 +15,7 @@
     </slot>
     <template #editor="{ value, input, isFocused, isInvalid, isLoading, blur, focus, confirm, cancel }">
       <KitTextArea
-        :value="value"
+        :model-value="value"
         :is-focused="isFocused"
         :is-invalid="isInvalid"
         :is-loading="isLoading"
@@ -23,7 +23,7 @@
         @confirm="confirm"
         @keydown.meta.enter="confirm"
         @keyup.esc="cancel"
-        @input="onInput($event, input)"
+        @update:model-value="onInput($event, input)"
         @blur="blur"
         @focus="focus" />
     </template>

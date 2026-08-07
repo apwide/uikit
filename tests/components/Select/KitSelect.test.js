@@ -98,7 +98,7 @@ describe('KitSelect', () => {
 
   it('accepts multi prop', () => {
     const component = shallowMount(KitSelect, {
-      propsData: { options: [], multi: true, value: [] }
+      propsData: { options: [], multi: true, modelValue: [] }
     })
     expect(component.props('multi')).toBe(true)
   })
@@ -197,9 +197,9 @@ describe('KitSelect', () => {
 
   it('accepts value prop', () => {
     const component = shallowMount(KitSelect, {
-      propsData: { options: mockOptions, value: mockOptions[0] }
+      propsData: { options: mockOptions, modelValue: mockOptions[0] }
     })
-    expect(component.props('value')).toEqual(mockOptions[0])
+    expect(component.props('modelValue')).toEqual(mockOptions[0])
   })
 
   it('renders KitTextField component', () => {

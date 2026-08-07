@@ -25,7 +25,7 @@ describe('KitRadioGroup', () => {
 
   it('uses default normalizer', () => {
     const component = shallowMount(KitRadioGroup, {
-      propsData: { values: mockValues, value: 'Option 1' }
+      propsData: { values: mockValues, modelValue: 'Option 1' }
     })
     expect(component.exists()).toBe(true)
   })

@@ -12,7 +12,7 @@
     @save-requested="onSaveRequested">
     <template #editor="props">
       <KitSelect
-          :value="props.value"
+          :model-value="props.value"
           :options="allowedValues"
           :open-on-focus="true"
           :is-invalid="props.isInvalid"
@@ -30,7 +30,7 @@
           :async="async"
           :confirm="confirm"
           :keep-open-on-select="keepOpenOnSelect"
-          @input="
+          @update:model-value="
             props.input($event);
             emit('input', $event)
           "

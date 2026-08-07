@@ -16,20 +16,16 @@ import KitRadio from './KitRadio'
 type Normalizer<TYPE> = (v: TYPE) => { key: string, label: string, value: unknown }
 
 type Props = {
-  value?: unknown
   values?: Array
   normalizer?: Normalizer
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: '',
   values: () => [],
   normalizer: (str) => ({ key: str, label: str, value: str })
 })
 
-const emit = defineEmits<{
-  (event: 'input', data?: unknown)
-}>()
+const modelValue = defineModel<unknown>({ default: '' })
 
 const name = computed(() => {
   return `kit-d-${Date.now()}`
@@ -41,10 +37,10 @@ const availableValues = computed(() => {
 
 const currentKey = computed({
   get() {
-    return props.normalizer(props.value).key
+    return props.normalizer(modelValue.value).key
   },
   set(newValue) {
-    emit('input', newValue.value)
+    modelValue.value = newValue.value
   }
 })
 

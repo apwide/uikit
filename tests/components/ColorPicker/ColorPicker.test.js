@@ -27,19 +27,19 @@ describe('KitColorPicker', () => {
 
   it('has default value color', () => {
     const component = shallowMount(KitColorPicker)
-    expect(component.props('value')).toBe('#DFE1E1')
+    expect(component.props('modelValue')).toBe('#DFE1E1')
   })
 
   it('accepts custom value prop', () => {
     const component = shallowMount(KitColorPicker, {
-      propsData: { value: '#FF0000' }
+      propsData: { modelValue: '#FF0000' }
     })
-    expect(component.props('value')).toBe('#FF0000')
+    expect(component.props('modelValue')).toBe('#FF0000')
   })
 
   it('displays selected color as background', () => {
     const component = shallowMount(KitColorPicker, {
-      propsData: { value: '#FF0000' }
+      propsData: { modelValue: '#FF0000' }
     })
     const colorDiv = component.find('.kit-color-picker__color')
     // Color is converted to rgb() format by Vue

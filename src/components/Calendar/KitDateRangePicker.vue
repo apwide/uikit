@@ -98,7 +98,6 @@ import Calendar from './Calendar'
 const MILISECONDS_IN_SECOND = 1000
 
 type Props = {
-  value?: DateRange
   isFocused?: boolean
   isLoading?: boolean
   isInvalid?: boolean
@@ -112,7 +111,6 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: () => ({ from: undefined, to: undefined }),
   isFocused: false,
   isLoading: false,
   isInvalid: false,
@@ -123,11 +121,12 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data: DateRange)
   (event: 'confirm', data: KeyboardEvent)
   (event: 'focus', data: FocusEvent)
   (event: 'blur', data: FocusEvent)
 }>()
+
+const modelValue = defineModel<DateRange>({ default: () => ({ from: undefined, to: undefined }) })
 
 const datePicker = ref<HTMLDivElement>()
 const inputFrom = ref<HTMLInputElement>()
@@ -139,24 +138,24 @@ const firstDateSelected = ref(false)
 const visibleDate = ref()
 
 const isValidFrom = computed(() => {
-  return props.value.from && isValid(props.value.from)
+  return modelValue.value.from && isValid(modelValue.value.from)
 })
 
 const isValidTo = computed(() => {
-  return props.value.to && isValid(props.value.to)
+  return modelValue.value.to && isValid(modelValue.value.to)
 })
 const selectedDateFrom = computed({
   get() {
     if (!isValidFrom.value) {
       return undefined
     }
-    return fromUnixTime(props.value.from / MILISECONDS_IN_SECOND)
+    return fromUnixTime(modelValue.value.from / MILISECONDS_IN_SECOND)
   },
   set(date) {
-    if (props.value.to && isAfter(date, props.value.to)) {
-      emit('input', { from: props.value.to, to: date })
+    if (modelValue.value.to && isAfter(date, modelValue.value.to)) {
+      modelValue.value = { from: modelValue.value.to, to: date }
     } else {
-      emit('input', { from: date, to: props.value.to })
+      modelValue.value = { from: date, to: modelValue.value.to }
     }
   }
 })
@@ -166,13 +165,13 @@ const selectedDateTo = computed({
     if (!isValidTo.value) {
       return undefined
     }
-    return fromUnixTime(props.value.to / MILISECONDS_IN_SECOND)
+    return fromUnixTime(modelValue.value.to / MILISECONDS_IN_SECOND)
   },
   set(date) {
-    if (props.value.from && isBefore(date, props.value.from)) {
-      emit('input', { from: date, to: props.value.from })
+    if (modelValue.value.from && isBefore(date, modelValue.value.from)) {
+      modelValue.value = { from: date, to: modelValue.value.from }
     } else {
-      emit('input', { from: props.value.from, to: date })
+      modelValue.value = { from: modelValue.value.from, to: date }
     }
   }
 })
@@ -181,14 +180,14 @@ const formattedDateFrom = computed(() => {
   if (!isValidFrom.value) {
     return ''
   }
-  return format(props.value.from, props.dateFormat)
+  return format(modelValue.value.from, props.dateFormat)
 })
 
 const formattedDateTo = computed(() => {
   if (!isValidTo.value) {
     return ''
   }
-  return format(props.value.to, props.dateFormat)
+  return format(modelValue.value.to, props.dateFormat)
 })
 
 const dateRange = computed(() => {
@@ -351,7 +350,7 @@ function onQuickRange(range) {
 }
 
 function setRange(from, to) {
-  emit('input', { from: getTime(from), to: getTime(to) })
+  modelValue.value = { from: getTime(from), to: getTime(to) }
   isOpen.value = false
 }
 

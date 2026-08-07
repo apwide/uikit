@@ -8,7 +8,7 @@
     @save-requested="onSaveRequested">
     <template #editor="{ props }">
       <KitSelect
-        :value="props.value"
+        :model-value="props.value"
         :options="users"
         :open-on-focus="true"
         :is-clearable="clearable"
@@ -22,7 +22,7 @@
         :confirm="confirm"
         @open="loadInitialOptions"
         @search-change="onSearchChange"
-        @input="props.input"
+        @update:model-value="props.input"
         @blur="props.blur"
         @confirm="props.confirm"
         @focus="props.focus"

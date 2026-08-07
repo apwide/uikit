@@ -3,16 +3,16 @@ import Checkbox from '@/components/Checkbox/KitCheckbox.vue'
 
 describe('Checkbox', () => {
   it('emits correct value on click', async () => {
-    const component = shallowMount(Checkbox, { propsData: { checked: false } })
+    const component = shallowMount(Checkbox, { propsData: { modelValue: false } })
     const input = component.find('input')
     await input.setChecked()
-    const [emitted] = component.emitted('update:checked')
+    const [emitted] = component.emitted('update:modelValue')
     expect(emitted).toEqual([true])
   })
 
   it('check if input is focused when passing is-focued prop and focus event is emitted', async () => {
     const component = shallowMount(Checkbox, {
-      propsData: { checked: false, isFocused: true },
+      propsData: { modelValue: false, isFocused: true },
       attachTo: document.body
     })
     const input = component.find('input').element
@@ -22,7 +22,7 @@ describe('Checkbox', () => {
   })
 
   it('check if input is disabled when passing disabled', async () => {
-    const component = shallowMount(Checkbox, { propsData: { checked: false, disabled: true } })
+    const component = shallowMount(Checkbox, { propsData: { modelValue: false, disabled: true } })
     const input = component.find('input')
     await input.setChecked()
     expect(input.element.disabled).toBe(true)

@@ -25,7 +25,6 @@ import KitIcon from '../Icon/KitIcon'
 import KitTextField from './KitTextField.vue'
 
 type Props = {
-  value?: number | string
   maxlength?: number
   placeholder?: string
   autoFocus?: boolean
@@ -44,7 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data?: number | string)
   (event: 'blur', data: FocusEvent)
   (event: 'focus', data: FocusEvent)
 }>()
@@ -54,14 +52,7 @@ const isFocused = ref(false)
 const obfuscated = ref(true)
 const justClickedOnTypeSwitch = ref(false)
 
-const input = computed({
-  get() {
-    return props.value
-  },
-  set(val) {
-    emit('input', val)
-  }
-})
+const input = defineModel<number | string>()
 
 const type = computed(() => obfuscated.value ? 'password' : 'text')
 const title = computed(() => obfuscated.value ? 'Reveal' : 'Hide')

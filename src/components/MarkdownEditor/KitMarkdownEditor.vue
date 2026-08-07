@@ -24,7 +24,6 @@ export type ToolbarItem =
   | '|'
 
 type Props = {
-  value?: string
   readonly?: boolean
   placeholder?: string
   toolbar?: ToolbarItem[]
@@ -36,7 +35,6 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: '',
   autoFocus: false,
   readonly: false,
   placeholder: '',
@@ -59,11 +57,12 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (event: 'input', data: string)
   (event: 'blur', e: Event)
   (event: 'focus', e: Event)
   (event: 'ctrl-enter')
 }>()
+
+const modelValue = defineModel<string>({ default: '' })
 
 const me = ref<HTMLDivElement>()
 const container = ref<HTMLDivElement>()
@@ -163,7 +162,7 @@ onMounted(() => {
       }
     }
   })
-  editor.value.value(props.value)
+  editor.value.value(modelValue.value)
 
   updateEditor(true)
 })
@@ -172,7 +171,7 @@ function onFocus() {
   emit('focus', new FocusEvent('focus'))
 }
 function onChange() {
-  emit('input', editor.value.value().trim())
+  modelValue.value = editor.value.value().trim()
 }
 function onBlur() {
   emit('focus', new FocusEvent('blur'))
@@ -218,10 +217,10 @@ async function updateEditor(firstTime = false) {
 }
 
 watch(
-  () => props.value,
+  modelValue,
   () => {
-    if (editor.value?.value().trim() !== props.value.trim()) {
-      editor.value.value(props.value)
+    if (editor.value?.value().trim() !== modelValue.value.trim()) {
+      editor.value.value(modelValue.value)
     }
   }
 )
