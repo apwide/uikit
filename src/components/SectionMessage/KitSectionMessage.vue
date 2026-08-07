@@ -142,19 +142,19 @@ const Icon = computed(() => {
   margin-top: 8px;
 }
 
-.kit-section-message .kit-section-message__actions ul {
+.kit-section-message .kit-section-message__actions :deep(ul) {
   display: flex;
   padding-left: 0;
   list-style: none;
 }
 
-.kit-section-message .kit-section-message__actions ul li {
+.kit-section-message .kit-section-message__actions :deep(ul li) {
   align-items: center;
   display: flex;
   margin: 0;
 }
 
-.kit-section-message .kit-section-message__actions ul li + li::before {
+.kit-section-message .kit-section-message__actions :deep(ul li + li::before) {
   color: var(--kit-section-mmesage-point);
   content: '·';
   display: inline-block;

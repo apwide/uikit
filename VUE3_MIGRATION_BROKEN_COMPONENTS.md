@@ -135,7 +135,17 @@ Storybook broken components:
   * ✅ missing icon to close modal — fixed (fontawesome upgrade)
   * Modal basic has lost some padding/margins on left and right between content and modal border ?
 * Section Message:
-  * First example of Section Message has Help/Ignore link displayed vertically but they should be displayed horizontally
+  * ✅ First example of Section Message has Help/Ignore link displayed vertically but they should be
+    displayed horizontally — the `<ul>`/`<li>` markup comes from the `actions` slot content authored
+    in `KitSectionMessage.story.vue`, so it carries the *story's* scoped `data-v-*` attribute, not
+    `KitSectionMessage.vue`'s own. The component's scoped rules targeting that markup
+    (`.kit-section-message__actions ul { display: flex; ... }`) were plain (non-deep) selectors, so
+    the compiled `ul[data-v-xxxx]` attribute selector never matched — the rule silently never applied.
+    Fixed by wrapping the slot-content part of each selector in `:deep()`
+    (`.kit-section-message__actions :deep(ul)`, `:deep(ul li)`, `:deep(ul li + li::before)`), same
+    pattern as the pre-existing `[appearance='setup'] ... :deep(button[appearance='primary'])` rule
+    right above it in the same file. Verified via `cypress run` against the live Storybook
+    (`getComputedStyle(ul).display` was `block`, now `flex`).
 * Select:
   * ✅ Select component are broken. — the `value`/`input` → `defineModel()` fix covered part of it,
     but the project owner found two more concrete symptoms after re-verifying: **SingleSelect story
