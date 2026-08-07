@@ -15,8 +15,8 @@
           class="chevron"
           size="large"
           :expanded="expanded"
-          @click.native="onExpand" />
-        <EditorCloseIcon v-else class="close" @click.native="emit('close')" />
+          @click="onExpand" />
+        <EditorCloseIcon v-else class="close" @click="emit('close')" />
       </div>
       <slot>
         <div class="content" :expanded="expanded">

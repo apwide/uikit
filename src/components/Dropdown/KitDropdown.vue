@@ -18,7 +18,7 @@
       :target-element="dropdownContainer"
       with-light-shadows
       without-arrow
-      @click.native="onMenuClick">
+      @click="onMenuClick">
       <slot :toggle="onTriggerClick" name="dropdown-menu">
         <div class="dropdown-menu">
           <slot :toggle="onTriggerClick" />

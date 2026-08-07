@@ -10,7 +10,7 @@
       ref="popper"
       :placement="placement"
       :target-element="trigger"
-      @mouseleave.native="requestHide"
+      @mouseleave="requestHide"
     >
       <slot :hide="hide"></slot>
     </KitBigTooltipContent>

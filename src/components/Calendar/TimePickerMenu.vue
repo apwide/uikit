@@ -8,7 +8,7 @@
         style="margin-left: 0px"
         appearance="subtle"
         :data-highlight="isHighlighted(option) || undefined"
-        @mousemove.native="mouseOver"
+        @mousemove="mouseOver"
         @click="onTimeSelected(option)">
         {{ option }}
       </KitButton>

@@ -117,12 +117,34 @@ This document outlines a **phased, incremental approach** to migrating the @apwi
    otherwise-correct Vue 3 code. Switching it is a net improvement (removes a rule that no longer applies
    to this codebase) but also newly surfaced 7 genuine, pre-existing `vue/no-deprecated-v-on-native-modifier`
    errors across the codebase (`.native` modifier on `v-on`, removed in Vue 3 since listeners now fall
-   through to a component's root element automatically) — **not fixed as part of this change** (out of
-   scope for the `model` option task), left for a follow-up pass: `TimePickerMenu.vue`, `KitDropdown.vue`,
-   `KitFlag.vue` (×2), `Select/Icons.vue`, `KitBigTooltip.vue`, `stories/Form/Input.story.vue`. Likely
-   low-severity (Vue 3's default attrs/listener fallthrough probably already makes these listeners work
-   without `.native`, unlike a hard functional break), but worth confirming per-component during Phase 3
-   review rather than assuming.
+   through to a component's root element automatically) — see "Lint cleanup" below, fixed the same day.
+
+**Lint cleanup (2026-08-07): the 3 items left over from the `.eslintrc.js` preset switch above, all now
+fixed, `npm run lint` down from 48 problems to 0 errors / 2 pre-existing warnings:**
+- **7 `.native` modifiers removed** (`TimePickerMenu.vue`, `KitDropdown.vue`, `KitFlag.vue` ×2,
+  `Select/Icons.vue`, `KitBigTooltip.vue`, `stories/Form/Input.story.vue`). Verified safe before touching
+  each one: every target component (`KitButton`, `Popup`, `KitBigTooltipContent`, and the icon SFCs via
+  `IconWrapper.vue`) declares no matching `emits`/`defineEmits` for that event name, so Vue 3's automatic
+  attrs/listener fallthrough already attaches the listener straight to the component's native root
+  element — exactly what `.native` used to force in Vue 2. Confirmed behaviorally identical, not just
+  lint-silenced.
+- **Icon `max-len` eslint override still targeted `.js`** (`**/Icon/*.js`, `**/Icon/aui/*.js`) after
+  those files were converted to `.vue` SFCs earlier in this branch's work — the override had gone
+  silently inert, and the 26 generated one-line-SVG icon files were failing `max-len` under the new
+  `vue3-essential` preset. Updated the glob patterns to `.vue`.
+- **`src/index.ts` `import/no-duplicates` and `import/order`**: `KitDropdownSeparator.vue` was
+  legitimately imported twice under two different local names (`KitDropdownSeparator` and
+  `KitMenuSeparator` — the same component, intentionally publicly exposed under two names for the
+  Dropdown and Menu systems respectively) — not a bug, but ESLint can't express "two default-import local
+  names, same module" as one `import` statement. Fixed by keeping a single import and adding
+  `const KitMenuSeparator = KitDropdownSeparator` after the import block. Separately, `KitSetToClipboard`'s
+  `@components/...` alias import had drifted after several `./`-relative imports, breaking `import/order`'s
+  grouping — moved it back up next to the other `@components/`-alias imports.
+- Also fixed a trivial, unrelated pre-existing `no-useless-constructor` in `Table.test.js` (an empty
+  explicit `constructor() {}` on a mock `IntersectionObserver` class — removed, default constructor is
+  equivalent).
+
+Full jest suite still 1012/0/10 after all of the above, webpack build still compiles clean.
 
 4. **Deep Selectors** (`>>>`) — **16 files** currently use it for scoped style penetration
    - **Vue 3 Change**: Use `:deep()` instead
@@ -811,12 +833,15 @@ inventory" above for the full breakdown of what Bucket A (mechanical VTU v1→v2
 portion of Phase 2/3 crossover work. 🏁 **`model` option migration is also done** (2026-08-07):
 `KitDropdownCheckboxItem.vue` and `KitCheckbox.vue` both converted to `defineModel('checked')` — see
 "`model` Option" above for the breaking-change details (event renamed `input` → `update:checked`) and
-the incidental `.eslintrc.js` Vue 2→3 preset fix it required. Full jest suite still green after
-(1012/0/10) and `npm run lint`/webpack build both reconfirmed clean (modulo pre-existing, unrelated lint
-debt — 7 `.native` modifier occurrences, the icon-file `max-len` override pattern needing a `.vue`
-update, `src/index.ts` import ordering — none introduced by this change, flagged for a separate pass).
+the incidental `.eslintrc.js` Vue 2→3 preset fix it required. 🏁 **Lint cleanup is also done**
+(2026-08-07): the 3 items that fix surfaced (7 `.native` modifiers, the icon `max-len` override still
+targeting `.js`, `src/index.ts` import ordering) are all fixed — see "Lint cleanup" above. `npm run lint`
+is now **0 errors** (2 pre-existing, unrelated `any`-type warnings in `src/components/utils.ts` remain).
+Full jest suite still 1012/0/10 and webpack build still compiles clean after all of the above.
 What's left for Phase 3 proper is the per-component Wave 1-3 migration passes described below (largely a
 formality at this point since the components already run correctly under Vue 3 — the waves are about
-deliberate review/sign-off per component, not fixing anything currently broken).
+deliberate review/sign-off per component, not fixing anything currently broken), plus the two lighter
+Phase 2 deliverables that were never started: a migration checklist template and consumer-facing
+migration documentation.
 
 **Last Updated**: 2026-08-07 (originally 2026-02-13)

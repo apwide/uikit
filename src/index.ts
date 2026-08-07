@@ -31,6 +31,7 @@ import KitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.v
 import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import KitBigTooltip from '@components/Tooltip/KitBigTooltip.vue'
 import KitPopup from '@components/common/Popup.vue'
+import KitSetToClipboard from '@components/CopyToClipboard/KitSetToClipboard'
 import KitDropdownSeparator from './components/Dropdown/KitDropdownSeparator.vue'
 import KitTable from './components/Table/KitTable.vue'
 import KitProgress from './components/Progress/progress'
@@ -39,7 +40,6 @@ import KitBigModal from './components/Modal/KitBigModal.vue'
 import KitButtonGroup from './components/Button/KitButtonGroup.vue'
 import KitIconButton from './components/Button/KitIconButton.vue'
 import KitIcon from './components/Icon/KitIcon.vue'
-import KitSetToClipboard from '@components/CopyToClipboard/KitSetToClipboard'
 import KitToggle from './components/Toggle/KitToggle.vue'
 import KitCheckbox from './components/Checkbox/KitCheckbox.vue'
 import KitSecuredInput from './components/Form/KitSecuredInput.vue'
@@ -49,7 +49,6 @@ import KitRadio from './components/Radio/KitRadio.vue'
 import KitCollapsible from './components/Collapsible/KitCollapsible.vue'
 import KitBorderedPanel from './components/layout/BorderedPanel/KitBorderedPanel.vue'
 import KitBorderedPanelRow from './components/layout/BorderedPanel/KitBorderedPanelRow.vue'
-import KitMenuSeparator from './components/Dropdown/KitDropdownSeparator.vue'
 import KitActionMenu from './components/Menu/KitActionMenu.vue'
 import KitIconMenu from './components/Menu/KitIconMenu.vue'
 import KitMenuItem from './components/Menu/KitMenuItem.vue'
@@ -75,6 +74,9 @@ import KitMultiLineEditableRenderer from './components/field-renderers/KitMultiL
 import KitMultiLineRenderer from './components/field-renderers/KitMultiLineRenderer.vue'
 
 import './style.css'
+
+// KitMenuSeparator is the same component, publicly exposed under a second name for the Menu system.
+const KitMenuSeparator = KitDropdownSeparator
 
 export {
   KitCard,

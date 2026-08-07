@@ -3,7 +3,6 @@ import KitTable from '@components/Table/KitTable.vue'
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
   observe() {}
   unobserve() {}
   disconnect() {}

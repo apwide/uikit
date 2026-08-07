@@ -23,7 +23,7 @@
       <template #after>
         <KitInlineDialog placement="right">
           <template v-slot:trigger="{ toggle }">
-            <EditorInfoIcon class="icon" size="small" @click.native="toggle" />
+            <EditorInfoIcon class="icon" size="small" @click="toggle" />
           </template>
           <div class="content">
             <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>

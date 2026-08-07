@@ -6,7 +6,7 @@
       size="xsmall"
       class="clear-icon"
       primary-color="#A5ADBA"
-      @click.native="onClear" />
+      @click="onClear" />
     <slot>
       <Caret v-if="!createable" size="xsmall" />
     </slot>

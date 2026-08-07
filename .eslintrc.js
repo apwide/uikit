@@ -58,7 +58,7 @@ module.exports = {
       }
     },
     {
-      files: ['**/Icon/*.js', '**/Icon/aui/*.js', '**/Avatar/Icons/*.vue', '**/KitAvatar.vue'],
+      files: ['**/Icon/*.vue', '**/Icon/aui/*.vue', '**/Avatar/Icons/*.vue', '**/KitAvatar.vue'],
       rules: {
         'max-len': 'off'
       }
