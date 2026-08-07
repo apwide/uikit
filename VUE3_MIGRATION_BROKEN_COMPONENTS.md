@@ -119,9 +119,58 @@ Storybook broken components:
 * Section Message:
   * First example of Section Message has Help/Ignore link displayed vertically but they should be displayed horizontally
 * Select:
-  * ✅ Select component are broken. — the underlying cause was the same `value`/`input` bug (`defineModel()` fix
-    applied to `KitSelect` and `UserPicker`); re-verify in Storybook since this was a broad statement and may
-    have covered more than just the model wiring
+  * ✅ Select component are broken. — the `value`/`input` → `defineModel()` fix covered part of it,
+    but the project owner found two more concrete symptoms after re-verifying: **SingleSelect story
+    displaying oddly (no visible text, dark background)** and **multi-select tags not showing their
+    label**. This needed a **real browser** to diagnose — jest maps all CSS imports to a no-op mock
+    (`styleMock.js`), so it can never catch a rendering/styling bug like this, and the component's own
+    unit tests (which assert on props/DOM structure, not on what `.map(normalizer)` actually produces)
+    didn't catch the underlying data bug either. Used `cypress run` against the live Storybook build to
+    get real, reliable signal throughout — `SingleSelect`'s "should search elements" test failed with
+    "Too many elements found: 10, expected 1" (typing into the search box never filtered the option
+    list), which is the same underlying data problem behind both reported symptoms: every "normalized"
+    option/tag was silently wrong, not `{id, label, value, disabled}`.
+    <br><br>
+    Root cause: `KitSelect.vue`'s `normalizer`/`filterPredicate` props are typed via an *imported* type
+    alias (`normalizer?: Normalizer<unknown>`, from `@components/Select/types`) rather than an inline
+    function-type literal. `@vue/compiler-sfc`'s lightweight `defineProps<T>()` type-to-runtime-prop
+    inference can resolve an inline function type (e.g. `(value: unknown) => Value<unknown>` written
+    directly) to `type: Function`, but can't "see through" an *imported* alias to know it's a function
+    type — it falls back to `type: null`. That distinction matters a lot at runtime: Vue only skips
+    invoking a function-valued prop default as a factory when the prop's resolved `type` is exactly
+    `Function`; for `type: null` (same as `Object`/`Array`), **any** function default gets called once
+    (with the whole `props` object as its argument) to compute the real value — the same convention
+    Object/Array defaults need, extended to cover anything the compiler couldn't prove was itself meant
+    to be used as a plain function value. The existing default was doubly-wrapped
+    (`normalizer: () => (value) => ({ id: value, label: value, ... })`) to account for exactly this.
+    <br><br>
+    Three attempts were needed to land the correct fix, and this is worth documenting because two of
+    them looked right until checked in a real browser: (1) simply removing the outer wrapper broke
+    `KitSelect.vue`'s own jest tests outright (`TypeError: object is not a function`) — with `type: null`
+    still in effect, the now-single-level function itself got invoked as the factory, so `props.normalizer`
+    ended up being *the result of calling the normalizer with the whole `props` object*, not the
+    normalizer itself. (2) Reverting to the original double-wrap tested as *correct* in an isolated jest
+    check (`vm.normalizer('Paris')` genuinely returned the right object) — yet that's the code the very
+    first `cypress run` had already shown as broken in the browser. That contradiction was never fully
+    resolved (most likely explanation: Storybook's webpack dev server was serving a stale cached bundle
+    at the time of that first `cypress run`, after many unrelated file edits earlier in the session —
+    but this isn't proven with certainty). (3) The fix that's actually in place now: changed the prop's
+    TypeScript type from the imported alias to an **inline** function-type literal
+    (`normalizer?: (value: unknown) => Value<unknown>`, `filterPredicate?: (label: string, input: string)
+    => boolean`) so the compiler correctly infers `type: Function`, then used a plain, unwrapped function
+    as the default — matching `isValidOption?: (option: string) => boolean` in the same file, which was
+    never affected by any of this because its type was already written inline. Fixed in **3 files**:
+    `KitSelect.vue`, `KitSingleSelectEditableRenderer.vue`, `KitMultiSelectEditableRenderer.vue` (the
+    latter two only had `normalizer`, not `filterPredicate`).
+    <br><br>
+    Verified with a full `cypress run` (`Select.spec.js`, `MultiSelect.spec.js`, `CreateableSelect.spec.js`
+    — 19/19 passing) against a Storybook instance that was fully killed and restarted with its webpack
+    cache cleared first, specifically to rule out a stale bundle giving a false-positive read on the fix
+    itself. Full jest suite still 1019/0/10, lint and webpack build both clean.
+    **Worth a broader check**: any other component with a function-typed prop default sourced from an
+    *imported* type alias (rather than written inline) carries the same latent risk — this pass fixed
+    the 3 instances found via `grep` for the double-wrapped-default pattern specifically, not every
+    possible instance of the underlying type-inference gap.
 * Tabs:
   * ✅ Broken, no content and error: can't access property "insertBefore", parent is null — fixed. Root
     cause: `Tooltip.vue` (used in the story's "With tooltip and badge" tab headers) manually did

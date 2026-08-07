@@ -180,6 +180,27 @@ Full jest suite still 1012/0/10 after all of the above, webpack build still comp
    - Currently excludes class/style
    - **Vue 3 Change**: Includes class/style by default
 
+6. ~~**Function-type prop defaults via an imported type alias silently become factories**~~ —
+   **FIXED (2026-08-07) for the 3 known instances**, found via a user-reported Select bug (see
+   `VUE3_MIGRATION_BROKEN_COMPONENTS.md` → "Select" for the full writeup). Not on the original breaking-
+   change list either — a genuinely new class of gotcha, distinct from items 1-5 above. A prop typed via
+   an **inline** function-type literal (`filterPredicate?: (label: string, input: string) => boolean`)
+   correctly compiles to runtime `type: Function`; the exact same signature typed via an **imported**
+   type alias (`filterPredicate?: FilterPredicate`) compiles to `type: null` instead —
+   `@vue/compiler-sfc`'s lightweight type-to-prop inference can't "see through" an import to resolve what
+   the alias actually is. Vue only skips treating a function-valued default as a factory-to-invoke when
+   `type === Function` exactly; for `type: null` it applies the same "invoke once, factory-style"
+   convention Object/Array defaults need. Silently breaks any default written as a plain function
+   (invoked with `props` as its argument, producing garbage) — or, if written pre-emptively
+   double-wrapped (`() => actualFn`) to account for this, only continues working as long as nobody
+   "simplifies" it later without knowing why the extra wrapper is there. Fixed by switching the prop's
+   TypeScript type to an inline literal (matching how already-correct props like `isValidOption?: (option:
+   string) => boolean` were written) rather than by re-adding a wrapper — removes the ambiguity instead
+   of working around it. Fixed in `KitSelect.vue`, `KitSingleSelectEditableRenderer.vue`,
+   `KitMultiSelectEditableRenderer.vue`. **Not exhaustively swept** — only the 3 instances surfaced by
+   grepping for the double-wrapped-default pattern were checked; any other function-typed prop default
+   sourced from an imported alias carries the same latent risk and hasn't been audited.
+
 #### Decision: no `vue3-compat.ts` compatibility layer
 
 The original Phase 2 plan (below) proposed a shared `utils/vue3-compat.ts` with `useListeners()`,

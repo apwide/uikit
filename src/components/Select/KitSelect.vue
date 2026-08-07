@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, unref, watch } from 'vue'
-import { FilterPredicate, Normalizer, Value } from '@components/Select/types'
+import { Value } from '@components/Select/types'
 import KitTextField from '../Form/KitTextField.vue'
 import Popper from '../Popper/Popper.vue'
 import KitSelectMenu from './KitSelectMenu.vue'
@@ -106,8 +106,8 @@ type Props = {
   placeholder?: string
   searchPromptText?: string
   multi?: boolean
-  filterPredicate?: FilterPredicate
-  normalizer?: Normalizer<unknown>
+  filterPredicate?: (label: string, input: string) => boolean
+  normalizer?: (value: unknown) => Value<unknown>
   isLoading?: boolean
   isFetching?: boolean
   isFocused?: boolean
@@ -138,11 +138,9 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Type to search...',
   searchPromptText: 'Type to search...',
   multi: false,
-  filterPredicate:
-    () =>
-    (label = '', input = '') =>
-      label.toString().toLowerCase().includes(input.toLowerCase().trim()),
-  normalizer: () => (value) => ({
+  filterPredicate: (label = '', input = '') =>
+    label.toString().toLowerCase().includes(input.toLowerCase().trim()),
+  normalizer: (value) => ({
     id: value,
     label: value,
     value,

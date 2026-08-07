@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ConfirmationCallback, FilterPredicate, Normalizer } from '@components/Select/types'
+import { ConfirmationCallback, Value } from '@components/Select/types'
 import { computed } from 'vue'
 import KitSelect from '../Select/KitSelect.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
@@ -79,11 +79,11 @@ type Props = {
   appendToBody?: boolean
   confirm?: boolean
   blurToSave?: boolean
-  normalizer?: Normalizer<unknown>
+  normalizer?: (value: unknown) => Value<unknown>
   icon?: boolean
   isClearable?: boolean
   forceIsEditing?: boolean
-  filterPredicate?: FilterPredicate
+  filterPredicate?: (label: string, input: string) => boolean
   fixedSelectWidth?: string
 }
 
@@ -96,7 +96,7 @@ const props = withDefaults(defineProps<Props>(), {
   noOptionsMessage: 'No options',
   appendToBody: false,
   confirm: true,
-  normalizer: () => (value) => ({
+  normalizer: (value) => ({
     id: value,
     value,
     label: value,
