@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import Tag from '@/components/Select/Tag';
+import Tag from '@/components/Select/Tag.vue';
 
 const normalizer = option => ({ id: option.id, label: option.id, value: option });
 

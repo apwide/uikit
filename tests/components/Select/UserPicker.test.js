@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
 import UserPicker from '@components/Select/UserPicker.vue'
 import KitSelect from '@components/Select/KitSelect.vue'
@@ -6,7 +7,7 @@ const users = [
   { key: 'jdoe', name: 'Jane Doe', disabled: false },
   { key: 'bsmith', name: 'Bob Smith', disabled: false }
 ]
-const getUsers = jest.fn().mockResolvedValue({ data: users })
+const getUsers = vi.fn().mockResolvedValue({ data: users })
 
 describe('UserPicker', () => {
   it('renders with required props', () => {

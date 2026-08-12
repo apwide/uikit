@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import KitButton from '@components/Button/KitButton.vue'
 import KitSpinner from '@components/Spinner/KitSpinner.vue'
@@ -15,7 +16,7 @@ describe('Button', () => {
   })
 
   it('emits click event on button click', () => {
-    const clickHandler = jest.fn()
+    const clickHandler = vi.fn()
     const component = shallowMount(KitButton, { slots: { default: 'Click me!' }, attrs: { onClick: clickHandler } })
     component.trigger('click')
     expect(clickHandler).toHaveBeenCalled()

@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import KitSecuredInput from '@components/Form/KitSecuredInput.vue'
 import KitIconButton from '@components/Button/KitIconButton.vue'
@@ -36,7 +37,7 @@ describe('KitSecuredInput', () => {
   it('reveals the value as plain text when the eye button is clicked', async () => {
     const component = shallowMount(KitSecuredInput)
     expect(component.find('input').attributes('type')).toBe('password')
-    const fakeEvent = { stopPropagation: jest.fn(), preventDefault: jest.fn() }
+    const fakeEvent = { stopPropagation: vi.fn(), preventDefault: vi.fn() }
     await component.findComponent(KitIconButton).vm.$emit('click', fakeEvent)
     expect(component.find('input').attributes('type')).toBe('text')
   })

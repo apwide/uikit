@@ -1,16 +1,17 @@
+import { vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Popper from '@components/Popper/Popper.vue'
 import { autoUpdate, computePosition } from '@floating-ui/dom'
 
-jest.mock('@floating-ui/dom', () => ({
-  computePosition: jest.fn(),
-  autoUpdate: jest.fn(),
-  flip: jest.fn(() => 'flip'),
-  shift: jest.fn(() => 'shift'),
-  limitShift: jest.fn(() => 'limitShift'),
-  offset: jest.fn(() => 'offset'),
-  arrow: jest.fn(() => 'arrow'),
-  autoPlacement: jest.fn(() => 'autoPlacement')
+vi.mock('@floating-ui/dom', () => ({
+  computePosition: vi.fn(),
+  autoUpdate: vi.fn(),
+  flip: vi.fn(() => 'flip'),
+  shift: vi.fn(() => 'shift'),
+  limitShift: vi.fn(() => 'limitShift'),
+  offset: vi.fn(() => 'offset'),
+  arrow: vi.fn(() => 'arrow'),
+  autoPlacement: vi.fn(() => 'autoPlacement')
 }))
 
 const flushPromises = () => new Promise(resolve => setTimeout(resolve, 0))
@@ -21,7 +22,7 @@ beforeEach(() => {
   computePosition.mockResolvedValue({ x: 10, y: 20, middlewareData: {}, placement: 'bottom' })
   autoUpdate.mockImplementation((targetElement, floatingElement, update) => {
     update()
-    return jest.fn()
+    return vi.fn()
   })
 })
 

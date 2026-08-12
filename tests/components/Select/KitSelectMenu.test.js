@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import KitSelectMenu from '@components/Select/KitSelectMenu.vue'
 import KitSelectOption from '@components/Select/KitSelectOption.vue'
@@ -67,14 +68,14 @@ describe('KitSelectMenu', () => {
   })
 
   it('appends the menu to the document body when appendToBody is true', () => {
-    const appendChild = jest.spyOn(document.body, 'appendChild')
+    const appendChild = vi.spyOn(document.body, 'appendChild')
     const component = shallowMount(KitSelectMenu, { propsData: { appendToBody: true } })
     expect(appendChild).toHaveBeenCalledWith(component.element)
     appendChild.mockRestore()
   })
 
   it('does not append the menu to the document body when appendToBody is false', () => {
-    const appendChild = jest.spyOn(document.body, 'appendChild')
+    const appendChild = vi.spyOn(document.body, 'appendChild')
     shallowMount(KitSelectMenu, { propsData: { appendToBody: false } })
     expect(appendChild).not.toHaveBeenCalled()
     appendChild.mockRestore()

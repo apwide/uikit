@@ -182,10 +182,14 @@ const intersectionObserver = new IntersectionObserver(
   }
 )
 
+let isUnmounted = false
+
 async function positionEditor() {
   if (!markdownEditorRef.value) {
     await nextTick()
-    positionEditor()
+    if (!isUnmounted) {
+      positionEditor()
+    }
   } else {
     if (markdownEditorRef.value.parentElement !== document.body) {
       document.body.appendChild(markdownEditorRef.value)
@@ -312,6 +316,7 @@ function onSaveRequested(value: string, callback) {
 }
 
 onBeforeUnmount(() => {
+  isUnmounted = true
   if (markdownEditorRef.value) {
     markdownEditorRef.value.remove()
   }

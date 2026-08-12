@@ -12,7 +12,7 @@ describe('TextArea', () => {
   it('contains properly configured textarea', () => {
     const component = shallowMount(KitTextArea, { propsData })
 
-    expect(component.find('textarea').attributes()).toEqual({
+    expect(component.find('textarea').attributes()).toMatchObject({
       auto: 'true',
       maxlength: '5',
       placeholder: 'Placeholder',

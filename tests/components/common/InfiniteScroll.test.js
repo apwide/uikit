@@ -1,17 +1,18 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import InfiniteScroll from '@components/common/InfiniteScroll.vue'
 import KitSpinner from '@components/Spinner/KitSpinner.vue'
 
 let observerCallback
-const observeMock = jest.fn()
-const disconnectMock = jest.fn()
+const observeMock = vi.fn()
+const disconnectMock = vi.fn()
 
-global.IntersectionObserver = jest.fn().mockImplementation((callback) => {
+global.IntersectionObserver = vi.fn().mockImplementation((callback) => {
   observerCallback = callback
   return {
     observe: observeMock,
     disconnect: disconnectMock,
-    unobserve: jest.fn()
+    unobserve: vi.fn()
   }
 })
 

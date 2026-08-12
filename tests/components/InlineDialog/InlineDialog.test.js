@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
-import Popup from '@components/common/Popup'
+import Popup from '@components/common/Popup.vue'
 
 describe('KitInlineDialog', () => {
   it('renders with default props', () => {

@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import Header from '@components/Modal/Header.vue'
-import WarningIcon from '@components/Icon/aui/WarningIcon'
-import ErrorIcon from '@components/Icon/aui/ErrorIcon'
+import WarningIcon from '@components/Icon/aui/WarningIcon.vue'
+import ErrorIcon from '@components/Icon/aui/ErrorIcon.vue'
 
 describe('Header', () => {
   it('renders with default props', () => {

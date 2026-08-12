@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import KitTabHeader from '@components/Tabs/KitTabHeader.vue'
 import KitTabButton from '@components/Tabs/KitTabButton.vue'
@@ -68,7 +69,7 @@ describe('KitTabHeader', () => {
   })
 
   it('calls injected select function on click', async () => {
-    const select = jest.fn()
+    const select = vi.fn()
     const component = shallowMount(KitTabHeader, {
       propsData: { id: 'tab1' },
       global: { provide: { select } }

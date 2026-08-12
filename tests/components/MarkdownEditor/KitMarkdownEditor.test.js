@@ -1,30 +1,31 @@
+import { vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import KitMarkdownEditor from '@components/MarkdownEditor/KitMarkdownEditor.vue'
 import EasyMDE from 'easymde'
 
-jest.mock('easymde', () => {
-  const MockEasyMDE = jest.fn().mockImplementation(function (options) {
+vi.mock('easymde', () => {
+  const MockEasyMDE = vi.fn().mockImplementation(function (options) {
     this.options = options
     this._value = ''
     this.codemirror = {
-      on: jest.fn(),
-      off: jest.fn(),
-      setOption: jest.fn(),
-      focus: jest.fn(),
-      setCursor: jest.fn(),
-      lineCount: jest.fn(() => 1)
+      on: vi.fn(),
+      off: vi.fn(),
+      setOption: vi.fn(),
+      focus: vi.fn(),
+      setCursor: vi.fn(),
+      lineCount: vi.fn(() => 1)
     }
-    this.value = jest.fn((v) => {
+    this.value = vi.fn((v) => {
       if (v === undefined) {
         return this._value
       }
       this._value = v
     })
-    this.isPreviewActive = jest.fn(() => false)
-    this.cleanup = jest.fn()
-    this.toTextArea = jest.fn()
+    this.isPreviewActive = vi.fn(() => false)
+    this.cleanup = vi.fn()
+    this.toTextArea = vi.fn()
   })
-  MockEasyMDE.togglePreview = jest.fn()
+  MockEasyMDE.togglePreview = vi.fn()
   // The compiled <script setup lang="ts"> in KitMarkdownEditor.vue accesses the module's
   // `.default` directly (matching webpack's CJS interop, which Jest's require() doesn't do on
   // its own) — the mock must shape itself the same way for `new EasyMDE(...)` to resolve.
@@ -47,7 +48,7 @@ const mountEditor = async (propsData = {}) => {
 
 describe('KitMarkdownEditor', () => {
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('renders with default props', async () => {
@@ -139,7 +140,7 @@ describe('KitMarkdownEditor', () => {
 
   it('emits input with the trimmed value when the editor changes', async () => {
     const { wrapper, instance } = await mountEditor()
-    instance.value = jest.fn(() => '  new content  ')
+    instance.value = vi.fn(() => '  new content  ')
     handlerFor(instance, 'change')()
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')[0]).toEqual(['new content'])
@@ -199,11 +200,11 @@ describe('KitMarkdownEditor', () => {
   })
 
   it('focuses the codemirror instance after mount when autoFocus is set', async () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     const wrapper = mount(KitMarkdownEditor, { propsData: { autoFocus: true }, attachTo: document.body })
     await wrapper.vm.$nextTick()
     const instance = EasyMDE.mock.instances[EasyMDE.mock.instances.length - 1]
-    jest.advanceTimersByTime(250)
+    vi.advanceTimersByTime(250)
     expect(instance.codemirror.focus).toHaveBeenCalled()
     wrapper.unmount()
   })

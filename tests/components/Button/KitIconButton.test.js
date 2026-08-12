@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import KitIconButton from '@components/Button/KitIconButton.vue'
 
@@ -75,7 +76,7 @@ describe('KitIconButton', () => {
   })
 
   it('forwards click events to the underlying button', async () => {
-    const clickHandler = jest.fn()
+    const clickHandler = vi.fn()
     const component = mount(KitIconButton, {
       propsData: { title: 'Delete' },
       attrs: { onClick: clickHandler }

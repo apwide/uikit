@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Day from '@components/Calendar/Day.vue'
 import KitButton from '@components/Button/KitButton.vue'
@@ -63,7 +64,7 @@ describe('Day', () => {
   it('emits date-selected with the day object on click', async () => {
     const day = makeDay()
     const component = shallowMount(Day, { propsData: { day } })
-    const fakeEvent = { stopPropagation: jest.fn() }
+    const fakeEvent = { stopPropagation: vi.fn() }
     await component.findComponent(KitButton).vm.$emit('click', fakeEvent)
     expect(component.emitted('date-selected')).toEqual([[day]])
   })

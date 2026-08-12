@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import KitTransitionExpand from '@components/common/KitTransitionExpand.vue'
 
@@ -23,7 +24,7 @@ describe('KitTransitionExpand', () => {
   let consoleErrorSpy
 
   beforeEach(() => {
-    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   afterEach(() => {

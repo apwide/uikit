@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import KitMarkdownEditableRenderer from '@components/field-renderers/KitMarkdownEditableRenderer.vue'
 import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
@@ -71,7 +72,7 @@ describe('KitMarkdownEditableRenderer', () => {
     const component = shallowMount(KitMarkdownEditableRenderer, {
       propsData: { value: 'hi', sizeLimit: 100 }
     })
-    const callback = jest.fn()
+    const callback = vi.fn()
     await component.findComponent(KitInlineEdit).vm.$emit('save-requested', 'new value', callback)
     expect(component.emitted('save-requested')).toBeTruthy()
     expect(component.emitted('save-requested')[0]).toEqual(['new value', callback])
@@ -82,7 +83,7 @@ describe('KitMarkdownEditableRenderer', () => {
     const component = shallowMount(KitMarkdownEditableRenderer, {
       propsData: { value: 'hi', sizeLimit: 5 }
     })
-    const callback = jest.fn()
+    const callback = vi.fn()
     await component.findComponent(KitInlineEdit).vm.$emit('save-requested', 'this is too long', callback)
     expect(callback).toHaveBeenCalledWith(expect.any(Error))
     expect(component.emitted('save-requested')).toBeFalsy()

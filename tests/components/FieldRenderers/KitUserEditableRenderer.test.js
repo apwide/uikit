@@ -1,9 +1,10 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import KitUserEditableRenderer from '@components/field-renderers/KitUserEditableRenderer.vue'
 import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import KitUserRenderer from '@components/field-renderers/KitUserRenderer.vue'
 
-const loadOptions = jest.fn().mockResolvedValue({ data: [] })
+const loadOptions = vi.fn().mockResolvedValue({ data: [] })
 
 describe('KitUserEditableRenderer', () => {
   it('renders with required props', () => {

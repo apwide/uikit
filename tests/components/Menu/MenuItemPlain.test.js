@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import MenuItem from '@components/Menu/MenuItem.vue'
 
@@ -46,7 +47,7 @@ describe('MenuItem (plain, non-Kit variant)', () => {
   })
 
   it('forwards click events bound on the root element', async () => {
-    const clickHandler = jest.fn()
+    const clickHandler = vi.fn()
     const component = shallowMount(MenuItem, {
       attrs: { onClick: clickHandler }
     })

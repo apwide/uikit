@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import SecureStringLineRenderer from '@components/field-renderers/SecureStringLineRenderer.vue'
 import KitIconButton from '@components/Button/KitIconButton.vue'
@@ -27,7 +28,7 @@ describe('SecureStringLineRenderer', () => {
 
   it('reveals the raw value and toggles the title to Hide when clicked', async () => {
     const component = shallowMount(SecureStringLineRenderer, { propsData: { value: 'secret123' } })
-    const fakeEvent = { stopPropagation: jest.fn(), preventDefault: jest.fn() }
+    const fakeEvent = { stopPropagation: vi.fn(), preventDefault: vi.fn() }
     // Two KitIconButtons render (copy-to-clipboard, then reveal-toggle); target the toggle one.
     await component.findAllComponents(KitIconButton).at(1).vm.$emit('click', fakeEvent)
     expect(component.find('.string-line-wrapper').exists()).toBe(true)

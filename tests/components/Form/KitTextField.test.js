@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import KitTextField from '@components/Form/KitTextField.vue'
 
@@ -25,7 +26,7 @@ describe('KitTextField', () => {
   })
 
   it('forwards listeners bound on the root element', () => {
-    const onClick = jest.fn()
+    const onClick = vi.fn()
     const component = shallowMount(KitTextField, {
       attrs: { onClick }
     })

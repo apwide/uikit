@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import KitDatePicker from '@components/Calendar/KitDatePicker.vue'
 import KitTextField from '@components/Form/KitTextField.vue'
-import Popup from '@components/common/Popup'
+import Popup from '@components/common/Popup.vue'
 
 describe('KitDatePicker', () => {
   it('renders with default props', () => {

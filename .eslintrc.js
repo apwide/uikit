@@ -49,8 +49,16 @@ module.exports = {
   overrides: [
     {
       files: ['tests/**/*.[j|t]s'],
-      env: {
-        'jest/globals': true
+      globals: {
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        vi: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly'
       },
       rules: {
         '@typescript-eslint/no-empty-function': 'off'

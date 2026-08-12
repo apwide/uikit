@@ -1,9 +1,9 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import KitTextField from '@components/Form/KitTextField.vue'
-import InlineEditViewContent from '@/components/Form/InlineEditViewContent'
-import InlineEditButtons from '@/components/Form/InlineEditButtons'
-import InlineErrorMessage from '@/components/Form/InlineErrorMessage'
+import InlineEditViewContent from '@/components/Form/InlineEditViewContent.vue'
+import InlineEditButtons from '@/components/Form/InlineEditButtons.vue'
+import InlineErrorMessage from '@/components/Form/InlineErrorMessage.vue'
 
 const stubs = { InlineEditViewContent }
 const propsData = { value: 'MackBook' }
@@ -17,7 +17,7 @@ global.document.createRange = () => ({
   }
 })
 
-xdescribe('InlineEdit', () => {
+describe.skip('InlineEdit', () => {
   it('should emit event on enter', async () => {
     const component = shallowMount(KitInlineEdit, { propsData, stubs })
     const inlineEditViewContent = component.findComponent(InlineEditViewContent)
