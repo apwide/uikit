@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Menu.story.vue';
-
-const sourceCode = require(`!!html-loader!./Menu.story.vue`);
+import sourceCode from './Menu.story.vue?raw';
 
 export default {
   title: 'Menu',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

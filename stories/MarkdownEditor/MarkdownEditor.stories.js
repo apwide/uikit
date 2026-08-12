@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './MarkdownEditor.story.vue';
-
-const sourceCode = require(`!!html-loader!./MarkdownEditor.story.vue`);
+import sourceCode from './MarkdownEditor.story.vue?raw';
 
 export default {
   title: 'MarkdownEditor',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

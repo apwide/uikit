@@ -9,5 +9,5 @@
 </template>
 
 <script setup lang="ts">
-import ContentLoader from './ContentLoader'
+import ContentLoader from './ContentLoader.vue'
 </script>

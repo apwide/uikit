@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { Promised } from 'vue-promised'
-import ContentLoader from '../ContentLoader/ContentLoader'
+import ContentLoader from '../ContentLoader/ContentLoader.vue'
 import { isPromise } from '../../utils/utils'
 
 type Props = {

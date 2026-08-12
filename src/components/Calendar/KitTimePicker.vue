@@ -30,8 +30,8 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useAttrs, watch } from 'vue'
 import KitTextField from '../Form/KitTextField.vue'
-import Popup from '../common/Popup'
-import TimePickerMenu from './TimePickerMenu'
+import Popup from '../common/Popup.vue'
+import TimePickerMenu from './TimePickerMenu.vue'
 
 type Props = {
   isLoading?: boolean

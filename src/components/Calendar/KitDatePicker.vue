@@ -38,9 +38,9 @@ import { toZonedTime, fromZonedTime } from 'date-fns-tz'
 import { computed, ref, useAttrs } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
-import Popup from '../common/Popup'
-import KitIcon from '../Icon/KitIcon'
-import Calendar from './Calendar'
+import Popup from '../common/Popup.vue'
+import KitIcon from '../Icon/KitIcon.vue'
+import Calendar from './Calendar.vue'
 
 const MILISECONDS_IN_SECOND = 1000
 

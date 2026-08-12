@@ -36,12 +36,12 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
-import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
-import InfoIcon from '../Icon/aui/InfoIcon'
-import WarningIcon from '../Icon/aui/WarningIcon'
-import ErrorIcon from '../Icon/aui/ErrorIcon'
-import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
+import ChevronDownIcon from '../Icon/aui/ChevronDownIcon.vue'
+import CheckCircleIcon from '../Icon/aui/CheckCircleIcon.vue'
+import InfoIcon from '../Icon/aui/InfoIcon.vue'
+import WarningIcon from '../Icon/aui/WarningIcon.vue'
+import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
+import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 
 
 type Props = {

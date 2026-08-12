@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { computed, getCurrentInstance, ref } from 'vue'
-import LockFilledIcon from '../Icon/aui/LockFilledIcon'
-import UnlockFilledIcon from '../Icon/aui/UnlockFilledIcon'
+import LockFilledIcon from '../Icon/aui/LockFilledIcon.vue'
+import UnlockFilledIcon from '../Icon/aui/UnlockFilledIcon.vue'
 
 type Props = {
   value?: number | string | boolean

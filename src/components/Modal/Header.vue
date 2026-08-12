@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import WarningIcon from '../Icon/aui/WarningIcon'
-import ErrorIcon from '../Icon/aui/ErrorIcon'
+import WarningIcon from '../Icon/aui/WarningIcon.vue'
+import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
 
 type Props = {
   heading?: string

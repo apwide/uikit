@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './CustomIcon.story.vue';
-
-const sourceCode = require(`!!html-loader!./CustomIcon.story.vue`);
+import sourceCode from './CustomIcon.story.vue?raw';
 
 export default {
   title: 'Icons',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

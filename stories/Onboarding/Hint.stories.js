@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Hint.story.vue';
-
-const sourceCode = require(`!!html-loader!./Hint.story.vue`);
+import sourceCode from './Hint.story.vue?raw';
 
 export default {
   title: 'Onboarding',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

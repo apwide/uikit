@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './Spinner.story.vue';
-
-const sourceCode = require(`!!html-loader!./Spinner.story.vue`);
+import sourceCode from './Spinner.story.vue?raw';
 
 export default {
   title: 'Spinner',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref, useSlots, watch } from 'vue'
 import KitButton from '../Button/KitButton.vue'
-import ChevronDownIcon from '../Icon/aui/ChevronDownIcon'
+import ChevronDownIcon from '../Icon/aui/ChevronDownIcon.vue'
 import Popup from '../common/Popup.vue'
 
 type Props = {

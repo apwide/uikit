@@ -32,11 +32,11 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KitIconButton from '../Button/KitIconButton'
-import KitButtonGroup from '../Button/KitButtonGroup'
-import KitIcon from '../Icon/KitIcon'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitButtonGroup from '../Button/KitButtonGroup.vue'
+import KitIcon from '../Icon/KitIcon.vue'
 import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
-import KitStringLineRenderer from './KitStringLineRenderer'
+import KitStringLineRenderer from './KitStringLineRenderer.vue'
 
 type Props = {
   value?: string

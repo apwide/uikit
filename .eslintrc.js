@@ -16,7 +16,6 @@ module.exports = {
   ],
   rules: {
     'multiline-ternary': 'off',
-    'import/no-webpack-loader-syntax': 'off',
     'no-console': 'error',
     'max-len': [
       'error',
@@ -58,7 +57,7 @@ module.exports = {
       }
     },
     {
-      files: ['**/Icon/*.vue', '**/Icon/aui/*.vue', '**/Avatar/Icons/*.vue', '**/KitAvatar.vue'],
+      files: ['**/Icon/*.vue', '**/Icon/aui/*.vue', '**/Avatar/Icons/*.vue', '**/KitAvatar.vue', '**/assets/svgs/*.vue'],
       rules: {
         'max-len': 'off'
       }

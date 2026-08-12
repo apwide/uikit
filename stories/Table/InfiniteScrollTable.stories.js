@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './InfiniteScrollTable.story.vue';
-
-const sourceCode = require(`!!html-loader!./InfiniteScrollTable.story.vue`);
+import sourceCode from './InfiniteScrollTable.story.vue?raw';
 
 export default {
   title: 'Table',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

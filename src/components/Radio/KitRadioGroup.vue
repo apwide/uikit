@@ -11,7 +11,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import KitRadio from './KitRadio'
+import KitRadio from './KitRadio.vue'
 
 type Normalizer<TYPE> = (v: TYPE) => { key: string, label: string, value: unknown }
 

@@ -90,17 +90,17 @@
 <script setup lang="ts">
 import KitBadge from '@components/Badge/KitBadge.vue'
 import { ref } from 'vue'
-import KitTooltip from '../../src/components/Tooltip/Tooltip'
-import KitTabProvider from '../../src/components/Tabs/KitTabProvider'
-import KitTabHeaders from '../../src/components/Tabs/KitTabHeaders'
-import KitTabHeader from '../../src/components/Tabs/KitTabHeader'
-import KitTabPanel from '../../src/components/Tabs/KitTabPanel'
-import KitTabButton from '../../src/components/Tabs/KitTabButton'
-import KitIconButton from '../../src/components/Button/KitIconButton'
-import KitIcon from '../../src/components/Icon/KitIcon'
-import KitActionMenu from '../../src/components/Menu/KitActionMenu'
-import KitMenuItem from '../../src/components/Menu/KitMenuItem'
-import KitTabPanels from '../../src/components/Tabs/KitTabPanels'
+import KitTooltip from '../../src/components/Tooltip/Tooltip.vue'
+import KitTabProvider from '../../src/components/Tabs/KitTabProvider.vue'
+import KitTabHeaders from '../../src/components/Tabs/KitTabHeaders.vue'
+import KitTabHeader from '../../src/components/Tabs/KitTabHeader.vue'
+import KitTabPanel from '../../src/components/Tabs/KitTabPanel.vue'
+import KitTabButton from '../../src/components/Tabs/KitTabButton.vue'
+import KitIconButton from '../../src/components/Button/KitIconButton.vue'
+import KitIcon from '../../src/components/Icon/KitIcon.vue'
+import KitActionMenu from '../../src/components/Menu/KitActionMenu.vue'
+import KitMenuItem from '../../src/components/Menu/KitMenuItem.vue'
+import KitTabPanels from '../../src/components/Tabs/KitTabPanels.vue'
 
 const active = ref(1)
 const tabs = ref([0, 1, 2, 3, 4, 5, 6])

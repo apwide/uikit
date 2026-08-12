@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './ButtonWithIcons.story.vue';
-
-const sourceCode = require(`!!html-loader!./ButtonWithIcons.story.vue`);
+import sourceCode from './ButtonWithIcons.story.vue?raw';
 
 export default {
   title: 'Button',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

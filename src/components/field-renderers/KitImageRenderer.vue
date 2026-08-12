@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import KitButton from '../Button/KitButton.vue'
-import SearchIcon from '../Icon/aui/SearchIcon'
+import SearchIcon from '../Icon/aui/SearchIcon.vue'
 
 type Props = {
   url?: string

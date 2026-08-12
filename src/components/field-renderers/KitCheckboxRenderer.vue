@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import Checked from '../Icon/aui/EditorDoneIcon'
+import Checked from '../Icon/aui/EditorDoneIcon.vue'
 
 type Props = {
   value?: boolean

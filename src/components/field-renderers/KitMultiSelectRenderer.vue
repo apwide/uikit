@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
 import { debounce } from '@components/utils'
-import Popper from '../Popper/Popper'
+import Popper from '../Popper/Popper.vue'
 import KitButton from '../Button/KitButton.vue'
 
 type Props = {

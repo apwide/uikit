@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './ModalPreventSubmit.story.vue';
-
-const sourceCode = require(`!!html-loader!./ModalPreventSubmit.story.vue`);
+import sourceCode from './ModalPreventSubmit.story.vue?raw';
 
 export default {
   title: 'Modal',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

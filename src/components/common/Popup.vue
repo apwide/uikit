@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import Popper from '../Popper/Popper'
+import Popper from '../Popper/Popper.vue'
 
 type Props = {
   isOpen?: boolean

@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './SimpleTable.story.vue';
-
-const sourceCode = require(`!!html-loader!./SimpleTable.story.vue`);
+import sourceCode from './SimpleTable.story.vue?raw';
 
 export default {
   title: 'Table',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

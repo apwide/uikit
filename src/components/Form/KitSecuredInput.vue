@@ -20,8 +20,8 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
-import KitIconButton from '../Button/KitIconButton'
-import KitIcon from '../Icon/KitIcon'
+import KitIconButton from '../Button/KitIconButton.vue'
+import KitIcon from '../Icon/KitIcon.vue'
 import KitTextField from './KitTextField.vue'
 
 type Props = {

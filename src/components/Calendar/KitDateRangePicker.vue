@@ -89,11 +89,11 @@ import {
 import { computed, nextTick, ref, useAttrs, watch } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
-import Popup from '../common/Popup'
+import Popup from '../common/Popup.vue'
 import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
 import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'
-import KitIcon from '../Icon/KitIcon'
-import Calendar from './Calendar'
+import KitIcon from '../Icon/KitIcon.vue'
+import Calendar from './Calendar.vue'
 
 const MILISECONDS_IN_SECOND = 1000
 

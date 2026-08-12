@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './ColorPicker.story.vue';
-
-const sourceCode = require(`!!html-loader!./ColorPicker.story.vue`);
+import sourceCode from './ColorPicker.story.vue?raw';
 
 export default {
   title: 'ColorPicker',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

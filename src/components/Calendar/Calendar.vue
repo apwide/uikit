@@ -44,10 +44,10 @@ import { toZonedTime, fromZonedTime } from 'date-fns-tz'
 import { computed, ref, watch } from 'vue'
 import type { CalendarDate, DateRange } from '@components/Calendar/CalendarType'
 import { chunk } from '../../utils/utils'
-import CalendarHeader from './CalendarHeader'
-import Weeks from './Weeks'
-import Months from './Months'
-import Years from './Years'
+import CalendarHeader from './CalendarHeader.vue'
+import Weeks from './Weeks.vue'
+import Months from './Months.vue'
+import Years from './Years.vue'
 
 const MONTHS = [
   'January',

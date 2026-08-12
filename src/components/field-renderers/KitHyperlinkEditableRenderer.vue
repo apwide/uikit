@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
-import KitHyperlinkRenderer from './KitHyperlinkRenderer'
+import KitHyperlinkRenderer from './KitHyperlinkRenderer.vue'
 
 type Props = {
   link?: string

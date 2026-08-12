@@ -52,7 +52,7 @@ import KitFieldGroup from '@components/Form/KitFieldGroup.vue'
 import KitInlineDialog from '@components/InlineDialog/KitInlineDialog.vue'
 import { computed, ref } from 'vue'
 import KitToggle from '@components/Toggle/KitToggle.vue'
-import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon'
+import EditorInfoIcon from '@/components/Icon/aui/EditorInfoIcon.vue'
 
 const message = ref('')
 const number = ref('')

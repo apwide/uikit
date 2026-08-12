@@ -11,5 +11,5 @@
 </template>
 
 <script setup lang="ts">
-import PresenceWrapper from './PresenceWrapper'
+import PresenceWrapper from './PresenceWrapper.vue'
 </script>

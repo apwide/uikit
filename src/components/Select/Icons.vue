@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import KitSpinner from '../Spinner/KitSpinner.vue'
-import Caret from '../Icon/aui/HipchatChevronDownIcon'
-import Clear from '../Icon/aui/EditorErrorIcon'
+import Caret from '../Icon/aui/HipchatChevronDownIcon.vue'
+import Clear from '../Icon/aui/EditorErrorIcon.vue'
 
 type Props = {
   isFetching?: boolean

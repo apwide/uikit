@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './EditableRenderer.story.vue';
-
-const sourceCode = require(`!!html-loader!./EditableRenderer.story.vue`);
+import sourceCode from './EditableRenderer.story.vue?raw';
 
 export default {
   title: 'InlineEdit/User',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

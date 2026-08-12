@@ -1,7 +1,6 @@
 // AUTO-GENERATED FILE – DO NOT EDIT
 import Comp from './KitSectionMessage.story.vue';
-
-const sourceCode = require(`!!html-loader!./KitSectionMessage.story.vue`);
+import sourceCode from './KitSectionMessage.story.vue?raw';
 
 export default {
   title: 'SectionMessage',
@@ -9,7 +8,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: `${sourceCode}`
+        code: sourceCode
       }
     }
   }

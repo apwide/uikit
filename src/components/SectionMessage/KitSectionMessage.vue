@@ -20,11 +20,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import MagicStick from '@components/Icon/MagicStick.vue'
-import InfoIcon from '../Icon/aui/InfoIcon'
-import WarningIcon from '../Icon/aui/WarningIcon'
-import ErrorIcon from '../Icon/aui/ErrorIcon'
-import CheckCircleIcon from '../Icon/aui/CheckCircleIcon'
-import QuestionCircleIcon from '../Icon/aui/QuestionCircleIcon'
+import InfoIcon from '../Icon/aui/InfoIcon.vue'
+import WarningIcon from '../Icon/aui/WarningIcon.vue'
+import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
+import CheckCircleIcon from '../Icon/aui/CheckCircleIcon.vue'
+import QuestionCircleIcon from '../Icon/aui/QuestionCircleIcon.vue'
 
 type SectionMessageAppearance = 'info' | 'warning' | 'error' | 'confirmation' | 'change' | 'setup'
 

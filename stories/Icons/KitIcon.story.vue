@@ -38,7 +38,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import KitCopyToClipboard from '@components/CopyToClipboard/KitCopyToClipboard.vue'
 import { computed, ref } from 'vue'
-import AwesomeIcon from '../../src/components/Icon/KitIcon'
+import AwesomeIcon from '../../src/components/Icon/KitIcon.vue'
 import KitSelect from '../../src/components/Select/KitSelect.vue'
 
 const size = ref()

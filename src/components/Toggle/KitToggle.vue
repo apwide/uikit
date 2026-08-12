@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import EditorDoneIcon from '../Icon/aui/EditorDoneIcon'
-import EditorCloseIcon from '../Icon/aui/EditorCloseIcon'
+import EditorDoneIcon from '../Icon/aui/EditorDoneIcon.vue'
+import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 import { uniqueId } from '@/utils/dom'
 
 type Props = {
