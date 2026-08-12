@@ -30,11 +30,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run build-storybook
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
 
   bump-and-publish:
     needs: [tests]
@@ -54,8 +50,6 @@ jobs:
           default: 'minor'
           commit-message: 'chore: version bump to {{version}}'
       - uses: actions/setup-node@v5
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
         with:
           node-version: 24
           package-manager-cache: false
@@ -65,13 +59,10 @@ jobs:
         run: npm ci
       - name: Publish
         run: npm publish
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
+#        env:
 #          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Build doc
         run: npm run build-storybook
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
       - name: Deploy doc to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v3
