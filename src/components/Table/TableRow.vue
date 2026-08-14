@@ -23,6 +23,9 @@ import { ref } from 'vue'
 import { BasicRow, Column } from '@components/Table/types'
 import TableRowCell from './TableRowCell.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   columns: Column[]
   row: T

@@ -26,6 +26,9 @@ import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitBreadcrumbItem from './KitBreadcrumbItem.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Item = {
   text: string
   link: string

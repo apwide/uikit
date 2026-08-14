@@ -18,6 +18,9 @@
 <script setup lang="ts">
 import { ref, useSlots } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   label?: string
 }

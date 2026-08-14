@@ -11,6 +11,9 @@ import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
 import { hasHeadings } from '@components/MarkdownEditor/utils'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 export type ToolbarItem =
   | 'heading'
   | 'bold'

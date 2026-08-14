@@ -38,6 +38,9 @@ import KitIcon from '../Icon/KitIcon.vue'
 import KitCopyToClipboard from '../CopyToClipboard/KitCopyToClipboard.vue'
 import KitStringLineRenderer from './KitStringLineRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: string
   htmlValue?: string

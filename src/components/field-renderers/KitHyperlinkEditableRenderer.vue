@@ -11,6 +11,9 @@
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitHyperlinkRenderer from './KitHyperlinkRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   link?: string
   editable?: boolean

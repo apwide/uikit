@@ -17,6 +17,9 @@
 import type { CalendarDate } from '@components/Calendar/CalendarType'
 import Day from './Day.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const WEEKDAYS_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 type Props = {

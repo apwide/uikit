@@ -16,6 +16,9 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { Value } from '@components/Select/types'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   option: Value<T>
   index?: number

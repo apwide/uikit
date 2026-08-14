@@ -15,6 +15,9 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { calculateRectangle, Rectangle } from './spotlight-helpers'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   elements?: Element[]
   textWidth?: number

@@ -22,6 +22,9 @@ import { debounce } from '@components/utils'
 import Popper from '../Popper/Popper.vue'
 import KitButton from '../Button/KitButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   selectedValues?: Array
 }

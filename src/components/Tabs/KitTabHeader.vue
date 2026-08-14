@@ -21,6 +21,9 @@ import { computed, inject } from 'vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitTabButton from './KitTabButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   id: string | number
   /**

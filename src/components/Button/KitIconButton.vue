@@ -34,6 +34,9 @@
 import { KitButtonSpacing } from '@components/Button/KitButton.types'
 import KitButton from './KitButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   title: string
   appearance?: string

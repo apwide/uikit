@@ -33,6 +33,9 @@ import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup.vue'
 import TimePickerMenu from './TimePickerMenu.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   isLoading?: boolean
   isFocused?: boolean

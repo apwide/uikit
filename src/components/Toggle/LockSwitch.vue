@@ -15,6 +15,9 @@ import { computed, getCurrentInstance, ref } from 'vue'
 import LockFilledIcon from '../Icon/aui/LockFilledIcon.vue'
 import UnlockFilledIcon from '../Icon/aui/UnlockFilledIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: number | string | boolean
   disabled?: boolean

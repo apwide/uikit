@@ -34,6 +34,9 @@ import { debounce } from '@components/utils'
 import KitUserRenderer from '../field-renderers/KitUserRenderer.vue'
 import KitSelect from './KitSelect.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type User = { key: string; name: string; disabled: boolean }
 type GetUsers = (searchTerm: unknown) => Promise<{ data: User[] }>
 type Mapper = (input: User[]) => User[]

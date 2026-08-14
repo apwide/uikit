@@ -44,6 +44,9 @@ import KitPositionerAbsolute from '@components/Modal/PositionerAbsolute.vue'
 import KitFooter from '@components/Modal/Footer.vue'
 import KitHeader from '@components/Modal/Header.vue'
 import KitBlanket from '@components/Modal/Blanket.vue'
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 export type Props = {
   heading?: string
   appearance?: string

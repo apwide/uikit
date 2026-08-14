@@ -17,6 +17,9 @@ import { computed } from 'vue'
 import { chunk } from '../../utils/utils'
 import KitButton from '../Button/KitButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const MONTHS = [
   'January',
   'February',

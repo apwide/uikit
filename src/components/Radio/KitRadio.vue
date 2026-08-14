@@ -14,6 +14,9 @@
 
 <script setup lang="ts">
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 import { computed, ref } from 'vue'
 
 type Props = {

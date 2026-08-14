@@ -20,6 +20,7 @@ type Placement = 'auto'
 
 export default defineComponent({
   name: 'Popper',
+  compatConfig: { COMPONENT_V_MODEL: false },
   props: {
     targetElement: { type: null as unknown as PropType<HTMLElement>, required: true },
     placement: { type: String as PropType<Placement>, default: 'bottom-end' },

@@ -17,6 +17,9 @@
 <script setup lang="ts">
 import Popper from '../Popper/Popper.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   label: string
   placement?: string

@@ -54,6 +54,9 @@ import KitSelect from '../Select/KitSelect.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitUserRenderer from './KitUserRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   user?: User
   editable?: boolean

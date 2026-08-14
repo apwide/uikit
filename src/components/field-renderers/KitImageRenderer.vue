@@ -18,6 +18,9 @@ import { computed } from 'vue'
 import KitButton from '../Button/KitButton.vue'
 import SearchIcon from '../Icon/aui/SearchIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   url?: string
   height?: string | number

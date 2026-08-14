@@ -17,6 +17,9 @@
 import type GeneralError from '@components/Form/GeneralError'
 import Popper from '../Popper/Popper.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   error: Error | GeneralError
   targetElement: HTMLElement

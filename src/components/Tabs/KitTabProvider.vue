@@ -7,6 +7,8 @@
 <script setup lang="ts">
 import { provide } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 const modelValue = defineModel<string | number>({ required: true })
 
 function onSelectTab(value) {

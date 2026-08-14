@@ -8,6 +8,9 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import KitSpinner from '../Spinner/KitSpinner.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   tag?: string
 }

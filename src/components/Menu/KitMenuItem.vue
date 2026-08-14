@@ -5,6 +5,9 @@
 </template>
 <script setup lang="ts">
 import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 const emit = defineEmits<{
   (event: 'click', data: MouseEvent)
 }>()

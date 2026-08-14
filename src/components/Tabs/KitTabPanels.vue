@@ -7,6 +7,9 @@
 <script setup lang="ts">
 import { inject, ref, watch } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const container = ref<HTMLDivElement>()
 const style = ref({ maxHeight: 'inherit' })
 const timer = ref(null)

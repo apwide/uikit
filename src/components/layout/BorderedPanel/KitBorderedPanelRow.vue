@@ -17,6 +17,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   label?: string
   value?: string

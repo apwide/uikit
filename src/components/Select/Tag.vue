@@ -21,6 +21,9 @@
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   tag?: {
     id?: string | number

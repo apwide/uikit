@@ -22,6 +22,9 @@ import EditorDoneIcon from '../Icon/aui/EditorDoneIcon.vue'
 import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 import { uniqueId } from '@/utils/dom'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   disabled?: boolean
   size?: 'regular' | 'large' | 'small' | 'xsmall'

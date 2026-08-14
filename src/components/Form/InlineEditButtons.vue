@@ -27,6 +27,9 @@
 import KitIconButton from '@components/Button/KitIconButton.vue'
 import KitIcon from '@components/Icon/KitIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const emit = defineEmits<{
   (event: 'confirm')
   (event: 'cancel')

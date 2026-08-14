@@ -22,6 +22,9 @@
 import { ref } from 'vue'
 import KitBigTooltipContent from '@components/Tooltip/KitBigTooltipContent.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   placement?: string
   disabled?: boolean

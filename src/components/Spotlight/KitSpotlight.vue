@@ -24,6 +24,9 @@ import KitSpotlightHintContainer from '@components/Spotlight/KitSpotlightHintCon
 import KitSpotlightStepHint from '@components/Spotlight/KitSpotlightStepHint.vue'
 import { KitSpotlightStep } from './spotlight-helpers'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   steps: KitSpotlightStep[]
 }

@@ -18,6 +18,9 @@
 import { ref, watch } from 'vue'
 import KitButton from '../Button/KitButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   appearance?: string
   autoFocus?: boolean

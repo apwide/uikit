@@ -5,6 +5,9 @@
 </template>
 
 <script setup lang="ts">
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 withDefaults(defineProps<{
   zIndex?: number
 }>(), {

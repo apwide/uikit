@@ -51,6 +51,9 @@ import KitInlineEdit from '@components/Form/KitInlineEdit.vue'
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { convertNumbersToPx, findTableParent, setStyles } from '@/utils/dom'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: string
   placeholder?: string

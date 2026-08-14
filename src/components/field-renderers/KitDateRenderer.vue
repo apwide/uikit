@@ -6,6 +6,9 @@
 import { format } from 'date-fns'
 import { computed } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   date?: string | number
 }

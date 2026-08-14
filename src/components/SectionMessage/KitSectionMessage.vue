@@ -26,6 +26,9 @@ import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
 import CheckCircleIcon from '../Icon/aui/CheckCircleIcon.vue'
 import QuestionCircleIcon from '../Icon/aui/QuestionCircleIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type SectionMessageAppearance = 'info' | 'warning' | 'error' | 'confirmation' | 'change' | 'setup'
 
 type Props = {

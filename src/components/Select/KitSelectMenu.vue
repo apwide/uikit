@@ -30,6 +30,9 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import type { Value } from '@components/Select/types'
 import KitSelectOption from './KitSelectOption.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   options?: Value<unknown>[]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

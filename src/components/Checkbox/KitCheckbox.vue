@@ -21,6 +21,9 @@ import { nextTick, ref, watch } from 'vue'
 import CheckboxIndeterminateIcon from '../Icon/aui/CheckboxIndeterminateIcon.vue'
 import CheckboxIcon from '../Icon/aui/CheckboxIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   disabled?: boolean
   value?: string | Record<string, unknown> | number

@@ -29,6 +29,9 @@ import { ConfirmationCallback } from '@components/Select/types'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitStringLineRenderer from './KitStringLineRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: string
   editable?: boolean

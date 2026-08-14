@@ -49,6 +49,9 @@ import Weeks from './Weeks.vue'
 import Months from './Months.vue'
 import Years from './Years.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const MONTHS = [
   'January',
   'February',

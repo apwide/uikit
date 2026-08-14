@@ -24,6 +24,9 @@ import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitTextField from './KitTextField.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   maxlength?: number
   placeholder?: string

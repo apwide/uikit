@@ -6,6 +6,9 @@
 </template>
 
 <script setup lang="ts">
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 type Props = {
   title: string
 }

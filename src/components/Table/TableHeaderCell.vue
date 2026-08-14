@@ -19,6 +19,9 @@ import { computed, useSlots } from 'vue'
 import ChevronDownIcon from '../Icon/aui/ChevronDownIcon.vue'
 import ChevronUpIcon from '../Icon/aui/ChevronUpIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   column: Column
   stickyHeader?: boolean

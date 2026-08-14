@@ -10,6 +10,9 @@
 import { computed } from 'vue'
 import ContentLoader from './ContentLoader.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   size?: 'normal' | 'small'
 }

@@ -13,6 +13,9 @@
 
 <script setup lang="ts">
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 import type { User } from '@components/field-renderers/types'
 
 type Props = {

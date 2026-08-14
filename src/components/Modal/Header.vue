@@ -13,6 +13,9 @@ import { computed } from 'vue'
 import WarningIcon from '../Icon/aui/WarningIcon.vue'
 import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   heading?: string
   appearance?: string

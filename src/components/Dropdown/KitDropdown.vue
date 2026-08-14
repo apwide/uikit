@@ -34,6 +34,9 @@ import KitButton from '../Button/KitButton.vue'
 import ChevronDownIcon from '../Icon/aui/ChevronDownIcon.vue'
 import Popup from '../common/Popup.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   label?: string
   appearance?: string

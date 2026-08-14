@@ -40,6 +40,9 @@ import KitTextArea from '../Form/KitTextArea.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitMultiLineRenderer from './KitMultiLineRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: string
   editable?: boolean

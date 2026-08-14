@@ -95,6 +95,9 @@ import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import Calendar from './Calendar.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const MILISECONDS_IN_SECOND = 1000
 
 type Props = {

@@ -2,6 +2,9 @@
   <div class="kit-dropdown-separator" />
 </template>
 <script setup lang="ts">
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 </script>
 <style scoped>
 .kit-dropdown-separator {

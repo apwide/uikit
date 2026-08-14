@@ -32,6 +32,9 @@ import KitCheckbox from '../Checkbox/KitCheckbox.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitCheckboxRenderer from './KitCheckboxRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: boolean
   editable?: boolean

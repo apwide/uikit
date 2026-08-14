@@ -59,6 +59,9 @@ import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import SecureStringLineRenderer from './SecureStringLineRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: string
   htmlValue?: string

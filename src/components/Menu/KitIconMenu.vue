@@ -31,6 +31,9 @@ import { ref, useSlots } from 'vue'
 import KitDropdown from '../Dropdown/KitDropdown.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   title?: string
   spacing?: string

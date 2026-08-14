@@ -27,6 +27,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   step?: number
   total?: number

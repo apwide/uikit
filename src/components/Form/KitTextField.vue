@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
-defineOptions({ inheritAttrs: false })
+defineOptions({ inheritAttrs: false, compatConfig: { COMPONENT_V_MODEL: false } })
 
 const BOOLEAN_ATTRS = ['compact', 'select', 'editable', 'should-fit-container', 'is-loading', 'is-focused', 'is-invalid', 'disabled']
 

@@ -33,6 +33,9 @@ import { Promised } from 'vue-promised'
 import ContentLoader from '../ContentLoader/ContentLoader.vue'
 import { isPromise } from '../../utils/utils'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value: Promise
   width?: number | string

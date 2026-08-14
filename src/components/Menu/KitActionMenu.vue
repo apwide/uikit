@@ -21,6 +21,9 @@
 import AwesomeIcon from '../Icon/KitIcon.vue'
 import KitIconMenu from './KitIconMenu.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   title?: string
   iconSize?: string

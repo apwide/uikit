@@ -13,6 +13,9 @@
 import { computed } from 'vue'
 import KitRadio from './KitRadio.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Normalizer<TYPE> = (v: TYPE) => { key: string, label: string, value: unknown }
 
 type Props = {

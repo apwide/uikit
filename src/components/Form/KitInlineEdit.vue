@@ -103,6 +103,9 @@ import InlineEditButtons from './InlineEditButtons.vue'
 import InlineEditViewContent from './InlineEditViewContent.vue'
 import InlineErrorMessage from './InlineErrorMessage.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const ENTER = 13
 const ESC = 27
 const BACKSPACE = 8

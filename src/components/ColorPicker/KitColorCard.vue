@@ -10,6 +10,9 @@
 import KitIcon from '@components/Icon/KitIcon.vue'
 import { computed } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   color?: string
   selected?: string

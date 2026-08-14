@@ -19,6 +19,9 @@
 import { computed, nextTick, onMounted, ref, useAttrs, watch } from 'vue'
 import KitTextField from './KitTextField.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const ENTER = 13
 
 type Props = {

@@ -22,6 +22,9 @@ import { computed } from 'vue'
 import type { CalendarDate } from '@components/Calendar/CalendarType'
 import KitButton from '../Button/KitButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   day: CalendarDate
 }

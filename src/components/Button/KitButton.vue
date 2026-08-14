@@ -22,6 +22,9 @@ import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue'
 import { KitButtonAppearance, KitButtonSpacing } from '@components/Button/KitButton.types'
 import KitSpinner from '../Spinner/KitSpinner.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   appearance?: KitButtonAppearance
   spacing?: KitButtonSpacing

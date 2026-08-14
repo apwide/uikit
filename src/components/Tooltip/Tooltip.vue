@@ -19,6 +19,9 @@
 import { ref } from 'vue'
 import TooltipContent from './TooltipContent.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   label: string
   placement?: string

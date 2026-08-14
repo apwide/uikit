@@ -21,6 +21,9 @@ import { ref } from 'vue'
 import KitIcon from '../Icon/KitIcon.vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const DRAG_THRESHOLD = 5
 
 const emit = defineEmits<{

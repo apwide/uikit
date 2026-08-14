@@ -21,6 +21,9 @@ import { computed, ref } from 'vue'
 import Popup from '../common/Popup.vue'
 import KitColorCard from './KitColorCard.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   // list of color codes
   colors?: string[]

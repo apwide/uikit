@@ -99,6 +99,9 @@ import KitSelectMenu from './KitSelectMenu.vue'
 import Tag from './Tag.vue'
 import Icons from './Icons.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const INPUT_WIDTH = '5px'
 
 type Props = {

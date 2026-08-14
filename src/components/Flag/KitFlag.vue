@@ -43,6 +43,9 @@ import WarningIcon from '../Icon/aui/WarningIcon.vue'
 import ErrorIcon from '../Icon/aui/ErrorIcon.vue'
 import EditorCloseIcon from '../Icon/aui/EditorCloseIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 
 type Props = {
   title?: string

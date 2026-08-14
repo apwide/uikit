@@ -4,6 +4,9 @@
   </div>
 </template>
 <script setup lang="ts">
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 </script>
 
 <style scoped>

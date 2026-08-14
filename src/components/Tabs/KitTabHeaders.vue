@@ -17,6 +17,9 @@
 import { inject, provide } from 'vue'
 import KitDraggable from '../common/KitDraggable'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   reorderable?: boolean
   reorderableIdsList?: Arrays

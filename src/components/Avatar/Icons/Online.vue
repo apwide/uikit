@@ -8,4 +8,7 @@
 
 <script setup lang="ts">
 import PresenceWrapper from './PresenceWrapper.vue'
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 </script>

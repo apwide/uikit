@@ -19,6 +19,9 @@ import KitSpinner from '../Spinner/KitSpinner.vue'
 import Caret from '../Icon/aui/HipchatChevronDownIcon.vue'
 import Clear from '../Icon/aui/EditorErrorIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   isFetching?: boolean
   isSelected?: boolean

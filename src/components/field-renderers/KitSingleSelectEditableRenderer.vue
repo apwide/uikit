@@ -69,6 +69,9 @@ import KitSelect from '../Select/KitSelect.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitStringLineRenderer from './KitStringLineRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   editable?: boolean
   placement?: string

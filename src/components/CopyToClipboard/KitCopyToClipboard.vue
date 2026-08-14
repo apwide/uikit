@@ -18,6 +18,9 @@ import KitIcon from '../Icon/KitIcon.vue'
 import Tooltip from '../Tooltip/Tooltip.vue'
 import KitSetToClipboard from './KitSetToClipboard'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   appearance?: string
   spacing?: string

@@ -11,6 +11,9 @@
 <script setup lang="ts">
 import ContentLoader from './ContentLoader.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   items?: number
 }

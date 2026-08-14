@@ -7,6 +7,9 @@
 </template>
 
 <script setup lang="ts">
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 type Props = {
   appearance?: 'default' | 'success' | 'yellow' | 'removed' | 'inprogress' | 'new' | 'moved' | 'brown'
   subtle?: boolean

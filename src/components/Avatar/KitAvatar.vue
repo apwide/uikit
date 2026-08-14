@@ -38,6 +38,9 @@ import Focus from './Icons/Focus.vue'
 import Approved from './Icons/Approved.vue'
 import Declined from './Icons/Declined.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 
 type Props = {
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'

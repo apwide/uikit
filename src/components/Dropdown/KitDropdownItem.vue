@@ -6,6 +6,9 @@
   </div>
 </template>
 <script setup lang="ts">
+
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
 type Props = {
   value?: string | number | boolean | unknown
   selected?: boolean

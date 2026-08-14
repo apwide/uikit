@@ -52,6 +52,9 @@ import KitIcon from '../Icon/KitIcon.vue'
 import KitModal from './KitModal.vue'
 import Header from './Header.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   heading?: string
   // copied from Modal as defineProps does not allow to use imported types

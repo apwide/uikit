@@ -12,5 +12,8 @@
 <script setup lang="ts">
 import ContentLoader from './ContentLoader.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const random = () => Math.random() * (1 - 0.7) + 0.7
 </script>

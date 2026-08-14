@@ -14,6 +14,9 @@
 <script setup lang="ts">
 import Popup from '@components/common/Popup.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   placement?: string
   targetElement: HTMLElement

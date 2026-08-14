@@ -23,6 +23,9 @@ import KitDatePicker from '../Calendar/KitDatePicker.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitDateRenderer from './KitDateRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   date?: number | string
   editable?: boolean

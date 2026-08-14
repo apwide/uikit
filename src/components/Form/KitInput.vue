@@ -17,6 +17,9 @@
 import { nextTick, ref, watch } from 'vue'
 import KitTextField from './KitTextField.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   maxlength?: number
   placeholder?: string

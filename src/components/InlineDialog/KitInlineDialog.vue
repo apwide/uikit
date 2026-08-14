@@ -20,6 +20,9 @@
 import { onBeforeUnmount, ref, watch } from 'vue'
 import Popup from '../common/Popup.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   boundariesElement?: string | HTMLElement | Function

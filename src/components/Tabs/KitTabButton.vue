@@ -3,6 +3,9 @@
 </template>
 <script setup lang="ts">
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 import { inject } from 'vue'
 
 type Props = {

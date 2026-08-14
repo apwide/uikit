@@ -19,6 +19,9 @@ import { computed } from 'vue'
 import KitCheckbox from '../Checkbox/KitCheckbox.vue'
 import KitButton from '../Button/KitButton.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: string
   showOnlyButton?: boolean

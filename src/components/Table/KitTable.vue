@@ -75,6 +75,9 @@ import KitDraggable from '../common/KitDraggable'
 import TableRow from './TableRow.vue'
 import TableHeaderCell from './TableHeaderCell.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   columns: Column[]
   data: T[]

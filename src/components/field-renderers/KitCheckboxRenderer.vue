@@ -9,6 +9,9 @@
 <script setup lang="ts">
 import Checked from '../Icon/aui/EditorDoneIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: boolean
   label?: string

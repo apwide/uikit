@@ -74,6 +74,9 @@ import KitSelect from '../Select/KitSelect.vue'
 import KitInlineEdit from '../Form/KitInlineEdit.vue'
 import KitMultiSelectRenderer from './KitMultiSelectRenderer.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   value?: Array
   editable?: boolean

@@ -7,6 +7,9 @@
 <script setup lang="ts">
 import IconWrapper from '../IconWrapper.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 type Props = {
   size?: string
   primaryColor?: string

@@ -100,6 +100,9 @@ import {
   faSquare as regularSquare
 } from '@fortawesome/free-regular-svg-icons'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 library.add(
   faLink,
   faUnlink,

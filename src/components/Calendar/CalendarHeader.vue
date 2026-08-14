@@ -22,6 +22,9 @@ import { computed, ref } from 'vue'
 import KitIconButton from '../Button/KitIconButton.vue'
 import KitIcon from '../Icon/KitIcon.vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const DECADE = 10
 
 export type MoveFunction = (value: Date | number) => Date

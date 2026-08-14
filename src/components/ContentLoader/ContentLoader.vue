@@ -32,6 +32,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+defineOptions({ compatConfig: { COMPONENT_V_MODEL: false } })
+
+
 const uid = () => Math.random().toString(36).substring(2)
 
 type Props = {
