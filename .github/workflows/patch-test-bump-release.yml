@@ -9,6 +9,11 @@ on:
       - '**.vue'
       - '**.json'
       - '**.css'
+
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
   tests:
     name: Ensure tests and builds are OK
@@ -18,13 +23,11 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-          cache: 'npm'
+          package-manager-cache: false
       - run: npm ci
       - run: npm run lint
       - run: npm test
       - run: npm run build
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
 
   bump-and-publish:
     needs: [tests]
@@ -32,25 +35,31 @@ jobs:
     if: "success() && !startsWith(github.event.head_commit.message, 'chore: version bump')"
     runs-on: ubuntu-latest
     steps:
+      - name: Get Github App Token
+        uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          client-id: ${{ vars.GH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
       - name: Bump
+        if: success()
         uses: 'phips28/gh-action-bump-version@master'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           default: 'patch'
           commit-message: 'chore: version bump to {{version}}'
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-          cache: 'npm'
+          package-manager-cache: false
           registry-url: 'https://registry.npmjs.org'
-
       - name: Install
         run: npm ci
       - name: Publish
         run: npm publish
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
