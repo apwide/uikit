@@ -145,7 +145,14 @@ const isValidFrom = computed(() => {
 const isValidTo = computed(() => {
   return props.value.to && isValid(props.value.to)
 })
-const selectedDateFrom = computed({
+
+function input(range: DateRange) {
+  const from = typeof range.from !== 'undefined' ? new Date(range.from).getTime() : undefined
+  const to = typeof range.to !== 'undefined' ? new Date(range.to).getTime() : undefined
+  emit('input', { from, to })
+}
+
+const selectedDateFrom = computed<Date | number | undefined>({
   get() {
     if (!isValidFrom.value) {
       return undefined
@@ -154,14 +161,14 @@ const selectedDateFrom = computed({
   },
   set(date) {
     if (props.value.to && isAfter(date, props.value.to)) {
-      emit('input', { from: props.value.to, to: date })
+      input({ from: props.value.to, to: date })
     } else {
-      emit('input', { from: date, to: props.value.to })
+      input({ from: date, to: props.value.to })
     }
   }
 })
 
-const selectedDateTo = computed({
+const selectedDateTo = computed<Date | number | undefined>({
   get() {
     if (!isValidTo.value) {
       return undefined
@@ -170,9 +177,9 @@ const selectedDateTo = computed({
   },
   set(date) {
     if (props.value.from && isBefore(date, props.value.from)) {
-      emit('input', { from: date, to: props.value.from })
+      input({ from: date, to: props.value.from })
     } else {
-      emit('input', { from: props.value.from, to: date })
+      input({ from: props.value.from, to: date })
     }
   }
 })
@@ -238,7 +245,7 @@ function onInputFrom(e) {
   } else if (!Number.isNaN(date)) {
     const formatted = format(date, props.dateFormat)
     if (e.target.value !== formatted) return
-    selectedDateFrom.value = date
+    selectedDateFrom.value = new Date(date)
     nextTick(() => {
       visibleDate.value = selectedDateFrom.value
     })
@@ -293,24 +300,24 @@ function onBlur(e) {
   }
 }
 
-function onDateSelected(date) {
+function onDateSelected(date: Date) {
   if (props.disabledTyping) {
     if (!selectedDateFrom.value) {
-      selectedDateFrom.value = Date.parse(date)
+      selectedDateFrom.value = date
     } else if (!selectedDateTo.value) {
-      selectedDateTo.value = Date.parse(date)
+      selectedDateTo.value = date
     } else {
-      if (Date.parse(date) < selectedDateFrom.value) {
-        selectedDateFrom.value = Date.parse(date)
+      if (isInputFromFocused()) {
+        selectedDateFrom.value = date
       } else {
-        selectedDateTo.value = Date.parse(date)
+        selectedDateTo.value = date
       }
     }
   } else {
     if (isInputFromFocused()) {
-      selectedDateFrom.value = Date.parse(date)
+      selectedDateFrom.value = date
     } else {
-      selectedDateTo.value = Date.parse(date)
+      selectedDateTo.value = date
     }
   }
 
@@ -351,7 +358,7 @@ function onQuickRange(range) {
 }
 
 function setRange(from, to) {
-  emit('input', { from: getTime(from), to: getTime(to) })
+  input({ from: getTime(from), to: getTime(to) })
   isOpen.value = false
 }
 
