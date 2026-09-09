@@ -99,7 +99,8 @@ export default defineComponent({
     // happens on dragged element
     function onDragStart(event: DragEvent) {
       const items = itemList()
-      if (!items.includes(event.target as HTMLElement)) {
+      const draggedItem = closest(event.target as HTMLElement, props.draggableClass)
+      if (!draggedItem || !items.includes(draggedItem)) {
         return
       }
 
@@ -111,7 +112,6 @@ export default defineComponent({
         // We probably don't care
       }
 
-      const draggedItem = event.target as HTMLElement
       const element = ghostFactory(draggedItem)
 
       draggedItem.style.opacity = '0.5'
