@@ -11,7 +11,8 @@
     :close-on-outside-click="closeOnOutsideClick"
     :width="modalWidth"
     v-bind="$attrs"
-    no-padding>
+    no-padding
+    @cancel="onCancel">
     <template #header>
       <div class="kit-modal__header-pre-title">
         <slot name="breadcrumb" class="" />
@@ -20,10 +21,7 @@
           <KitIconButton
             class="kit-modal__close"
             title="close"
-            @click="
-              emit('cancel');
-              emit('close')
-            ">
+            @click="onCancel">
             <KitIcon type="times" style="font-size: 1.2rem" />
           </KitIconButton>
         </KitButtonGroup>
@@ -78,6 +76,11 @@ const emit = defineEmits<{
 const slots = useSlots()
 const modalWidth = ref('')
 
+function onCancel() {
+  emit('cancel')
+  emit('close')
+}
+
 function resize() {
   const { width } = document.body.getBoundingClientRect()
   if (width > 1200) {
@@ -92,7 +95,7 @@ onMounted(() => {
   window.addEventListener('resize', resize)
 })
 onBeforeUnmount(() => {
-  window.addEventListener('resize', resize)
+  window.removeEventListener('resize', resize)
 })
 </script>
 <style scoped>
