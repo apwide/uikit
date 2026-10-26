@@ -9,7 +9,7 @@ import KitIconButton from '@components/Button/KitIconButton.vue'
 const mountBigModal = (options) =>
   shallowMount(KitBigModal, {
     ...options,
-    global: { stubs: { KitModal: false } }
+    global: { stubs: { KitModal: false, teleport: true } }
   })
 
 describe('KitBigModal', () => {

@@ -1,5 +1,5 @@
 <template>
-  <div ref="menuRef" class="kit-select-menu" tabindex="-1" @mousedown.prevent>
+  <div class="kit-select-menu" tabindex="-1" @mousedown.prevent>
     <div class="kit-select-menu-inner">
       <KitSelectOption
         v-for="(item, index) in options"
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import type { Value } from '@components/Select/types'
 import KitSelectOption from './KitSelectOption.vue'
 
@@ -51,20 +51,12 @@ const emit = defineEmits<{
 }>()
 
 const selectedId = computed(() => (!Array.isArray(props.selected) ? props.selected?.id : undefined))
-const menuRef = ref<HTMLDivElement>()
 
 onMounted(() => {
   if (props.appendToBody) {
-    document.body.appendChild(menuRef.value)
     setTimeout(() => {
       emit('update-popper-position')
     }, 0)
-  }
-})
-
-onBeforeUnmount(() => {
-  if (props.appendToBody) {
-    menuRef.value?.remove()
   }
 })
 

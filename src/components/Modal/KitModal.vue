@@ -1,41 +1,43 @@
 <template>
-  <div ref="me" class="kit-big-modal">
-    <Transition appear name="kit-modal-transition">
-      <KitBlanket ref="blanket" :z-index="zIndex" class="kit-dialog">
-        <KitPositionerAbsolute :width="currentWidth">
-          <form
-            ref="form"
-            :no-padding="noPadding || undefined"
-            class="kit-modal kit-modal-container"
-            novalidate
-            @submit.prevent="onSubmit">
-            <slot>
-              <header v-if="!noHeader">
-                <slot name="header">
-                  <KitHeader :appearance="appearance" :heading="heading" />
-                </slot>
-              </header>
-              <div class="kit-content">
-                <slot name="content" />
-              </div>
-              <footer v-if="!noFooter">
-                <slot name="footer">
-                  <slot name="progress" />
-                  <KitFooter
-                    :actions="actions"
-                    :appearance="appearance"
-                    :auto-focus="autoFocus"
-                    :pending="pending"
-                    :should-allow-submit="shouldAllowSubmit"
-                    @cancel="onCancel" />
-                </slot>
-              </footer>
-            </slot>
-          </form>
-        </KitPositionerAbsolute>
-      </KitBlanket>
-    </Transition>
-  </div>
+  <Teleport to="body">
+    <div class="kit-big-modal" v-bind="$attrs">
+      <Transition appear name="kit-modal-transition">
+        <KitBlanket ref="blanket" :z-index="zIndex" class="kit-dialog">
+          <KitPositionerAbsolute :width="currentWidth">
+            <form
+              ref="form"
+              :no-padding="noPadding || undefined"
+              class="kit-modal kit-modal-container"
+              novalidate
+              @submit.prevent="onSubmit">
+              <slot>
+                <header v-if="!noHeader">
+                  <slot name="header">
+                    <KitHeader :appearance="appearance" :heading="heading" />
+                  </slot>
+                </header>
+                <div class="kit-content">
+                  <slot name="content" />
+                </div>
+                <footer v-if="!noFooter">
+                  <slot name="footer">
+                    <slot name="progress" />
+                    <KitFooter
+                      :actions="actions"
+                      :appearance="appearance"
+                      :auto-focus="autoFocus"
+                      :pending="pending"
+                      :should-allow-submit="shouldAllowSubmit"
+                      @cancel="onCancel" />
+                  </slot>
+                </footer>
+              </slot>
+            </form>
+          </KitPositionerAbsolute>
+        </KitBlanket>
+      </Transition>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -60,6 +62,8 @@ export type Props = {
   noPadding?: boolean
 }
 
+defineOptions({ inheritAttrs: false })
+
 const ESC = 27
 
 const props = withDefaults(defineProps<Props>(), {
@@ -82,7 +86,6 @@ const emit = defineEmits<{
   (event: 'submit')
 }>()
 
-const me = ref()
 const blanket = ref()
 const lastInitTime = ref(0)
 const currentWidth = computed(() => props.width)
@@ -116,7 +119,6 @@ function onMouseup() {
 }
 
 onMounted(() => {
-  document.body.appendChild(me.value)
   document.body.classList.add('kit-modal-is-open')
   document.addEventListener('keyup', onEsc)
   lastInitTime.value = Date.now()
@@ -130,17 +132,8 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('keyup', onEsc)
-  try {
-    document.body.removeChild(me.value)
-    blanket.value.$el.removeEventListener('mousedown', onMousedown)
-    blanket.value.$el.removeEventListener('mouseup', onMouseup)
-  } catch (error) {
-    if (error.name === 'NotFoundError') {
-      // already removed https://developer.mozilla.org/fr/docs/Web/API/Node/removeChild
-      return
-    }
-    throw error
-  }
+  blanket.value?.$el.removeEventListener('mousedown', onMousedown)
+  blanket.value?.$el.removeEventListener('mouseup', onMouseup)
 })
 
 onUnmounted(() => {

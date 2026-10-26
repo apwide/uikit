@@ -1,4 +1,5 @@
-import { shallowMount } from '@vue/test-utils'
+import { defineComponent, h, nextTick, ref } from 'vue'
+import { mount, shallowMount } from '@vue/test-utils'
 import KitDropdown from '@components/Dropdown/KitDropdown.vue'
 import KitButton from '@components/Button/KitButton.vue'
 import Popup from '@components/common/Popup.vue'
@@ -129,5 +130,21 @@ describe('KitDropdown', () => {
   it('appendToBody is false by default', () => {
     const component = shallowMount(KitDropdown)
     expect(component.props('appendToBody')).toBe(false)
+  })
+
+  it('removes its body-appended menu when an ancestor is unmounted while open', async () => {
+    const show = ref(true)
+    const Host = defineComponent({
+      setup: () => () => h('div', show.value ? [h(KitDropdown, { appendToBody: true })] : [])
+    })
+    const host = mount(Host, { attachTo: document.body })
+    await host.findComponent(KitButton).trigger('click')
+    await nextTick()
+    expect(document.body.querySelector(':scope > .kit-popup')).not.toBeNull()
+
+    show.value = false
+    await nextTick()
+    expect(document.body.querySelector('.kit-popup')).toBeNull()
+    host.unmount()
   })
 })
