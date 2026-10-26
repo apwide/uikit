@@ -60,33 +60,35 @@
         <slot name="icon" />
       </Icons>
     </KitTextField>
-    <Popper
-      v-if="shouldOpenMenu"
-      :boundaries-element="boundariesElement"
-      :offset="[0, 0]"
-      :target-element="containerRef"
-      placement="bottom-start">
-      <KitSelectMenu
-        :append-to-body="appendToBody"
-        :async="async"
-        :contains-query="!!search"
-        :current-suggestion-index="currentSuggestionIndex"
-        :has-suggestions="hasSuggestions"
-        :is-fetching="isFetching"
-        :no-options-message="noOptionsMessage"
-        :options="suggestions"
-        :placeholder="searchPromptText"
-        :selected="selected"
-        :style="{ width: selectWidth }"
-        data-cy="select-menu"
-        @mouseover="onMouseOverSuggestion"
-        @option-selected="onOptionSelected">
-        <template #option="{ option, isCurrent }">
-          <slot :is-current="isCurrent" :option="option" name="option" />
-        </template>
-        <slot name="custom-action" :search="search" />
-      </KitSelectMenu>
-    </Popper>
+    <Teleport to="body" :disabled="!appendToBody">
+      <Popper
+        v-if="shouldOpenMenu"
+        :boundaries-element="boundariesElement"
+        :offset="[0, 0]"
+        :target-element="containerRef"
+        placement="bottom-start">
+        <KitSelectMenu
+          :append-to-body="appendToBody"
+          :async="async"
+          :contains-query="!!search"
+          :current-suggestion-index="currentSuggestionIndex"
+          :has-suggestions="hasSuggestions"
+          :is-fetching="isFetching"
+          :no-options-message="noOptionsMessage"
+          :options="suggestions"
+          :placeholder="searchPromptText"
+          :selected="selected"
+          :style="{ width: selectWidth }"
+          data-cy="select-menu"
+          @mouseover="onMouseOverSuggestion"
+          @option-selected="onOptionSelected">
+          <template #option="{ option, isCurrent }">
+            <slot :is-current="isCurrent" :option="option" name="option" />
+          </template>
+          <slot name="custom-action" :search="search" />
+        </KitSelectMenu>
+      </Popper>
+    </Teleport>
   </div>
 </template>
 

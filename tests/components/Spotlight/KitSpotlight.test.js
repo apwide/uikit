@@ -1,8 +1,10 @@
-import { mount } from '@vue/test-utils'
+import { DOMWrapper, mount } from '@vue/test-utils'
 import KitSpotlight from '@components/Spotlight/KitSpotlight.vue'
 import KitSpotlightMask from '@components/Spotlight/KitSpotlightMask.vue'
 import KitSpotlightHintContainer from '@components/Spotlight/KitSpotlightHintContainer.vue'
 
+// KitSpotlight teleports its content to body, out of wrapper.element
+const content = () => new DOMWrapper(document.body.querySelector('.kit-spotlight'))
 const flushPromises = () => new Promise(resolve => setTimeout(resolve, 0))
 
 const makeStep = (overrides = {}) => ({
@@ -27,10 +29,10 @@ describe('KitSpotlight', () => {
     expect(document.body.style.position).toBe('fixed')
   })
 
-  it('moves its root element into document.body', async () => {
+  it('teleports its content into document.body', async () => {
     wrapper = mount(KitSpotlight, { propsData: { steps: [makeStep()] } })
     await flushPromises()
-    expect(wrapper.element.parentElement).toBe(document.body)
+    expect(content().element.parentElement).toBe(document.body)
   })
 
   it('does not render the mask when the step has no elements', async () => {
@@ -53,8 +55,8 @@ describe('KitSpotlight', () => {
       propsData: { steps: [makeStep({ title: 'Welcome', p: ['First line'] })] }
     })
     await flushPromises()
-    expect(wrapper.text()).toContain('Welcome')
-    expect(wrapper.text()).toContain('First line')
+    expect(content().text()).toContain('Welcome')
+    expect(content().text()).toContain('First line')
   })
 
   it('renders a custom step slot instead of the default hint when provided', async () => {
@@ -63,8 +65,8 @@ describe('KitSpotlight', () => {
       slots: { step1: '<div class="custom-step">Custom content</div>' }
     })
     await flushPromises()
-    expect(wrapper.find('.custom-step').exists()).toBe(true)
-    expect(wrapper.text()).not.toContain('Step Title')
+    expect(content().find('.custom-step').exists()).toBe(true)
+    expect(content().text()).not.toContain('Step Title')
   })
 
   it('uses a default margin of [10, 10] when the step does not specify one', async () => {
@@ -90,7 +92,7 @@ describe('KitSpotlight', () => {
       propsData: { steps: [makeStep(), makeStep(), makeStep()] }
     })
     await flushPromises()
-    expect(wrapper.text()).toContain('1 / 3')
+    expect(content().text()).toContain('1 / 3')
   })
 
   it('navigates to the next step on ArrowRight', async () => {
@@ -100,7 +102,7 @@ describe('KitSpotlight', () => {
     await flushPromises()
     document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight' }))
     await flushPromises()
-    expect(wrapper.text()).toContain('Second')
+    expect(content().text()).toContain('Second')
   })
 
   it('navigates to the next step on Enter', async () => {
@@ -110,7 +112,7 @@ describe('KitSpotlight', () => {
     await flushPromises()
     document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }))
     await flushPromises()
-    expect(wrapper.text()).toContain('Second')
+    expect(content().text()).toContain('Second')
   })
 
   it('navigates back to the previous step on ArrowLeft', async () => {
@@ -122,7 +124,7 @@ describe('KitSpotlight', () => {
     await flushPromises()
     document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowLeft' }))
     await flushPromises()
-    expect(wrapper.text()).toContain('First')
+    expect(content().text()).toContain('First')
   })
 
   it('does not navigate when the ctrl key is held', async () => {
@@ -132,8 +134,8 @@ describe('KitSpotlight', () => {
     await flushPromises()
     document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight', ctrlKey: true }))
     await flushPromises()
-    expect(wrapper.text()).toContain('First')
-    expect(wrapper.text()).not.toContain('Second')
+    expect(content().text()).toContain('First')
+    expect(content().text()).not.toContain('Second')
   })
 
   it('emits close on Escape', async () => {
@@ -146,7 +148,7 @@ describe('KitSpotlight', () => {
   it('emits close when the Dismiss button is clicked', async () => {
     wrapper = mount(KitSpotlight, { propsData: { steps: [makeStep(), makeStep()] } })
     await flushPromises()
-    const dismiss = wrapper.findAll('button').filter(w => w.text() === 'Dismiss').at(0)
+    const dismiss = content().findAll('button').filter(w => w.text() === 'Dismiss').at(0)
     await dismiss.trigger('click')
     expect(wrapper.emitted('close')).toBeTruthy()
   })
@@ -154,7 +156,7 @@ describe('KitSpotlight', () => {
   it('restores the body position and removes itself from the DOM on unmount', async () => {
     wrapper = mount(KitSpotlight, { propsData: { steps: [makeStep()] } })
     await flushPromises()
-    const el = wrapper.element
+    const el = content().element
     wrapper.unmount()
     wrapper = null
     expect(document.body.style.position).toBe('static')

@@ -8,23 +8,24 @@
       </template>
     </KitButton>
 
-    <Popup
-      ref="menu"
-      :boundaries-element="boundariesElement"
-      :is-open="open"
-      :offset="[0, 4]"
-      :placement="placement"
-      :position-fixed="positionFixed"
-      :target-element="dropdownContainer"
-      with-light-shadows
-      without-arrow
-      @click="onMenuClick">
-      <slot :toggle="onTriggerClick" name="dropdown-menu">
-        <div class="dropdown-menu">
-          <slot :toggle="onTriggerClick" />
-        </div>
-      </slot>
-    </Popup>
+    <Teleport to="body" :disabled="!appendToBody">
+      <Popup
+        :boundaries-element="boundariesElement"
+        :is-open="open"
+        :offset="[0, 4]"
+        :placement="placement"
+        :position-fixed="positionFixed"
+        :target-element="dropdownContainer"
+        with-light-shadows
+        without-arrow
+        @click="onMenuClick">
+        <slot :toggle="onTriggerClick" name="dropdown-menu">
+          <div class="dropdown-menu">
+            <slot :toggle="onTriggerClick" />
+          </div>
+        </slot>
+      </Popup>
+    </Teleport>
   </div>
 </template>
 
@@ -69,7 +70,6 @@ const emit = defineEmits<{
 const open = ref(false)
 const lastOpen = ref(0)
 const DEFAULT_OPEN_TRIGGER_THRESHOLD = 200
-const menu = ref()
 const dropdownContainer = ref<HTMLDivElement>()
 
 const slots = useSlots()
@@ -120,9 +120,6 @@ watch(open, async (current) => {
     await nextTick()
     document.addEventListener('click', onOutsideClick)
     document.addEventListener('keydown', onKeyDown)
-    if (props.appendToBody && menu.value) {
-      document.body.appendChild(menu.value.$el)
-    }
     emit('open')
   } else {
     emit('close')

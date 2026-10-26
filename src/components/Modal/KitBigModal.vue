@@ -115,8 +115,10 @@ onBeforeUnmount(() => {
 .kit-modal__header-title {
   padding: 0 10px 0 20px;
 }
-
-.kit-modal :deep(header) {
+</style>
+<style>
+/* KitModal teleports its root to body, so a scoped selector cannot reach it */
+.kit-big-modal.kit-modal header {
   display: block;
 }
 </style>

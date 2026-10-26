@@ -13,21 +13,23 @@
       @stop-editing="onStopEditing"
       @save-requested="onSaveRequested">
       <template #editor="editProps">
-        <div class="kit-markdown-editable-renderer__editor-container" ref="markdownEditorRef">
-          <div class="kit-markdown-editable-renderer__editor">
-            <KitMarkdownEditor
-              auto-focus
-              :placeholder="placeholder"
-              :model-value="editProps.value"
-              :size-limit="sizeLimit"
-              :toolbar="toolbar"
-              :min-height="minHeight"
-              @ctrl-enter="onCtrlEnter(editProps.confirm)"
-              @update:model-value="onInput(editProps.input, $event)"
-              @focus="editProps.focus"
-              @blur="onBlur(editProps.blur, $event)" />
+        <Teleport to="body">
+          <div class="kit-markdown-editable-renderer__editor-container" ref="markdownEditorRef">
+            <div class="kit-markdown-editable-renderer__editor">
+              <KitMarkdownEditor
+                auto-focus
+                :placeholder="placeholder"
+                :model-value="editProps.value"
+                :size-limit="sizeLimit"
+                :toolbar="toolbar"
+                :min-height="minHeight"
+                @ctrl-enter="onCtrlEnter(editProps.confirm)"
+                @update:model-value="onInput(editProps.input, $event)"
+                @focus="editProps.focus"
+                @blur="onBlur(editProps.blur, $event)" />
+            </div>
           </div>
-        </div>
+        </Teleport>
       </template>
       <template #default>
         <span ref="placeholderRef" @click="contentClicked">
@@ -191,10 +193,6 @@ async function positionEditor() {
       positionEditor()
     }
   } else {
-    if (markdownEditorRef.value.parentElement !== document.body) {
-      document.body.appendChild(markdownEditorRef.value)
-    }
-
     if (!triggerIsVisible.value) {
       setStyles(markdownEditorRef.value, { display: 'none' })
     }
@@ -246,7 +244,6 @@ async function positionEditor() {
 
 function cleanUp() {
   cleanupTable()
-  markdownEditorRef.value?.remove()
 }
 
 let width = 0
@@ -317,9 +314,6 @@ function onSaveRequested(value: string, callback) {
 
 onBeforeUnmount(() => {
   isUnmounted = true
-  if (markdownEditorRef.value) {
-    markdownEditorRef.value.remove()
-  }
   resizeObserver.disconnect()
 })
 </script>

@@ -1,5 +1,9 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount as baseShallowMount } from '@vue/test-utils'
 import KitModal from '@components/Modal/KitModal.vue'
+
+// KitModal teleports to body: stub Teleport so wrapper.find() can see the content
+const shallowMount = (component, options = {}) =>
+  baseShallowMount(component, { ...options, global: { stubs: { teleport: true } } })
 
 describe('KitModal', () => {
   it('renders with default props', () => {

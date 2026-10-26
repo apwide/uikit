@@ -67,10 +67,18 @@ describe('KitSelectMenu', () => {
     expect(component.emitted('mouseover')).toEqual([[0]])
   })
 
-  it('appends the menu to the document body when appendToBody is true', () => {
-    const appendChild = vi.spyOn(document.body, 'appendChild')
+  it('requests a popper position update when appendToBody is true', () => {
+    vi.useFakeTimers()
     const component = shallowMount(KitSelectMenu, { propsData: { appendToBody: true } })
-    expect(appendChild).toHaveBeenCalledWith(component.element)
+    vi.runAllTimers()
+    expect(component.emitted('update-popper-position')).toBeTruthy()
+    vi.useRealTimers()
+  })
+
+  it('does not move the menu itself when appendToBody is true (KitSelect teleports it)', () => {
+    const appendChild = vi.spyOn(document.body, 'appendChild')
+    shallowMount(KitSelectMenu, { propsData: { appendToBody: true } })
+    expect(appendChild).not.toHaveBeenCalled()
     appendChild.mockRestore()
   })
 
