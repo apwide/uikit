@@ -1,0 +1,21 @@
+import{f as p,j as m,k as t,d as u,s as C,t as d,A as l}from"./vue.esm-bundler-Bq7iw15p.js";import{I as _}from"./IconWrapper-BpnstkGd.js";import{_ as L}from"./_plugin-vue_export-helper-DlAUqK2U.js";const i={},f={viewBox:"0 0 17 20",xmlns:"http://www.w3.org/2000/svg"};function g(s,o){return p(),m("svg",f,[...o[0]||(o[0]=[t("g",{id:"Web",stroke:"none","stroke-width":"1",fill:"none","fill-rule":"evenodd"},[t("g",{id:"Artboard",transform:"translate(-182.000000, -20.000000)",fill:"currentColor"},[t("path",{id:"trash",d:"M187.409091,26.1538462 C187.836667,26.1538462 188.181818,26.4974359 188.181818,26.9230769 L188.181818,36.1538462 C188.181818,36.5794872 187.836667,36.9230769 187.409091,36.9230769 C186.981515,36.9230769 186.636364,36.5794872 186.636364,36.1538462 L186.636364,26.9230769 C186.636364,26.4974359 186.981515,26.1538462 187.409091,26.1538462 Z M190.5,26.1538462 C190.922424,26.1538462 191.272727,26.4974359 191.272727,26.9230769 L191.272727,36.1538462 C191.272727,36.5794872 190.922424,36.9230769 190.5,36.9230769 C190.072424,36.9230769 189.727273,36.5794872 189.727273,36.1538462 L189.727273,26.9230769 C189.727273,26.4974359 190.072424,26.1538462 190.5,26.1538462 Z M192.818182,26.9230769 C192.818182,26.4974359 193.168485,26.1538462 193.590909,26.1538462 C194.018485,26.1538462 194.363636,26.4974359 194.363636,26.9230769 L194.363636,36.1538462 C194.363636,36.5794872 194.018485,36.9230769 193.590909,36.9230769 C193.168485,36.9230769 192.818182,36.5794872 192.818182,36.1538462 L192.818182,26.9230769 Z M195.909091,38.2086869 C195.909091,38.3452267 195.797091,38.4615385 195.654545,38.4615385 L185.345455,38.4615385 C185.208,38.4615385 185.090909,38.3452267 185.090909,38.2086869 L185.090909,24.6153846 L195.909091,24.6153846 L195.909091,38.2086869 Z M188.181818,21.8461538 C188.181818,21.68 188.30204,21.5384615 188.443169,21.5384615 L192.556831,21.5384615 C192.703187,21.5384615 192.818182,21.68 192.818182,21.8461538 L192.818182,23.0769231 L188.181818,23.0769231 L188.181818,21.8461538 Z M198.247344,22.8292181 L194.167946,22.8292181 L194.167946,21.8004115 C194.167946,20.8076132 193.380165,20 192.411747,20 L188.46281,20 C187.494392,20 186.706612,20.8076132 186.706612,21.8004115 L186.706612,22.8292181 L182.752656,22.8292181 C182.341204,22.8292181 182,23.1738683 182,23.600823 C182,24.0277778 182.341204,24.372428 182.752656,24.372428 L183.630756,24.372428 L183.630756,38.1995885 C183.630756,39.1923868 184.418536,40 185.386954,40 L195.547816,40 C196.516234,40 197.304014,39.1923868 197.304014,38.1995885 L197.304014,24.372428 L198.247344,24.372428 C198.663813,24.372428 199,24.0277778 199,23.600823 C199,23.1738683 198.663813,22.8292181 198.247344,22.8292181 Z"})])],-1)])])}const I=L(i,[["render",g]]);i.__docgenInfo={displayName:"Trash",description:"",tags:{},sourceFiles:["/home/runner/work/uikit/uikit/stories/assets/svgs/Trash.vue"]};const r=u({__name:"CustomIcon.story",setup(s){return(o,v)=>(p(),C(_,{size:"small"},{default:d(()=>[l(I)]),_:1}))}});r.__docgenInfo={exportName:"default",displayName:"CustomIcon.story",description:"",tags:{},sourceFiles:["/home/runner/work/uikit/uikit/stories/Icons/CustomIcon.story.vue"]};const h=`<template>
+  <KitIconWrapper size="small">
+    <Trash />
+  </KitIconWrapper>
+</template>
+
+<script setup lang="ts">
+import KitIconWrapper from '@components/Icon/IconWrapper.vue'
+import Trash from '../assets/svgs/Trash.vue'
+<\/script>
+`,M={title:"Icons",component:r,parameters:{docs:{source:{code:h}}}},k=s=>({components:{Comp:r},setup(){return{args:s}},template:'<Comp v-bind="args" />'}),e=k.bind({});var n,a,c;e.parameters={...e.parameters,docs:{...(n=e.parameters)==null?void 0:n.docs,source:{originalSource:`args => ({
+  components: {
+    Comp
+  },
+  setup() {
+    return {
+      args
+    };
+  },
+  template: '<Comp v-bind="args" />'
+})`,...(c=(a=e.parameters)==null?void 0:a.docs)==null?void 0:c.source}}};const W=["CustomIcon"];export{e as CustomIcon,W as __namedExportsOrder,M as default};

@@ -1,0 +1,1 @@
+const t={decorators:[e=>({components:{story:e},template:'<div style="padding: 20px;"><story/></div>'})],parameters:{actions:{argTypesRegex:"^on[A-Z].*"},docs:{inlineStories:!0}}};export{t as default};
