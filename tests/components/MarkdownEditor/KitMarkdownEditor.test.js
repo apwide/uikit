@@ -93,17 +93,14 @@ describe('KitMarkdownEditor', () => {
     wrapper.unmount()
   })
 
-  it('replaces the heading toolbar entry with a headings dropdown when not readonly', async () => {
+  it('uses embedded svg icons instead of downloading Font Awesome from a CDN', async () => {
     const { wrapper, instance } = await mountEditor()
     const toolbar = instance.options.toolbar
+    expect(instance.options.autoDownloadFontAwesome).toBe(false)
     const headingEntry = toolbar.find(item => item && item.name === 'others')
-    expect(headingEntry).toEqual({
-      name: 'others',
-      className: 'fa fa-header',
-      title: 'Headings',
-      children: ['heading-1', 'heading-2', 'heading-3']
-    })
-    expect(toolbar).toContain('bold')
+    expect(headingEntry.children.map(child => child.name)).toEqual(['heading-1', 'heading-2', 'heading-3'])
+    toolbar.filter(item => item !== '|').forEach(item => expect(item.icon).toMatch(/^<svg/))
+    expect(toolbar.find(item => item.name === 'bold')).toBeTruthy()
     wrapper.unmount()
   })
 
