@@ -8,6 +8,18 @@
 import { nextTick, onMounted, onUnmounted, ref, unref, watch, watchEffect } from 'vue'
 import DOMPurify from 'dompurify'
 import EasyMDE from 'easymde'
+import { icon, IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import {
+  faBold,
+  faCode,
+  faEye,
+  faHeading,
+  faImage,
+  faItalic,
+  faLink,
+  faListOl,
+  faListUl
+} from '@fortawesome/free-solid-svg-icons'
 import 'easymde/dist/easymde.min.css'
 import { hasHeadings } from '@components/MarkdownEditor/utils'
 
@@ -63,6 +75,29 @@ const emit = defineEmits<{
 }>()
 
 const modelValue = defineModel<string>({ default: '' })
+
+// Inline SVG icons: EasyMDE's default icons need Font Awesome CSS downloaded from maxcdn.
+const svg = (definition: IconDefinition) => icon(definition).html.join('')
+const toolbarButtons = {
+  bold: { name: 'bold', action: EasyMDE.toggleBold, title: 'Bold', icon: svg(faBold) },
+  italic: { name: 'italic', action: EasyMDE.toggleItalic, title: 'Italic', icon: svg(faItalic) },
+  code: { name: 'code', action: EasyMDE.toggleCodeBlock, title: 'Code', icon: svg(faCode) },
+  'unordered-list': { name: 'unordered-list', action: EasyMDE.toggleUnorderedList, title: 'Generic List', icon: svg(faListUl) },
+  'ordered-list': { name: 'ordered-list', action: EasyMDE.toggleOrderedList, title: 'Numbered List', icon: svg(faListOl) },
+  link: { name: 'link', action: EasyMDE.drawLink, title: 'Create Link', icon: svg(faLink) },
+  image: { name: 'image', action: EasyMDE.drawImage, title: 'Insert Image', icon: svg(faImage) },
+  preview: { name: 'preview', action: EasyMDE.togglePreview, title: 'Toggle Preview', icon: svg(faEye), noDisable: true },
+  heading: {
+    name: 'others',
+    title: 'Headings',
+    icon: svg(faHeading),
+    children: [
+      { name: 'heading-1', action: EasyMDE.toggleHeading1, title: 'Big Heading', icon: svg(faHeading) },
+      { name: 'heading-2', action: EasyMDE.toggleHeading2, title: 'Medium Heading', icon: svg(faHeading) },
+      { name: 'heading-3', action: EasyMDE.toggleHeading3, title: 'Small Heading', icon: svg(faHeading) }
+    ]
+  }
+}
 
 const me = ref<HTMLDivElement>()
 const container = ref<HTMLDivElement>()
@@ -126,17 +161,7 @@ function buildCharacterCounter(limit: number, propsToolbar?: ToolbarItem[]) {
 onMounted(() => {
   let toolbar = null
   if (!props.readonly) {
-    toolbar = props.toolbar.map((item) => {
-      if (item === 'heading') {
-        return {
-          name: 'others',
-          className: 'fa fa-header',
-          title: 'Headings',
-          children: ['heading-1', 'heading-2', 'heading-3']
-        }
-      }
-      return item
-    })
+    toolbar = props.toolbar.map((item) => toolbarButtons[item] ?? item)
   }
 
   const status: unknown[] = [buildCharacterCounter(props.sizeLimit, props.toolbar)]
@@ -152,6 +177,7 @@ onMounted(() => {
     placeholder: props.placeholder,
     status,
     spellChecker: false,
+    autoDownloadFontAwesome: false,
     toolbar,
     renderingConfig: {
       singleLineBreaks: true,
