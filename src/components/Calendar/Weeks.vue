@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table @keydown="onKeyDown">
     <thead class="kit-calendar-weeks">
       <th v-for="weekday in weekdays" :key="weekday" class="kit-calendar-weeks__weekday">
         {{ weekday }}
@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { addDays, addMonths, endOfWeek, startOfWeek } from 'date-fns'
 import type { CalendarDate } from '@components/Calendar/CalendarType'
 import Day from './Day.vue'
 
@@ -23,16 +24,37 @@ type Props = {
   weeks: Array
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   (event: 'date-selected', data: CalendarDate)
+  (event: 'navigate', data: Date)
 }>()
 
 const weekdays = WEEKDAYS_LABELS
 
 function onDateSelected(date: CalendarDate) {
   emit('date-selected', date)
+}
+
+// WAI-ARIA date picker grid: the days are one Tab stop, the keys move the focused day
+const MOVES: Record<string, (date: Date) => Date> = {
+  ArrowLeft: (d) => addDays(d, -1),
+  ArrowRight: (d) => addDays(d, 1),
+  ArrowUp: (d) => addDays(d, -7),
+  ArrowDown: (d) => addDays(d, 7),
+  Home: (d) => startOfWeek(d),
+  End: (d) => endOfWeek(d),
+  PageUp: (d) => addMonths(d, -1),
+  PageDown: (d) => addMonths(d, 1)
+}
+
+function onKeyDown(e: KeyboardEvent) {
+  const move = MOVES[e.key]
+  const tabStop = props.weeks.flat().find((day) => day.isTabStop)
+  if (!move || !tabStop) return
+  e.preventDefault()
+  emit('navigate', move(tabStop.date))
 }
 
 </script>

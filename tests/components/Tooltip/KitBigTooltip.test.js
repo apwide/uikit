@@ -54,6 +54,35 @@ describe('KitBigTooltip', () => {
     expect(component.vm.$props.placement).toBe('left')
   })
 
+  // WCAG 1.4.13 (accessibility audit finding F-019)
+  it('shows on keyboard focus and hides when focus leaves', async () => {
+    const component = shallowMount(KitBigTooltip, { slots: { trigger: '<button>Chip</button>' } })
+    await component.find('button').trigger('focusin')
+    expect(component.findComponent(KitBigTooltipContent).exists()).toBe(true)
+    await component.find('span').trigger('focusout', { relatedTarget: null })
+    expect(component.findComponent(KitBigTooltipContent).exists()).toBe(false)
+  })
+
+  it('stays open while focus moves inside the trigger', async () => {
+    const component = shallowMount(KitBigTooltip, {
+      slots: { trigger: '<button class="a">A</button><button class="b">B</button>' }
+    })
+    await component.find('.a').trigger('focusin')
+    await component.find('span').trigger('focusout', { relatedTarget: component.find('.b').element })
+    expect(component.findComponent(KitBigTooltipContent).exists()).toBe(true)
+  })
+
+  it('hides on Escape', async () => {
+    const component = shallowMount(KitBigTooltip, { slots: { trigger: '<button>Chip</button>' } })
+    await component.find('span').trigger('mouseenter')
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    await component.vm.$nextTick()
+    expect(component.findComponent(KitBigTooltipContent).exists()).toBe(false)
+    // the pointer leaving the trigger afterwards must not throw
+    await component.find('span').trigger('mouseleave')
+    component.unmount()
+  })
+
   it('passes placement to KitBigTooltipContent', async () => {
     const component = shallowMount(KitBigTooltip, {
       propsData: { placement: 'left' },

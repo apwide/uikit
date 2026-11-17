@@ -25,6 +25,7 @@
     "cypress:test": "wait-on http://localhost:9001 && cypress run",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
+    "cypress:docker": "docker run --rm --network host -u $(id -u):$(id -g) -e HOME=/tmp -v \"$PWD\":/e2e -w /e2e cypress/included:15.20.0",
     "prepublishOnly": "npm run build",
     "prepare": "husky install"
   },

@@ -3,6 +3,8 @@ export type Column = {
   width?: number
   sortable?: boolean
   name?: string
+  // visually hidden header text for a column without a name (e.g. 'Actions')
+  label?: string
 }
 
 export type BasicRow = {

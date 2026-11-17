@@ -1,5 +1,6 @@
 <template>
   <div ref="datePicker" class="kit-date-picker" @click.stop>
+    <span :id="partId" hidden>date</span>
     <KitTextField
       :is-focused="focused"
       :is-loading="isLoading"
@@ -14,7 +15,7 @@
         width="50%"
         placeholder="e.g. 31/12/2018"
         :disabled="disabled || isLoading"
-        v-bind="forwardedAttrs"
+        v-bind="{ ...fieldGroupAttrs, ...forwardedAttrs }"
         @keydown.enter="onEnter"
         @input="onInput"
         @keyup.esc="onEsc"
@@ -22,7 +23,12 @@
         @blur="onBlur" />
       <KitIcon type="calendar-alt" icon-style="regular" class="kit-icon" />
     </KitTextField>
-    <Popup :is-open="isOpen" :target-element="datePicker" placement="bottom-start" data-cy="select-menu">
+    <Popup
+      :is-open="isOpen"
+      :target-element="datePicker"
+      placement="bottom-start"
+      data-cy="select-menu"
+      @keyup.esc="closeToInput">
       <Calendar
         :value="selectedDate"
         :disabled-range="disabledRange"
@@ -39,7 +45,9 @@ import { computed, ref, useAttrs } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup.vue'
+import { useFieldGroupAttrs } from '../Form/fieldGroup'
 import KitIcon from '../Icon/KitIcon.vue'
+import { uniqueId } from '@/utils/dom'
 import Calendar from './Calendar.vue'
 
 const MILISECONDS_IN_SECOND = 1000
@@ -87,6 +95,9 @@ const formattedDate = computed(() => {
 })
 
 const attrs = useAttrs()
+// named "<field group label> date" (WCAG 3.3.2: the placeholder is only a format hint)
+const partId = uniqueId()
+const fieldGroupAttrs = useFieldGroupAttrs(attrs, partId)
 const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { onFocus, onBlur, onInput, ...rest } = attrs
@@ -132,8 +143,18 @@ function toggle() {
   isOpen.value = !isOpen.value
 }
 
-function onEsc() {
+function onEsc(e: KeyboardEvent) {
+  if (!isOpen.value) return
+  e.stopPropagation()
   isOpen.value = false
+}
+
+// Escape closes the calendar only, not an enclosing dialog (listeners on keyup, e.g. golive FullScreen);
+// in the calendar, focus goes back to the field
+function closeToInput(e: KeyboardEvent) {
+  e.stopPropagation()
+  isOpen.value = false
+  input.value.focus()
 }
 
 function onEnter(e) {

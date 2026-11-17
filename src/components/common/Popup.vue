@@ -7,7 +7,7 @@
     :boundaries-element="boundariesElement"
     :position-fixed="positionFixed"
     spotlight-skip>
-    <div class="kit-popup" role="tooltip" :data-light-shadows="withLightShadows || undefined">
+    <div :role="role" class="kit-popup" :data-light-shadows="withLightShadows || undefined">
       <slot />
       <div v-if="!withoutArrow" class="kit-popup-arrow" data-popper-arrow />
     </div>
@@ -29,6 +29,8 @@ type Props = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   boundariesElement?: string | HTMLElement | Function
   positionFixed?: boolean
+  // null: no role (content that is neither a tooltip nor a menu)
+  role?: string | null
 }
 
 withDefaults(defineProps<Props>(), {
@@ -40,7 +42,8 @@ withDefaults(defineProps<Props>(), {
   offset: () => [0, 5],
   transitionDelay: 0,
   boundariesElement: 'viewport',
-  positionFixed: false
+  positionFixed: false,
+  role: 'tooltip'
 })
 </script>
 

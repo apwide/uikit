@@ -32,6 +32,14 @@
           :style="{ width: currentWidth }"
           :value="search"
           class="kit-select__search"
+          role="combobox"
+          aria-autocomplete="list"
+          v-bind="fieldGroupAttrs"
+          :aria-expanded="shouldOpenMenu"
+          :aria-controls="shouldOpenMenu && hasSuggestions ? listboxId : undefined"
+          :aria-activedescendant="
+            shouldOpenMenu && currentSuggestionIndex !== undefined ? `${listboxId}-${currentSuggestionIndex}` : undefined
+          "
           @blur="onBlur"
           @focus="onFocus"
           @input="onInput"
@@ -73,6 +81,7 @@
           :contains-query="!!search"
           :current-suggestion-index="currentSuggestionIndex"
           :has-suggestions="hasSuggestions"
+          :listbox-id="listboxId"
           :is-fetching="isFetching"
           :no-options-message="noOptionsMessage"
           :options="suggestions"
@@ -96,7 +105,9 @@
 import { computed, nextTick, ref, unref, watch } from 'vue'
 import { Value } from '@components/Select/types'
 import KitTextField from '../Form/KitTextField.vue'
+import { useFieldGroupAttrs } from '../Form/fieldGroup'
 import Popper from '../Popper/Popper.vue'
+import { uniqueId } from '@/utils/dom'
 import KitSelectMenu from './KitSelectMenu.vue'
 import Tag from './Tag.vue'
 import Icons from './Icons.vue'
@@ -133,6 +144,7 @@ type Props = {
   dropdownWidth?: number
   selectFirstEntry?: boolean
   allowTabToSelect?: boolean
+  blurOnSelect?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -168,7 +180,9 @@ const props = withDefaults(defineProps<Props>(), {
   keepFilterOnSelect: false,
   confirm: true,
   selectFirstEntry: false,
-  allowTabToSelect: false
+  allowTabToSelect: false,
+  // with confirm=false, inline edits save on blur; plain pickers set false to keep keyboard focus
+  blurOnSelect: true
 })
 
 const emit = defineEmits<{
@@ -184,6 +198,8 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<string | number | string[] | number[] | object | object[]>()
 
+const listboxId = uniqueId()
+const fieldGroupAttrs = useFieldGroupAttrs()
 const isOpen = ref(false)
 const search = ref('')
 const focused = ref(false)
@@ -313,7 +329,7 @@ async function onOptionSelected(option: Value<unknown>) {
   focused.value = true
   const s = props.multi ? [...selected.value.map((e) => e.value), option.value] : option.value
   modelValue.value = s
-  if (!props.confirm && inputRef.value) {
+  if (!props.confirm && props.blurOnSelect && inputRef.value) {
     await nextTick()
     inputRef.value?.blur()
   }

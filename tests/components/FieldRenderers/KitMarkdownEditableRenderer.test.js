@@ -46,6 +46,8 @@ describe('KitMarkdownEditableRenderer', () => {
     const inlineEdit = component.findComponent(KitInlineEdit)
     expect(inlineEdit.props('blurToSave')).toBe(true)
     expect(inlineEdit.props('forceIsEditing')).toBe(true)
+    // cancels the delayed forced edit, which would otherwise outlive the test
+    component.unmount()
   })
 
   it('renders a plain readonly KitMarkdownEditor when editable is false', () => {

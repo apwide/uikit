@@ -3,6 +3,8 @@
     ref="optionRef"
     :selected="isSelected || undefined"
     class="kit-select-option"
+    role="option"
+    :aria-selected="isSelected"
     :current="current || undefined"
     @click.stop="onOptionSelected"
     @mouseover="onMouseOver">

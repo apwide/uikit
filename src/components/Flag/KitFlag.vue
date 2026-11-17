@@ -1,6 +1,6 @@
 <template>
   <transition :name="leaveLeft ? 'flag-left' : 'flag'" appear @after-leave="emit('close')">
-    <div v-if="visible" class="kit-flag" :appearance="appearance">
+    <div v-if="visible" class="kit-flag" :appearance="appearance" :role="isUrgent ? 'alert' : 'status'">
       <div class="header">
         <div class="icon">
           <CheckCircleIcon v-if="flag.name === 'success'" :primary-color="flag.primary" :secondary-color="flag.secondary" class="icon" />
@@ -67,6 +67,7 @@ const emit = defineEmits<{
 }>()
 
 const visible = ref(true)
+const isUrgent = computed(() => [props.appearance, props.type].some((t) => t === 'error' || t === 'warning'))
 const expanded = ref(false)
 const color = computed(() => {
   switch (props.type) {

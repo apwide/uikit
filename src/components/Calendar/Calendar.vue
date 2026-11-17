@@ -13,7 +13,8 @@
       v-if="currentInterval === 'days'"
       :weeks="weeks"
       :disabled-range="disabledRange"
-      @date-selected="onDateSelected" />
+      @date-selected="onDateSelected"
+      @navigate="onNavigate" />
     <Months
       v-else-if="currentInterval === 'months'"
       :disabled-range="disabledRange"
@@ -41,7 +42,7 @@ import {
   setMonth
 } from 'date-fns'
 import { toZonedTime, fromZonedTime } from 'date-fns-tz'
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import type { CalendarDate, DateRange } from '@components/Calendar/CalendarType'
 import { chunk } from '../../utils/utils'
 import CalendarHeader from './CalendarHeader.vue'
@@ -90,6 +91,18 @@ const emit = defineEmits<{
 const currentDate = ref<Date | number>()
 const selectedDate = ref<Date | number>()
 const currentInterval = ref('days')
+const calendar = ref<HTMLDivElement>()
+// day moved to with the keyboard; the grid's only Tab stop is this day, else the selected day, today, or the 1st
+const focusDate = ref<Date>()
+const tabStopDate = computed(() => {
+  const inMonth = (d) => d && isSameMonth(d, currentDate.value)
+  const today = toZonedTime(new Date(), props.timeZone)
+  const candidate = [focusDate.value, selectedDate.value, today].find(inMonth) || startOfMonth(currentDate.value)
+  if (!isDisabled(candidate)) return candidate
+  return eachDayOfInterval({ start: startOfMonth(currentDate.value), end: endOfMonth(currentDate.value) }).find(
+    (d) => !isDisabled(d)
+  )
+})
 
 const daysOfMonth = computed(() => {
   const monthFirstDate = startOfMonth(currentDate.value)
@@ -151,7 +164,8 @@ function enrichDay(date) {
     isDisabled: isDisabled(date),
     isHighlighted: isHighlighted(date),
     isRangeStart: isSameDay(date, rangeFrom.value),
-    isRangeEnd: isSameDay(date, rangeTo.value)
+    isRangeEnd: isSameDay(date, rangeTo.value),
+    isTabStop: isSameDay(date, tabStopDate.value)
   }
 }
 
@@ -215,6 +229,16 @@ function onDateSelected(day: CalendarDate) {
   currentDate.value = date
   const utcDate = fromZonedTime(date, props.timeZone)
   emit('date-selected', utcDate)
+}
+
+// shortcut: a disabled target day is not skipped, the key does nothing (disabled ranges are bounds, so further days
+// in that direction are disabled too)
+async function onNavigate(date: Date) {
+  if (isDisabled(date)) return
+  focusDate.value = date
+  currentDate.value = date
+  await nextTick()
+  calendar.value?.querySelector<HTMLElement>('.kit-calendar-day [tabindex="0"]')?.focus()
 }
 
 function onIntervalChange(interval) {

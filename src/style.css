@@ -36,8 +36,8 @@ body {
     --kit-btn-link-text: #0052cc;
     --kit-btn-link-hover-bg: #0065ff;
     --kit-btn-link-active-text: #0747a6;
-    --kit-btn-subtle-link-text: #6b778c;
-    --kit-btn-subtle-link-hover-text: #8993a4;
+    --kit-btn-subtle-link-text: #505f79;
+    --kit-btn-subtle-link-hover-text: #42526e;
     --kit-btn-subtle-link-active-text: #505f79;
     --kit-btn-subtle-bg: none;
     --kit-btn-subtle-text: #505f79;
@@ -62,7 +62,7 @@ body {
     --kit-btn-help-active-bg: #352a8dff;
     --kit-btn-help-active-text: #ffffff;
 
-    --kit-select-placeholder: rgb(122, 134, 154);
+    --kit-select-placeholder: #505f79;
     --kit-select-ghost-bg-color: #ffffff;
     --kit-select-menu-bg-color: rgb(255, 255, 255);
     --kit-select-option-selected-bg: #42526e;
@@ -109,8 +109,9 @@ body {
     --kit-popup-bg-color: var(--kit-page-bg);
     --kit-popup-light-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
 
-    --kit-text-field-placeholder-color: #7a869a;
-    --kit-text-field-border-color: var(--kit-input-border);
+    --kit-text-field-placeholder-color: #505f79;
+    /* WCAG 1.4.11: field boundary 3:1 or more on white and light grey pages (#dfe1e6 was 1.3:1) */
+    --kit-text-field-border-color: #7a869a;
     --kit-text-field-text-color: #091e42;
     --kit-text-field-bg-color: #fafbfc;
     --kit-text-field-hover-color: #ebecf0;
@@ -120,9 +121,9 @@ body {
     --kit-text-field-active-border-color: #4c9aff;
     --kit-text-field-loading-bg-color: white;
     --kit-text-field-select-bg-color: #f4f5f7;
-    --kit-text-field-select-border-color: #f4f5f7;
+    --kit-text-field-select-border-color: var(--kit-text-field-border-color);
     --kit-text-field-select-hover-color: #ebecf0;
-    --kit-text-field-select-hover-border-color: #ebecf0;
+    --kit-text-field-select-hover-border-color: var(--kit-text-field-border-color);
 
     --kit-table-bg-color: var(--kit-page-bg);
     --kit-table-busy-bg-color: rgba(255, 255, 255, 0.5);

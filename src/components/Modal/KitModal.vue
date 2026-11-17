@@ -8,6 +8,9 @@
               ref="form"
               :no-padding="noPadding || undefined"
               class="kit-modal kit-modal-container"
+              role="dialog"
+              aria-modal="true"
+              tabindex="-1"
               novalidate
               @submit.prevent="onSubmit">
               <slot>
@@ -41,11 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue'
 import KitPositionerAbsolute from '@components/Modal/PositionerAbsolute.vue'
 import KitFooter from '@components/Modal/Footer.vue'
 import KitHeader from '@components/Modal/Header.vue'
 import KitBlanket from '@components/Modal/Blanket.vue'
+import { uniqueId } from '@/utils/dom'
 export type Props = {
   heading?: string
   appearance?: string
@@ -86,8 +90,55 @@ const emit = defineEmits<{
   (event: 'submit')
 }>()
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), ' +
+  'textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable="true"]'
+
 const blanket = ref()
+const form = ref<HTMLFormElement>()
 const lastInitTime = ref(0)
+let opener: HTMLElement | null = null
+
+function focusables(root: HTMLElement): HTMLElement[] {
+  return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE)).filter((el) => el.getClientRects().length > 0)
+}
+
+function isTopmost() {
+  const dialogs = document.querySelectorAll('.kit-modal-container')
+  return dialogs[dialogs.length - 1] === form.value
+}
+
+// keeps Tab inside the topmost dialog (WAI-ARIA modal dialog pattern)
+function onTab(e: KeyboardEvent) {
+  const dialog = form.value
+  if (e.key !== 'Tab' || !dialog || !isTopmost()) {
+    return
+  }
+  const items = focusables(dialog)
+  if (!items.length) {
+    e.preventDefault()
+    dialog.focus()
+    return
+  }
+  const first = items[0]
+  const last = items[items.length - 1]
+  const active = document.activeElement
+  if (!dialog.contains(active) || (e.shiftKey ? active === first || active === dialog : active === last)) {
+    e.preventDefault()
+    ;(e.shiftKey ? last : first).focus()
+  }
+}
+
+async function focusOnOpen() {
+  await nextTick()
+  const dialog = form.value
+  if (!dialog || dialog.contains(document.activeElement)) {
+    return
+  }
+  const content = dialog.querySelector<HTMLElement>('.kit-content')
+  const [firstField] = content ? focusables(content) : []
+  ;(firstField || dialog).focus()
+}
 const currentWidth = computed(() => props.width)
 
 function onEsc(e) {
@@ -128,9 +179,24 @@ onMounted(() => {
    */
   blanket.value.$el.addEventListener('mousedown', onMousedown)
   blanket.value.$el.addEventListener('mouseup', onMouseup)
+
+  opener = document.activeElement as HTMLElement | null
+  const heading = form.value?.querySelector('h1, h2, h3, h4, h5, h6, [role="heading"]')
+  if (heading) {
+    heading.id ||= uniqueId()
+    form.value.setAttribute('aria-labelledby', heading.id)
+  }
+  document.addEventListener('keydown', onTab)
+  focusOnOpen()
 })
 
 onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onTab)
+  const focusWasInside = !document.activeElement || document.activeElement === document.body ||
+    form.value?.contains(document.activeElement)
+  if (focusWasInside && opener?.isConnected) {
+    opener.focus()
+  }
   document.removeEventListener('keyup', onEsc)
   blanket.value?.$el.removeEventListener('mousedown', onMousedown)
   blanket.value?.$el.removeEventListener('mouseup', onMouseup)
