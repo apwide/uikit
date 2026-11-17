@@ -1,5 +1,6 @@
 <template>
   <div ref="me" class="kit-time-picker" @click.stop>
+    <span :id="partId" hidden>time</span>
     <KitTextField
       :is-focused="focused"
       :is-loading="isLoading"
@@ -15,7 +16,7 @@
         width="50%"
         :placeholder="placeholder"
         :disabled="disabled || isLoading"
-        v-bind="forwardedAttrs"
+        v-bind="{ ...fieldGroupAttrs, ...forwardedAttrs }"
         @input="onInput"
         @keyup.esc="onEsc"
         @focus="onFocus"
@@ -31,6 +32,8 @@
 import { computed, nextTick, ref, useAttrs, watch } from 'vue'
 import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup.vue'
+import { useFieldGroupAttrs } from '../Form/fieldGroup'
+import { uniqueId } from '@/utils/dom'
 import TimePickerMenu from './TimePickerMenu.vue'
 
 type Props = {
@@ -63,6 +66,9 @@ const input = ref<HTMLInputElement>()
 const tempValue = ref()
 
 const attrs = useAttrs()
+// named "<field group label> time" (WCAG 3.3.2: the placeholder is only a format hint)
+const partId = uniqueId()
+const fieldGroupAttrs = useFieldGroupAttrs(attrs, partId)
 const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { onFocus, onBlur, onInput, ...rest } = attrs

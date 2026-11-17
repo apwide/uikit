@@ -19,6 +19,18 @@ describe('TableHeaderCell', () => {
     expect(component.element.tagName).toBe('TH')
   })
 
+  // WCAG 1.3.1 (accessibility audit finding F-013): no empty header for action / drag handle columns
+  it('renders the label of a column without a name as visually hidden header text', () => {
+    const component = shallowMount(TableHeaderCell, { propsData: { column: { id: 'actions', name: '', label: 'Actions' } } })
+    expect(component.element.tagName).toBe('TH')
+    expect(component.find('.kit-table-header-cell__hidden-label').text()).toBe('Actions')
+  })
+
+  it('does not render the label when the column has a name', () => {
+    const component = shallowMount(TableHeaderCell, { propsData: { column: { id: 'n', name: 'Name', label: 'Hidden' } } })
+    expect(component.find('.kit-table-header-cell__hidden-label').exists()).toBe(false)
+  })
+
   it('renders column name by default', () => {
     const component = shallowMount(TableHeaderCell, {
       propsData: { column }

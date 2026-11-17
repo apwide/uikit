@@ -272,11 +272,12 @@ watch(isEditing, (editing) => {
   }
 })
 
+let forceEditTimer: ReturnType<typeof setTimeout>
 watch(
   () => props.forceIsEditing,
   async (forceIsEditing) => {
     if (forceIsEditing) {
-      setTimeout(() => {
+      forceEditTimer = setTimeout(() => {
         onStartEditing()
         isEditing.value = true
       }, 100)
@@ -314,6 +315,8 @@ function onSaveRequested(value: string, callback) {
 
 onBeforeUnmount(() => {
   isUnmounted = true
+  // a pending forced edit would run on the unmounted component (and hang vitest teardown)
+  clearTimeout(forceEditTimer)
   resizeObserver.disconnect()
 })
 </script>

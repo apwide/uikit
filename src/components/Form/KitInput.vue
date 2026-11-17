@@ -6,7 +6,7 @@
       :type="type"
       :placeholder="placeholder"
       :step="step"
-      v-bind="$attrs"
+      v-bind="{ ...fieldGroupAttrs, ...$attrs }"
       :maxlength="maxlength"
       @focus="onFocus"
       @blur="onBlur" />
@@ -14,8 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, ref, useAttrs, watch } from 'vue'
 import KitTextField from './KitTextField.vue'
+import { useFieldGroupAttrs } from './fieldGroup'
+
+const fieldGroupAttrs = useFieldGroupAttrs(useAttrs())
 
 type Props = {
   maxlength?: number

@@ -1,5 +1,7 @@
 <template>
   <div ref="datePicker" class="kit-daterange-picker" @click.stop>
+    <span :id="fromId" hidden>from</span>
+    <span :id="toId" hidden>to</span>
     <KitTextField
       :is-focused="focused"
       :is-loading="isLoading"
@@ -17,7 +19,7 @@
           :placeholder="displayedFromPlaceholder"
           :disabled="isLoading"
           :readonly="disabledTyping"
-          v-bind="forwardedAttrs"
+          v-bind="{ ...fromGroupAttrs, ...forwardedAttrs }"
           @keydown.enter="onEnter"
           @input="onInputFrom"
           @keyup.esc="onEsc"
@@ -33,7 +35,7 @@
         :placeholder="displayedToPlaceholder"
         :disabled="isLoading"
         :readonly="disabledTyping"
-        v-bind="forwardedAttrs"
+        v-bind="{ ...toGroupAttrs, ...forwardedAttrs }"
         @keydown.enter="onEnter"
         @input="onInputTo"
         @keyup.esc="onEsc"
@@ -90,9 +92,11 @@ import { computed, nextTick, ref, useAttrs, watch } from 'vue'
 import type { DateRange } from '@components/Calendar/CalendarType'
 import KitTextField from '../Form/KitTextField.vue'
 import Popup from '../common/Popup.vue'
+import { useFieldGroupAttrs } from '../Form/fieldGroup'
 import KitDropdownItem from '../Dropdown/KitDropdownItem.vue'
 import DropdownGroup from '../Dropdown/KitDropdownGroup.vue'
 import KitIcon from '../Icon/KitIcon.vue'
+import { uniqueId } from '@/utils/dom'
 import Calendar from './Calendar.vue'
 
 const MILISECONDS_IN_SECOND = 1000
@@ -205,6 +209,11 @@ const dateRange = computed(() => {
 })
 
 const attrs = useAttrs()
+// named "<field group label> from" / "... to" (WCAG 3.3.2: the placeholders are only hints)
+const fromId = uniqueId()
+const toId = uniqueId()
+const fromGroupAttrs = useFieldGroupAttrs(attrs, fromId)
+const toGroupAttrs = useFieldGroupAttrs(attrs, toId)
 const forwardedAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { onFocus, onBlur, onInput, ...rest } = attrs

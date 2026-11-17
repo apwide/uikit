@@ -2,9 +2,11 @@
   <th :sortable="column.sortable || undefined" :style="style" class="kit-table-header-cell" @click="onClick">
     <span class="kit-table-header-cell__label-wrapper">
       <slot v-if="slots.header" name="header" :column="column" />
-      <span v-else>
+      <span v-else-if="column.name">
         {{ column.name }}
       </span>
+      <!-- a column without a title (actions, drag handle) still needs header text for screen readers (WCAG 1.3.1) -->
+      <span v-else-if="column.label" class="kit-table-header-cell__hidden-label">{{ column.label }}</span>
       <template v-if="column.sortable">
         <ChevronDownIcon v-if="sorted && sortedDesc" size="small" />
         <ChevronUpIcon v-if="sorted && !sortedDesc" size="small" />
@@ -66,6 +68,15 @@ th {
 th[sortable]:hover {
   background-color: var(--kit-table-row-hover-color);
   cursor: pointer;
+}
+
+.kit-table-header-cell__hidden-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .kit-table-header-cell__label-wrapper {

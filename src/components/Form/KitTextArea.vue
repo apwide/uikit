@@ -3,7 +3,7 @@
     <textarea
       ref="textarea"
       v-model="text"
-      v-bind="forwardedAttrs"
+      v-bind="{ ...fieldGroupAttrs, ...forwardedAttrs }"
       :rows="rows"
       :disabled="isLoading"
       :style="{ height: currentHeight, width, maxHeight }"
@@ -18,6 +18,9 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, useAttrs, watch } from 'vue'
 import KitTextField from './KitTextField.vue'
+import { useFieldGroupAttrs } from './fieldGroup'
+
+const fieldGroupAttrs = useFieldGroupAttrs(useAttrs())
 
 const ENTER = 13
 

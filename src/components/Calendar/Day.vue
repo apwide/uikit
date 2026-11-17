@@ -11,6 +11,9 @@
       :disabled="isDisabled"
       :is-not-same-month="day.isNotSameMonth || undefined"
       :is-selected="day.isSelected"
+      :tabindex="day.isTabStop ? 0 : -1"
+      :aria-label="label"
+      :aria-current="day.isToday ? 'date' : undefined"
       @click.stop="onDateSelected">
       {{ date }}
     </KitButton>
@@ -19,6 +22,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { format } from 'date-fns'
 import type { CalendarDate } from '@components/Calendar/CalendarType'
 import KitButton from '../Button/KitButton.vue'
 
@@ -33,6 +37,8 @@ const emit = defineEmits<{
 }>()
 
 const date = computed(() => props.day.date.getDate())
+// the button shows only the day number
+const label = computed(() => format(props.day.date, 'EEEE d MMMM yyyy'))
 const isDisabled = computed(() => props.day.isDisabled)
 const isHighlighted = computed(() => props.day.isHighlighted)
 const isRangeStart = computed(() => props.day.isRangeStart)

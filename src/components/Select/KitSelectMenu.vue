@@ -1,8 +1,9 @@
 <template>
   <div class="kit-select-menu" tabindex="-1" @mousedown.prevent>
-    <div class="kit-select-menu-inner">
+    <div :id="listboxId" :role="hasSuggestions ? 'listbox' : undefined" class="kit-select-menu-inner">
       <KitSelectOption
         v-for="(item, index) in options"
+        :id="listboxId && `${listboxId}-${index}`"
         :key="`${item.id}-${index}`"
         :selected-id="selectedId"
         :option="item"
@@ -41,6 +42,7 @@ type Props = {
   appendToBody: boolean
   noOptionsMessage?: string
   placeholder?: string
+  listboxId?: string
 }
 
 const props = defineProps<Props>()

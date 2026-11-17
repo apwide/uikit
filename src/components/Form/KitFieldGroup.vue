@@ -1,24 +1,41 @@
 <template>
   <div class="kit-field-group">
     <div class="top">
-      <span class="kit-field-group__label">{{ label }}</span
+      <span :id="labelId" class="kit-field-group__label">{{ label }}</span
       ><slot name="after" />
     </div>
     <slot />
-    <div v-for="error in errors" ref="error" :key="error" class="kit-field-group__error-message">
-      {{ error }}
+    <div :id="errorsId" role="alert">
+      <div v-for="error in visibleErrors" ref="error" :key="error" class="kit-field-group__error-message">
+        {{ error }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, useAttrs } from 'vue'
+import { uniqueId } from '@/utils/dom'
+import { provideFieldGroup } from './fieldGroup'
 
 type Props = {
   label?: string
   errors?: Array
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+const id = uniqueId()
+const errorsId = `${id}-errors`
+const visibleErrors = computed(() => (props.errors || []).filter(Boolean))
+const labelId = computed(() => (props.label ? id : undefined))
+// the label span is not a <label for>: fields inside the group name themselves with aria-labelledby
+const attrs = useAttrs()
+provideFieldGroup({
+  labelId,
+  errorId: computed(() => (visibleErrors.value.length ? errorsId : undefined)),
+  // `required` is a plain attribute on the group (it drives the asterisk CSS)
+  required: computed(() => attrs.required !== undefined && attrs.required !== false)
+})
 </script>
 
 <style scoped>
@@ -58,5 +75,7 @@ defineProps<Props>()
   padding-left: 2px;
   display: inline-block;
   content: '*';
+  /* empty alt text: the asterisk stays out of the field's accessible name (aria-required says it) */
+  content: '*' / '';
 }
 </style>

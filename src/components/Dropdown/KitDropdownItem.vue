@@ -1,5 +1,13 @@
 <template>
-  <div class="dropdown-item" @click="emit('select', value)" :data-selected="selected" :data-disabled="disabled">
+  <div
+    class="dropdown-item"
+    role="menuitem"
+    tabindex="-1"
+    :aria-disabled="disabled || undefined"
+    :data-selected="selected"
+    :data-disabled="disabled"
+    @click="emit('select', value)"
+    @keydown.enter.space.self.prevent="activate">
     <span class="dropdown-item-label">
       <slot />
     </span>
@@ -19,6 +27,12 @@ withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (event: 'select', data: MouseEvent)
 }>()
+
+// Enter / Space on the item (not on a field inside it): same as a mouse click, on the item's link when it wraps one
+function activate(e: KeyboardEvent) {
+  const item = e.currentTarget as HTMLElement
+  ;(item.querySelector<HTMLElement>('a[href]') ?? item).click()
+}
 </script>
 <style scoped>
 .dropdown-item {
@@ -48,6 +62,11 @@ const emit = defineEmits<{
   color: var(--kit-dropdown-item-hover-text);
   fill: var(--kit-dropdown-item-hover-bg);
   text-decoration: none;
+}
+
+.dropdown-item:focus-visible {
+  /* inside the menu's scroll container, an outer outline would be clipped */
+  outline-offset: -2px;
 }
 
 .dropdown-item[data-disabled="true"] {

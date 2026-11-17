@@ -107,7 +107,7 @@ const observer = ref()
 const scrollLoaderRef = ref<HTMLTableCellElement>()
 
 const actualColumns = computed<Column[]>(() =>
-  props.dragRows ? [{ id: 'kitDragHandle', width: 30 }, ...props.columns] : props.columns
+  props.dragRows ? [{ id: 'kitDragHandle', width: 30, label: 'Reorder' }, ...props.columns] : props.columns
 )
 
 const dragEnabled = computed(() => props.dragRows && !props.busy && props.data.length > 0)

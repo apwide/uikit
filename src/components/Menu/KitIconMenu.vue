@@ -8,8 +8,9 @@
     :is-disabled="isDisabled"
     @close="handleClose"
     @open="handleOpen">
-    <template #trigger="{ toggle, isOpen, isDisabled }">
+    <template #trigger="{ toggle, isOpen, isDisabled, triggerAttrs }">
       <KitIconButton
+        v-bind="triggerAttrs"
         :is-selected="isOpen"
         :is-disabled="isDisabled"
         :style="{ fontSize: iconSize }"

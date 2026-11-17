@@ -2,7 +2,9 @@
   <div class="kit-big-tooltip">
     <span ref="trigger"
           @mouseenter="show"
-          @mouseleave="requestHide">
+          @mouseleave="requestHide"
+          @focusin="show"
+          @focusout="onFocusOut">
       <slot name="trigger"></slot>
     </span>
     <Teleport to="body" :disabled="!appendToBody">
@@ -12,6 +14,7 @@
         :placement="placement"
         :target-element="trigger"
         @mouseleave="requestHide"
+        @focusout="onFocusOut"
       >
         <slot :hide="hide"></slot>
       </KitBigTooltipContent>
@@ -19,7 +22,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, ref, watch } from 'vue'
 import KitBigTooltipContent from '@components/Tooltip/KitBigTooltipContent.vue'
 
 type Props = {
@@ -55,6 +58,8 @@ function isInside(e: MouseEvent, rect: DOMRect) {
 }
 
 function requestHide(e: MouseEvent) {
+  // popper is gone when Escape already closed the tooltip
+  if (!popper.value) return
   if (isInside(e, trigger.value.getBoundingClientRect()) || isInside(e, popper.value.$el.getBoundingClientRect())) {
     return
   }
@@ -64,6 +69,23 @@ function requestHide(e: MouseEvent) {
 function hide() {
   visible.value = false
 }
+
+// WCAG 1.4.13: shown on keyboard focus too, kept while focus stays in the trigger or the tooltip, dismissed with Escape
+function onFocusOut(e: FocusEvent) {
+  const next = e.relatedTarget as Node | null
+  if (next && (trigger.value?.contains(next) || popper.value?.$el?.contains(next))) return
+  hide()
+}
+
+function onKeyDown(e: KeyboardEvent) {
+  if (e.key === 'Escape') hide()
+}
+
+watch(visible, (open) => {
+  if (open) document.addEventListener('keydown', onKeyDown)
+  else document.removeEventListener('keydown', onKeyDown)
+})
+onBeforeUnmount(() => document.removeEventListener('keydown', onKeyDown))
 
 </script>
 <style scoped>
