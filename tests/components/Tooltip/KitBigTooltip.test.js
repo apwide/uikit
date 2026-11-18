@@ -83,6 +83,15 @@ describe('KitBigTooltip', () => {
     component.unmount()
   })
 
+  it('exposes hide to the trigger slot', async () => {
+    const component = shallowMount(KitBigTooltip, {
+      slots: { trigger: `<template #trigger="{ hide }"><button @click="hide">Chip</button></template>` }
+    })
+    await component.find('span').trigger('mouseenter')
+    await component.find('button').trigger('click')
+    expect(component.findComponent(KitBigTooltipContent).exists()).toBe(false)
+  })
+
   it('passes placement to KitBigTooltipContent', async () => {
     const component = shallowMount(KitBigTooltip, {
       propsData: { placement: 'left' },
