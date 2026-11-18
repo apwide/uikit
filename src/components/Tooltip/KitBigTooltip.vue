@@ -5,7 +5,8 @@
           @mouseleave="requestHide"
           @focusin="show"
           @focusout="onFocusOut">
-      <slot name="trigger"></slot>
+      <!-- hide: for triggers that open a modal, the mouseleave is ignored while the pointer is still over the trigger -->
+      <slot name="trigger" :hide="hide"></slot>
     </span>
     <Teleport to="body" :disabled="!appendToBody">
       <KitBigTooltipContent
