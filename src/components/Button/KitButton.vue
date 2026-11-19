@@ -154,7 +154,7 @@ button[loading][selected] :deep(.kit-spinner) {
   color: #fff;
 }
 
-button:focus {
+button:focus-visible {
   box-shadow: rgba(38, 132, 255, 0.6) 0 0 0 2px;
 }
 
@@ -249,7 +249,7 @@ button[appearance='warning'] {
   color: var(--kit-btn-warn-text);
 }
 
-button:focus[appearance='warning'] {
+button:focus-visible[appearance='warning'] {
   box-shadow: var(--kit-btn-warn-bg) 0 0 0 2px;
 }
 button[appearance='warning']:not([disabled]):not([selected]):hover {
@@ -275,7 +275,7 @@ button[appearance='danger'] {
   color: var(--kit-btn-danger-text);
 }
 
-button:focus[appearance='danger'] {
+button:focus-visible[appearance='danger'] {
   box-shadow: var(--kit-btn-danger-border) 0 0 0 2px;
 }
 
@@ -299,7 +299,7 @@ button[appearance='help'] {
   color: var(--kit-btn-help-text);
 }
 
-button:focus[appearance='help'] {
+button:focus-visible[appearance='help'] {
   box-shadow: var(--kit-btn-help-border) 0 0 0 2px;
 }
 

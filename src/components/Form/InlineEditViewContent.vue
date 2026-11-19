@@ -85,7 +85,7 @@ function mouseHasMoved({ clientX, clientY }) {
   padding: 0;
 }
 
-:focus > .kit-inline-edit-view-content__label {
+:focus-visible > .kit-inline-edit-view-content__label {
   border: 1px solid var(--kit-inline-edit-active-border);
   background: transparent;
 }

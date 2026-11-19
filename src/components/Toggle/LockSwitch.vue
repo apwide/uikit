@@ -73,7 +73,7 @@ label {
   cursor: pointer;
 }
 
-input:focus + .slide {
+input:focus-visible + .slide {
   border: 2px solid rgb(76, 154, 255);
 }
 
