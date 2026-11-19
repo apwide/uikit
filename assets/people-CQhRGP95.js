@@ -1,0 +1,1 @@
+import{f as r}from"./chunk-NAVWDHVN-nYOG0we8.js";import{m as t}from"./helpers-CDDBEDKi.js";const a=({name:s=r.person.fullName(),key:e,avatar:o=`https://i.pravatar.cc/300?u=${r.string.uuid()}`}={})=>({name:s,displayName:s,avatar:o,key:e||r.helpers.slugify(s).toLowerCase(),username:e||r.helpers.slugify(s).toLowerCase()}),c=t(a);export{c as a,a as c};
