@@ -150,7 +150,7 @@ input + .kit-checkbox__icon :deep(path) {
   fill: var(--kit-checkbox-checked-tick-color);
 }
 
-input:not([is-invalid]):focus + .kit-checkbox__icon :deep(rect) {
+input:not([is-invalid]):focus-visible + .kit-checkbox__icon :deep(rect) {
   stroke: var(--kit-checkbox-focus-color);
 }
 

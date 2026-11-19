@@ -74,7 +74,7 @@ label {
   cursor: pointer;
 }
 
-input:focus + .kit-toggle__slide {
+input:focus-visible + .kit-toggle__slide {
   border: 2px solid rgb(76, 154, 255);
 }
 
